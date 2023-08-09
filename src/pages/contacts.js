@@ -7,8 +7,9 @@ import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 import { Box, Button, Container, Stack, SvgIcon, Typography } from "@mui/material";
 import { useSelection } from "src/hooks/use-selection";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
-import { CustomersTable } from "src/sections/customer/customers-table";
-import { CustomersSearch } from "src/sections/customer/customers-search";
+import { ContactsTable } from "src/sections/contacts/contacts-table";
+import { ContactsSearch } from "src/sections/contacts/contacts-search";
+import { ContactsAdd } from "src/sections/contacts/contacs-add";
 import { applyPagination } from "src/utils/apply-pagination";
 
 const now = new Date();
@@ -174,6 +175,11 @@ const Page = () => {
   const customers = useCustomers(page, rowsPerPage);
   const customersIds = useCustomerIds(customers);
   const customersSelection = useSelection(customersIds);
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleClose = () => {
+    setOpenModal(false);
+  };
 
   const handlePageChange = useCallback((event, value) => {
     setPage(value);
@@ -186,7 +192,7 @@ const Page = () => {
   return (
     <>
       <Head>
-        <title>Customers | MCM</title>
+        <title>Contacts | MCM</title>
       </Head>
       <Box
         component="main"
@@ -199,7 +205,7 @@ const Page = () => {
           <Stack spacing={3}>
             <Stack direction="row" justifyContent="space-between" spacing={4}>
               <Stack spacing={1}>
-                <Typography variant="h4">Customers</Typography>
+                <Typography variant="h4">Contacts</Typography>
                 <Stack alignItems="center" direction="row" spacing={1}>
                   <Button
                     color="inherit"
@@ -231,13 +237,14 @@ const Page = () => {
                     </SvgIcon>
                   }
                   variant="contained"
+                  onClick={() => setOpenModal(true)}
                 >
                   Add
                 </Button>
               </div>
             </Stack>
-            <CustomersSearch />
-            <CustomersTable
+            <ContactsSearch />
+            <ContactsTable
               count={data.length}
               items={customers}
               onDeselectAll={customersSelection.handleDeselectAll}
@@ -251,6 +258,7 @@ const Page = () => {
               selected={customersSelection.selected}
             />
           </Stack>
+          <ContactsAdd open={openModal} handleClose={handleClose} />
         </Container>
       </Box>
     </>
