@@ -14,6 +14,8 @@ import {
 import { FieldArray, Formik } from "formik";
 import React, { useState, useCallback, Fragment } from "react";
 import { TrashIcon, PlusCircleIcon } from "@heroicons/react/20/solid";
+import { MapPinIcon } from "@heroicons/react/24/outline";
+import { neutral, indigo } from "src/theme/colors";
 
 const states = [
   {
@@ -45,7 +47,20 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
     border: "2px solid #000",
     boxShadow: 24,
     p: 1,
+    overflow: "auto",
+    maxHeight: "90%",
   };
+
+  const addressObject = {
+    type: "work",
+    city: "",
+    countryCode: "",
+    zip: "",
+    street: "",
+  };
+
+  const phoneObject = { type: "work", no: "" };
+  const emailObject = { type: "work", email: "" };
 
   const [initialValues, setInitialValues] = useState({
     id: "5e887ac47eed253091be10cb",
@@ -72,16 +87,7 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
     ],
   });
 
-  const [values, setValues] = useState({
-    firstName: "Anika",
-    lastName: "Visser",
-    email: "demo@devias.io",
-    phone: "",
-    state: "los-angeles",
-    country: "USA",
-  });
-
-  const handleSubmit = useCallback((event) => {
+  const handleSubmit = useCallback((values) => {
     alert(JSON.stringify(values, null, 2));
   }, []);
 
@@ -91,6 +97,7 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      // style={{ overflow: "scroll", height: "100%" }}
     >
       <Box sx={style}>
         <Formik
@@ -106,7 +113,7 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
           {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
             <form autoComplete="off" noValidate onSubmit={handleSubmit}>
               <Card>
-                <CardHeader subheader="The information can be edited" title="Contacts" />
+                <CardHeader subheader="The information can be edited" title="Contact" />
                 <CardContent sx={{ pt: 0 }}>
                   <Box sx={{ m: -1.5 }}>
                     <Grid container spacing={2}>
@@ -146,38 +153,26 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                             <Grid
                               container
                               spacing={1}
-                              style={{ border: "dashed", borderColor: "black" }}
+                              // style={{ border: "dashed", borderColor: "black" }}
                             >
-                              {values.address.length > 0 && (
-                                <Fragment>
-                                  <Grid xs={10} md={11}>
-                                    <Typography
-                                      style={{
-                                        alignItems: "center",
-                                        display: "flex",
-                                        height: "100%",
-                                      }}
-                                    >
-                                      Address
-                                    </Typography>
-                                  </Grid>
-                                  <Grid xs={2} md={1}>
-                                    <Button
-                                      type="button"
-                                      onClick={() => arrayHelpers.push({ type: "work", email: "" })}
-                                    >
-                                      <PlusCircleIcon />
-                                    </Button>
-                                  </Grid>
-                                </Fragment>
-                              )}
+                              <Grid xs={12} md={12}>
+                                <Typography
+                                  style={{
+                                    alignItems: "center",
+                                    display: "flex",
+                                    height: "100%",
+                                  }}
+                                >
+                                  Address
+                                </Typography>
+                              </Grid>
                               {values.address && values.address.length > 0 ? (
                                 values.address.map((item, index) => (
                                   <>
-                                    <Grid xs={12} md={6}>
+                                    <Grid xs={12} md={3}>
                                       <TextField
                                         fullWidth
-                                        small
+                                        size="small"
                                         label="Type"
                                         name={`address.${index}.type`}
                                         onChange={handleChange}
@@ -192,7 +187,7 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                                         ))}
                                       </TextField>
                                     </Grid>
-                                    <Grid xs={12} md={6}>
+                                    <Grid xs={12} md={3}>
                                       <TextField
                                         fullWidth
                                         size="small"
@@ -202,17 +197,7 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                                         value={values?.address[index]?.city}
                                       />
                                     </Grid>
-                                    <Grid xs={12} md={12}>
-                                      <TextField
-                                        fullWidth
-                                        size="small"
-                                        label="Street"
-                                        name={`address.${index}.street`}
-                                        onChange={handleChange}
-                                        value={values?.address[index]?.street}
-                                      />
-                                    </Grid>
-                                    <Grid xs={12} md={5.5}>
+                                    <Grid xs={12} md={3}>
                                       <TextField
                                         fullWidth
                                         size="small"
@@ -222,7 +207,7 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                                         value={values?.address[index]?.countryCode}
                                       />
                                     </Grid>
-                                    <Grid xs={10} md={5.5}>
+                                    <Grid xs={12} md={3}>
                                       <TextField
                                         fullWidth
                                         size="small"
@@ -230,6 +215,16 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                                         name={`address.${index}.zip`}
                                         onChange={handleChange}
                                         value={values?.address[index]?.zip}
+                                      />
+                                    </Grid>
+                                    <Grid xs={10} md={11}>
+                                      <TextField
+                                        fullWidth
+                                        size="small"
+                                        label="Street"
+                                        name={`address.${index}.street`}
+                                        onChange={handleChange}
+                                        value={values?.address[index]?.street}
                                       />
                                     </Grid>
                                     <Grid xs={2} md={1}>
@@ -240,32 +235,59 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                                         <TrashIcon />
                                       </Button>
                                     </Grid>
+                                    <Grid xs={12} md={12}>
+                                      <Divider />
+                                    </Grid>
                                   </>
                                 ))
                               ) : (
                                 <Grid xs={12} md={12}>
                                   <Button
                                     type="button"
-                                    onClick={() => arrayHelpers.push({ type: "work", email: "" })}
+                                    onClick={() => arrayHelpers.push(addressObject)}
                                   >
                                     Add an Address
                                   </Button>
                                 </Grid>
+                              )}
+                              {values.address.length > 0 && (
+                                <Fragment>
+                                  <Grid xs={10} md={11}></Grid>
+                                  <Grid xs={2} md={1}>
+                                    <Button
+                                      type="button"
+                                      onClick={() => arrayHelpers.push(addressObject)}
+                                    >
+                                      <PlusCircleIcon />
+                                    </Button>
+                                  </Grid>
+                                </Fragment>
                               )}
                             </Grid>
                           )}
                         />
                       </Grid>
 
-                      <Grid xs={12} md={12} style={{ marginTop: "-12px" }}>
+                      <Grid xs={12} md={12} style={{ marginTop: "-32px" }}>
                         <FieldArray
                           name="email"
                           render={(arrayHelpers) => (
                             <Grid container spacing={1}>
+                              <Grid xs={12} md={12}>
+                                <Typography
+                                  style={{
+                                    alignItems: "center",
+                                    display: "flex",
+                                    height: "100%",
+                                  }}
+                                >
+                                  Email
+                                </Typography>
+                              </Grid>
                               {values.email && values.email.length > 0 ? (
                                 values.email.map((item, index) => (
                                   <>
-                                    <Grid xs={12} md={5.5}>
+                                    <Grid xs={12} md={4}>
                                       <TextField
                                         fullWidth
                                         size="small"
@@ -283,7 +305,7 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                                         ))}
                                       </TextField>
                                     </Grid>
-                                    <Grid xs={10} md={5.5}>
+                                    <Grid xs={10} md={7}>
                                       <TextField
                                         fullWidth
                                         size="small"
@@ -307,7 +329,7 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                                 <Grid xs={12} md={12}>
                                   <Button
                                     type="button"
-                                    onClick={() => arrayHelpers.push({ type: "work", email: "" })}
+                                    onClick={() => arrayHelpers.push(emailObject)}
                                   >
                                     Add an Email
                                   </Button>
@@ -319,7 +341,7 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                                   <Grid xs={2} md={1}>
                                     <Button
                                       type="button"
-                                      onClick={() => arrayHelpers.push({ type: "work", email: "" })}
+                                      onClick={() => arrayHelpers.push(emailObject)}
                                     >
                                       <PlusCircleIcon />
                                     </Button>
@@ -336,10 +358,21 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                           name="phone"
                           render={(arrayHelpers) => (
                             <Grid container spacing={1}>
+                              <Grid xs={12} md={12}>
+                                <Typography
+                                  style={{
+                                    alignItems: "center",
+                                    display: "flex",
+                                    height: "100%",
+                                  }}
+                                >
+                                  Phone Number
+                                </Typography>
+                              </Grid>
                               {values.phone && values.phone.length > 0 ? (
                                 values.phone.map((item, index) => (
                                   <>
-                                    <Grid xs={12} md={5.5}>
+                                    <Grid xs={12} md={4}>
                                       <TextField
                                         fullWidth
                                         size="small"
@@ -357,7 +390,7 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                                         ))}
                                       </TextField>
                                     </Grid>
-                                    <Grid xs={10} md={5.5}>
+                                    <Grid xs={10} md={7}>
                                       <TextField
                                         fullWidth
                                         size="small"
@@ -381,7 +414,7 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                                 <Grid xs={12} md={12}>
                                   <Button
                                     type="button"
-                                    onClick={() => arrayHelpers.push({ type: "work", email: "" })}
+                                    onClick={() => arrayHelpers.push(phoneObject)}
                                   >
                                     Add a Phone Number
                                   </Button>
@@ -393,7 +426,7 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                                   <Grid xs={2} md={1}>
                                     <Button
                                       type="button"
-                                      onClick={() => arrayHelpers.push({ type: "work", email: "" })}
+                                      onClick={() => arrayHelpers.push(phoneObject)}
                                     >
                                       <PlusCircleIcon />
                                     </Button>
@@ -409,7 +442,7 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                 </CardContent>
                 <Divider />
                 <CardActions sx={{ justifyContent: "flex-end" }}>
-                  <Button variant="contained" color="error">
+                  <Button variant="contained" color="neutral" onClick={handleClose}>
                     Cancel
                   </Button>
                   <Button variant="contained" type="submit" disabled={isSubmitting}>

@@ -87,11 +87,25 @@ export const ContactsTable = (props) => {
                         <Typography variant="subtitle2">{customer.name}</Typography>
                       </Stack>
                     </TableCell>
-                    <TableCell>{customer.email}</TableCell>
                     <TableCell>
-                      {customer.address.city}, {customer.address.state}, {customer.address.country}
+                      {customer.email.map((email, ind) => (
+                        <div key={ind}>{email.email}</div>
+                      ))}
                     </TableCell>
-                    <TableCell>{customer.phone}</TableCell>
+                    <TableCell>
+                      {customer.address.map((address) => {
+                        return (
+                          <>
+                            {address?.city},{address?.state},{address?.country}
+                          </>
+                        );
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      {customer.phone?.map((number, ind) => (
+                        <div key={ind}>{number.no}</div>
+                      ))}
+                    </TableCell>
                     <TableCell>{createdAt}</TableCell>
                   </TableRow>
                 );
