@@ -81,9 +81,9 @@ export const AuthProvider = (props) => {
     if (isAuthenticated) {
       const user = {
         id: "5e86809283e28b96d2d38537",
-        avatar: "/assets/avatars/avatar-anika-visser.png",
-        name: "Zehra Taqvi",
-        email: "zehra.taqvi@gmail.com",
+        avatar: "/assets/avatars/avatar-siegbert-gottfried.png",
+        name: "Howie Guttman",
+        email: "howie.guttman@outlook.com",
       };
 
       dispatch({
@@ -114,9 +114,9 @@ export const AuthProvider = (props) => {
 
     const user = {
       id: "5e86809283e28b96d2d38537",
-      avatar: "/assets/avatars/avatar-anika-visser.png",
-      name: "Zehra Taqvi",
-      email: "zehra.taqvi@gmail.com",
+      avatar: "/assets/avatars/avatar-siegbert-gottfried.png",
+      name: "Howie Guttman",
+      email: "howie.guttman@outlook.com",
     };
 
     dispatch({
@@ -138,9 +138,9 @@ export const AuthProvider = (props) => {
 
     const user = {
       id: "5e86809283e28b96d2d38537",
-      avatar: "/assets/avatars/avatar-anika-visser.png",
-      name: "Zehra Taqvi",
-      email: "zehra.taqvi@gmail.com",
+      avatar: "/assets/avatars/avatar-siegbert-gottfried.png",
+      name: "Howie Guttman",
+      email: "howie.guttman@outlook.com",
     };
 
     dispatch({

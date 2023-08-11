@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import BellIcon from "@heroicons/react/24/solid/BellIcon";
 import UsersIcon from "@heroicons/react/24/solid/UsersIcon";
 import Bars3Icon from "@heroicons/react/24/solid/Bars3Icon";
+import HomeIcon from "@heroicons/react/24/solid/HomeIcon";
 import MagnifyingGlassIcon from "@heroicons/react/24/solid/MagnifyingGlassIcon";
 import {
   Avatar,
@@ -75,7 +76,7 @@ export const TopNav = (props) => {
             <Tooltip title="Contacts">
               <IconButton onClick={() => router.push("/")}>
                 <SvgIcon fontSize="small">
-                  <UsersIcon />
+                  <HomeIcon />
                 </SvgIcon>
               </IconButton>
             </Tooltip>
@@ -96,7 +97,7 @@ export const TopNav = (props) => {
                 height: 40,
                 width: 40,
               }}
-              src="/assets/avatars/avatar-anika-visser.png"
+              src="/assets/avatars/avatar-siegbert-gottfried.png"
             />
           </Stack>
         </Stack>

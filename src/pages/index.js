@@ -1,336 +1,132 @@
-import { useCallback, useMemo, useState } from "react";
 import Head from "next/head";
-import { subDays, subHours } from "date-fns";
-import ArrowDownOnSquareIcon from "@heroicons/react/24/solid/ArrowDownOnSquareIcon";
 import ArrowUpOnSquareIcon from "@heroicons/react/24/solid/ArrowUpOnSquareIcon";
+import ArrowDownOnSquareIcon from "@heroicons/react/24/solid/ArrowDownOnSquareIcon";
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
-import { Box, Button, Container, Stack, SvgIcon, Typography } from "@mui/material";
-import { useSelection } from "src/hooks/use-selection";
+import {
+  Box,
+  Button,
+  Container,
+  Pagination,
+  Stack,
+  SvgIcon,
+  Typography,
+  Unstable_Grid2 as Grid,
+} from "@mui/material";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
-import { ContactsTable } from "src/sections/contacts/contacts-table";
-import { ContactsSearch } from "src/sections/contacts/contacts-search";
-import { ContactsAdd } from "src/sections/contacts/contacs-add";
-import { applyPagination } from "src/utils/apply-pagination";
+import { CompanyCard } from "src/sections/companies/company-card";
+import { CompaniesSearch } from "src/sections/companies/companies-search";
+import { items } from "src/layouts/dashboard/config";
+import { TopNav } from "src/layouts/dashboard/top-nav";
 
-const now = new Date();
-
-const data = [
+const menuItems = [
   {
-    id: "5e887ac47eed253091be10cb",
-    address: [
-      {
-        type: "work",
-        city: "Cleveland",
-        countryCode: "US",
-        zip: "2500",
-        street: "2849 Fulton Street",
-      },
-    ],
-    avatar: "/assets/avatars/avatar-carson-darrin.png",
-    createdAt: subDays(subHours(now, 7), 1).getTime(),
-    email: [
-      { type: "work", email: "carson.darrin@devias.io" },
-      { type: "work", email: "tayyab.darrin@devias.io" },
-    ],
-    name: "Carson Darrin",
-    phone: [
-      { type: "work", no: "309-432-123" },
-      { type: "work", no: "309-432-157" },
-    ],
+    id: "2569ce0d517a7f06d3ea1f24",
+    createdAt: "27/03/2019",
+    description:
+      "Dropbox is a file hosting service that offers cloud storage, file synchronization, a personal cloud.",
+    logo: "/assets/logos/logo-dropbox.png",
+    title: "Contacts",
+    downloads: "594",
   },
   {
-    id: "5e887b209c28ac3dd97f6db5",
-    address: [
-      {
-        city: "Atlanta",
-        country: "USA",
-        state: "Georgia",
-        street: "1865  Pleasant Hill Road",
-      },
-    ],
-    avatar: "/assets/avatars/avatar-fran-perez.png",
-    createdAt: subDays(subHours(now, 1), 2).getTime(),
-    email: [{ type: "work", email: "carson.darrin@devias.io" }],
-    name: "Fran Perez",
-    phone: [{ type: "work", no: "309-432-123" }],
+    id: "ed2b900870ceba72d203ec15",
+    createdAt: "31/03/2019",
+    description:
+      "Medium is an online publishing platform developed by Evan Williams, and launched in August 2012.",
+    logo: "/assets/logos/logo-medium.png",
+    title: "Medium Corporation",
+    downloads: "625",
   },
   {
-    id: "5e887b7602bdbc4dbb234b27",
-    address: [
-      {
-        city: "North Canton",
-        country: "USA",
-        state: "Ohio",
-        street: "4894  Lakeland Park Drive",
-      },
-    ],
-    avatar: "/assets/avatars/avatar-jie-yan-song.png",
-    createdAt: subDays(subHours(now, 4), 2).getTime(),
-    email: [
-      { type: "work", email: "carson.darrin@devias.io" },
-      { type: "work", email: "tayyab.darrin@devias.io" },
-    ],
-    name: "Jie Yan Song",
-    phone: [
-      { type: "work", no: "309-432-123" },
-      { type: "work", no: "309-432-157" },
-    ],
+    id: "a033e38768c82fca90df3db7",
+    createdAt: "03/04/2019",
+    description:
+      "Slack is a cloud-based set of team collaboration tools and services, founded by Stewart Butterfield.",
+    logo: "/assets/logos/logo-slack.png",
+    title: "Slack",
+    downloads: "857",
   },
   {
-    id: "5e86809283e28b96d2d38537",
-    address: [
-      {
-        city: "Madrid",
-        country: "Spain",
-        name: "Anika Visser",
-        street: "4158  Hedge Street",
-      },
-    ],
-    avatar: "/assets/avatars/avatar-anika-visser.png",
-    createdAt: subDays(subHours(now, 11), 2).getTime(),
-    email: [{ type: "work", email: "carson.darrin@devias.io" }],
-    name: "Anika Visser",
-    phone: [
-      { type: "work", no: "309-432-123" },
-      { type: "work", no: "309-432-157" },
-    ],
+    id: "1efecb2bf6a51def9869ab0f",
+    createdAt: "04/04/2019",
+    description: "Lyft is an on-demand transportation company based in San Francisco, California.",
+    logo: "/assets/logos/logo-lyft.png",
+    title: "Lyft",
+    downloads: "406",
   },
   {
-    id: "5e86805e2bafd54f66cc95c3",
-    address: [
-      {
-        city: "San Diego",
-        country: "USA",
-        state: "California",
-        street: "75247",
-      },
-    ],
-    avatar: "/assets/avatars/avatar-miron-vitold.png",
-    createdAt: subDays(subHours(now, 7), 3).getTime(),
-    email: [
-      { type: "work", email: "carson.darrin@devias.io" },
-      { type: "work", email: "tayyab.darrin@devias.io" },
-    ],
-    name: "Miron Vitold",
-    phone: [
-      { type: "work", no: "309-432-123" },
-      { type: "work", no: "309-432-157" },
-    ],
+    id: "1ed68149f65fbc6089b5fd07",
+    createdAt: "04/04/2019",
+    description: "GitHub is a web-based hosting service for version control of code using Git.",
+    logo: "/assets/logos/logo-github.png",
+    title: "GitHub",
+    downloads: "835",
   },
   {
-    id: "5e887a1fbefd7938eea9c981",
-    address: [
-      {
-        city: "Berkeley",
-        country: "USA",
-        state: "California",
-        street: "317 Angus Road",
-      },
-    ],
-    avatar: "/assets/avatars/avatar-penjani-inyene.png",
-    createdAt: subDays(subHours(now, 5), 4).getTime(),
-    email: [{ type: "work", email: "carson.darrin@devias.io" }],
-    name: "Penjani Inyene",
-    phone: [
-      { type: "work", no: "309-432-123" },
-      { type: "work", no: "309-432-157" },
-    ],
-  },
-  {
-    id: "5e887d0b3d090c1b8f162003",
-    address: [
-      {
-        city: "Carson City",
-        country: "USA",
-        state: "Nevada",
-        street: "2188  Armbrester Drive",
-      },
-    ],
-    avatar: "/assets/avatars/avatar-omar-darboe.png",
-    createdAt: subDays(subHours(now, 15), 4).getTime(),
-    email: [{ type: "work", email: "carson.darrin@devias.io" }],
-    name: "Omar Darobe",
-    phone: [
-      { type: "work", no: "309-432-123" },
-      { type: "work", no: "309-432-157" },
-    ],
-  },
-  {
-    id: "5e88792be2d4cfb4bf0971d9",
-    address: [
-      {
-        city: "Los Angeles",
-        country: "USA",
-        state: "California",
-        street: "1798  Hickory Ridge Drive",
-      },
-    ],
-    avatar: "/assets/avatars/avatar-siegbert-gottfried.png",
-    createdAt: subDays(subHours(now, 2), 5).getTime(),
-    email: [
-      { type: "work", email: "carson.darrin@devias.io" },
-      { type: "work", email: "tayyab.darrin@devias.io" },
-    ],
-    name: "Siegbert Gottfried",
-    phone: [
-      { type: "work", no: "309-432-123" },
-      { type: "work", no: "309-432-157" },
-    ],
-  },
-  {
-    id: "5e8877da9a65442b11551975",
-    address: [
-      {
-        city: "Murray",
-        country: "USA",
-        state: "Utah",
-        street: "3934  Wildrose Lane",
-      },
-    ],
-    avatar: "/assets/avatars/avatar-iulia-albu.png",
-    createdAt: subDays(subHours(now, 8), 6).getTime(),
-    email: [
-      { type: "work", email: "carson.darrin@devias.io" },
-      { type: "work", email: "tayyab.darrin@devias.io" },
-    ],
-    name: "Iulia Albu",
-    phone: [
-      { type: "work", no: "309-432-123" },
-      { type: "work", no: "309-432-157" },
-    ],
-  },
-  {
-    id: "5e8680e60cba5019c5ca6fda",
-    address: [
-      {
-        city: "Salt Lake City",
-        country: "USA",
-        state: "Utah",
-        street: "368 Lamberts Branch Road",
-      },
-    ],
-    avatar: "/assets/avatars/avatar-nasimiyu-danai.png",
-    createdAt: subDays(subHours(now, 1), 9).getTime(),
-    email: [
-      { type: "work", email: "carson.darrin@devias.io" },
-      { type: "work", email: "tayyab.darrin@devias.io" },
-    ],
-    name: "Nasimiyu Danai",
-    phone: [
-      { type: "work", no: "309-432-123" },
-      { type: "work", no: "309-432-157" },
-    ],
+    id: "5dab321376eff6177407e887",
+    createdAt: "04/04/2019",
+    description:
+      "Squarespace provides software as a service for website building and hosting. Headquartered in NYC.",
+    logo: "/assets/logos/logo-squarespace.png",
+    title: "Squarespace",
+    downloads: "835",
   },
 ];
 
-const useCustomers = (page, rowsPerPage) => {
-  return useMemo(() => {
-    return applyPagination(data, page, rowsPerPage);
-  }, [page, rowsPerPage]);
-};
-
-const useCustomerIds = (customers) => {
-  return useMemo(() => {
-    return customers.map((customer) => customer.id);
-  }, [customers]);
-};
-
-const Page = () => {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const customers = useCustomers(page, rowsPerPage);
-  const customersIds = useCustomerIds(customers);
-  const customersSelection = useSelection(customersIds);
-  const [openModal, setOpenModal] = useState(false);
-
-  const handleClose = () => {
-    setOpenModal(false);
-  };
-
-  const handlePageChange = useCallback((event, value) => {
-    setPage(value);
-  }, []);
-
-  const handleRowsPerPageChange = useCallback((event) => {
-    setRowsPerPage(event.target.value);
-  }, []);
-
-  return (
-    <>
-      <Head>
-        <title>Contacts | MCM</title>
-      </Head>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          py: 8,
-        }}
-      >
-        <Container maxWidth="xl">
-          <Stack spacing={3}>
-            <Stack direction="row" justifyContent="space-between" spacing={4}>
+const Page = () => (
+  <>
+    <Head>
+      <title>Dashboard | MCM</title>
+    </Head>
+    <TopNav />
+    <Box
+      component="main"
+      sx={{
+        flexGrow: 1,
+        py: 8,
+        backgroundColor: "white",
+      }}
+    >
+      <Container maxWidth="xl">
+        <Stack spacing={3}>
+          <Stack direction="row" justifyContent="space-between" spacing={4}>
+            <Container>
               <Stack spacing={1}>
-                <Typography variant="h4">Contacts</Typography>
-                {/* <Stack alignItems="center" direction="row" spacing={1}>
-                  <Button
-                    color="inherit"
-                    startIcon={
-                      <SvgIcon fontSize="small">
-                        <ArrowUpOnSquareIcon />
-                      </SvgIcon>
-                    }
-                  >
-                    Import
-                  </Button>
-                  <Button
-                    color="inherit"
-                    startIcon={
-                      <SvgIcon fontSize="small">
-                        <ArrowDownOnSquareIcon />
-                      </SvgIcon>
-                    }
-                  >
-                    Export
-                  </Button>
-                </Stack> */}
-              </Stack>
-              <div>
-                <Button
-                  startIcon={
-                    <SvgIcon fontSize="small">
-                      <PlusIcon />
-                    </SvgIcon>
-                  }
-                  variant="contained"
-                  onClick={() => setOpenModal(true)}
+                {/* <Typography variant="h4">My Claims Manager</Typography> */}
+                <Typography
+                  align="center"
+                  color="inherit"
+                  sx={{
+                    fontSize: "24px",
+                    lineHeight: "32px",
+                    mb: 1,
+                  }}
+                  variant="h1"
                 >
-                  Add
-                </Button>
-              </div>
-            </Stack>
-            <ContactsSearch />
-            <ContactsTable
-              count={data.length}
-              items={customers}
-              onDeselectAll={customersSelection.handleDeselectAll}
-              onDeselectOne={customersSelection.handleDeselectOne}
-              onPageChange={handlePageChange}
-              onRowsPerPageChange={handleRowsPerPageChange}
-              onSelectAll={customersSelection.handleSelectAll}
-              onSelectOne={customersSelection.handleSelectOne}
-              page={page}
-              rowsPerPage={rowsPerPage}
-              selected={customersSelection.selected}
-            />
+                  Welcome to{" "}
+                  <Box component="a" sx={{ color: "#15B79E" }} target="_blank">
+                    My Claims Manager
+                  </Box>
+                </Typography>
+                <Typography align="center" sx={{ mb: 3 }} variant="subtitle1">
+                  Hey, Howie. What's on your mind today?
+                </Typography>
+              </Stack>
+            </Container>
           </Stack>
-          <ContactsAdd open={openModal} handleClose={handleClose} />
-        </Container>
-      </Box>
-    </>
-  );
-};
+          <Grid container spacing={3}>
+            {items.map((item) => (
+              <Grid xs={12} md={6} lg={4} key={item.title}>
+                <CompanyCard company={item} />
+              </Grid>
+            ))}
+          </Grid>
+        </Stack>
+      </Container>
+    </Box>
+  </>
+);
 
-Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+// Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default Page;

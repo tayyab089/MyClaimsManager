@@ -1,48 +1,52 @@
-import PropTypes from 'prop-types';
-import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
-import ClockIcon from '@heroicons/react/24/solid/ClockIcon';
-import { Avatar, Box, Card, CardContent, Divider, Stack, SvgIcon, Typography } from '@mui/material';
-
+import PropTypes from "prop-types";
+import ArrowDownOnSquareIcon from "@heroicons/react/24/solid/ArrowDownOnSquareIcon";
+import ClockIcon from "@heroicons/react/24/solid/ClockIcon";
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  CardActionArea,
+  Divider,
+  Stack,
+  SvgIcon,
+  Typography,
+} from "@mui/material";
+import { useRouter } from "next/router";
 export const CompanyCard = (props) => {
   const { company } = props;
+  const router = useRouter();
 
   return (
     <Card
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%'
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
       }}
     >
-      <CardContent>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            pb: 3
-          }}
-        >
-          <Avatar
-            src={company.logo}
-            variant="square"
-          />
-        </Box>
-        <Typography
-          align="center"
-          gutterBottom
-          variant="h5"
-        >
-          {company.title}
-        </Typography>
-        <Typography
-          align="center"
-          variant="body1"
-        >
-          {company.description}
-        </Typography>
-      </CardContent>
-      <Box sx={{ flexGrow: 1 }} />
-      <Divider />
+      <CardActionArea onClick={() => router.push(company.path)}>
+        <CardContent>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              pb: 3,
+            }}
+          >
+            {/* <Avatar src={company.logo} variant="square" /> */}
+            {company.icon}
+          </Box>
+          <Typography align="center" gutterBottom variant="h5">
+            {company.title}
+          </Typography>
+          <Typography align="center" variant="body1">
+            {company.description}
+          </Typography>
+        </CardContent>
+        <Box sx={{ flexGrow: 1 }} />
+      </CardActionArea>
+      {/* <Divider />
       <Stack
         alignItems="center"
         direction="row"
@@ -88,11 +92,11 @@ export const CompanyCard = (props) => {
             {company.downloads} Downloads
           </Typography>
         </Stack>
-      </Stack>
+      </Stack> */}
     </Card>
   );
 };
 
 CompanyCard.propTypes = {
-  company: PropTypes.object.isRequired
+  company: PropTypes.object.isRequired,
 };
