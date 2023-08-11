@@ -258,7 +258,7 @@ const Page = () => {
   return (
     <>
       <Head>
-        <title>Contacts | MCM</title>
+        <title>Claims | MCM</title>
       </Head>
       {/* <Box
         component="main"

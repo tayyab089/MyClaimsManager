@@ -69,7 +69,7 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
     id: "",
     address: [
       {
-        type: "",
+        type: "work",
         city: "",
         countryCode: "",
         zip: "",
@@ -77,17 +77,11 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
       },
     ],
     avatar: "/assets/avatars/avatar-carson-darrin.png",
-    email: [
-      { type: "work", email: "" },
-      { type: "work", email: "" },
-    ],
+    email: [{ type: "work", email: "" }],
     name: "",
     businessName: "",
     jobTitle: "",
-    phone: [
-      { type: "work", no: "" },
-      { type: "work", no: "" },
-    ],
+    phone: [{ type: "work", no: "" }],
   });
 
   const handleSubmit = useCallback((values) => {
