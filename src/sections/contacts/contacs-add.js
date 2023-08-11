@@ -9,6 +9,7 @@ import {
   CardHeader,
   Divider,
   TextField,
+  useMediaQuery,
   Unstable_Grid2 as Grid,
 } from "@mui/material";
 import { FieldArray, Formik } from "formik";
@@ -37,12 +38,14 @@ const states = [
 ];
 
 export const ContactsAdd = ({ open, handleClose, item }) => {
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+
   const style = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 800,
+    width: lgUp ? 800 : 400,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -63,27 +66,27 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
   const emailObject = { type: "work", email: "" };
 
   const [initialValues, setInitialValues] = useState({
-    id: "5e887ac47eed253091be10cb",
+    id: "",
     address: [
       {
-        type: "work",
-        city: "Cleveland",
-        countryCode: "US",
-        zip: "2500",
-        street: "2849 Fulton Street",
+        type: "",
+        city: "",
+        countryCode: "",
+        zip: "",
+        street: "",
       },
     ],
     avatar: "/assets/avatars/avatar-carson-darrin.png",
     email: [
-      { type: "work", email: "carson.darrin@devias.io" },
-      { type: "work", email: "tayyab.darrin@devias.io" },
+      { type: "work", email: "" },
+      { type: "work", email: "" },
     ],
-    name: "Carson Darrin",
-    businessName: "Hellasdasd",
-    jobTitle: "asdasdsad",
+    name: "",
+    businessName: "",
+    jobTitle: "",
     phone: [
-      { type: "work", no: "309-432-123" },
-      { type: "work", no: "309-432-157" },
+      { type: "work", no: "" },
+      { type: "work", no: "" },
     ],
   });
 
