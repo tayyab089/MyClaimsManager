@@ -109,7 +109,7 @@ const Page = () => (
                   </Box>
                 </Typography>
                 <Typography align="center" sx={{ mb: 3 }} variant="subtitle1">
-                  Hey, Howie. What's on your mind today?
+                  Hey, Howie. What&#39;s on your mind today?
                 </Typography>
               </Stack>
             </Container>
