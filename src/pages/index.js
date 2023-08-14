@@ -78,7 +78,6 @@ const Page = () => (
     <Head>
       <title>Dashboard | MCM</title>
     </Head>
-    <TopNav />
     <Box
       component="main"
       sx={{
@@ -115,10 +114,14 @@ const Page = () => (
             </Container>
           </Stack>
           <Grid container spacing={3}>
-            {items.map((item) => (
-              <Grid xs={12} md={6} lg={4} key={item.title}>
-                <CompanyCard company={item} />
-              </Grid>
+            {items.map((item, index) => (
+              <>
+                {index !== 0 && (
+                  <Grid xs={12} md={6} lg={4} key={item.title}>
+                    <CompanyCard company={item} />
+                  </Grid>
+                )}
+              </>
             ))}
           </Grid>
         </Stack>
@@ -127,6 +130,6 @@ const Page = () => (
   </>
 );
 
-// Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default Page;

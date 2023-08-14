@@ -59,7 +59,7 @@ export const ContactsTable = (props) => {
                 <TableCell>Email</TableCell>
                 <TableCell>Location</TableCell>
                 <TableCell>Phone</TableCell>
-                <TableCell>Signed Up</TableCell>
+                <TableCell>Last Updated</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

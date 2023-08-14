@@ -6,18 +6,19 @@ import UserIcon from "@heroicons/react/24/solid/UserIcon";
 import UserPlusIcon from "@heroicons/react/24/solid/UserPlusIcon";
 import UsersIcon from "@heroicons/react/24/solid/UsersIcon";
 import XCircleIcon from "@heroicons/react/24/solid/XCircleIcon";
+import HomeIcon from "@heroicons/react/24/solid/HomeIcon";
 import { SvgIcon } from "@mui/material";
 
 export const items = [
-  // {
-  //   title: "Home",
-  //   path: "/",
-  //   icon: (
-  //     <SvgIcon fontSize="small">
-  //       <ChartBarIcon />
-  //     </SvgIcon>
-  //   ),
-  // },
+  {
+    title: "Home",
+    path: "/",
+    icon: (
+      <SvgIcon fontSize="small">
+        <HomeIcon />
+      </SvgIcon>
+    ),
+  },
   {
     title: "Contacts",
     path: "/contacts",

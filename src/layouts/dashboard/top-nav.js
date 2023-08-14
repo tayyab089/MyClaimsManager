@@ -73,7 +73,7 @@ export const TopNav = (props) => {
             </Tooltip> */}
           </Stack>
           <Stack alignItems="center" direction="row" spacing={2}>
-            <Tooltip title="Contacts">
+            <Tooltip title="Home">
               <IconButton onClick={() => router.push("/")}>
                 <SvgIcon fontSize="small">
                   <HomeIcon />

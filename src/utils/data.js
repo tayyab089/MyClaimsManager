@@ -1,3 +1,20 @@
+const uer = [
+  {
+    id: STRING,
+    firstName: STRING,
+    lastName: STRING,
+    email: STRING,
+    phoneNo: STRING,
+    address: {
+      type: STRING,
+      street: STRING,
+      city: STRING,
+      code: STRING,
+      zip: STRING,
+    },
+  },
+];
+
 const Contacts = [
   {
     id: STRING,
@@ -19,10 +36,21 @@ const Contacts = [
   },
 ];
 
+const tasks = [
+  {
+    type: STRING,
+    dueDate: STRING,
+    summary: STRING,
+    description: STRING,
+    location: STRING,
+    attachements: [STRING1, STRING2, STRING3],
+  },
+];
+
 const Claims = [
   {
     fileNo: STRING,
-    insured: [CONTACT1, CONTACT2],
+    insured: [CONTACT.ID, CONTACT.ID],
     lossLocation: STRING,
     lossType: STRING,
     lossDate: DATE,
@@ -35,9 +63,9 @@ const Claims = [
       expiryDate: DATE,
     },
     policyCOverage: [{ category: STRING, amount: NUMBER }],
-    contacts: [{ category: STRING, contact: CONTACT }],
-    docs: [],
-    tasks: [],
-    forms: [],
+    contacts: [{ category: STRING, contact: CONTACT.ID }],
+    docs: [STRING, STRING, STRING],
+    tasks: [STRING, STRING, STRING],
+    forms: [STRING, STRING, STRING],
   },
 ];
