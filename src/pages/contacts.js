@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import { subDays, subHours } from "date-fns";
 import ArrowDownOnSquareIcon from "@heroicons/react/24/solid/ArrowDownOnSquareIcon";
@@ -11,6 +11,7 @@ import { ContactsTable } from "src/sections/contacts/contacts-table";
 import { ContactsSearch } from "src/sections/contacts/contacts-search";
 import { ContactsAdd } from "src/sections/contacts/contacs-add";
 import { applyPagination } from "src/utils/apply-pagination";
+import { getContactsApi } from "src/network/api";
 
 const now = new Date();
 
@@ -21,19 +22,19 @@ const data = [
       {
         type: "work",
         city: "Cleveland",
-        countryCode: "US",
+        code: "US",
         zip: "2500",
         street: "2849 Fulton Street",
       },
     ],
     avatar: "/assets/avatars/avatar-carson-darrin.png",
-    createdAt: subDays(subHours(now, 7), 1).getTime(),
+    lastUpdated: subDays(subHours(now, 7), 1).getTime(),
     email: [
       { type: "work", email: "carson.darrin@devias.io" },
       { type: "work", email: "tayyab.darrin@devias.io" },
     ],
     name: "Carson Darrin",
-    phone: [
+    phNo: [
       { type: "work", no: "309-432-123" },
       { type: "work", no: "309-432-157" },
     ],
@@ -49,10 +50,10 @@ const data = [
       },
     ],
     avatar: "/assets/avatars/avatar-fran-perez.png",
-    createdAt: subDays(subHours(now, 1), 2).getTime(),
+    lastUpdated: subDays(subHours(now, 1), 2).getTime(),
     email: [{ type: "work", email: "carson.darrin@devias.io" }],
     name: "Fran Perez",
-    phone: [{ type: "work", no: "309-432-123" }],
+    phNo: [{ type: "work", no: "309-432-123" }],
   },
   {
     id: "5e887b7602bdbc4dbb234b27",
@@ -65,13 +66,13 @@ const data = [
       },
     ],
     avatar: "/assets/avatars/avatar-jie-yan-song.png",
-    createdAt: subDays(subHours(now, 4), 2).getTime(),
+    lastUpdated: subDays(subHours(now, 4), 2).getTime(),
     email: [
       { type: "work", email: "carson.darrin@devias.io" },
       { type: "work", email: "tayyab.darrin@devias.io" },
     ],
     name: "Jie Yan Song",
-    phone: [
+    phNo: [
       { type: "work", no: "309-432-123" },
       { type: "work", no: "309-432-157" },
     ],
@@ -87,7 +88,7 @@ const data = [
       },
     ],
     avatar: "/assets/avatars/avatar-anika-visser.png",
-    createdAt: subDays(subHours(now, 11), 2).getTime(),
+    lastUpdated: subDays(subHours(now, 11), 2).getTime(),
     email: [{ type: "work", email: "carson.darrin@devias.io" }],
     name: "Anika Visser",
     phone: [
@@ -106,13 +107,13 @@ const data = [
       },
     ],
     avatar: "/assets/avatars/avatar-miron-vitold.png",
-    createdAt: subDays(subHours(now, 7), 3).getTime(),
+    lastUpdated: subDays(subHours(now, 7), 3).getTime(),
     email: [
       { type: "work", email: "carson.darrin@devias.io" },
       { type: "work", email: "tayyab.darrin@devias.io" },
     ],
     name: "Miron Vitold",
-    phone: [
+    phNo: [
       { type: "work", no: "309-432-123" },
       { type: "work", no: "309-432-157" },
     ],
@@ -128,10 +129,10 @@ const data = [
       },
     ],
     avatar: "/assets/avatars/avatar-penjani-inyene.png",
-    createdAt: subDays(subHours(now, 5), 4).getTime(),
+    lastUpdated: subDays(subHours(now, 5), 4).getTime(),
     email: [{ type: "work", email: "carson.darrin@devias.io" }],
     name: "Penjani Inyene",
-    phone: [
+    phNo: [
       { type: "work", no: "309-432-123" },
       { type: "work", no: "309-432-157" },
     ],
@@ -147,10 +148,10 @@ const data = [
       },
     ],
     avatar: "/assets/avatars/avatar-omar-darboe.png",
-    createdAt: subDays(subHours(now, 15), 4).getTime(),
+    lastUpdated: subDays(subHours(now, 15), 4).getTime(),
     email: [{ type: "work", email: "carson.darrin@devias.io" }],
     name: "Omar Darobe",
-    phone: [
+    phNo: [
       { type: "work", no: "309-432-123" },
       { type: "work", no: "309-432-157" },
     ],
@@ -166,13 +167,13 @@ const data = [
       },
     ],
     avatar: "/assets/avatars/avatar-siegbert-gottfried.png",
-    createdAt: subDays(subHours(now, 2), 5).getTime(),
+    lastUpdated: subDays(subHours(now, 2), 5).getTime(),
     email: [
       { type: "work", email: "carson.darrin@devias.io" },
       { type: "work", email: "tayyab.darrin@devias.io" },
     ],
     name: "Siegbert Gottfried",
-    phone: [
+    phNo: [
       { type: "work", no: "309-432-123" },
       { type: "work", no: "309-432-157" },
     ],
@@ -188,13 +189,13 @@ const data = [
       },
     ],
     avatar: "/assets/avatars/avatar-iulia-albu.png",
-    createdAt: subDays(subHours(now, 8), 6).getTime(),
+    lastUpdated: subDays(subHours(now, 8), 6).getTime(),
     email: [
       { type: "work", email: "carson.darrin@devias.io" },
       { type: "work", email: "tayyab.darrin@devias.io" },
     ],
     name: "Iulia Albu",
-    phone: [
+    phNo: [
       { type: "work", no: "309-432-123" },
       { type: "work", no: "309-432-157" },
     ],
@@ -210,42 +211,42 @@ const data = [
       },
     ],
     avatar: "/assets/avatars/avatar-nasimiyu-danai.png",
-    createdAt: subDays(subHours(now, 1), 9).getTime(),
+    lastUpdated: subDays(subHours(now, 1), 9).getTime(),
     email: [
       { type: "work", email: "carson.darrin@devias.io" },
       { type: "work", email: "tayyab.darrin@devias.io" },
     ],
     name: "Nasimiyu Danai",
-    phone: [
+    phNo: [
       { type: "work", no: "309-432-123" },
       { type: "work", no: "309-432-157" },
     ],
   },
 ];
 
-const useCustomers = (page, rowsPerPage) => {
-  return useMemo(() => {
-    return applyPagination(data, page, rowsPerPage);
-  }, [page, rowsPerPage]);
-};
-
-const useCustomerIds = (customers) => {
-  return useMemo(() => {
-    return customers.map((customer) => customer.id);
-  }, [customers]);
-};
-
 const Page = () => {
+  const [contactsData, setContactsData] = useState(data);
+  const [contactItem, setContactItem] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
+
+  const useCustomers = (page, rowsPerPage) => {
+    return useMemo(() => {
+      return applyPagination(contactsData, page, rowsPerPage);
+    }, [contactsData, page, rowsPerPage]);
+  };
+
+  const useCustomerIds = (customers) => {
+    return useMemo(() => {
+      return customers.map((customer) => customer.id);
+    }, [customers]);
+  };
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const customers = useCustomers(page, rowsPerPage);
-  const customersIds = useCustomerIds(customers);
-  const customersSelection = useSelection(customersIds);
+  const contacts = useCustomers(page, rowsPerPage);
+  const contactIds = useCustomerIds(contacts);
+  const contactsSelection = useSelection(contactIds);
   const [openModal, setOpenModal] = useState(false);
-
-  const handleClose = () => {
-    setOpenModal(false);
-  };
 
   const handlePageChange = useCallback((event, value) => {
     setPage(value);
@@ -254,6 +255,43 @@ const Page = () => {
   const handleRowsPerPageChange = useCallback((event) => {
     setRowsPerPage(event.target.value);
   }, []);
+
+  const fetchContacts = async () => {
+    const response = await getContactsApi();
+    setContactsData(response.data);
+  };
+
+  // Modal Functions ----------------------------------------------
+  const handleRowClick = (item) => {
+    setContactItem(item);
+    setIsEdit(true);
+  };
+
+  const handleClose = () => {
+    setIsEdit(false);
+    setContactItem(null);
+    setOpenModal(false);
+  };
+
+  const handleOpen = () => {
+    setOpenModal(true);
+  };
+
+  useEffect(() => {
+    if (isEdit) {
+      setOpenModal(true);
+    }
+  }, [isEdit]);
+
+  // =================================================================
+
+  useEffect(() => {
+    fetchContacts();
+  }, []);
+
+  // useEffect(() => {
+  //   console.log(contactsData);
+  // }, [contactsData]);
 
   return (
     <>
@@ -281,7 +319,7 @@ const Page = () => {
                     </SvgIcon>
                   }
                   variant="contained"
-                  onClick={() => setOpenModal(true)}
+                  onClick={handleOpen}
                 >
                   Add
                 </Button>
@@ -289,20 +327,26 @@ const Page = () => {
             </Stack>
             <ContactsSearch />
             <ContactsTable
-              count={data.length}
-              items={customers}
-              onDeselectAll={customersSelection.handleDeselectAll}
-              onDeselectOne={customersSelection.handleDeselectOne}
+              count={contactsData.length}
+              items={contacts}
+              onDeselectAll={contactsSelection.handleDeselectAll}
+              onDeselectOne={contactsSelection.handleDeselectOne}
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
-              onSelectAll={customersSelection.handleSelectAll}
-              onSelectOne={customersSelection.handleSelectOne}
+              onSelectAll={contactsSelection.handleSelectAll}
+              onSelectOne={contactsSelection.handleSelectOne}
               page={page}
               rowsPerPage={rowsPerPage}
-              selected={customersSelection.selected}
+              selected={contactsSelection.selected}
+              handleRowClick={handleRowClick}
             />
           </Stack>
-          <ContactsAdd open={openModal} handleClose={handleClose} />
+          <ContactsAdd
+            open={openModal}
+            handleClose={handleClose}
+            item={contactItem}
+            isEdit={isEdit}
+          />
         </Container>
       </Box>
     </>

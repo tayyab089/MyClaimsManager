@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import {
   Avatar,
   Box,
@@ -30,6 +30,7 @@ export const ContactsTable = (props) => {
     page = 0,
     rowsPerPage = 0,
     selected = [],
+    handleRowClick,
   } = props;
 
   const selectedSome = selected.length > 0 && selected.length < items.length;
@@ -65,10 +66,18 @@ export const ContactsTable = (props) => {
             <TableBody>
               {items.map((customer) => {
                 const isSelected = selected.includes(customer.id);
-                const createdAt = format(customer.createdAt, "dd/MM/yyyy");
+                const lastUpdated = customer.lastUpdated
+                  ? format(new Date(customer.lastUpdated), "dd/MM/yyyy")
+                  : "N/A";
 
                 return (
-                  <TableRow hover key={customer.id} selected={isSelected}>
+                  <TableRow
+                    hover
+                    key={customer.id}
+                    selected={isSelected}
+                    onClick={() => handleRowClick(customer)}
+                    style={{ cursor: "pointer" }}
+                  >
                     <TableCell padding="checkbox">
                       <Checkbox
                         checked={isSelected}
@@ -96,17 +105,17 @@ export const ContactsTable = (props) => {
                       {customer.address.map((address) => {
                         return (
                           <>
-                            {address?.city},{address?.state},{address?.country}
+                            {address?.street},{address?.city},{address?.code}
                           </>
                         );
                       })}
                     </TableCell>
                     <TableCell>
-                      {customer.phone?.map((number, ind) => (
+                      {customer.phNo?.map((number, ind) => (
                         <div key={ind}>{number.no}</div>
                       ))}
                     </TableCell>
-                    <TableCell>{createdAt}</TableCell>
+                    <TableCell>{lastUpdated}</TableCell>
                   </TableRow>
                 );
               })}

@@ -10,13 +10,64 @@ import {
   Divider,
   TextField,
   useMediaQuery,
+  Avatar,
+  Menu,
+  MenuItem,
   Unstable_Grid2 as Grid,
 } from "@mui/material";
 import { FieldArray, Formik } from "formik";
-import React, { useState, useCallback, Fragment } from "react";
+import React, { useState, useCallback, Fragment, useEffect } from "react";
 import { TrashIcon, PlusCircleIcon } from "@heroicons/react/20/solid";
+import { saveContactApi } from "src/network/api";
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import { neutral, indigo } from "src/theme/colors";
+import contactSchema from "./contacts-schema";
+
+const AvatarDropdown = ({ avatars, selectedAvatar, onSelectAvatar }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleAvatarSelect = (avatar) => {
+    onSelectAvatar(avatar);
+    handleClose();
+  };
+
+  return (
+    <div>
+      <Button onClick={handleClick}>
+        <Avatar src={selectedAvatar} alt="Selected Avatar" />
+      </Button>
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+        {avatars.map((avatar, index) => (
+          <MenuItem key={index} onClick={() => handleAvatarSelect(avatar)}>
+            <Avatar src={avatar} alt={`Avatar ${index}`} />
+          </MenuItem>
+        ))}
+      </Menu>
+    </div>
+  );
+};
+
+const avatars = [
+  "",
+  "/assets/avatars/avatar-carson-darrin.png",
+  "/assets/avatars/avatar-fran-perez.png",
+  "/assets/avatars/avatar-jie-yan-song.png",
+  "/assets/avatars/avatar-anika-visser.png",
+  "/assets/avatars/avatar-miron-vitold.png",
+  "/assets/avatars/avatar-penjani-inyene.png",
+  "/assets/avatars/avatar-omar-darboe.png",
+  "/assets/avatars/avatar-siegbert-gottfried.png",
+  "/assets/avatars/avatar-iulia-albu.png",
+  "/assets/avatars/avatar-nasimiyu-danai.png",
+];
 
 const states = [
   {
@@ -37,7 +88,7 @@ const states = [
   },
 ];
 
-export const ContactsAdd = ({ open, handleClose, item }) => {
+export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
   const style = {
@@ -57,37 +108,47 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
   const addressObject = {
     type: "work",
     city: "",
-    countryCode: "",
+    code: "",
     zip: "",
     street: "",
   };
 
-  const phoneObject = { type: "work", no: "" };
+  const phNoObject = { type: "work", no: "" };
   const emailObject = { type: "work", email: "" };
 
-  const [initialValues, setInitialValues] = useState({
+  const emptyValues = {
     id: "",
     address: [
       {
         type: "work",
         city: "",
-        countryCode: "",
+        code: "",
         zip: "",
         street: "",
       },
     ],
-    avatar: "/assets/avatars/avatar-carson-darrin.png",
+    avatar: "",
     email: [{ type: "work", email: "" }],
     name: "",
     businessName: "",
     jobTitle: "",
-    phone: [{ type: "work", no: "" }],
-  });
+    phNo: [{ type: "work", no: "" }],
+  };
 
-  const handleSubmit = useCallback((values) => {
-    alert(JSON.stringify(values, null, 2));
+  const [initialValues, setInitialValues] = useState(emptyValues);
+
+  useEffect(() => {
+    setInitialValues(item ? item : emptyValues);
+  }, [item]);
+
+  const handleSubmit = useCallback(async (values, setSubmitting) => {
+    const response = await saveContactApi({ contact: values });
+    alert(JSON.stringify(response.data, null, 2));
+    setSubmitting(false);
+    response.data === "Contact Added Successfully" && handleClose();
   }, []);
 
+  console.log(item);
   return (
     <Modal
       open={open}
@@ -99,22 +160,36 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
       <Box sx={style}>
         <Formik
           initialValues={initialValues}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-
-              setSubmitting(false);
-            }, 400);
-          }}
+          onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting)}
+          validationSchema={contactSchema}
+          enableReinitialize
+          validateOnMount
         >
-          {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+            setFieldValue,
+            isValid,
+          }) => (
             <form autoComplete="off" noValidate onSubmit={handleSubmit}>
               <Card>
                 <CardHeader subheader="The information can be edited" title="Contact" />
                 <CardContent sx={{ pt: 0 }}>
                   <Box sx={{ m: -1.5 }}>
                     <Grid container spacing={2}>
-                      <Grid xs={12} md={12}>
+                      <Grid xs={2} md={2}>
+                        <AvatarDropdown
+                          avatars={avatars}
+                          selectedAvatar={values.avatar}
+                          onSelectAvatar={(avatar) => setFieldValue("avatar", avatar)}
+                        />
+                      </Grid>
+                      <Grid xs={10} md={10}>
                         <TextField
                           fullWidth
                           label="Name"
@@ -199,9 +274,9 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                                         fullWidth
                                         size="small"
                                         label="Country Code"
-                                        name={`address.${index}.countryCode`}
+                                        name={`address.${index}.code`}
                                         onChange={handleChange}
-                                        value={values?.address[index]?.countryCode}
+                                        value={values?.address[index]?.code}
                                       />
                                     </Grid>
                                     <Grid xs={12} md={3}>
@@ -307,6 +382,7 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                                         fullWidth
                                         size="small"
                                         label="Email"
+                                        required
                                         name={`email.${index}.email`}
                                         onChange={handleChange}
                                         value={values.email[index].email}
@@ -352,7 +428,7 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
 
                       <Grid xs={12} md={12} style={{ marginTop: "-32px" }}>
                         <FieldArray
-                          name="phone"
+                          name="phNo"
                           render={(arrayHelpers) => (
                             <Grid container spacing={1}>
                               <Grid xs={12} md={12}>
@@ -366,19 +442,19 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                                   Phone Number
                                 </Typography>
                               </Grid>
-                              {values.phone && values.phone.length > 0 ? (
-                                values.phone.map((item, index) => (
+                              {values.phNo && values.phNo.length > 0 ? (
+                                values.phNo.map((item, index) => (
                                   <>
                                     <Grid xs={12} md={4}>
                                       <TextField
                                         fullWidth
                                         size="small"
                                         label="Type"
-                                        name={`phone.${index}.type`}
+                                        name={`phNo.${index}.type`}
                                         onChange={handleChange}
                                         select
                                         SelectProps={{ native: true }}
-                                        value={values.phone[index].type}
+                                        value={values.phNo[index].type}
                                       >
                                         {states.map((option) => (
                                           <option key={option.value} value={option.value}>
@@ -392,9 +468,10 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                                         fullWidth
                                         size="small"
                                         label="Phone No."
-                                        name={`phone.${index}.no`}
+                                        required
+                                        name={`phNo.${index}.no`}
                                         onChange={handleChange}
-                                        value={values.phone[index].no}
+                                        value={values.phNo[index].no}
                                       />
                                     </Grid>
                                     <Grid xs={2} md={1}>
@@ -411,19 +488,19 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                                 <Grid xs={12} md={12}>
                                   <Button
                                     type="button"
-                                    onClick={() => arrayHelpers.push(phoneObject)}
+                                    onClick={() => arrayHelpers.push(phNoObject)}
                                   >
-                                    Add a Phone Number
+                                    Add a phNo Number
                                   </Button>
                                 </Grid>
                               )}
-                              {values.phone.length > 0 && (
+                              {values.phNo.length > 0 && (
                                 <Fragment>
                                   <Grid xs={10} md={11}></Grid>
                                   <Grid xs={2} md={1}>
                                     <Button
                                       type="button"
-                                      onClick={() => arrayHelpers.push(phoneObject)}
+                                      onClick={() => arrayHelpers.push(phNoObject)}
                                     >
                                       <PlusCircleIcon />
                                     </Button>
@@ -442,8 +519,8 @@ export const ContactsAdd = ({ open, handleClose, item }) => {
                   <Button variant="contained" color="neutral" onClick={handleClose}>
                     Cancel
                   </Button>
-                  <Button variant="contained" type="submit" disabled={isSubmitting}>
-                    Save details
+                  <Button variant="contained" type="submit" disabled={isSubmitting || !isValid}>
+                    {isEdit ? "Update" : "Save details"}
                   </Button>
                 </CardActions>
               </Card>
