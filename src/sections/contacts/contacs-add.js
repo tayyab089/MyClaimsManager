@@ -18,7 +18,7 @@ import {
 import { FieldArray, Formik } from "formik";
 import React, { useState, useCallback, Fragment, useEffect } from "react";
 import { TrashIcon, PlusCircleIcon } from "@heroicons/react/20/solid";
-import { saveContactApi } from "src/network/api";
+import { saveContactApi, updateContactApi } from "src/network/api";
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import { neutral, indigo } from "src/theme/colors";
 import contactSchema from "./contacts-schema";
@@ -88,7 +88,7 @@ const states = [
   },
 ];
 
-export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
+export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts }) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
   const style = {
@@ -118,6 +118,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
 
   const emptyValues = {
     id: "",
+    userId: "",
     address: [
       {
         type: "work",
@@ -141,14 +142,33 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
     setInitialValues(item ? item : emptyValues);
   }, [item]);
 
-  const handleSubmit = useCallback(async (values, setSubmitting) => {
-    const response = await saveContactApi({ contact: values });
-    alert(JSON.stringify(response.data, null, 2));
-    setSubmitting(false);
-    response.data === "Contact Added Successfully" && handleClose();
-  }, []);
+  const handleSubmit = useCallback(
+    async (values, setSubmitting) => {
+      if (isEdit) {
+        const response = await updateContactApi({ contact: values });
+        if (response && response.data.type !== "error") {
+          alert(response.data.message);
+          handleClose();
+          fetchContacts();
+        } else {
+          alert(response.data.message);
+        }
+      } else {
+        const response = await saveContactApi({ contact: values });
+        if (response && response.data.type !== "error") {
+          alert(response.data.message);
+          handleClose();
+          fetchContacts();
+        } else {
+          alert(response.data.message);
+        }
+      }
+      // alert(JSON.stringify(response.data, null, 2));
+      setSubmitting(false);
+    },
+    [isEdit]
+  );
 
-  console.log(item);
   return (
     <Modal
       open={open}
@@ -156,6 +176,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       // style={{ overflow: "scroll", height: "100%" }}
+      disableEscapeKeyDown
     >
       <Box sx={style}>
         <Formik
@@ -170,7 +191,6 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
             errors,
             touched,
             handleChange,
-            handleBlur,
             handleSubmit,
             isSubmitting,
             setFieldValue,

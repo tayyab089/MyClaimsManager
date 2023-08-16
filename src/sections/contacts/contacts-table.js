@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { format, parseISO } from "date-fns";
 import {
@@ -13,9 +14,13 @@ import {
   TablePagination,
   TableRow,
   Typography,
+  SvgIcon,
+  Button,
 } from "@mui/material";
 import { Scrollbar } from "src/components/scrollbar";
 import { getInitials } from "src/utils/get-initials";
+import TrashIcon from "@heroicons/react/20/solid/TrashIcon";
+import useConfirm from "src/hooks/use-confirm";
 
 export const ContactsTable = (props) => {
   const {
@@ -31,8 +36,24 @@ export const ContactsTable = (props) => {
     rowsPerPage = 0,
     selected = [],
     handleRowClick,
+    deleteContact,
   } = props;
 
+  // const [open, setOpen] = useState(false);
+  const [Dialog, confirmDelete] = useConfirm(
+    "Are you sure?",
+    "The Contact will be permanently deleted from the database"
+  );
+
+  const handleDelete = async (event, contact) => {
+    event.stopPropagation();
+    const ans = await confirmDelete();
+    if (ans) {
+      deleteContact(contact);
+    } else {
+      console.log("dont delete");
+    }
+  };
   const selectedSome = selected.length > 0 && selected.length < items.length;
   const selectedAll = items.length > 0 && selected.length === items.length;
 
@@ -61,21 +82,22 @@ export const ContactsTable = (props) => {
                 <TableCell>Location</TableCell>
                 <TableCell>Phone</TableCell>
                 <TableCell>Last Updated</TableCell>
+                <TableCell>Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((customer) => {
-                const isSelected = selected.includes(customer.id);
-                const lastUpdated = customer.lastUpdated
-                  ? format(new Date(customer.lastUpdated), "dd/MM/yyyy")
+              {items.map((contact) => {
+                const isSelected = selected.includes(contact.id);
+                const lastUpdated = contact.lastUpdated
+                  ? format(new Date(contact.lastUpdated), "dd/MM/yyyy")
                   : "N/A";
 
                 return (
                   <TableRow
                     hover
-                    key={customer.id}
+                    key={contact.id}
                     selected={isSelected}
-                    onClick={() => handleRowClick(customer)}
+                    onClick={() => handleRowClick(contact)}
                     style={{ cursor: "pointer" }}
                   >
                     <TableCell padding="checkbox">
@@ -83,42 +105,52 @@ export const ContactsTable = (props) => {
                         checked={isSelected}
                         onChange={(event) => {
                           if (event.target.checked) {
-                            onSelectOne?.(customer.id);
+                            onSelectOne?.(contact.id);
                           } else {
-                            onDeselectOne?.(customer.id);
+                            onDeselectOne?.(contact.id);
                           }
                         }}
                       />
                     </TableCell>
                     <TableCell>
                       <Stack alignItems="center" direction="row" spacing={2}>
-                        <Avatar src={customer.avatar}>{getInitials(customer.name)}</Avatar>
-                        <Typography variant="subtitle2">{customer.name}</Typography>
+                        <Avatar src={contact.avatar}>{getInitials(contact.name)}</Avatar>
+                        <Typography variant="subtitle2">{contact.name}</Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      {customer.email.map((email, ind) => (
+                      {contact.email.map((email, ind) => (
                         <div key={ind}>{email.email}</div>
                       ))}
                     </TableCell>
                     <TableCell>
-                      {customer.address.map((address) => {
+                      {contact.address.map((address, index) => {
                         return (
-                          <>
-                            {address?.street},{address?.city},{address?.code}
-                          </>
+                          <React.Fragment key={index}>
+                            {address?.street}
+                            {address?.city && `, ${address?.city}`}
+                            {address?.code && `, ${address?.code}`}
+                          </React.Fragment>
                         );
                       })}
                     </TableCell>
                     <TableCell>
-                      {customer.phNo?.map((number, ind) => (
+                      {contact.phNo?.map((number, ind) => (
                         <div key={ind}>{number.no}</div>
                       ))}
                     </TableCell>
                     <TableCell>{lastUpdated}</TableCell>
+                    <TableCell>
+                      <Button onClick={(event) => handleDelete(event, contact)}>
+                        <SvgIcon fontSize="small">
+                          <TrashIcon />
+                        </SvgIcon>
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 );
               })}
+              <Dialog />
             </TableBody>
           </Table>
         </Box>

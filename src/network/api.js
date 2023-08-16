@@ -4,7 +4,7 @@ import axios from "axios";
 // import store from "../store";
 
 export const api = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: "http://localhost:3001/",
 });
 
 // Function to get the user token from Redux state
@@ -24,7 +24,7 @@ export const getContactsApi = async () => {
     const response = await api.get("contacts", getHeadersConfig());
     return response;
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };
 
@@ -33,6 +33,27 @@ export const saveContactApi = async (data) => {
     const response = await api.post("contacts", data, getHeadersConfig());
     return response;
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
+  }
+};
+
+export const deleteContactApi = async (data) => {
+  try {
+    const response = await api.delete(`contacts/${data.contact.id}`, {
+      ...getHeadersConfig(),
+      data: data,
+    });
+    return response;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const updateContactApi = async (data) => {
+  try {
+    const response = await api.patch("contacts", data, getHeadersConfig());
+    return response;
+  } catch (error) {
+    console.log(error.message);
   }
 };

@@ -2,6 +2,7 @@ import * as Yup from "yup";
 
 const schema = Yup.object().shape({
   id: Yup.string().notRequired(),
+  userId: Yup.string().notRequired(),
   address: Yup.array().of(
     Yup.object().shape({
       type: Yup.string().notRequired(),
