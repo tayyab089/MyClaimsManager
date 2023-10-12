@@ -49,23 +49,31 @@ const Page = () => {
   // API Functions----------------------------------------------
   const fetchContacts = async () => {
     setIsloading(true);
-    const response = await getContactsApi();
-    if (response && response.data.type !== "error") {
-      setContactsData(response.data.data);
-    } else {
-      alert(`${response.data.message}`);
+    try {
+      const response = await getContactsApi();
+      if (response && response.data.type !== "error") {
+        setContactsData(response.data.data);
+      } else {
+        alert(`${response.data.message}`);
+      }
+    } catch (e) {
+      console.log(e);
     }
     setIsloading(false);
   };
 
   const deleteContact = async (contact) => {
-    const response = await deleteContactApi({ contact: contact });
-    if (response && response.data.type !== "error") {
-      alert(`${response.data.message}`);
-    } else {
-      alert(`${response.data.message}`);
+    try {
+      const response = await deleteContactApi({ contact: contact });
+      if (response && response.data.type !== "error") {
+        alert(`${response.data.message}`);
+      } else {
+        alert(`${response.data.message}`);
+      }
+      fetchContacts();
+    } catch (e) {
+      console.log(e);
     }
-    fetchContacts();
   };
 
   useEffect(() => {

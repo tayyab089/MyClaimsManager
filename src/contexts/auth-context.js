@@ -80,7 +80,7 @@ export const AuthProvider = (props) => {
 
     if (isAuthenticated) {
       const user = {
-        id: "5e86809283e28b96d2d38537",
+        id: "fe5daa66-05c0-4e48-9235-95ae370ded9d",
         avatar: "/assets/avatars/avatar-siegbert-gottfried.png",
         name: "Howie Guttman",
         email: "howie.guttman@outlook.com",
@@ -113,7 +113,7 @@ export const AuthProvider = (props) => {
     }
 
     const user = {
-      id: "5e86809283e28b96d2d38537",
+      id: "fe5daa66-05c0-4e48-9235-95ae370ded9d",
       avatar: "/assets/avatars/avatar-siegbert-gottfried.png",
       name: "Howie Guttman",
       email: "howie.guttman@outlook.com",
@@ -137,7 +137,7 @@ export const AuthProvider = (props) => {
     }
 
     const user = {
-      id: "5e86809283e28b96d2d38537",
+      id: "fe5daa66-05c0-4e48-9235-95ae370ded9d",
       avatar: "/assets/avatars/avatar-siegbert-gottfried.png",
       name: "Howie Guttman",
       email: "howie.guttman@outlook.com",
