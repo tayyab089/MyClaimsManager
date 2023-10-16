@@ -4,7 +4,18 @@ import { subDays, subHours } from "date-fns";
 import ArrowDownOnSquareIcon from "@heroicons/react/24/solid/ArrowDownOnSquareIcon";
 import ArrowUpOnSquareIcon from "@heroicons/react/24/solid/ArrowUpOnSquareIcon";
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
-import { Box, Button, Container, Stack, SvgIcon, Typography, LinearProgress } from "@mui/material";
+import XMarkIcon from "@heroicons/react/24/solid/XMarkIcon";
+import {
+  Box,
+  Button,
+  Container,
+  Stack,
+  SvgIcon,
+  Typography,
+  LinearProgress,
+  Alert,
+  Collapse,
+} from "@mui/material";
 import { useSelection } from "src/hooks/use-selection";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { ContactsTable } from "src/sections/contacts/contacts-table";
@@ -54,7 +65,11 @@ const Page = () => {
       if (response && response.data.type !== "error") {
         setContactsData(response.data.data);
       } else {
-        alert(`${response.data.message}`);
+        // alert(`${response.data.message}`);
+        setAlertData({ open: true, message: response.data.message, type: response.data.type });
+        setTimeout(() => {
+          setAlertData({ open: false, message: "", type: "" });
+        }, 3000);
       }
     } catch (e) {
       console.log(e);
@@ -66,9 +81,17 @@ const Page = () => {
     try {
       const response = await deleteContactApi({ contact: contact });
       if (response && response.data.type !== "error") {
-        alert(`${response.data.message}`);
+        // alert(`${response.data.message}`);
+        setAlertData({ open: true, message: response.data.message, type: response.data.type });
+        setTimeout(() => {
+          setAlertData({ open: false, message: "", type: "" });
+        }, 3000);
       } else {
-        alert(`${response.data.message}`);
+        // alert(`${response.data.message}`);
+        setAlertData({ open: true, message: response.data.message, type: response.data.type });
+        setTimeout(() => {
+          setAlertData({ open: false, message: "", type: "" });
+        }, 3000);
       }
       fetchContacts();
     } catch (e) {
@@ -105,14 +128,22 @@ const Page = () => {
   }, [isEdit]);
 
   // Search Functions and State-------------------------------------
-
+  const [searchValue, setSearchValue] = useState("");
   const [filteredContacts, setFilteredContacts] = useState([]);
 
   const filterData = (val) => {
-    const filteredData = contacts.filter((obj) => obj.name.includes(val));
+    const lowercaseVal = val.toLowerCase();
+    const filteredData = contacts.filter((obj) => obj.name.toLowerCase().includes(lowercaseVal));
     console.log(filteredData);
+    setSearchValue(val);
     setFilteredContacts(filteredData);
   };
+
+  const [alertData, setAlertData] = useState({
+    open: true,
+    message: "Contact Added Succsefully",
+    type: "success",
+  });
 
   return (
     <>
@@ -151,7 +182,7 @@ const Page = () => {
               <Box sx={{ width: "100%" }}>
                 <LinearProgress />
               </Box>
-            ) : (
+            ) : filteredContacts.length > 0 || !searchValue ? (
               <ContactsTable
                 count={filteredContacts.length > 0 ? filteredContacts.length : contactsData.length}
                 items={filteredContacts.length > 0 ? filteredContacts : contacts}
@@ -167,6 +198,8 @@ const Page = () => {
                 handleRowClick={handleRowClick}
                 deleteContact={deleteContact}
               />
+            ) : (
+              <Typography variant="h6">No contact found</Typography>
             )}
           </Stack>
           <ContactsAdd
@@ -175,8 +208,30 @@ const Page = () => {
             item={contactItem}
             isEdit={isEdit}
             fetchContacts={fetchContacts}
+            setAlertData={setAlertData}
           />
         </Container>
+        <div style={{ position: "absolute", top: 10, right: 10, zIndex: 9999 }}>
+          <Collapse in={alertData.open}>
+            <Alert
+              action={
+                <SvgIcon
+                  fontSize="small"
+                  onClick={() => {
+                    setAlertData({ open: false, message: "", type: "" });
+                  }}
+                  style={{ marginTop: 4.5, cursor: "pointer" }}
+                >
+                  <XMarkIcon fontSize="inherit" />
+                </SvgIcon>
+              }
+              sx={{ mb: 2 }}
+              severity={alertData.type}
+            >
+              {alertData.message}
+            </Alert>
+          </Collapse>
+        </div>
       </Box>
     </>
   );

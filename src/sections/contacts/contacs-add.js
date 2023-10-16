@@ -14,10 +14,11 @@ import {
   Menu,
   MenuItem,
   Unstable_Grid2 as Grid,
+  FormHelperText,
 } from "@mui/material";
 import { FieldArray, Formik } from "formik";
 import React, { useState, useCallback, Fragment, useEffect } from "react";
-import { TrashIcon, PlusCircleIcon } from "@heroicons/react/20/solid";
+import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { saveContactApi, updateContactApi } from "src/network/api";
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import { neutral, indigo } from "src/theme/colors";
@@ -88,7 +89,7 @@ const states = [
   },
 ];
 
-export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts }) => {
+export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, setAlertData }) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
   const style = {
@@ -97,8 +98,8 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts }) 
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: lgUp ? 800 : 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
+    // bgcolor: "background.paper",
+    // border: "2px solid #000",
     boxShadow: 24,
     p: 1,
     overflow: "auto",
@@ -147,20 +148,31 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts }) 
       if (isEdit) {
         const response = await updateContactApi({ contact: values });
         if (response && response.data.type !== "error") {
-          alert(response.data.message);
+          // alert(response.data.message);
+          setAlertData({ open: true, message: response.data.message, type: response.data.type });
           handleClose();
           fetchContacts();
+          setTimeout(() => {
+            setAlertData({ open: false, message: "", type: "" });
+          }, 3000);
         } else {
           alert(response.data.message);
         }
       } else {
         const response = await saveContactApi({ contact: values });
         if (response && response.data.type !== "error") {
-          alert(response.data.message);
+          // alert(response.data.message);
+          setAlertData({ open: true, message: response.data.message, type: response.data.type });
           handleClose();
           fetchContacts();
+          setTimeout(() => {
+            setAlertData({ open: false, message: "", type: "" });
+          }, 3000);
         } else {
-          alert(response.data.message);
+          setAlertData({ open: true, message: response.data.message, type: response.data.type });
+          setTimeout(() => {
+            setAlertData({ open: false, message: "", type: "" });
+          }, 3000);
         }
       }
       // alert(JSON.stringify(response.data, null, 2));
@@ -197,10 +209,29 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts }) 
             isValid,
           }) => (
             <form autoComplete="off" noValidate onSubmit={handleSubmit}>
+              {console.log(errors)}
               <Card>
-                <CardHeader subheader="The information can be edited" title="Contact" />
+                <CardHeader
+                  subheader=""
+                  title={isEdit ? "Edit Existing Contact" : "Add New Contact"}
+                  style={{ marginBottom: 20 }}
+                />
                 <CardContent sx={{ pt: 0 }}>
                   <Box sx={{ m: -1.5 }}>
+                    {/* <IconButton
+                      sx={{ position: "absolute", top: 0, right: 50, zIndex: 99 }}
+                      onClick={handleClose}
+                    >
+                      <p>close</p>
+                      <XMarkIcon />
+                    </IconButton> */}
+                    <Button
+                      type="button"
+                      onClick={handleClose}
+                      style={{ position: "absolute", top: 20, right: 10, zIndex: 99 }}
+                    >
+                      <XMarkIcon />
+                    </Button>
                     <Grid container spacing={2}>
                       <Grid xs={2} md={2}>
                         <AvatarDropdown
@@ -218,7 +249,9 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts }) 
                           required
                           value={values.name}
                         />
+                        <FormHelperText error>{errors.name}</FormHelperText>
                       </Grid>
+
                       <Grid xs={12} md={6}>
                         <TextField
                           fullWidth
@@ -407,6 +440,11 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts }) 
                                         onChange={handleChange}
                                         value={values.email[index].email}
                                       />
+                                      {errors.email && (
+                                        <FormHelperText error>
+                                          {errors?.email[index]?.email}
+                                        </FormHelperText>
+                                      )}
                                     </Grid>
                                     <Grid xs={2} md={1}>
                                       <Button
@@ -493,6 +531,11 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts }) 
                                         onChange={handleChange}
                                         value={values.phNo[index].no}
                                       />
+                                      {errors.phNo && (
+                                        <FormHelperText error>
+                                          {errors?.phNo[index]?.no}
+                                        </FormHelperText>
+                                      )}
                                     </Grid>
                                     <Grid xs={2} md={1}>
                                       <Button

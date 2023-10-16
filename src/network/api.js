@@ -6,6 +6,7 @@ import { useAuthContext } from "src/contexts/auth-context";
 
 export const api = axios.create({
   baseURL: "https://s4r7rz1w2m.execute-api.us-east-1.amazonaws.com/dev",
+  // baseURL: "http://localhost:3001/",
 });
 
 // Function to get the user token from Redux state

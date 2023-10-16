@@ -7,12 +7,13 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { useState } from "react";
-const useConfirm = (title, message) => {
+
+const useConfirm = () => {
   const [promise, setPromise] = useState(null);
 
-  const confirm = () =>
+  const confirm = (title, message) =>
     new Promise((resolve, reject) => {
-      setPromise({ resolve });
+      setPromise({ resolve, title, message });
     });
 
   const handleClose = () => {
@@ -27,12 +28,13 @@ const useConfirm = (title, message) => {
   const handleCancel = () => {
     promise?.resolve(false);
     handleClose();
-  }; // You could replace the Dialog with your library's version
+  };
+
   const ConfirmationDialog = () => (
     <Dialog open={promise !== null} fullWidth>
-      <DialogTitle>{title}</DialogTitle>
+      <DialogTitle>{promise?.title}</DialogTitle>
       <DialogContent>
-        <DialogContentText>{message}</DialogContentText>
+        <DialogContentText>{promise?.message}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCancel}>Cancel</Button>
@@ -40,6 +42,7 @@ const useConfirm = (title, message) => {
       </DialogActions>
     </Dialog>
   );
+
   return [ConfirmationDialog, confirm];
 };
 

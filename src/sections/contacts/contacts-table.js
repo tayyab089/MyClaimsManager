@@ -40,14 +40,14 @@ export const ContactsTable = (props) => {
   } = props;
 
   // const [open, setOpen] = useState(false);
-  const [Dialog, confirmDelete] = useConfirm(
-    "Are you sure?",
-    "The Contact will be permanently deleted from the database"
-  );
+  const [Dialog, confirmDelete] = useConfirm();
 
   const handleDelete = async (event, contact) => {
     event.stopPropagation();
-    const ans = await confirmDelete();
+    const customTitle = "Confirm Delete";
+    const customMessage = `Are you sure you want to delete contact: ${contact.name} along with their phone numbers, emails and locations? Please note that this process is not reversible.`;
+
+    const ans = await confirmDelete(customTitle, customMessage);
     if (ans) {
       deleteContact(contact);
     } else {
@@ -64,7 +64,7 @@ export const ContactsTable = (props) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
+                {/* <TableCell padding="checkbox">
                   <Checkbox
                     checked={selectedAll}
                     indeterminate={selectedSome}
@@ -76,12 +76,12 @@ export const ContactsTable = (props) => {
                       }
                     }}
                   />
-                </TableCell>
+                </TableCell> */}
                 <TableCell>Name</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Location</TableCell>
                 <TableCell>Phone</TableCell>
-                <TableCell>Last Updated</TableCell>
+                {/* <TableCell>Last Updated</TableCell> */}
                 <TableCell>Delete</TableCell>
               </TableRow>
             </TableHead>
@@ -100,7 +100,7 @@ export const ContactsTable = (props) => {
                     onClick={() => handleRowClick(contact)}
                     style={{ cursor: "pointer" }}
                   >
-                    <TableCell padding="checkbox">
+                    {/* <TableCell padding="checkbox">
                       <Checkbox
                         checked={isSelected}
                         onChange={(event) => {
@@ -111,7 +111,7 @@ export const ContactsTable = (props) => {
                           }
                         }}
                       />
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell>
                       <Stack alignItems="center" direction="row" spacing={2}>
                         <Avatar src={contact.avatar}>{getInitials(contact.name)}</Avatar>
@@ -120,26 +120,28 @@ export const ContactsTable = (props) => {
                     </TableCell>
                     <TableCell>
                       {contact.email.map((email, ind) => (
-                        <div key={ind}>{email.email}</div>
+                        <li key={ind}>{email.email}</li>
                       ))}
                     </TableCell>
                     <TableCell>
                       {contact.address.map((address, index) => {
                         return (
-                          <React.Fragment key={index}>
+                          <li key={index}>
                             {address?.street}
                             {address?.city && `, ${address?.city}`}
                             {address?.code && `, ${address?.code}`}
-                          </React.Fragment>
+                          </li>
                         );
                       })}
                     </TableCell>
                     <TableCell>
-                      {contact.phNo?.map((number, ind) => (
-                        <div key={ind}>{number.no}</div>
-                      ))}
+                      <ul>
+                        {contact.phNo?.map((number, ind) => (
+                          <li key={ind}>{number.no}</li>
+                        ))}
+                      </ul>
                     </TableCell>
-                    <TableCell>{lastUpdated}</TableCell>
+                    {/* <TableCell>{lastUpdated}</TableCell> */}
                     <TableCell>
                       <Button onClick={(event) => handleDelete(event, contact)}>
                         <SvgIcon fontSize="small">
