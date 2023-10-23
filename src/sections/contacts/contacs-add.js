@@ -16,12 +16,11 @@ import {
   Unstable_Grid2 as Grid,
   FormHelperText,
 } from "@mui/material";
+import InputMask from "react-input-mask";
 import { FieldArray, Formik } from "formik";
 import React, { useState, useCallback, Fragment, useEffect } from "react";
 import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { saveContactApi, updateContactApi } from "src/network/api";
-import { MapPinIcon } from "@heroicons/react/24/outline";
-import { neutral, indigo } from "src/theme/colors";
 import contactSchema from "./contacts-schema";
 
 const AvatarDropdown = ({ avatars, selectedAvatar, onSelectAvatar }) => {
@@ -76,8 +75,8 @@ const states = [
     label: "Work",
   },
   {
-    value: "personal",
-    label: "Personal",
+    value: "residence",
+    label: "Residence",
   },
   {
     value: "mobile",
@@ -124,7 +123,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
       {
         type: "work",
         city: "",
-        code: "",
+        state: "",
         zip: "",
         street: "",
       },
@@ -145,6 +144,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
 
   const handleSubmit = useCallback(
     async (values, setSubmitting) => {
+      console.log(values);
       if (isEdit) {
         const response = await updateContactApi({ contact: values });
         if (response && response.data.type !== "error") {
@@ -202,6 +202,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
             values,
             errors,
             touched,
+            handleBlur,
             handleChange,
             handleSubmit,
             isSubmitting,
@@ -218,13 +219,6 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                 />
                 <CardContent sx={{ pt: 0 }}>
                   <Box sx={{ m: -1.5 }}>
-                    {/* <IconButton
-                      sx={{ position: "absolute", top: 0, right: 50, zIndex: 99 }}
-                      onClick={handleClose}
-                    >
-                      <p>close</p>
-                      <XMarkIcon />
-                    </IconButton> */}
                     <Button
                       type="button"
                       onClick={handleClose}
@@ -275,11 +269,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                         <FieldArray
                           name="address"
                           render={(arrayHelpers) => (
-                            <Grid
-                              container
-                              spacing={1}
-                              // style={{ border: "dashed", borderColor: "black" }}
-                            >
+                            <Grid container spacing={1}>
                               <Grid xs={12} md={12}>
                                 <Typography
                                   style={{
@@ -287,6 +277,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                     display: "flex",
                                     height: "100%",
                                   }}
+                                  variant="subtitle1"
                                 >
                                   Address
                                 </Typography>
@@ -294,7 +285,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                               {values.address && values.address.length > 0 ? (
                                 values.address.map((item, index) => (
                                   <>
-                                    <Grid xs={12} md={3}>
+                                    <Grid xs={12} md={2}>
                                       <TextField
                                         fullWidth
                                         size="small"
@@ -312,37 +303,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                         ))}
                                       </TextField>
                                     </Grid>
-                                    <Grid xs={12} md={3}>
-                                      <TextField
-                                        fullWidth
-                                        size="small"
-                                        label="City"
-                                        name={`address.${index}.city`}
-                                        onChange={handleChange}
-                                        value={values?.address[index]?.city}
-                                      />
-                                    </Grid>
-                                    <Grid xs={12} md={3}>
-                                      <TextField
-                                        fullWidth
-                                        size="small"
-                                        label="Country Code"
-                                        name={`address.${index}.code`}
-                                        onChange={handleChange}
-                                        value={values?.address[index]?.code}
-                                      />
-                                    </Grid>
-                                    <Grid xs={12} md={3}>
-                                      <TextField
-                                        fullWidth
-                                        size="small"
-                                        label="Zip"
-                                        name={`address.${index}.zip`}
-                                        onChange={handleChange}
-                                        value={values?.address[index]?.zip}
-                                      />
-                                    </Grid>
-                                    <Grid xs={10} md={11}>
+                                    <Grid xs={12} md={10}>
                                       <TextField
                                         fullWidth
                                         size="small"
@@ -352,12 +313,42 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                         value={values?.address[index]?.street}
                                       />
                                     </Grid>
+                                    <Grid xs={12} md={3.66}>
+                                      <TextField
+                                        fullWidth
+                                        size="small"
+                                        label="City"
+                                        name={`address.${index}.city`}
+                                        onChange={handleChange}
+                                        value={values?.address[index]?.city}
+                                      />
+                                    </Grid>
+                                    <Grid xs={12} md={3.66}>
+                                      <TextField
+                                        fullWidth
+                                        size="small"
+                                        label="State"
+                                        name={`address.${index}.state`}
+                                        onChange={handleChange}
+                                        value={values?.address[index]?.state}
+                                      />
+                                    </Grid>
+                                    <Grid xs={10} md={3.66}>
+                                      <TextField
+                                        fullWidth
+                                        size="small"
+                                        label="Zip"
+                                        name={`address.${index}.zip`}
+                                        onChange={handleChange}
+                                        value={values?.address[index]?.zip}
+                                      />
+                                    </Grid>
                                     <Grid xs={2} md={1}>
                                       <Button
                                         type="button"
                                         onClick={() => arrayHelpers.remove(index)}
                                       >
-                                        <TrashIcon />
+                                        <TrashIcon color="red" />
                                       </Button>
                                     </Grid>
                                     <Grid xs={12} md={12}>
@@ -405,6 +396,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                     display: "flex",
                                     height: "100%",
                                   }}
+                                  variant="subtitle1"
                                 >
                                   Email
                                 </Typography>
@@ -451,7 +443,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                         type="button"
                                         onClick={() => arrayHelpers.remove(index)}
                                       >
-                                        <TrashIcon />
+                                        <TrashIcon color="red" />
                                       </Button>
                                     </Grid>
                                   </>
@@ -496,6 +488,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                     display: "flex",
                                     height: "100%",
                                   }}
+                                  variant="subtitle1"
                                 >
                                   Phone Number
                                 </Typography>
@@ -522,7 +515,21 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                       </TextField>
                                     </Grid>
                                     <Grid xs={10} md={7}>
-                                      <TextField
+                                      <InputMask
+                                        mask="999-999-9999"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.phNo[index].no}
+                                      >
+                                        <TextField
+                                          fullWidth
+                                          size="small"
+                                          label="Phone No."
+                                          required
+                                          name={`phNo.${index}.no`}
+                                        />
+                                      </InputMask>
+                                      {/* <TextField
                                         fullWidth
                                         size="small"
                                         label="Phone No."
@@ -530,7 +537,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                         name={`phNo.${index}.no`}
                                         onChange={handleChange}
                                         value={values.phNo[index].no}
-                                      />
+                                      /> */}
                                       {errors.phNo && (
                                         <FormHelperText error>
                                           {errors?.phNo[index]?.no}
@@ -542,7 +549,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                         type="button"
                                         onClick={() => arrayHelpers.remove(index)}
                                       >
-                                        <TrashIcon />
+                                        <TrashIcon color="red" />
                                       </Button>
                                     </Grid>
                                   </>

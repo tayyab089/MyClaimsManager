@@ -21,6 +21,7 @@ import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { ContactsTable } from "src/sections/contacts/contacts-table";
 import { ContactsSearch } from "src/sections/contacts/contacts-search";
 import { ContactsAdd } from "src/sections/contacts/contacs-add";
+import { ContactsView } from "src/sections/contacts/contacts-view";
 import { applyPagination } from "src/utils/apply-pagination";
 import { getContactsApi, deleteContactApi } from "src/network/api";
 
@@ -48,6 +49,7 @@ const Page = () => {
   const contactIds = useContactIds(contacts);
   const contactsSelection = useSelection(contactIds);
   const [openModal, setOpenModal] = useState(false);
+  const [openViewModal, setOpenViewModal] = useState(false);
 
   const handlePageChange = useCallback((event, value) => {
     setPage(value);
@@ -63,6 +65,19 @@ const Page = () => {
     try {
       const response = await getContactsApi();
       if (response && response.data.type !== "error") {
+        console.log(response.data.data);
+        response.data.data.sort((a, b) => {
+          const nameA = a.name.toUpperCase(); // Convert names to uppercase for case-insensitive sorting
+          const nameB = b.name.toUpperCase();
+
+          if (nameA < nameB) {
+            return -1; // a should come before b
+          } else if (nameA > nameB) {
+            return 1; // a should come after b
+          } else {
+            return 0; // names are equal
+          }
+        });
         setContactsData(response.data.data);
       } else {
         // alert(`${response.data.message}`);
@@ -103,7 +118,7 @@ const Page = () => {
     fetchContacts();
   }, []);
 
-  // Modal Functions ----------------------------------------------
+  // Edit Modal Functions ----------------------------------------------
   const handleRowClick = (item) => {
     setContactItem(item);
     setIsEdit(true);
@@ -127,6 +142,24 @@ const Page = () => {
     }
   }, [isEdit]);
 
+  // View Modal Functions ----------------------------------------------
+  const handleViewClose = (event, reason) => {
+    if (reason !== "backdropClick") {
+      setContactItem(null);
+      setOpenViewModal(false);
+    }
+  };
+
+  const handleViewOpen = (item) => {
+    setContactItem(item);
+    setOpenViewModal(true);
+  };
+
+  const handleViewEdit = () => {
+    setOpenViewModal(false);
+    setIsEdit(true);
+  };
+
   // Search Functions and State-------------------------------------
   const [searchValue, setSearchValue] = useState("");
   const [filteredContacts, setFilteredContacts] = useState([]);
@@ -140,9 +173,9 @@ const Page = () => {
   };
 
   const [alertData, setAlertData] = useState({
-    open: true,
-    message: "Contact Added Succsefully",
-    type: "success",
+    open: false,
+    message: "",
+    type: "",
   });
 
   return (
@@ -173,7 +206,7 @@ const Page = () => {
                   variant="contained"
                   onClick={handleOpen}
                 >
-                  Add
+                  Add New Contact
                 </Button>
               </div>
             </Stack>
@@ -197,6 +230,7 @@ const Page = () => {
                 selected={contactsSelection.selected}
                 handleRowClick={handleRowClick}
                 deleteContact={deleteContact}
+                viewContact={handleViewOpen}
               />
             ) : (
               <Typography variant="h6">No contact found</Typography>
@@ -209,6 +243,12 @@ const Page = () => {
             isEdit={isEdit}
             fetchContacts={fetchContacts}
             setAlertData={setAlertData}
+          />
+          <ContactsView
+            open={openViewModal}
+            handleClose={handleViewClose}
+            item={contactItem}
+            handleViewEdit={handleViewEdit}
           />
         </Container>
         <div style={{ position: "absolute", top: 10, right: 10, zIndex: 9999 }}>
