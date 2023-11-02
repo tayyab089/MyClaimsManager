@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { getInitials } from "src/utils/get-initials";
 import React, { useState, useCallback, Fragment, useEffect } from "react";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 
 export const ContactsView = ({ item, handleClose, open, handleViewEdit }) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
@@ -29,9 +30,14 @@ export const ContactsView = ({ item, handleClose, open, handleViewEdit }) => {
     maxHeight: "90%",
   };
 
-  const headerStyle = {
-    backgroundColor: "#f0f0f0",
-    borderBottom: "1px solid #ccc",
+  const contentStyle = {
+    paddingLeft: "15px",
+  };
+
+  const subheaderStyles = {
+    marginTop: "20px",
+    // borderBottom: "1px solid #ccc",
+    borderTop: "1px solid #ccc",
     padding: "10px",
   };
 
@@ -73,42 +79,30 @@ export const ContactsView = ({ item, handleClose, open, handleViewEdit }) => {
     >
       <Box sx={style}>
         <Card>
-          {/* <CardHeader subheader="" title="Contact Info">
-            <Avatar src={item?.avatar}>{getInitials(item?.name)}</Avatar>
-          </CardHeader> */}
+          <CardHeader
+            subheader={`${item?.jobTitle} @ ${item?.businessName}`}
+            title={item?.name}
+            sx={{ marginBottom: "-30px" }}
+          />
           <CardContent>
+            <Button
+              type="button"
+              onClick={handleClose}
+              style={{ position: "absolute", top: 20, right: 10, zIndex: 99 }}
+            >
+              <XMarkIcon />
+            </Button>
             <Grid container spacing={1}>
-              <Grid xs={10} md={12} sx={headerStyle}>
-                <Typography variant="oerline">Basic Info</Typography>
-              </Grid>
-              <Grid xs={10} md={3}>
-                <Typography variant="subtitle1">Name :</Typography>
-              </Grid>
-              <Grid xs={10} md={9}>
-                <Typography>{item?.name}</Typography>
-              </Grid>
-              <Grid xs={10} md={3}>
-                <Typography variant="subtitle1">Business Name :</Typography>
-              </Grid>
-              <Grid xs={10} md={9}>
-                <Typography>{item?.businessName}</Typography>
-              </Grid>
-              <Grid xs={10} md={3}>
-                <Typography variant="subtitle1">Job Title :</Typography>
-              </Grid>
-              <Grid xs={10} md={9}>
-                <Typography>{item?.jobTitle}</Typography>
-              </Grid>
-              <Grid xs={10} md={12} sx={headerStyle}>
-                <Typography variant="oerline">Address</Typography>
+              <Grid xs={10} md={12} sx={subheaderStyles}>
+                <Typography variant="overline">Address</Typography>
               </Grid>
               {contact.address.map((address, index) => {
                 return (
                   <Fragment key={index}>
-                    <Grid xs={10} md={3}>
+                    <Grid xs={4} md={3} sx={contentStyle}>
                       <Typography variant="subtitle1">{address.type} :</Typography>
                     </Grid>
-                    <Grid xs={10} md={9}>
+                    <Grid xs={8} md={9}>
                       {address?.street}
                       {address?.city && `, ${address?.city}`}
                       {address?.state && `, ${address?.state}`}
@@ -117,32 +111,32 @@ export const ContactsView = ({ item, handleClose, open, handleViewEdit }) => {
                   </Fragment>
                 );
               })}
-              <Grid xs={10} md={12} sx={headerStyle}>
-                <Typography variant="oerline">Emails</Typography>
+              <Grid xs={10} md={12} sx={subheaderStyles}>
+                <Typography variant="overline">Emails</Typography>
               </Grid>
               {contact.email.map((email, index) => {
                 return (
                   <Fragment key={index}>
-                    <Grid xs={10} md={3}>
+                    <Grid xs={4} md={3} sx={contentStyle}>
                       <Typography variant="subtitle1">{email.type} :</Typography>
                     </Grid>
-                    <Grid xs={10} md={9}>
+                    <Grid xs={8} md={9}>
                       <Typography>{email?.email}</Typography>
                     </Grid>
                   </Fragment>
                 );
               })}
-              <Grid xs={10} md={12} sx={headerStyle}>
-                <Typography variant="oerline">Phone Numbers</Typography>
+              <Grid xs={10} md={12} sx={subheaderStyles}>
+                <Typography variant="overline">Phone Numbers</Typography>
               </Grid>
               {contact.phNo.map((phNo, index) => {
                 return (
                   <Fragment key={index}>
-                    <Grid xs={10} md={3}>
+                    <Grid xs={4} md={3} sx={contentStyle}>
                       <Typography variant="subtitle1">{phNo.type} :</Typography>
                     </Grid>
-                    <Grid xs={10} md={9}>
-                      <Typography>{phNo?.no}</Typography>
+                    <Grid xs={8} md={9}>
+                      <Typography>{phNo?.ext ? `${phNo?.no} --${phNo?.ext}` : phNo.no}</Typography>
                     </Grid>
                   </Fragment>
                 );

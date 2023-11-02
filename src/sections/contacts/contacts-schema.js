@@ -26,6 +26,7 @@ const schema = Yup.object().shape({
     Yup.object().shape({
       type: Yup.string().notRequired(),
       no: Yup.string().required("Phone number is required"),
+      ext: Yup.string(),
     })
   ),
 });

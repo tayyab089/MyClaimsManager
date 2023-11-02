@@ -34,11 +34,13 @@ const useConfirm = () => {
     <Dialog open={promise !== null} fullWidth>
       <DialogTitle>{promise?.title}</DialogTitle>
       <DialogContent>
-        <DialogContentText>{promise?.message}</DialogContentText>
+        <DialogContentText>
+          <div dangerouslySetInnerHTML={{ __html: promise?.message }} />
+        </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCancel}>Cancel</Button>
-        <Button onClick={handleConfirm}>Yes</Button>
+        <Button onClick={handleConfirm}>Delete</Button>
       </DialogActions>
     </Dialog>
   );

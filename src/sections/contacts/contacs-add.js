@@ -22,69 +22,73 @@ import React, { useState, useCallback, Fragment, useEffect } from "react";
 import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { saveContactApi, updateContactApi } from "src/network/api";
 import contactSchema from "./contacts-schema";
+// import { getInitials } from "src/utils/get-initials";
 
-const AvatarDropdown = ({ avatars, selectedAvatar, onSelectAvatar }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
+// const AvatarDropdown = ({ avatars, selectedAvatar, onSelectAvatar }) => {
+//   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+//   const handleClick = (event) => {
+//     setAnchorEl(event.currentTarget);
+//   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+//   const handleClose = () => {
+//     setAnchorEl(null);
+//   };
 
-  const handleAvatarSelect = (avatar) => {
-    onSelectAvatar(avatar);
-    handleClose();
-  };
+//   const handleAvatarSelect = (avatar) => {
+//     onSelectAvatar(avatar);
+//     handleClose();
+//   };
 
-  return (
-    <div>
-      <Button onClick={handleClick}>
-        <Avatar src={selectedAvatar} alt="Selected Avatar" />
-      </Button>
-      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        {avatars.map((avatar, index) => (
-          <MenuItem key={index} onClick={() => handleAvatarSelect(avatar)}>
-            <Avatar src={avatar} alt={`Avatar ${index}`} />
-          </MenuItem>
-        ))}
-      </Menu>
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       <Button onClick={handleClick}>
+//         <Avatar src={selectedAvatar} alt="Selected Avatar" />
+//       </Button>
+//       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+//         {avatars.map((avatar, index) => (
+//           <MenuItem key={index} onClick={() => handleAvatarSelect(avatar)}>
+//             <Avatar src={avatar} alt={`Avatar ${index}`} />
+//           </MenuItem>
+//         ))}
+//       </Menu>
+//     </div>
+//   );
+// };
 
-const avatars = [
-  "",
-  "/assets/avatars/avatar-carson-darrin.png",
-  "/assets/avatars/avatar-fran-perez.png",
-  "/assets/avatars/avatar-jie-yan-song.png",
-  "/assets/avatars/avatar-anika-visser.png",
-  "/assets/avatars/avatar-miron-vitold.png",
-  "/assets/avatars/avatar-penjani-inyene.png",
-  "/assets/avatars/avatar-omar-darboe.png",
-  "/assets/avatars/avatar-siegbert-gottfried.png",
-  "/assets/avatars/avatar-iulia-albu.png",
-  "/assets/avatars/avatar-nasimiyu-danai.png",
-];
+// const avatars = [
+//   "",
+//   "/assets/avatars/avatar-carson-darrin.png",
+//   "/assets/avatars/avatar-fran-perez.png",
+//   "/assets/avatars/avatar-jie-yan-song.png",
+//   "/assets/avatars/avatar-anika-visser.png",
+//   "/assets/avatars/avatar-miron-vitold.png",
+//   "/assets/avatars/avatar-penjani-inyene.png",
+//   "/assets/avatars/avatar-omar-darboe.png",
+//   "/assets/avatars/avatar-siegbert-gottfried.png",
+//   "/assets/avatars/avatar-iulia-albu.png",
+//   "/assets/avatars/avatar-nasimiyu-danai.png",
+// ];
 
-const states = [
+const addressTypes = [
   {
-    value: "work",
+    value: "Work",
     label: "Work",
   },
   {
-    value: "residence",
+    value: "Residence",
     label: "Residence",
   },
+];
+
+const phEmailTypes = [
   {
-    value: "mobile",
-    label: "Mobile",
+    value: "Work",
+    label: "Work",
   },
   {
-    value: "landLine",
-    label: "Land Line",
+    value: "Personal",
+    label: "Personal",
   },
 ];
 
@@ -113,7 +117,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
     street: "",
   };
 
-  const phNoObject = { type: "work", no: "" };
+  const phNoObject = { type: "work", no: "", ext: "" };
   const emailObject = { type: "work", email: "" };
 
   const emptyValues = {
@@ -133,7 +137,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
     name: "",
     businessName: "",
     jobTitle: "",
-    phNo: [{ type: "work", no: "" }],
+    phNo: [{ type: "work", no: "", ext: "" }],
   };
 
   const [initialValues, setInitialValues] = useState(emptyValues);
@@ -227,14 +231,17 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                       <XMarkIcon />
                     </Button>
                     <Grid container spacing={2}>
-                      <Grid xs={2} md={2}>
-                        <AvatarDropdown
+                      <Grid xs={2} md={1.5}>
+                        {/* <AvatarDropdown
                           avatars={avatars}
-                          selectedAvatar={values.avatar}
-                          onSelectAvatar={(avatar) => setFieldValue("avatar", avatar)}
-                        />
+                          // selectedAvatar={values.avatar}
+                          // onSelectAvatar={(avatar) => setFieldValue("avatar", avatar)}
+                        /> */}
+                        <Button>
+                          <Avatar src={values.avatar} alt="Selected Avatar" />
+                        </Button>
                       </Grid>
-                      <Grid xs={10} md={10}>
+                      <Grid xs={10} md={10.5}>
                         <TextField
                           fullWidth
                           label="Name"
@@ -277,7 +284,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                     display: "flex",
                                     height: "100%",
                                   }}
-                                  variant="subtitle1"
+                                  variant="formSubHeading"
                                 >
                                   Address
                                 </Typography>
@@ -296,7 +303,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                         SelectProps={{ native: true }}
                                         value={values?.address[index]?.type}
                                       >
-                                        {states.map((option) => (
+                                        {addressTypes.map((option) => (
                                           <option key={option.value} value={option.value}>
                                             {option.label}
                                           </option>
@@ -307,7 +314,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                       <TextField
                                         fullWidth
                                         size="small"
-                                        label="Street"
+                                        label="Appartmet No, Street"
                                         name={`address.${index}.street`}
                                         onChange={handleChange}
                                         value={values?.address[index]?.street}
@@ -396,7 +403,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                     display: "flex",
                                     height: "100%",
                                   }}
-                                  variant="subtitle1"
+                                  variant="formSubHeading"
                                 >
                                   Email
                                 </Typography>
@@ -415,7 +422,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                         SelectProps={{ native: true }}
                                         value={values.email[index].type}
                                       >
-                                        {states.map((option) => (
+                                        {phEmailTypes.map((option) => (
                                           <option key={option.value} value={option.value}>
                                             {option.label}
                                           </option>
@@ -488,7 +495,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                     display: "flex",
                                     height: "100%",
                                   }}
-                                  variant="subtitle1"
+                                  variant="formSubHeading"
                                 >
                                   Phone Number
                                 </Typography>
@@ -496,7 +503,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                               {values.phNo && values.phNo.length > 0 ? (
                                 values.phNo.map((item, index) => (
                                   <>
-                                    <Grid xs={12} md={4}>
+                                    <Grid xs={12} md={3}>
                                       <TextField
                                         fullWidth
                                         size="small"
@@ -507,14 +514,14 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                         SelectProps={{ native: true }}
                                         value={values.phNo[index].type}
                                       >
-                                        {states.map((option) => (
+                                        {phEmailTypes.map((option) => (
                                           <option key={option.value} value={option.value}>
                                             {option.label}
                                           </option>
                                         ))}
                                       </TextField>
                                     </Grid>
-                                    <Grid xs={10} md={7}>
+                                    <Grid xs={8} md={6}>
                                       <InputMask
                                         mask="999-999-9999"
                                         onChange={handleChange}
@@ -529,20 +536,21 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                                           name={`phNo.${index}.no`}
                                         />
                                       </InputMask>
-                                      {/* <TextField
-                                        fullWidth
-                                        size="small"
-                                        label="Phone No."
-                                        required
-                                        name={`phNo.${index}.no`}
-                                        onChange={handleChange}
-                                        value={values.phNo[index].no}
-                                      /> */}
                                       {errors.phNo && (
                                         <FormHelperText error>
                                           {errors?.phNo[index]?.no}
                                         </FormHelperText>
                                       )}
+                                    </Grid>
+                                    <Grid xs={2} md={2}>
+                                      <TextField
+                                        fullWidth
+                                        size="small"
+                                        label="Ext"
+                                        name={`phNo.${index}.ext`}
+                                        onChange={handleChange}
+                                        value={values.phNo[index].ext}
+                                      />
                                     </Grid>
                                     <Grid xs={2} md={1}>
                                       <Button

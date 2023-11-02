@@ -67,12 +67,16 @@ const Page = () => {
       if (response && response.data.type !== "error") {
         console.log(response.data.data);
         response.data.data.sort((a, b) => {
-          const nameA = a.name.toUpperCase(); // Convert names to uppercase for case-insensitive sorting
-          const nameB = b.name.toUpperCase();
+          const extractLastName = (fullName) => {
+            const nameParts = fullName.split(" ");
+            return nameParts.length > 1 ? nameParts[nameParts.length - 1] : fullName;
+          };
+          const lastNameA = extractLastName(a.name).toUpperCase();
+          const lastNameB = extractLastName(b.name).toUpperCase();
 
-          if (nameA < nameB) {
+          if (lastNameA < lastNameB) {
             return -1; // a should come before b
-          } else if (nameA > nameB) {
+          } else if (lastNameA > lastNameB) {
             return 1; // a should come after b
           } else {
             return 0; // names are equal

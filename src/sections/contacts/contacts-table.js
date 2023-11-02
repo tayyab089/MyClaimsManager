@@ -24,7 +24,7 @@ import { getInitials } from "src/utils/get-initials";
 import TrashIcon from "@heroicons/react/20/solid/TrashIcon";
 import useConfirm from "src/hooks/use-confirm";
 
-const ButtonsContaner = styled("div")(({ theme }) => ({
+const ButtonsContainer = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   [theme.breakpoints.down("sm")]: {
@@ -58,7 +58,7 @@ export const ContactsTable = (props) => {
   const handleDelete = async (event, contact) => {
     event.stopPropagation();
     const customTitle = "Confirm Delete";
-    const customMessage = `Are you sure you want to delete contact: ${contact.name} along with their phone numbers, emails and locations? Please note that this process is not reversible.`;
+    const customMessage = `Are you sure you want to delete contact: <strong> ${contact.name} </strong> along with their phone numbers, emails and locations? Please note that this process is not reversible.`;
 
     const ans = await confirmDelete(customTitle, customMessage);
     if (ans) {
@@ -104,11 +104,12 @@ export const ContactsTable = (props) => {
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      <ButtonsContaner>
+                      <ButtonsContainer>
                         <Button
                           onClick={() => viewContact(contact)}
                           variant={!lgUp ? "text" : "contained"}
                           size="small"
+                          style={{ marginRight: 10 }}
                         >
                           View
                         </Button>
@@ -117,6 +118,7 @@ export const ContactsTable = (props) => {
                           variant={!lgUp ? "text" : "outlined"}
                           size="small"
                           color="secondary"
+                          style={{ marginRight: 10 }}
                         >
                           Edit
                         </Button>
@@ -125,10 +127,11 @@ export const ContactsTable = (props) => {
                           color="error"
                           variant={!lgUp ? "text" : "outlined"}
                           size="small"
+                          style={{ marginRight: 10 }}
                         >
                           Delete
                         </Button>
-                      </ButtonsContaner>
+                      </ButtonsContainer>
                     </TableCell>
                   </TableRow>
                 );
