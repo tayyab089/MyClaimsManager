@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useRouter } from "next/router";
 import { format } from "date-fns";
 import {
   Avatar,
@@ -32,6 +33,8 @@ export const ClaimsTable = (props) => {
     selected = [],
   } = props;
 
+  const router = useRouter();
+
   const selectedSome = selected.length > 0 && selected.length < items.length;
   const selectedAll = items.length > 0 && selected.length === items.length;
 
@@ -42,19 +45,6 @@ export const ClaimsTable = (props) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedAll}
-                    indeterminate={selectedSome}
-                    onChange={(event) => {
-                      if (event.target.checked) {
-                        onSelectAll?.();
-                      } else {
-                        onDeselectAll?.();
-                      }
-                    }}
-                  />
-                </TableCell>
                 <TableCell>File No</TableCell>
                 <TableCell>Insured</TableCell>
                 <TableCell>Insurance Co.</TableCell>
@@ -62,44 +52,36 @@ export const ClaimsTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((customer) => {
-                const isSelected = selected.includes(customer.id);
-                const createdAt = format(customer.createdAt, "dd/MM/yyyy");
+              {items.map((claim) => {
+                const isSelected = selected.includes(claim.id);
+                const timeDiff = new Date() - claim.lossDate;
+                const age = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
 
                 return (
-                  <TableRow hover key={customer.id} selected={isSelected}>
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        onChange={(event) => {
-                          if (event.target.checked) {
-                            onSelectOne?.(customer.id);
-                          } else {
-                            onDeselectOne?.(customer.id);
-                          }
-                        }}
-                      />
-                    </TableCell>
+                  <TableRow
+                    hover
+                    key={claim.id}
+                    selected={isSelected}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      router.push({
+                        pathname: "/claim",
+                        query: { data: JSON.stringify(claim) },
+                      });
+                    }}
+                  >
                     <TableCell>
                       <Stack alignItems="center" direction="row" spacing={2}>
-                        <Typography variant="subtitle2">{customer.name}</Typography>
+                        <Typography variant="subtitle2">{claim.fileNo}</Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      {customer.email.map((email, ind) => (
-                        <div key={ind}>{email.email}</div>
+                      {claim.insured.map((insured, ind) => (
+                        <div key={ind}>{insured.name}</div>
                       ))}
                     </TableCell>
-                    <TableCell>
-                      {customer.address.map((address) => {
-                        return <>{address?.city}</>;
-                      })}
-                    </TableCell>
-                    <TableCell>
-                      {customer.phone?.map((number, ind) => (
-                        <div key={ind}>{number.no}</div>
-                      ))}
-                    </TableCell>
+                    <TableCell>{claim?.insurance?.company}</TableCell>
+                    <TableCell> {age} Days</TableCell>
                   </TableRow>
                 );
               })}

@@ -44,7 +44,7 @@ const Page = () => {
   const [isEdit, setIsEdit] = useState(false);
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
   const contacts = useContacts(contactsData, page, rowsPerPage);
   const contactIds = useContactIds(contacts);
   const contactsSelection = useSelection(contactIds);
@@ -82,6 +82,7 @@ const Page = () => {
             return 0; // names are equal
           }
         });
+        sessionStorage.setItem("contacts", JSON.stringify(response.data.data));
         setContactsData(response.data.data);
       } else {
         // alert(`${response.data.message}`);

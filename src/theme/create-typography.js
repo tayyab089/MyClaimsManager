@@ -42,6 +42,19 @@ export const createTypography = () => {
       lineHeight: 2.5,
       textTransform: "uppercase",
     },
+    formTag: {
+      fontSize: "0.75rem",
+      fontWeight: 600,
+      lineHeight: 1.57,
+      letterSpacing: "0.5px",
+      textTransform: "uppercase",
+    },
+    formText: {
+      fontSize: "0.75rem",
+      fontWeight: 400,
+      lineHeight: 1.57,
+      letterSpacing: "0.5px",
+    },
     h1: {
       fontFamily: "'Plus Jakarta Sans', sans-serif",
       fontWeight: 700,

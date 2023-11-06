@@ -21,7 +21,6 @@ import {
 import { styled } from "@mui/material/styles";
 import { Scrollbar } from "src/components/scrollbar";
 import { getInitials } from "src/utils/get-initials";
-import TrashIcon from "@heroicons/react/20/solid/TrashIcon";
 import useConfirm from "src/hooks/use-confirm";
 
 const ButtonsContainer = styled("div")(({ theme }) => ({
