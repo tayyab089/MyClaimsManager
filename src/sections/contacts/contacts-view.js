@@ -9,15 +9,17 @@ import {
   useMediaQuery,
   Unstable_Grid2 as Grid,
   CardHeader,
-  Avatar,
 } from "@mui/material";
-import { getInitials } from "src/utils/get-initials";
-import React, { useState, useCallback, Fragment, useEffect } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { XMarkIcon } from "@heroicons/react/20/solid";
+import { emptyValues } from "./contacts-static-data";
 
 export const ContactsView = ({ item, handleClose, open, handleViewEdit }) => {
+  // State Variables ===============================================
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const [contact, setContact] = useState(emptyValues);
 
+  // Style Objects =================================================
   const style = {
     position: "absolute",
     top: "50%",
@@ -41,33 +43,10 @@ export const ContactsView = ({ item, handleClose, open, handleViewEdit }) => {
     padding: "10px",
   };
 
-  const emptyValues = {
-    id: "",
-    userId: "",
-    address: [
-      {
-        type: "work",
-        city: "",
-        code: "",
-        zip: "",
-        street: "",
-      },
-    ],
-    avatar: "",
-    email: [{ type: "work", email: "" }],
-    name: "",
-    businessName: "",
-    jobTitle: "",
-    phNo: [{ type: "work", no: "" }],
-  };
-
-  const [contact, setContact] = useState(emptyValues);
-
+  // UseEffect Calls ===============================================
   useEffect(() => {
     setContact(item ? item : emptyValues);
   }, [item]);
-
-  console.log(item);
 
   return (
     <Modal
@@ -75,7 +54,6 @@ export const ContactsView = ({ item, handleClose, open, handleViewEdit }) => {
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
-      //   disableEscapeKeyDown
     >
       <Box sx={style}>
         <Card>

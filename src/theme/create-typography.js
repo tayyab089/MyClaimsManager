@@ -55,6 +55,14 @@ export const createTypography = () => {
       lineHeight: 1.57,
       letterSpacing: "0.5px",
     },
+    link: {
+      fontSize: "0.75rem",
+      fontWeight: 400,
+      lineHeight: 1.57,
+      letterSpacing: "0.5px",
+      cursor: "pointer",
+      textDecoration: "underline",
+    },
     h1: {
       fontFamily: "'Plus Jakarta Sans', sans-serif",
       fontWeight: 700,

@@ -1,21 +1,7 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Head from "next/head";
-import { subDays, subHours } from "date-fns";
-import ArrowDownOnSquareIcon from "@heroicons/react/24/solid/ArrowDownOnSquareIcon";
-import ArrowUpOnSquareIcon from "@heroicons/react/24/solid/ArrowUpOnSquareIcon";
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
-import XMarkIcon from "@heroicons/react/24/solid/XMarkIcon";
-import {
-  Box,
-  Button,
-  Container,
-  Stack,
-  SvgIcon,
-  Typography,
-  LinearProgress,
-  Alert,
-  Collapse,
-} from "@mui/material";
+import { Box, Button, Container, Stack, SvgIcon, Typography, LinearProgress } from "@mui/material";
 import { useSelection } from "src/hooks/use-selection";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { ContactsTable } from "src/sections/contacts/contacts-table";
@@ -23,7 +9,11 @@ import { ContactsSearch } from "src/sections/contacts/contacts-search";
 import { ContactsAdd } from "src/sections/contacts/contacs-add";
 import { ContactsView } from "src/sections/contacts/contacts-view";
 import { applyPagination } from "src/utils/apply-pagination";
-import { getContactsApi, deleteContactApi } from "src/network/api";
+import { deleteContactApi } from "src/network/api";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchContacts } from "src/store/reducers/contacts/thunks";
+import { CustomAlert } from "src/components/custom-alert";
+import { setAlertData } from "src/store/reducers/alert/thunks";
 
 const useContacts = (contactsData, page, rowsPerPage) => {
   return useMemo(() => {
@@ -38,9 +28,14 @@ const useContactIds = (contacts) => {
 };
 
 const Page = () => {
-  const [contactsData, setContactsData] = useState([]);
+  // State Variables ===============================================
+  const dispatch = useDispatch();
+  const {
+    contactsData,
+    meta: { isLoading },
+  } = useSelector((state) => state.contacts);
+
   const [contactItem, setContactItem] = useState(null);
-  const [isLoading, setIsloading] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
 
   const [page, setPage] = useState(0);
@@ -51,6 +46,7 @@ const Page = () => {
   const [openModal, setOpenModal] = useState(false);
   const [openViewModal, setOpenViewModal] = useState(false);
 
+  // Table Functions ================================================
   const handlePageChange = useCallback((event, value) => {
     setPage(value);
   }, []);
@@ -59,71 +55,26 @@ const Page = () => {
     setRowsPerPage(event.target.value);
   }, []);
 
-  // API Functions----------------------------------------------
-  const fetchContacts = async () => {
-    setIsloading(true);
-    try {
-      const response = await getContactsApi();
-      if (response && response.data.type !== "error") {
-        console.log(response.data.data);
-        response.data.data.sort((a, b) => {
-          const extractLastName = (fullName) => {
-            const nameParts = fullName.split(" ");
-            return nameParts.length > 1 ? nameParts[nameParts.length - 1] : fullName;
-          };
-          const lastNameA = extractLastName(a.name).toUpperCase();
-          const lastNameB = extractLastName(b.name).toUpperCase();
-
-          if (lastNameA < lastNameB) {
-            return -1; // a should come before b
-          } else if (lastNameA > lastNameB) {
-            return 1; // a should come after b
-          } else {
-            return 0; // names are equal
-          }
-        });
-        sessionStorage.setItem("contacts", JSON.stringify(response.data.data));
-        setContactsData(response.data.data);
-      } else {
-        // alert(`${response.data.message}`);
-        setAlertData({ open: true, message: response.data.message, type: response.data.type });
-        setTimeout(() => {
-          setAlertData({ open: false, message: "", type: "" });
-        }, 3000);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-    setIsloading(false);
-  };
-
+  // API Functions====================================================
   const deleteContact = async (contact) => {
     try {
       const response = await deleteContactApi({ contact: contact });
       if (response && response.data.type !== "error") {
-        // alert(`${response.data.message}`);
-        setAlertData({ open: true, message: response.data.message, type: response.data.type });
-        setTimeout(() => {
-          setAlertData({ open: false, message: "", type: "" });
-        }, 3000);
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
       } else {
-        // alert(`${response.data.message}`);
-        setAlertData({ open: true, message: response.data.message, type: response.data.type });
-        setTimeout(() => {
-          setAlertData({ open: false, message: "", type: "" });
-        }, 3000);
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
       }
-      fetchContacts();
+      dispatch(fetchContacts());
     } catch (e) {
       console.log(e);
     }
   };
 
-  useEffect(() => {
-    fetchContacts();
-  }, []);
-
-  // Edit Modal Functions ----------------------------------------------
+  // Edit Modal Functions ==============================================
   const handleRowClick = (item) => {
     setContactItem(item);
     setIsEdit(true);
@@ -147,7 +98,7 @@ const Page = () => {
     }
   }, [isEdit]);
 
-  // View Modal Functions ----------------------------------------------
+  // View Modal Functions =============================================
   const handleViewClose = (event, reason) => {
     if (reason !== "backdropClick") {
       setContactItem(null);
@@ -165,7 +116,7 @@ const Page = () => {
     setIsEdit(true);
   };
 
-  // Search Functions and State-------------------------------------
+  // Search Functions and State=========================================
   const [searchValue, setSearchValue] = useState("");
   const [filteredContacts, setFilteredContacts] = useState([]);
 
@@ -177,11 +128,10 @@ const Page = () => {
     setFilteredContacts(filteredData);
   };
 
-  const [alertData, setAlertData] = useState({
-    open: false,
-    message: "",
-    type: "",
-  });
+  // Useffect Calls =====================================================
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, []);
 
   return (
     <>
@@ -246,8 +196,6 @@ const Page = () => {
             handleClose={handleClose}
             item={contactItem}
             isEdit={isEdit}
-            fetchContacts={fetchContacts}
-            setAlertData={setAlertData}
           />
           <ContactsView
             open={openViewModal}
@@ -256,27 +204,7 @@ const Page = () => {
             handleViewEdit={handleViewEdit}
           />
         </Container>
-        <div style={{ position: "absolute", top: 10, right: 10, zIndex: 9999 }}>
-          <Collapse in={alertData.open}>
-            <Alert
-              action={
-                <SvgIcon
-                  fontSize="small"
-                  onClick={() => {
-                    setAlertData({ open: false, message: "", type: "" });
-                  }}
-                  style={{ marginTop: 4.5, cursor: "pointer" }}
-                >
-                  <XMarkIcon fontSize="inherit" />
-                </SvgIcon>
-              }
-              sx={{ mb: 2 }}
-              severity={alertData.type}
-            >
-              {alertData.message}
-            </Alert>
-          </Collapse>
-        </div>
+        <CustomAlert />
       </Box>
     </>
   );

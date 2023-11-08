@@ -9,6 +9,7 @@ import {
   CardHeader,
   Divider,
   TextField,
+  Autocomplete,
   useMediaQuery,
   Unstable_Grid2 as Grid,
 } from "@mui/material";
@@ -16,27 +17,38 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { FieldArray, Formik } from "formik";
 import React, { useState, useCallback, useEffect, Fragment } from "react";
 import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import { useSelector } from "react-redux";
+import { ContactsEdit } from "../contacts/contacts-edit";
+import {
+  emptyValues,
+  policyCoverageCategories,
+  policyCoverageObject,
+  contactsObject,
+  insuredObject,
+  contactCategories,
+} from "./claims-static-data";
 
-const policyCoverageCategories = [
-  {
-    value: "Work",
-    label: "Work",
-  },
-  {
-    value: "Personal",
-    label: "Personal",
-  },
-];
+export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
+  // State Variables ==============================================
+  const {
+    contactsData,
+    meta: { isLoading },
+  } = useSelector((state) => state.contacts);
 
-export const ClaimsAdd = ({ open, handleClose, item }) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const smDown = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const smUp = useMediaQuery((theme) => theme.breakpoints.up("sm"));
+  const [initialValues, setInitialValues] = useState(emptyValues);
+  const [contactList, setContactList] = useState([]);
+  const [expand, setExpand] = useState(false);
 
+  // Style Objects =================================================
   const style = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: lgUp ? 800 : 400,
+    width: lgUp ? 800 : smUp ? "95%" : 400,
     boxShadow: 24,
     p: 1,
     overflow: "auto",
@@ -49,40 +61,26 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
     padding: "10px",
   };
 
-  const emptyValues = {
-    fileNo: "",
-    insured: [],
-    lossLocation: "",
-    lossType: "",
-    lossDate: new Date(),
-    insurance: {
-      company: "",
-      fileNo: "",
-      policyNo: "",
-      claimNo: "",
-      issueDate: new Date(),
-      expiryDate: new Date(),
-    },
-    policyCoverage: [],
-    contacts: [],
-    docs: ["", "", ""],
-    tasks: ["", "", ""],
-    forms: ["", "", ""],
-  };
+  // Submit Functions ==============================================
+  const handleSubmit = useCallback((values) => {
+    alert(JSON.stringify(values, null, 2));
+  }, []);
 
-  const [initialValues, setInitialValues] = useState(emptyValues);
+  // UseEffect Calls ===============================================
+  useEffect(() => {
+    setContactList(
+      contactsData?.map((item) => {
+        return {
+          label: item.name,
+          id: item.id,
+        };
+      })
+    );
+  }, []);
 
   useEffect(() => {
     setInitialValues(item?.id ? item : emptyValues);
   }, [item]);
-
-  const policyCoverageObject = { category: "Work", amount: "" };
-  const contactsObject = { category: "Work", contact: "" };
-  const insuredObject = { name: "", id: "" };
-
-  const handleSubmit = useCallback((values) => {
-    alert(JSON.stringify(values, null, 2));
-  }, []);
 
   return (
     <Modal
@@ -103,16 +101,7 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
             }, 400);
           }}
         >
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            isSubmitting,
-            setFieldValue,
-          }) => (
+          {({ values, errors, handleChange, handleSubmit, isSubmitting, setFieldValue }) => (
             <form autoComplete="off" noValidate onSubmit={handleSubmit}>
               <Card sx={{ padding: "10px" }}>
                 <CardHeader
@@ -129,14 +118,17 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                       <XMarkIcon />
                     </Button>
                     <Grid container spacing={2}>
-                      <Grid
-                        xs={2}
-                        md={2}
-                        sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
-                      >
-                        <Typography variant="overline">File No:</Typography>
-                      </Grid>
-                      <Grid xs={10} md={10}>
+                      {smUp && (
+                        <Grid
+                          xs={2}
+                          sm={2}
+                          md={2}
+                          sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
+                        >
+                          <Typography variant="overline">File No:</Typography>
+                        </Grid>
+                      )}
+                      <Grid xs={12} sm={10} md={10}>
                         <TextField
                           fullWidth
                           label="File No"
@@ -156,28 +148,45 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                               {values.insured && values.insured.length > 0 ? (
                                 values.insured.map((item, index) => (
                                   <>
-                                    <Grid
-                                      xs={2}
-                                      md={2}
-                                      sx={{
-                                        display: "flex",
-                                        justifyContent: "flex-end",
-                                        alignItems: "center",
-                                      }}
-                                    >
-                                      <Typography variant="overline">Insured:</Typography>
-                                    </Grid>
-                                    <Grid xs={2} md={8}>
-                                      <TextField
-                                        fullWidth
-                                        size="small"
-                                        label="Insured"
+                                    {smUp && (
+                                      <Grid
+                                        xs={2}
+                                        sm={2}
+                                        md={2}
+                                        sx={{
+                                          display: "flex",
+                                          justifyContent: "flex-end",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <Typography variant="overline">Insured:</Typography>
+                                      </Grid>
+                                    )}
+                                    <Grid xs={6} sm={6} md={6}>
+                                      <Autocomplete
+                                        disablePortal
+                                        id="Insured"
                                         name={`insured.${index}.name`}
-                                        onChange={handleChange}
-                                        value={values.insured[index].name}
+                                        onChange={(e, v) => {
+                                          setFieldValue(`insured.${index}.name`, v?.label);
+                                          setFieldValue(`insured.${index}.id`, v?.id);
+                                        }}
+                                        value={{
+                                          label: values.insured[index].name,
+                                          id: values.insured[index].id,
+                                        }}
+                                        options={contactList}
+                                        renderInput={(params) => (
+                                          <TextField {...params} label="Insured" size="small" />
+                                        )}
                                       />
                                     </Grid>
-                                    <Grid xs={2} md={1}>
+                                    <Grid xs={2} sm={2} md={2}>
+                                      <Button onClick={() => editContact(values.insured[index].id)}>
+                                        Edit
+                                      </Button>
+                                    </Grid>
+                                    <Grid xs={2} sm={1} md={1}>
                                       <Button
                                         type="button"
                                         onClick={() => arrayHelpers.remove(index)}
@@ -203,7 +212,7 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                               {values.insured.length > 0 && (
                                 <Fragment>
                                   {/* <Grid xs={10} md={11}></Grid> */}
-                                  <Grid xs={2} md={1}>
+                                  <Grid xs={2} sm={1} md={1}>
                                     <Button
                                       type="button"
                                       onClick={() => arrayHelpers.push(insuredObject)}
@@ -217,15 +226,18 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                           )}
                         />
                       </Grid>
+                      {smUp && (
+                        <Grid
+                          xs={2}
+                          sm={2}
+                          md={2}
+                          sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
+                        >
+                          <Typography variant="overline">Loss Location:</Typography>
+                        </Grid>
+                      )}
 
-                      <Grid
-                        xs={2}
-                        md={2}
-                        sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
-                      >
-                        <Typography variant="overline">Loss Location:</Typography>
-                      </Grid>
-                      <Grid xs={10} md={10}>
+                      <Grid xs={12} sm={10} md={10}>
                         <TextField
                           fullWidth
                           label="Address,City,State,Zip,Country"
@@ -235,14 +247,17 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                           value={values.lossLocation}
                         />
                       </Grid>
-                      <Grid
-                        xs={2}
-                        md={2}
-                        sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
-                      >
-                        <Typography variant="overline">Type of Loss:</Typography>
-                      </Grid>
-                      <Grid xs={10} md={4}>
+                      {smUp && (
+                        <Grid
+                          xs={2}
+                          sm={2}
+                          md={2}
+                          sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
+                        >
+                          <Typography variant="overline">Type of Loss:</Typography>
+                        </Grid>
+                      )}
+                      <Grid xs={12} sm={4} md={4}>
                         <TextField
                           fullWidth
                           label="Type of Loss"
@@ -253,13 +268,15 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                         />
                       </Grid>
                       <Grid
-                        xs={2}
+                        xs={4}
+                        sm={2}
                         md={2}
                         sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
                       >
                         <Typography variant="overline">Date of Loss:</Typography>
                       </Grid>
-                      <Grid xs={10} md={4}>
+
+                      <Grid xs={8} sm={4} md={4}>
                         <DatePicker
                           renderInput={(props) => (
                             <TextField fullWidth variant="outlined" {...props} />
@@ -272,17 +289,20 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
 
                       {/* Insurance part */}
 
-                      <Grid xs={10} md={12} sx={subheaderStyles}>
+                      <Grid xs={12} sm={12} md={12} sx={subheaderStyles}>
                         <Typography variant="formSubHeading">Insurance</Typography>
                       </Grid>
-                      <Grid
-                        xs={2}
-                        md={2}
-                        sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
-                      >
-                        <Typography variant="overline">Company:</Typography>
-                      </Grid>
-                      <Grid xs={10} md={4}>
+                      {smUp && (
+                        <Grid
+                          xs={2}
+                          sm={2}
+                          md={2}
+                          sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
+                        >
+                          <Typography variant="overline">Company:</Typography>
+                        </Grid>
+                      )}
+                      <Grid xs={12} sm={4} md={4}>
                         <TextField
                           fullWidth
                           label="Company"
@@ -292,14 +312,17 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                           value={values.insurance.company}
                         />
                       </Grid>
-                      <Grid
-                        xs={2}
-                        md={2}
-                        sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
-                      >
-                        <Typography variant="overline">File #:</Typography>
-                      </Grid>
-                      <Grid xs={10} md={4}>
+                      {smUp && (
+                        <Grid
+                          xs={2}
+                          sm={2}
+                          md={2}
+                          sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
+                        >
+                          <Typography variant="overline">File #:</Typography>
+                        </Grid>
+                      )}
+                      <Grid xs={12} sm={4} md={4}>
                         <TextField
                           fullWidth
                           label="File No."
@@ -309,14 +332,17 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                           value={values.insurance.fileNo}
                         />
                       </Grid>
-                      <Grid
-                        xs={2}
-                        md={2}
-                        sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
-                      >
-                        <Typography variant="overline">Policy #:</Typography>
-                      </Grid>
-                      <Grid xs={10} md={4}>
+                      {smUp && (
+                        <Grid
+                          xs={2}
+                          sm={2}
+                          md={2}
+                          sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
+                        >
+                          <Typography variant="overline">Policy #:</Typography>
+                        </Grid>
+                      )}
+                      <Grid xs={12} sm={4} md={4}>
                         <TextField
                           fullWidth
                           label="Policy No."
@@ -326,14 +352,18 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                           value={values.insurance.policyNo}
                         />
                       </Grid>
-                      <Grid
-                        xs={2}
-                        md={2}
-                        sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
-                      >
-                        <Typography variant="overline">Claim #:</Typography>
-                      </Grid>
-                      <Grid xs={10} md={4}>
+                      {smUp && (
+                        <Grid
+                          xs={2}
+                          sm={2}
+                          md={2}
+                          sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
+                        >
+                          <Typography variant="overline">Claim #:</Typography>
+                        </Grid>
+                      )}
+
+                      <Grid xs={12} sm={4} md={4}>
                         <TextField
                           fullWidth
                           label="Claim No."
@@ -345,13 +375,14 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                       </Grid>
 
                       <Grid
-                        xs={2}
+                        xs={4}
+                        sm={2}
                         md={2}
                         sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
                       >
                         <Typography variant="overline">Date Issued:</Typography>
                       </Grid>
-                      <Grid xs={10} md={4}>
+                      <Grid xs={8} sm={4} md={4}>
                         <DatePicker
                           renderInput={(props) => (
                             <TextField fullWidth variant="outlined" {...props} />
@@ -362,13 +393,14 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                         />
                       </Grid>
                       <Grid
-                        xs={2}
+                        xs={4}
+                        sm={2}
                         md={2}
                         sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
                       >
                         <Typography variant="overline">Expiry Date:</Typography>
                       </Grid>
-                      <Grid xs={10} md={4}>
+                      <Grid xs={8} sm={4} md={4}>
                         <DatePicker
                           renderInput={(props) => (
                             <TextField fullWidth variant="outlined" {...props} />
@@ -381,7 +413,7 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
 
                       {/* Policy Coverages part */}
 
-                      <Grid xs={10} md={12} sx={subheaderStyles}>
+                      <Grid xs={12} md={12} sx={subheaderStyles}>
                         <Typography variant="formSubHeading">Policy Coverages (Editor)</Typography>
                       </Grid>
 
@@ -393,7 +425,7 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                               {values.policyCoverage && values.policyCoverage.length > 0 ? (
                                 values.policyCoverage.map((item, index) => (
                                   <>
-                                    <Grid xs={12} md={4}>
+                                    <Grid xs={12} sm={4} md={4}>
                                       <TextField
                                         fullWidth
                                         size="small"
@@ -411,7 +443,7 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                                         ))}
                                       </TextField>
                                     </Grid>
-                                    <Grid xs={2} md={6}>
+                                    <Grid xs={8} sm={6} md={6}>
                                       <TextField
                                         fullWidth
                                         size="small"
@@ -421,7 +453,7 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                                         value={values.policyCoverage[index].amount}
                                       />
                                     </Grid>
-                                    <Grid xs={2} md={1}>
+                                    <Grid xs={2} sm={1} md={1}>
                                       <Button
                                         type="button"
                                         onClick={() => arrayHelpers.remove(index)}
@@ -432,7 +464,7 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                                   </>
                                 ))
                               ) : (
-                                <Grid xs={12} md={12}>
+                                <Grid xs={12} sm={12} md={12}>
                                   <Button
                                     type="button"
                                     onClick={() => arrayHelpers.push(policyCoverageObject)}
@@ -444,7 +476,7 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                               {values.policyCoverage.length > 0 && (
                                 <Fragment>
                                   {/* <Grid xs={10} md={11}></Grid> */}
-                                  <Grid xs={2} md={1}>
+                                  <Grid xs={2} sm={1} md={1}>
                                     <Button
                                       type="button"
                                       onClick={() => arrayHelpers.push(policyCoverageObject)}
@@ -461,11 +493,11 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
 
                       {/* Contacts part */}
 
-                      <Grid xs={10} md={12} sx={subheaderStyles}>
+                      <Grid xs={12} sm={12} md={12} sx={subheaderStyles}>
                         <Typography variant="formSubHeading">Contacts</Typography>
                       </Grid>
 
-                      <Grid xs={12} md={12}>
+                      <Grid xs={12} sm={12} md={12}>
                         <FieldArray
                           name="contacts"
                           render={(arrayHelpers) => (
@@ -473,7 +505,7 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                               {values.contacts && values.contacts.length > 0 ? (
                                 values.contacts.map((item, index) => (
                                   <>
-                                    <Grid xs={12} md={4}>
+                                    <Grid xs={12} sm={3} md={4}>
                                       <TextField
                                         fullWidth
                                         size="small"
@@ -484,24 +516,42 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                                         SelectProps={{ native: true }}
                                         value={values.contacts[index].category}
                                       >
-                                        {policyCoverageCategories.map((option) => (
+                                        {contactCategories.map((option) => (
                                           <option key={option.value} value={option.value}>
                                             {option.label}
                                           </option>
                                         ))}
                                       </TextField>
                                     </Grid>
-                                    <Grid xs={2} md={6}>
-                                      <TextField
-                                        fullWidth
-                                        size="small"
-                                        label="Name"
+                                    <Grid xs={6} sm={5} md={4}>
+                                      <Autocomplete
+                                        disablePortal
+                                        id="Contact"
                                         name={`contacts.${index}.contact`}
-                                        onChange={handleChange}
-                                        value={values.contacts[index].contact}
+                                        onChange={(e, v) => {
+                                          setFieldValue(`contacts.${index}.contact.name`, v?.label);
+                                          setFieldValue(`contacts.${index}.contact.id`, v?.id);
+                                        }}
+                                        value={{
+                                          label: values.contacts[index].contact.name,
+                                          id: values.contacts[index].contact.id,
+                                        }}
+                                        options={contactList}
+                                        renderInput={(params) => (
+                                          <TextField {...params} label="Name" size="small" />
+                                        )}
                                       />
                                     </Grid>
-                                    <Grid xs={2} md={1}>
+                                    <Grid xs={2} sm={2} md={2}>
+                                      <Button
+                                        onClick={() =>
+                                          editContact(values.contacts[index].contact.id)
+                                        }
+                                      >
+                                        Edit
+                                      </Button>
+                                    </Grid>
+                                    <Grid xs={2} sm={1} md={1}>
                                       <Button
                                         type="button"
                                         onClick={() => arrayHelpers.remove(index)}
@@ -512,7 +562,7 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                                   </>
                                 ))
                               ) : (
-                                <Grid xs={12} md={12}>
+                                <Grid xs={12} sm={12} md={12}>
                                   <Button
                                     type="button"
                                     onClick={() => arrayHelpers.push(contactsObject)}
@@ -524,7 +574,7 @@ export const ClaimsAdd = ({ open, handleClose, item }) => {
                               {values.contacts.length > 0 && (
                                 <Fragment>
                                   {/* <Grid xs={10} md={11}></Grid> */}
-                                  <Grid xs={2} md={1}>
+                                  <Grid xs={2} sm={1} md={1}>
                                     <Button
                                       type="button"
                                       onClick={() => arrayHelpers.push(contactsObject)}

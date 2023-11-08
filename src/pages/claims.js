@@ -1,8 +1,5 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useEffect } from "react";
 import Head from "next/head";
-import { subDays, subHours } from "date-fns";
-import ArrowDownOnSquareIcon from "@heroicons/react/24/solid/ArrowDownOnSquareIcon";
-import ArrowUpOnSquareIcon from "@heroicons/react/24/solid/ArrowUpOnSquareIcon";
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 import { Box, Button, Container, Stack, SvgIcon, Typography } from "@mui/material";
 import { useSelection } from "src/hooks/use-selection";
@@ -11,15 +8,16 @@ import { ClaimsAdd } from "src/sections/claims/claims-add";
 import { ClaimsTable } from "src/sections/claims/claims-table";
 import { ClaimsSearch } from "src/sections/claims/claims-search";
 import { applyPagination } from "src/utils/apply-pagination";
-
-const now = new Date();
+import { useDispatch, useSelector } from "react-redux";
+import { fetchContacts } from "src/store/reducers/contacts/thunks";
+import { ContactsAdd } from "src/sections/contacts/contacs-add";
 
 const claim = {
   id: "5e887ac47eed25309112fvcb",
   fileNo: "223021",
   insured: [
+    { name: "Dan Roussis", id: "970249f1-cb29-44ba-9d6a-bd3363e5774a" },
     { name: "Anika Viser", id: "99235a6d-b99a-4d74-b477-2dda8b06635f" },
-    { name: "With Extension", id: "cb8fde23-963c-4b24-bf44-0467c543f049" },
   ],
   lossLocation: "1038 Boston Rd, The Bronx, NY 10456, USA",
   lossType: "Fire",
@@ -32,8 +30,17 @@ const claim = {
     issueDate: new Date(),
     expiryDate: new Date(),
   },
-  policyCoverage: [],
-  contacts: [{ category: "Work", contact: "With Extension" }],
+  policyCoverage: [{ category: "Property Damage", amount: "23000" }],
+  contacts: [
+    {
+      category: "Adjuster",
+      contact: { name: "Howard Guttman", id: "20441dae-40dc-49a5-85fa-e570706b912b" },
+    },
+    {
+      category: "Adjuster",
+      contact: { name: "Anika Viser", id: "99235a6d-b99a-4d74-b477-2dda8b06635f" },
+    },
+  ],
   docs: ["", "", ""],
   tasks: ["", "", ""],
   forms: ["", "", ""],
@@ -54,6 +61,9 @@ const useClaimIds = (claims) => {
 };
 
 const Page = () => {
+  // State Variables======================================
+  const dispatch = useDispatch();
+  const { contactsData } = useSelector((state) => state.contacts);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(25);
   const claims = useClaims(page, rowsPerPage);
@@ -61,6 +71,11 @@ const Page = () => {
   const claimsSelection = useSelection(claimsIds);
   const [openModal, setOpenModal] = useState(false);
 
+  const [openContactsModal, setOpenContactsModal] = useState(false);
+  const [contactsModalData, setContactsModalData] = useState();
+  const [isEdit, setIsEdit] = useState(false);
+
+  // Modal Functions======================================
   const handleClose = () => {
     setOpenModal(false);
   };
@@ -71,6 +86,37 @@ const Page = () => {
 
   const handleRowsPerPageChange = useCallback((event) => {
     setRowsPerPage(event.target.value);
+  }, []);
+
+  // Contact Modal================================
+  const handleContactClick = (item) => {
+    const foundContact = contactsData.find((x) => x.id === item);
+    if (foundContact) {
+      setContactsModalData(foundContact);
+      setIsEdit(true);
+    } else {
+      console.log("Contact Not Found, You might have deleted it");
+    }
+  };
+
+  const handleContactsModalClose = (event, reason) => {
+    if (reason !== "backdropClick") {
+      setIsEdit(false);
+      setContactsModalData(null);
+      setOpenContactsModal(false);
+    }
+  };
+
+  // UseEffect Calls=======================================
+
+  useEffect(() => {
+    if (isEdit) {
+      setOpenContactsModal(true);
+    }
+  }, [isEdit]);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
   }, []);
 
   return (
@@ -120,7 +166,13 @@ const Page = () => {
               selected={claimsSelection.selected}
             />
           </Stack>
-          <ClaimsAdd open={openModal} handleClose={handleClose} />
+          <ClaimsAdd open={openModal} handleClose={handleClose} editContact={handleContactClick} />
+          <ContactsAdd
+            open={openContactsModal}
+            handleClose={handleContactsModalClose}
+            item={contactsModalData}
+            isEdit={isEdit}
+          />
         </Container>
       </Box>
     </>

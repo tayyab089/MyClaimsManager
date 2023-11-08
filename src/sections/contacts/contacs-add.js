@@ -1,3 +1,4 @@
+import React, { useState, useCallback, Fragment, useEffect } from "react";
 import {
   Modal,
   Box,
@@ -11,179 +12,86 @@ import {
   TextField,
   useMediaQuery,
   Avatar,
-  Menu,
-  MenuItem,
   Unstable_Grid2 as Grid,
   FormHelperText,
 } from "@mui/material";
-import InputMask from "react-input-mask";
 import { FieldArray, Formik } from "formik";
-import React, { useState, useCallback, Fragment, useEffect } from "react";
 import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { saveContactApi, updateContactApi } from "src/network/api";
+import { fetchContacts } from "src/store/reducers/contacts/thunks";
+
+import { useDispatch } from "react-redux";
+import { setAlertData } from "src/store/reducers/alert/thunks";
+
+import InputMask from "react-input-mask";
 import contactSchema from "./contacts-schema";
-// import { getInitials } from "src/utils/get-initials";
 
-// const AvatarDropdown = ({ avatars, selectedAvatar, onSelectAvatar }) => {
-//   const [anchorEl, setAnchorEl] = useState(null);
+import {
+  emptyValues,
+  addressTypes,
+  phEmailTypes,
+  addressObject,
+  phNoObject,
+  emailObject,
+} from "./contacts-static-data";
 
-//   const handleClick = (event) => {
-//     setAnchorEl(event.currentTarget);
-//   };
-
-//   const handleClose = () => {
-//     setAnchorEl(null);
-//   };
-
-//   const handleAvatarSelect = (avatar) => {
-//     onSelectAvatar(avatar);
-//     handleClose();
-//   };
-
-//   return (
-//     <div>
-//       <Button onClick={handleClick}>
-//         <Avatar src={selectedAvatar} alt="Selected Avatar" />
-//       </Button>
-//       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-//         {avatars.map((avatar, index) => (
-//           <MenuItem key={index} onClick={() => handleAvatarSelect(avatar)}>
-//             <Avatar src={avatar} alt={`Avatar ${index}`} />
-//           </MenuItem>
-//         ))}
-//       </Menu>
-//     </div>
-//   );
-// };
-
-// const avatars = [
-//   "",
-//   "/assets/avatars/avatar-carson-darrin.png",
-//   "/assets/avatars/avatar-fran-perez.png",
-//   "/assets/avatars/avatar-jie-yan-song.png",
-//   "/assets/avatars/avatar-anika-visser.png",
-//   "/assets/avatars/avatar-miron-vitold.png",
-//   "/assets/avatars/avatar-penjani-inyene.png",
-//   "/assets/avatars/avatar-omar-darboe.png",
-//   "/assets/avatars/avatar-siegbert-gottfried.png",
-//   "/assets/avatars/avatar-iulia-albu.png",
-//   "/assets/avatars/avatar-nasimiyu-danai.png",
-// ];
-
-const addressTypes = [
-  {
-    value: "Work",
-    label: "Work",
-  },
-  {
-    value: "Residence",
-    label: "Residence",
-  },
-];
-
-const phEmailTypes = [
-  {
-    value: "Work",
-    label: "Work",
-  },
-  {
-    value: "Personal",
-    label: "Personal",
-  },
-];
-
-export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, setAlertData }) => {
+export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
+  // State Variables =================================================
+  const dispatch = useDispatch();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const [initialValues, setInitialValues] = useState(emptyValues);
 
+  // Style Objects ===================================================
   const style = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: lgUp ? 800 : 400,
-    // bgcolor: "background.paper",
-    // border: "2px solid #000",
     boxShadow: 24,
     p: 1,
     overflow: "auto",
     maxHeight: "90%",
   };
 
-  const addressObject = {
-    type: "work",
-    city: "",
-    code: "",
-    zip: "",
-    street: "",
-  };
-
-  const phNoObject = { type: "work", no: "", ext: "" };
-  const emailObject = { type: "work", email: "" };
-
-  const emptyValues = {
-    id: "",
-    userId: "",
-    address: [
-      {
-        type: "work",
-        city: "",
-        state: "",
-        zip: "",
-        street: "",
-      },
-    ],
-    avatar: "",
-    email: [{ type: "work", email: "" }],
-    name: "",
-    businessName: "",
-    jobTitle: "",
-    phNo: [{ type: "work", no: "", ext: "" }],
-  };
-
-  const [initialValues, setInitialValues] = useState(emptyValues);
-
-  useEffect(() => {
-    setInitialValues(item ? item : emptyValues);
-  }, [item]);
-
+  // Submit Function ==================================================
   const handleSubmit = useCallback(
     async (values, setSubmitting) => {
       console.log(values);
       if (isEdit) {
         const response = await updateContactApi({ contact: values });
         if (response && response.data.type !== "error") {
-          // alert(response.data.message);
-          setAlertData({ open: true, message: response.data.message, type: response.data.type });
+          dispatch(
+            setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          );
           handleClose();
-          fetchContacts();
-          setTimeout(() => {
-            setAlertData({ open: false, message: "", type: "" });
-          }, 3000);
+          dispatch(fetchContacts());
         } else {
           alert(response.data.message);
         }
       } else {
         const response = await saveContactApi({ contact: values });
         if (response && response.data.type !== "error") {
-          // alert(response.data.message);
-          setAlertData({ open: true, message: response.data.message, type: response.data.type });
+          dispatch(
+            setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          );
           handleClose();
-          fetchContacts();
-          setTimeout(() => {
-            setAlertData({ open: false, message: "", type: "" });
-          }, 3000);
+          dispatch(fetchContacts());
         } else {
-          setAlertData({ open: true, message: response.data.message, type: response.data.type });
-          setTimeout(() => {
-            setAlertData({ open: false, message: "", type: "" });
-          }, 3000);
+          dispatch(
+            setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          );
         }
       }
-      // alert(JSON.stringify(response.data, null, 2));
       setSubmitting(false);
     },
     [isEdit]
   );
+
+  // UseEffect Calls ========================================================
+  useEffect(() => {
+    setInitialValues(item ? item : emptyValues);
+  }, [item]);
 
   return (
     <Modal
@@ -191,7 +99,6 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
-      // style={{ overflow: "scroll", height: "100%" }}
       disableEscapeKeyDown
     >
       <Box sx={style}>
@@ -202,17 +109,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
           enableReinitialize
           validateOnMount
         >
-          {({
-            values,
-            errors,
-            touched,
-            handleBlur,
-            handleChange,
-            handleSubmit,
-            isSubmitting,
-            setFieldValue,
-            isValid,
-          }) => (
+          {({ values, errors, handleBlur, handleChange, handleSubmit, isSubmitting, isValid }) => (
             <form autoComplete="off" noValidate onSubmit={handleSubmit}>
               {console.log(errors)}
               <Card>
@@ -232,11 +129,6 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit, fetchContacts, se
                     </Button>
                     <Grid container spacing={2}>
                       <Grid xs={2} md={1.5}>
-                        {/* <AvatarDropdown
-                          avatars={avatars}
-                          // selectedAvatar={values.avatar}
-                          // onSelectAvatar={(avatar) => setFieldValue("avatar", avatar)}
-                        /> */}
                         <Button>
                           <Avatar src={values.avatar} alt="Selected Avatar" />
                         </Button>

@@ -1,24 +1,26 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import { Box, Button, Container, Stack, SvgIcon, Typography } from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
-import { ClaimsAdd } from "src/sections/claims/claims-add";
 import { ClaimView } from "src/sections/claims/claim-view";
+import { CustomAlert } from "src/components/custom-alert";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { fetchContacts } from "src/store/reducers/contacts/thunks";
 
 const Page = () => {
+  const dispatch = useDispatch();
   const [claim, setClaim] = useState({});
-  const [openModal, setOpenModal] = useState(false);
-
-  const handleClose = () => {
-    setOpenModal(false);
-  };
 
   const router = useRouter();
   const { data } = router.query;
 
   useEffect(() => {
     setClaim(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
   }, []);
 
   return (
@@ -42,7 +44,7 @@ const Page = () => {
             </Stack>
             <ClaimView item={claim} />
           </Stack>
-          <ClaimsAdd open={openModal} handleClose={handleClose} />
+          <CustomAlert />
         </Container>
       </Box>
     </>
