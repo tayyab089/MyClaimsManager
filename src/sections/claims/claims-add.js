@@ -17,8 +17,13 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { FieldArray, Formik } from "formik";
 import React, { useState, useCallback, useEffect, Fragment } from "react";
 import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import { saveClaimApi, updateClaimApi } from "src/network/claims-api";
+import { fetchClaims } from "src/store/reducers/claims/thunks";
+
 import { useSelector } from "react-redux";
-import { ContactsEdit } from "../contacts/contacts-edit";
+import { useDispatch } from "react-redux";
+import { setAlertData } from "src/store/reducers/alert/thunks";
+
 import {
   emptyValues,
   policyCoverageCategories,
@@ -34,6 +39,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
     contactsData,
     meta: { isLoading },
   } = useSelector((state) => state.contacts);
+  const dispatch = useDispatch();
 
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
   const smDown = useMediaQuery((theme) => theme.breakpoints.down("sm"));
@@ -62,10 +68,40 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
   };
 
   // Submit Functions ==============================================
-  const handleSubmit = useCallback((values) => {
-    alert(JSON.stringify(values, null, 2));
-  }, []);
 
+  const handleSubmit = useCallback(
+    async (values, setSubmitting) => {
+      console.log(values);
+      if (item?.fileNo) {
+        const response = await updateClaimApi({ claim: values });
+        if (response && response.data.type !== "error") {
+          dispatch(
+            setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          );
+          handleClose();
+          dispatch(fetchClaims());
+        } else {
+          alert(response.data.message);
+        }
+      } else {
+        const response = await saveClaimApi({ claim: values });
+        console.log(response);
+        if (response && response.data.type !== "error") {
+          dispatch(
+            setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          );
+          handleClose();
+          dispatch(fetchClaims());
+        } else {
+          dispatch(
+            setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          );
+        }
+      }
+      setSubmitting(false);
+    },
+    [item?.fileNo]
+  );
   // UseEffect Calls ===============================================
   useEffect(() => {
     setContactList(
@@ -79,7 +115,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
   }, []);
 
   useEffect(() => {
-    setInitialValues(item?.id ? item : emptyValues);
+    setInitialValues(item?.fileNo ? item : emptyValues);
   }, [item]);
 
   return (
@@ -93,13 +129,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
       <Box sx={style}>
         <Formik
           initialValues={initialValues}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-
-              setSubmitting(false);
-            }, 400);
-          }}
+          onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting)}
         >
           {({ values, errors, handleChange, handleSubmit, isSubmitting, setFieldValue }) => (
             <form autoComplete="off" noValidate onSubmit={handleSubmit}>

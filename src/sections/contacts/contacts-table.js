@@ -49,6 +49,7 @@ export const ContactsTable = (props) => {
 
   // Delete Function =====================================================
   const handleDelete = async (event, contact) => {
+    console.log(contact);
     event.stopPropagation();
     const customTitle = "Confirm Delete";
     const customMessage = `Are you sure you want to delete contact: <strong> ${contact.name} </strong> along with their phone numbers, emails and locations? Please note that this process is not reversible.`;

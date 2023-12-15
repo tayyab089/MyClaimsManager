@@ -5,13 +5,13 @@ import axios from "axios";
 import { useAuthContext } from "src/contexts/auth-context";
 
 export const api = axios.create({
-  baseURL: "https://s4r7rz1w2m.execute-api.us-east-1.amazonaws.com/dev",
-  // baseURL: "http://localhost:3001/",
+  // baseURL: "https://s4r7rz1w2m.execute-api.us-east-1.amazonaws.com/dev",
+  baseURL: "http://localhost:3001/",
 });
 
 // Function to get the user token from Redux state
 
-const getHeadersConfig = () => {
+export const getHeadersConfig = () => {
   //   const accessToken = store.getState().auth.accessToken;
   return {
     headers: {
@@ -40,6 +40,7 @@ export const saveContactApi = async (data) => {
 };
 
 export const deleteContactApi = async (data) => {
+  console.log(data);
   try {
     const response = await api.delete(`contacts/${data.contact.id}`, {
       ...getHeadersConfig(),

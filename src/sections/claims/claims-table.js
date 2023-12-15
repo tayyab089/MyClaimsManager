@@ -43,13 +43,13 @@ export const ClaimsTable = (props) => {
             <TableBody>
               {items.map((claim) => {
                 const isSelected = selected.includes(claim.id);
-                const timeDiff = new Date() - claim.lossDate;
+                const timeDiff = new Date() - new Date(claim.lossDate);
                 const age = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
 
                 return (
                   <TableRow
                     hover
-                    key={claim.id}
+                    key={claim.fileNo}
                     selected={isSelected}
                     style={{ cursor: "pointer" }}
                     onClick={() => {

@@ -11,6 +11,8 @@ import { applyPagination } from "src/utils/apply-pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts } from "src/store/reducers/contacts/thunks";
 import { ContactsAdd } from "src/sections/contacts/contacs-add";
+import { CustomAlert } from "src/components/custom-alert";
+import { fetchClaims } from "src/store/reducers/claims/thunks";
 
 const claim = {
   id: "5e887ac47eed25309112fvcb",
@@ -48,10 +50,10 @@ const claim = {
 
 const data = Array.from({ length: 10 }, () => claim);
 
-const useClaims = (page, rowsPerPage) => {
+const useClaims = (claimsData, page, rowsPerPage) => {
   return useMemo(() => {
-    return applyPagination(data, page, rowsPerPage);
-  }, [page, rowsPerPage]);
+    return applyPagination(claimsData, page, rowsPerPage);
+  }, [claimsData, page, rowsPerPage]);
 };
 
 const useClaimIds = (claims) => {
@@ -64,9 +66,10 @@ const Page = () => {
   // State Variables======================================
   const dispatch = useDispatch();
   const { contactsData } = useSelector((state) => state.contacts);
+  const { claimsData } = useSelector((state) => state.claims);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(25);
-  const claims = useClaims(page, rowsPerPage);
+  const claims = useClaims(claimsData, page, rowsPerPage);
   const claimsIds = useClaimIds(claims);
   const claimsSelection = useSelection(claimsIds);
   const [openModal, setOpenModal] = useState(false);
@@ -117,6 +120,7 @@ const Page = () => {
 
   useEffect(() => {
     dispatch(fetchContacts());
+    dispatch(fetchClaims());
   }, []);
 
   return (
@@ -174,6 +178,7 @@ const Page = () => {
             isEdit={isEdit}
           />
         </Container>
+        <CustomAlert />
       </Box>
     </>
   );

@@ -1,4 +1,5 @@
 export const emptyValues = {
+  userId: "fe5daa66-05c0-4e48-9235-95ae370ded9d",
   fileNo: "",
   insured: [],
   lossLocation: "",

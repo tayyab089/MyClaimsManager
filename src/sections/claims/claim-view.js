@@ -4,6 +4,9 @@ import { ContactsAdd } from "../contacts/contacs-add";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setAlertData } from "src/store/reducers/alert/thunks";
+import useConfirm from "src/hooks/use-confirm";
+import { deleteClaimApi } from "src/network/claims-api";
+import { useRouter } from "next/router";
 
 export const ClaimView = ({ item }) => {
   const dispatch = useDispatch();
@@ -14,6 +17,8 @@ export const ClaimView = ({ item }) => {
   const [openContactsModal, setOpenContactsModal] = useState(false);
   const [contactsModalData, setContactsModalData] = useState();
   const [isEdit, setIsEdit] = useState(false);
+
+  const router = useRouter();
 
   // Style Objects =============================
   const style = {
@@ -36,7 +41,7 @@ export const ClaimView = ({ item }) => {
   };
 
   useEffect(() => {
-    if (modalData?.id) {
+    if (modalData?.fileNo) {
       setOpenModal(true);
     }
   }, [modalData]);
@@ -55,6 +60,23 @@ export const ClaimView = ({ item }) => {
           type: "warning",
         })
       );
+    }
+  };
+
+  // Delete Function =====================================================
+  const [Dialog, confirmDelete] = useConfirm();
+
+  const handleDelete = async (claim) => {
+    const customTitle = "Confirm Delete";
+    const customMessage = `Are you sure you want to delete claim: <strong> ${claim.fileNo} </strong> along with all its data? Please note that this process is not reversible.`;
+
+    const ans = await confirmDelete(customTitle, customMessage);
+    if (ans) {
+      console.log("Deleting Claim");
+      deleteClaimApi({ claim: claim });
+      router.push("/claims");
+    } else {
+      console.log("dont delete");
     }
   };
 
@@ -78,12 +100,17 @@ export const ClaimView = ({ item }) => {
     <Box sx={style}>
       <Grid container spacing={1}>
         {/* Insured Section */}
-        <Grid xs={10} sm={11} md={11}>
+        <Grid xs={8} sm={10} md={10}>
           <Typography variant="formTag">Insured</Typography>
         </Grid>
         <Grid xs={2} sm={1} md={1}>
           <Button variant="contained" size="small" onClick={() => setModalData(item)}>
             Edit
+          </Button>
+        </Grid>
+        <Grid xs={2} sm={1} md={1}>
+          <Button variant="contained" size="small" color="error" onClick={() => handleDelete(item)}>
+            Delete
           </Button>
         </Grid>
         {item?.insured?.map((contact, index) => (
@@ -200,6 +227,7 @@ export const ClaimView = ({ item }) => {
         item={contactsModalData}
         isEdit={isEdit}
       />
+      <Dialog />
     </Box>
   );
 };
