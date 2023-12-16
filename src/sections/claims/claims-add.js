@@ -12,6 +12,7 @@ import {
   Autocomplete,
   useMediaQuery,
   Unstable_Grid2 as Grid,
+  CircularProgress,
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { FieldArray, Formik } from "formik";
@@ -206,6 +207,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                           id: values.insured[index].id,
                                         }}
                                         options={contactList}
+                                        getOptionLabel={(option) => option.label || ""}
                                         renderInput={(params) => (
                                           <TextField {...params} label="Insured" size="small" />
                                         )}
@@ -567,6 +569,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                           id: values.contacts[index].contact.id,
                                         }}
                                         options={contactList}
+                                        getOptionLabel={(option) => option.label || ""}
                                         renderInput={(params) => (
                                           <TextField {...params} label="Name" size="small" />
                                         )}
@@ -627,7 +630,11 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                     Cancel
                   </Button>
                   <Button variant="contained" type="submit" disabled={isSubmitting}>
-                    Save details
+                    {isSubmitting ? (
+                      <CircularProgress style={{ width: 24, height: 24, color: "white" }} />
+                    ) : (
+                      "Save details"
+                    )}
                   </Button>
                 </CardActions>
               </Card>

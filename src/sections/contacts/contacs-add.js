@@ -14,6 +14,7 @@ import {
   Avatar,
   Unstable_Grid2 as Grid,
   FormHelperText,
+  CircularProgress,
 } from "@mui/material";
 import { FieldArray, Formik } from "formik";
 import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
@@ -490,7 +491,13 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                     Cancel
                   </Button>
                   <Button variant="contained" type="submit" disabled={isSubmitting || !isValid}>
-                    {isEdit ? "Update" : "Save details"}
+                    {isSubmitting ? (
+                      <CircularProgress style={{ width: 24, height: 24, color: "white" }} />
+                    ) : isEdit ? (
+                      "Update"
+                    ) : (
+                      "Save details"
+                    )}
                   </Button>
                 </CardActions>
               </Card>

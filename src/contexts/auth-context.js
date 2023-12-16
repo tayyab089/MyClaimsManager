@@ -81,7 +81,7 @@ export const AuthProvider = (props) => {
     if (isAuthenticated) {
       const user = {
         id: "fe5daa66-05c0-4e48-9235-95ae370ded9d",
-        avatar: "/assets/avatars/avatar-siegbert-gottfried.png",
+        avatar: "",
         name: "Howie Guttman",
         email: "howie.guttman@outlook.com",
       };
@@ -114,7 +114,7 @@ export const AuthProvider = (props) => {
 
     const user = {
       id: "fe5daa66-05c0-4e48-9235-95ae370ded9d",
-      avatar: "/assets/avatars/avatar-siegbert-gottfried.png",
+      avatar: "",
       name: "Howie Guttman",
       email: "howie.guttman@outlook.com",
     };

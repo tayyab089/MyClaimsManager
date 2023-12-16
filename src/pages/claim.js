@@ -5,23 +5,20 @@ import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { ClaimView } from "src/sections/claims/claim-view";
 import { CustomAlert } from "src/components/custom-alert";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts } from "src/store/reducers/contacts/thunks";
 
 const Page = () => {
   const dispatch = useDispatch();
   const [claim, setClaim] = useState({});
+  const { claimsData } = useSelector((state) => state.claims);
 
   const router = useRouter();
-  const { data } = router.query;
+  const { fileNo } = router.query;
 
   useEffect(() => {
-    setClaim(JSON.parse(data));
-  }, []);
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, []);
+    setClaim(claimsData.filter((i) => i.fileNo == fileNo)[0]);
+  }, [claimsData]);
 
   return (
     <>

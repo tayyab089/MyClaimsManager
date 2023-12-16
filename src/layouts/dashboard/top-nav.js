@@ -18,6 +18,9 @@ import { alpha } from "@mui/material/styles";
 import { usePopover } from "src/hooks/use-popover";
 import { AccountPopover } from "./account-popover";
 import { useRouter } from "next/router";
+import { getInitials } from "src/utils/get-initials";
+import { useContext } from "react";
+import { AuthContext } from "src/contexts/auth-context";
 
 const SIDE_NAV_WIDTH = 280;
 const TOP_NAV_HEIGHT = 64;
@@ -27,6 +30,7 @@ export const TopNav = (props) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
   const accountPopover = usePopover();
   const router = useRouter();
+  const { user } = useContext(AuthContext);
 
   return (
     <>
@@ -97,8 +101,10 @@ export const TopNav = (props) => {
                 height: 40,
                 width: 40,
               }}
-              src="/assets/avatars/avatar-siegbert-gottfried.png"
-            />
+              src=""
+            >
+              {getInitials(user.name)}
+            </Avatar>
           </Stack>
         </Stack>
       </Box>

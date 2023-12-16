@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState, useEffect } from "react";
 import Head from "next/head";
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
-import { Box, Button, Container, Stack, SvgIcon, Typography } from "@mui/material";
+import { Box, Button, Container, Stack, SvgIcon, Typography, LinearProgress } from "@mui/material";
 import { useSelection } from "src/hooks/use-selection";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { ClaimsAdd } from "src/sections/claims/claims-add";
@@ -13,6 +13,8 @@ import { fetchContacts } from "src/store/reducers/contacts/thunks";
 import { ContactsAdd } from "src/sections/contacts/contacs-add";
 import { CustomAlert } from "src/components/custom-alert";
 import { fetchClaims } from "src/store/reducers/claims/thunks";
+import { setAlertData } from "src/store/reducers/alert/thunks";
+import { deleteClaimApi } from "src/network/claims-api";
 
 const claim = {
   id: "5e887ac47eed25309112fvcb",
@@ -66,7 +68,10 @@ const Page = () => {
   // State Variables======================================
   const dispatch = useDispatch();
   const { contactsData } = useSelector((state) => state.contacts);
-  const { claimsData } = useSelector((state) => state.claims);
+  const {
+    claimsData,
+    meta: { isLoading },
+  } = useSelector((state) => state.claims);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(25);
   const claims = useClaims(claimsData, page, rowsPerPage);
@@ -77,6 +82,25 @@ const Page = () => {
   const [openContactsModal, setOpenContactsModal] = useState(false);
   const [contactsModalData, setContactsModalData] = useState();
   const [isEdit, setIsEdit] = useState(false);
+
+  // API Functions====================================================
+  const deleteClaim = async (claim) => {
+    try {
+      const response = await deleteClaimApi({ claim: claim });
+      if (response && response.data.type !== "error") {
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
+      } else {
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
+      }
+      dispatch(fetchClaims());
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   // Modal Functions======================================
   const handleClose = () => {
@@ -119,8 +143,8 @@ const Page = () => {
   }, [isEdit]);
 
   useEffect(() => {
-    dispatch(fetchContacts());
     dispatch(fetchClaims());
+    dispatch(fetchContacts());
   }, []);
 
   return (
@@ -156,19 +180,26 @@ const Page = () => {
               </div>
             </Stack>
             <ClaimsSearch />
-            <ClaimsTable
-              count={data.length}
-              items={claims}
-              onDeselectAll={claimsSelection.handleDeselectAll}
-              onDeselectOne={claimsSelection.handleDeselectOne}
-              onPageChange={handlePageChange}
-              onRowsPerPageChange={handleRowsPerPageChange}
-              onSelectAll={claimsSelection.handleSelectAll}
-              onSelectOne={claimsSelection.handleSelectOne}
-              page={page}
-              rowsPerPage={rowsPerPage}
-              selected={claimsSelection.selected}
-            />
+            {isLoading ? (
+              <Box sx={{ width: "100%" }}>
+                <LinearProgress />
+              </Box>
+            ) : (
+              <ClaimsTable
+                count={data.length}
+                items={claims}
+                onDeselectAll={claimsSelection.handleDeselectAll}
+                onDeselectOne={claimsSelection.handleDeselectOne}
+                onPageChange={handlePageChange}
+                onRowsPerPageChange={handleRowsPerPageChange}
+                onSelectAll={claimsSelection.handleSelectAll}
+                onSelectOne={claimsSelection.handleSelectOne}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                selected={claimsSelection.selected}
+                deleteClaim={deleteClaim}
+              />
+            )}
           </Stack>
           <ClaimsAdd open={openModal} handleClose={handleClose} editContact={handleContactClick} />
           <ContactsAdd

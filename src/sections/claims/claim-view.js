@@ -1,12 +1,13 @@
-import { Grid, Box, Typography, Stack, Button, Link } from "@mui/material";
+import { Grid, Box, Typography, Button, useMediaQuery } from "@mui/material";
 import { ClaimsAdd } from "./claims-add";
 import { ContactsAdd } from "../contacts/contacs-add";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setAlertData } from "src/store/reducers/alert/thunks";
 import useConfirm from "src/hooks/use-confirm";
 import { deleteClaimApi } from "src/network/claims-api";
 import { useRouter } from "next/router";
+import { useReactToPrint } from "react-to-print";
 
 export const ClaimView = ({ item }) => {
   const dispatch = useDispatch();
@@ -17,6 +18,10 @@ export const ClaimView = ({ item }) => {
   const [openContactsModal, setOpenContactsModal] = useState(false);
   const [contactsModalData, setContactsModalData] = useState();
   const [isEdit, setIsEdit] = useState(false);
+
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+
+  const componentRef = useRef();
 
   const router = useRouter();
 
@@ -88,6 +93,11 @@ export const ClaimView = ({ item }) => {
     }
   };
 
+  // Print Function ==============================
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
   // Useffect Calls ==============================
 
   useEffect(() => {
@@ -97,19 +107,64 @@ export const ClaimView = ({ item }) => {
   }, [isEdit]);
 
   return (
-    <Box sx={style}>
+    <Box sx={style} ref={componentRef}>
+      <Box
+        sx={{
+          "@media print": {
+            display: "block",
+            marginBottom: "100px",
+          },
+          display: "none",
+        }}
+      >
+        <Typography variant="h4">{`Claim ${item?.fileNo}/${item?.insurance?.fileNo}`}</Typography>
+      </Box>
       <Grid container spacing={1}>
         {/* Insured Section */}
-        <Grid xs={8} sm={10} md={10}>
+        <Grid xs={6} sm={7.5} md={9}>
           <Typography variant="formTag">Insured</Typography>
         </Grid>
-        <Grid xs={2} sm={1} md={1}>
-          <Button variant="contained" size="small" onClick={() => setModalData(item)}>
+        <Grid xs={2} sm={1.5} md={1}>
+          <Button
+            variant={!lgUp ? "text" : "contained"}
+            size="small"
+            color="secondary"
+            onClick={handlePrint}
+            sx={{
+              "@media print": {
+                display: "none",
+              },
+            }}
+          >
+            Print
+          </Button>
+        </Grid>
+        <Grid xs={2} sm={1.5} md={1}>
+          <Button
+            variant={!lgUp ? "text" : "contained"}
+            size="small"
+            onClick={() => setModalData(item)}
+            sx={{
+              "@media print": {
+                display: "none",
+              },
+            }}
+          >
             Edit
           </Button>
         </Grid>
-        <Grid xs={2} sm={1} md={1}>
-          <Button variant="contained" size="small" color="error" onClick={() => handleDelete(item)}>
+        <Grid xs={2} sm={1.5} md={1}>
+          <Button
+            variant={!lgUp ? "text" : "contained"}
+            size="small"
+            color="error"
+            onClick={() => handleDelete(item)}
+            sx={{
+              "@media print": {
+                display: "none",
+              },
+            }}
+          >
             Delete
           </Button>
         </Grid>

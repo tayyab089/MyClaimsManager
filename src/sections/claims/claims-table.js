@@ -11,8 +11,23 @@ import {
   TablePagination,
   TableRow,
   Typography,
+  Button,
+  useMediaQuery,
 } from "@mui/material";
 import { Scrollbar } from "src/components/scrollbar";
+import { styled } from "@mui/material/styles";
+import useConfirm from "src/hooks/use-confirm";
+import { deleteClaimApi } from "src/network/claims-api";
+import { useDispatch } from "react-redux";
+import { fetchClaims } from "src/store/reducers/claims/thunks";
+
+const ButtonsContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+  },
+}));
 
 export const ClaimsTable = (props) => {
   const {
@@ -22,22 +37,41 @@ export const ClaimsTable = (props) => {
     onRowsPerPageChange,
     page = 0,
     rowsPerPage = 0,
+    deleteClaim,
     selected = [],
   } = props;
 
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const dispatch = useDispatch();
   const router = useRouter();
+
+  // Delete Function =====================================================
+  const [Dialog, confirmDelete] = useConfirm();
+
+  const handleDelete = async (claim) => {
+    const customTitle = "Confirm Delete";
+    const customMessage = `Are you sure you want to delete claim: <strong> ${claim.fileNo} </strong> along with all its data? Please note that this process is not reversible.`;
+
+    const ans = await confirmDelete(customTitle, customMessage);
+    if (ans) {
+      deleteClaim(claim);
+    } else {
+      console.log("dont delete");
+    }
+  };
 
   return (
     <Card>
       <Scrollbar>
-        <Box sx={{ minWidth: 800 }}>
+        <Box sx={{ minWidth: 360 }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>File No</TableCell>
-                <TableCell>Insured</TableCell>
-                <TableCell>Insurance Co.</TableCell>
-                <TableCell>Age</TableCell>
+                <TableCell style={{ width: "15%" }}>File No</TableCell>
+                <TableCell style={{ width: "25%" }}>Insured</TableCell>
+                <TableCell style={{ width: "25%" }}>Insurance Co.</TableCell>
+                <TableCell style={{ width: "10%" }}>Age</TableCell>
+                <TableCell style={{ width: "25%" }}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -52,12 +86,6 @@ export const ClaimsTable = (props) => {
                     key={claim.fileNo}
                     selected={isSelected}
                     style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      router.push({
-                        pathname: "/claim",
-                        query: { data: JSON.stringify(claim) },
-                      });
-                    }}
                   >
                     <TableCell>
                       <Stack alignItems="center" direction="row" spacing={2}>
@@ -71,6 +99,41 @@ export const ClaimsTable = (props) => {
                     </TableCell>
                     <TableCell>{claim?.insurance?.company}</TableCell>
                     <TableCell> {age} Days</TableCell>
+                    <TableCell>
+                      <ButtonsContainer>
+                        <Button
+                          onClick={() => {
+                            router.push({
+                              pathname: "/claim",
+                              query: { fileNo: claim.fileNo },
+                            });
+                          }}
+                          variant={!lgUp ? "text" : "contained"}
+                          size="small"
+                          style={{ marginRight: 10 }}
+                        >
+                          View
+                        </Button>
+                        <Button
+                          onClick={() => handleRowClick(contact)}
+                          variant={!lgUp ? "text" : "outlined"}
+                          size="small"
+                          color="secondary"
+                          style={{ marginRight: 10 }}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          onClick={() => handleDelete(claim)}
+                          color="error"
+                          variant={!lgUp ? "text" : "outlined"}
+                          size="small"
+                          style={{ marginRight: 10 }}
+                        >
+                          Delete
+                        </Button>
+                      </ButtonsContainer>
+                    </TableCell>
                   </TableRow>
                 );
               })}
@@ -87,6 +150,7 @@ export const ClaimsTable = (props) => {
         rowsPerPage={rowsPerPage}
         rowsPerPageOptions={[5, 10, 25]}
       />
+      <Dialog />
     </Card>
   );
 };
