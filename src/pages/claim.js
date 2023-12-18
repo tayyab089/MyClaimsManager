@@ -5,11 +5,9 @@ import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { ClaimView } from "src/sections/claims/claim-view";
 import { CustomAlert } from "src/components/custom-alert";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchContacts } from "src/store/reducers/contacts/thunks";
+import { useSelector } from "react-redux";
 
 const Page = () => {
-  const dispatch = useDispatch();
   const [claim, setClaim] = useState({});
   const { claimsData } = useSelector((state) => state.claims);
 

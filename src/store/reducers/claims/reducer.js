@@ -4,7 +4,7 @@ import { SET_CLAIMS, REMOVE_CLAIMS, IS_FETCHING_CLAIMS } from "./actions";
 const initialState = {
   claimsData: [],
   meta: {
-    isLoading: false,
+    isClaimLoading: false,
   },
 };
 
@@ -20,7 +20,7 @@ const claimsReducer = createReducer(initialState, (builder) => {
       return {
         ...state,
         meta: {
-          isLoading: payload,
+          isClaimLoading: payload,
         },
       };
     });

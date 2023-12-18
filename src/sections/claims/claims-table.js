@@ -38,6 +38,7 @@ export const ClaimsTable = (props) => {
     page = 0,
     rowsPerPage = 0,
     deleteClaim,
+    handleEditModalOpen,
     selected = [],
   } = props;
 
@@ -115,7 +116,7 @@ export const ClaimsTable = (props) => {
                           View
                         </Button>
                         <Button
-                          onClick={() => handleRowClick(contact)}
+                          onClick={() => handleEditModalOpen(claim)}
                           variant={!lgUp ? "text" : "outlined"}
                           size="small"
                           color="secondary"

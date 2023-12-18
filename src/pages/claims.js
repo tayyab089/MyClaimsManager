@@ -70,7 +70,7 @@ const Page = () => {
   const { contactsData } = useSelector((state) => state.contacts);
   const {
     claimsData,
-    meta: { isLoading },
+    meta: { isClaimLoading },
   } = useSelector((state) => state.claims);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(25);
@@ -78,6 +78,7 @@ const Page = () => {
   const claimsIds = useClaimIds(claims);
   const claimsSelection = useSelection(claimsIds);
   const [openModal, setOpenModal] = useState(false);
+  const [claimsModalData, setClaimsModalData] = useState();
 
   const [openContactsModal, setOpenContactsModal] = useState(false);
   const [contactsModalData, setContactsModalData] = useState();
@@ -104,6 +105,7 @@ const Page = () => {
 
   // Modal Functions======================================
   const handleClose = () => {
+    setClaimsModalData({});
     setOpenModal(false);
   };
 
@@ -114,6 +116,10 @@ const Page = () => {
   const handleRowsPerPageChange = useCallback((event) => {
     setRowsPerPage(event.target.value);
   }, []);
+
+  const handleEditModalOpen = (item) => {
+    setClaimsModalData(item);
+  };
 
   // Contact Modal================================
   const handleContactClick = (item) => {
@@ -141,6 +147,12 @@ const Page = () => {
       setOpenContactsModal(true);
     }
   }, [isEdit]);
+
+  useEffect(() => {
+    if (claimsModalData?.fileNo) {
+      setOpenModal(true);
+    }
+  }, [claimsModalData]);
 
   useEffect(() => {
     dispatch(fetchClaims());
@@ -180,7 +192,7 @@ const Page = () => {
               </div>
             </Stack>
             <ClaimsSearch />
-            {isLoading ? (
+            {isClaimLoading ? (
               <Box sx={{ width: "100%" }}>
                 <LinearProgress />
               </Box>
@@ -198,10 +210,16 @@ const Page = () => {
                 rowsPerPage={rowsPerPage}
                 selected={claimsSelection.selected}
                 deleteClaim={deleteClaim}
+                handleEditModalOpen={handleEditModalOpen}
               />
             )}
           </Stack>
-          <ClaimsAdd open={openModal} handleClose={handleClose} editContact={handleContactClick} />
+          <ClaimsAdd
+            open={openModal}
+            handleClose={handleClose}
+            editContact={handleContactClick}
+            item={claimsModalData}
+          />
           <ContactsAdd
             open={openContactsModal}
             handleClose={handleContactsModalClose}
