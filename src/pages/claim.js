@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
+
 import { ClaimView } from "src/sections/claims/claim-view";
+import { InsuraceForms } from "src/sections/claims/insurance-forms";
+
 import { CustomAlert } from "src/components/custom-alert";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -38,6 +41,7 @@ const Page = () => {
               </Stack>
             </Stack>
             <ClaimView item={claim} />
+            <InsuraceForms item={claim} />
           </Stack>
           <CustomAlert />
         </Container>

@@ -15,9 +15,9 @@ export const emptyValues = {
   },
   policyCoverage: [],
   contacts: [],
-  docs: ["", "", ""],
-  tasks: ["", "", ""],
-  forms: ["", "", ""],
+  docs: [],
+  tasks: [],
+  forms: [],
 };
 
 export const policyCoverageCategories = [

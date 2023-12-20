@@ -1,0 +1,699 @@
+@font-face {
+  font-family: "webflow-icons";
+  src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAALAIAAAwAwT1MvMg6SAy0AAAC8AAAAYGNtYXAaVcxaAAABHAAAAExnYXNwAAAAEAAAAWgAAAAIZ2x5ZgscV1gAAAFwAAABhGhlYWQCkFKvAAAC9AAAADZoaGVhB0MDyQAAAywAAAAkaG10eBIAA10AAANQAAAAIGxvY2EBMADyAAADcAAAABJtYXhwAAwATQAAA4QAAAAgbmFtZWTuiIAAAAOkAAABe3Bvc3QAAwAAAAAFIAAAACAAAwQAAZAABQAAApkCzAAAAI8CmQLMAAAB6wAzAQkAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAABAAADmAwPA/8D/wAPAAEAAAAABAAAAAAAAAAAAAAAgAAAAAAACAAAAAwAAABQAAwABAAAAFAAEADgAAAAKAAgAAgACAAEAIOYD//3//wAAAAAAIOYA//3//wAB/+MaBAADAAEAAAAAAAAAAAAAAAEAAf//AA8AAQAAAAAAAAAAAAIAADc5AQAAAAABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQEgAAADIAOAAAUAAAkBBwkBFwMg/kBAAYD+gEABwAHAQP6A/oBAAAEA4AAAAuADgAAFAAATARcJAQfgAcBA/oABgEABwAHAQP6A/oBAAAADAMAA4ANAAsAAGAAxAEoAAAEhIg4CHQEUHgIzITI+Aj0BNC4CIxUhIg4CHQEUHgIzITI+Aj0BNC4CIxUhIg4CHQEUHgIzITI+Aj0BNC4CIwMg/cAHCwkFBQkLBwJABwsJBQUJCwf9wAcLCQUFCQsHAkAHCwkFBQkLB/3ABwsJBQUJCwcCQAcLCQUFCQsHAsAFCQsHIAcLCQUFCQsHIAcLCQXABQkLByAHCwkFBQkLByAHCwkFwAUJCwcgBwsJBQUJCwcgBwsJBQAAAAABAJ0AtAOBApUABQAACQIHCQEDJP7r/upcAXEBcgKU/usBFFv+egGGAAAAAAEAAAABAADSLAJOXw889QALBAAAAAAAz/iHGQAAAADP+IcZAAAAAAOBA4AAAAAIAAIAAAAAAAAAAQAAA8D/wAAABAAAAAAAA4EAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAACAAAABAABIAQAAOAEAADABAAAnQAAAAAACgAUAB4AMgBGAKwAwgAAAAEAAAAIAEsAAwAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAOAK4AAQAAAAAAAQAaAAAAAQAAAAAAAgAOAHEAAQAAAAAAAwAaADAAAQAAAAAABAAaAH8AAQAAAAAABQAWABoAAQAAAAAABgANAEoAAQAAAAAACgA0AJkAAwABBAkAAQAaAAAAAwABBAkAAgAOAHEAAwABBAkAAwAaADAAAwABBAkABAAaAH8AAwABBAkABQAWABoAAwABBAkABgAaAFcAAwABBAkACgA0AJkAdwBlAGIAZgBsAG8AdwAtAGkAYwBvAG4AcwBWAGUAcgBzAGkAbwBuACAAMQAuADAAdwBlAGIAZgBsAG8AdwAtAGkAYwBvAG4Ac3dlYmZsb3ctaWNvbnMAdwBlAGIAZgBsAG8AdwAtAGkAYwBvAG4AcwBSAGUAZwB1AGwAYQByAHcAZQBiAGYAbABvAHcALQBpAGMAbwBuAHMARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAYgB5ACAASQBjAG8ATQBvAG8AbgAuAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA)
+      format("truetype"),
+    url(data:application/font-woff;charset=utf-8;base64,d09GRk9UVE8AAAVcAAoAAAAABRQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABDRkYgAAAA9AAAAZMAAAGTuzUomU9TLzIAAAKIAAAAYAAAAGAOkgMtY21hcAAAAugAAABMAAAATBpVzFpnYXNwAAADNAAAAAgAAAAIAAAAEGhlYWQAAAM8AAAANgAAADYCkFKvaGhlYQAAA3QAAAAkAAAAJAdDA8lobXR4AAADmAAAACAAAAAgEgADXW1heHAAAAO4AAAABgAAAAYACFAAbmFtZQAAA8AAAAF7AAABe2TuiIBwb3N0AAAFPAAAACAAAAAgAAMAAAEABAQAAQEBDndlYmZsb3ctaWNvbnMAAQIAAQA6+BwC+BsD+BgEHgoACXf/i4seCgAJd/+LiwwHi0v6lPpUBR0AAACaDx0AAACfER0AAAAJHQAAAYoSAAkBAQ4bHR8iJywxNndlYmZsb3ctaWNvbnN3ZWJmbG93LWljb25zdTB1MXUyMHVFNjAwdUU2MDF1RTYwMnVFNjAzAAACAYkABgAIAQEEBwoNJDvH4P6UDv6UDv6UDvyUDvm0+FQV/FT4VEtL+BT8FPwU/BTLSwUO93T4VBX4VPhUy0v8FPwU+BT8FEtLBQ75tPlUFfzUiwV5i319i3kIi2sFi3mZfZ2LCPjUiwWdi5mZi50Ii6sFi519mXmLCIv7VBX81IsFeYt9fYt5CItrBYt5mX2diwj41IsFnYuZmYudCIurBYudfZl5iwiL+1QV/NSLBXmLfX2LeQiLawWLeZl9nYsI+NSLBZ2LmZmLnQiLqwWLnX2ZeYsIDvm4+SkV+6n7qvuq96ovLvgG/Bj4BvgYBQ76lBT6lBWLDAoAAAMEAAGQAAUAAAKZAswAAACPApkCzAAAAesAMwEJAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAQAAA5gMDwP/A/8ADwABAAAAAAQAAAAAAAAAAAAAAIAAAAAAAAgAAAAMAAAAUAAMAAQAAABQABAA4AAAACgAIAAIAAgABACDmA//9//8AAAAAACDmAP/9//8AAf/jGgQAAwABAAAAAAAAAAAAAAABAAH//wAPAAEAAAABAAC1pQTjXw889QALBAAAAAAAz/iHGQAAAADP+IcZAAAAAAOBA4AAAAAIAAIAAAAAAAAAAQAAA8D/wAAABAAAAAAAA4EAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAACAAAABAABIAQAAOAEAADABAAAnQAAUAAACAAAAAAADgCuAAEAAAAAAAEAGgAAAAEAAAAAAAIADgBxAAEAAAAAAAMAGgAwAAEAAAAAAAQAGgB/AAEAAAAAAAUAFgAaAAEAAAAAAAYADQBKAAEAAAAAAAoANACZAAMAAQQJAAEAGgAAAAMAAQQJAAIADgBxAAMAAQQJAAMAGgAwAAMAAQQJAAQAGgB/AAMAAQQJAAUAFgAaAAMAAQQJAAYAGgBXAAMAAQQJAAoANACZAHcAZQBiAGYAbABvAHcALQBpAGMAbwBuAHMAVgBlAHIAcwBpAG8AbgAgADEALgAwAHcAZQBiAGYAbABvAHcALQBpAGMAbwBuAHN3ZWJmbG93LWljb25zAHcAZQBiAGYAbABvAHcALQBpAGMAbwBuAHMAUgBlAGcAdQBsAGEAcgB3AGUAYgBmAGwAbwB3AC0AaQBjAG8AbgBzAEYAbwBuAHQAIABnAGUAbgBlAHIAYQB0AGUAZAAgAGIAeQAgAEkAYwBvAE0AbwBvAG4ALgAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==)
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/**********************************************************/
+/**** Alignment ****/
+/**********************************************************/
+
+div {
+  white-space: normal;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.tableCell {
+  display: table-cell;
+}
+
+.tableRow {
+  display: table-row;
+}
+
+.alignLeft {
+  float: left;
+}
+
+.alignRight {
+  float: right;
+}
+
+.centered {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pull-top {
+  vertical-align: top;
+}
+
+/**** Width Dimensions ****/
+
+.narrowest {
+  width: 60px;
+  min-width: 60px;
+}
+
+.narrower {
+  width: 80px;
+  min-width: 80px;
+}
+
+.narrow {
+  width: 100px;
+  min-width: 100px;
+}
+
+.normal {
+  width: 150px;
+  min-width: 150px;
+}
+
+.wide {
+  width: 200px;
+  min-width: 200px;
+}
+
+.wider {
+  width: 250px;
+  min-width: 250px;
+}
+
+.widest {
+  width: 350px;
+  min-width: 350px;
+}
+
+.flexRowCenter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/**********************************************************/
+/**** Margins and borders ****/
+/**********************************************************/
+
+.topMargin {
+  margin-top: 2px;
+}
+
+.topMargin5 {
+  margin-top: 5px;
+}
+
+.topMargin10 {
+  margin-top: 10px;
+}
+
+.topMargin15 {
+  margin-top: 15px;
+}
+
+.topMargin1pc {
+  margin-top: 1%;
+}
+
+.topMargin5pc {
+  margin-top: 5%;
+}
+
+.bottomMargin0 {
+  margin-bottom: 0px;
+}
+
+.bottomMargin {
+  margin-bottom: 2px;
+}
+
+.bottomMargin5 {
+  margin-bottom: 5px;
+}
+
+.bottomMargin10 {
+  margin-bottom: 10px;
+}
+
+.bottomMargin15 {
+  margin-bottom: 15px;
+}
+
+.leftMargin {
+  margin-left: 2px;
+}
+
+.leftMargin5 {
+  margin-left: 5px;
+}
+
+.leftMargin1pc {
+  margin-left: 1%;
+}
+
+.leftMargin2pc {
+  margin-left: 2%;
+}
+
+.rightMargin {
+  margin-right: 2px;
+}
+
+.rightMargin5 {
+  margin-right: 5px;
+}
+
+.rightMargin2pc {
+  margin-right: 2%;
+}
+
+.rightMargin5pc {
+  margin-right: 5%;
+}
+
+.paddingRight5 {
+  padding-right: 5px;
+}
+
+.topBorderSolid {
+  border-top: 1px solid #e2e4e7;
+}
+
+.topBorder {
+  border-top: 1px dotted #2d6ca2;
+}
+
+.rightBorderSolid {
+  border-right: 1px solid rgb(228, 229, 230);
+}
+
+.bottomBorderDashed {
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.2) !important;
+}
+
+.bottomBorder {
+  border-bottom: 1px dotted #2d6ca2;
+}
+
+.bottomBorderForm {
+  border-bottom: 1px solid black;
+}
+
+.bottomBorder.darkGray {
+  border-bottom-color: #ccc;
+}
+
+.border {
+  border: 1px solid black;
+}
+
+.noBorder {
+  border: 0;
+}
+
+.noBorderBottom {
+  border-bottom: 0;
+}
+
+.squareCorners {
+  border-radius: 0px;
+}
+
+.noRightBorder {
+  border-right: 0;
+}
+
+.noLeftBorder {
+  border-left: 0;
+}
+
+.noShadow {
+  box-shadow: none;
+}
+
+.noPadding {
+  padding: 0;
+}
+
+.noRightPadding {
+  padding-right: 0;
+}
+
+.noLeftPadding {
+  padding-left: 0;
+}
+
+.noOverflow {
+  overflow: hidden;
+}
+
+.hide {
+  display: none;
+}
+
+.boxShadow {
+  border: 1px solid darkgrey;
+  box-shadow: 2px 2px 2px lightgray;
+}
+
+.clear {
+  clear: both;
+}
+
+.overflowY {
+  overflow-y: auto;
+}
+
+/**********************************************************/
+/**** Form elements ****/
+/**********************************************************/
+
+.input-sm {
+  font-size: 1em;
+}
+
+input[type="text"] {
+  border-radius: 0;
+  color: black;
+  font-size: 1em;
+}
+
+input[type="text"]::-webkit-input-placeholder {
+  border-radius: 0;
+  color: #242424;
+  opacity: 0.75;
+  font-size: 1em;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.fileDropBox {
+  width: 80%;
+  min-height: 50px;
+  border: 1px dashed #ccc;
+  position: relative;
+  color: #007aac;
+  background-color: #dff4fa;
+  padding: 10px;
+}
+
+.fieldLabel {
+  display: inline-block;
+  text-align: right;
+  padding-right: 2px;
+}
+
+.strong {
+  background-color: #f7f7f9;
+  color: #222222;
+  font-weight: 500;
+}
+
+#modal-button {
+  display: none;
+}
+
+.no-border {
+  border: 0;
+  box-shadow: none;
+}
+
+.control-label {
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.control-label .sub-heading {
+  font-weight: 600;
+}
+
+.sub-heading {
+  font-weight: 600;
+}
+
+/****  Borders on input elements ****/
+textarea {
+  border: 1px solid #ccc;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.form-control {
+  border: 1px solid #ccc;
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 1em;
+}
+
+.select2-container--default .select2-selection--single {
+  border: 1px solid #ccc;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* input:hover {
+  border: 1px solid #039cdb;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+} */
+
+input.no-border {
+  border: 0;
+  box-shadow: none;
+}
+
+/****  End - Borders on input elements ****/
+
+.color-grey {
+  color: rgb(169, 169, 169);
+}
+
+.color-dark-grey {
+  color: rgb(85, 85, 85) !important;
+}
+
+.color-light-blue {
+  color: #039cdb;
+}
+
+.color-dark-green {
+  color: darkgreen;
+}
+
+.color-red {
+  color: red;
+}
+
+.color-yellow {
+  color: #f8b300;
+}
+
+#claimListTable .text-success {
+  color: darkgreen;
+}
+
+.clearSearchIcon {
+  color: rgb(169, 169, 169);
+  font-size: 1.2em;
+}
+
+.clearSearchIcon:hover {
+  color: lightcoral;
+  font-size: 1.4em;
+  transition-property: font-size;
+  transition-duration: 300ms;
+  transition-timing-function: linear;
+}
+
+.text-fine-print {
+  color: #8f8f8f;
+  font-size: 12px;
+  text-align: right;
+}
+/**********************************************************/
+/**** Bootstrap table overrides ****/
+/**********************************************************/
+
+.fixed-table-container {
+  border: 0px;
+}
+
+.fixed-table-container thead th {
+  border-left: 0px;
+}
+
+.fixed-table-container tbody td {
+  border-left: 0px;
+}
+
+/**********************************************************/
+/**** Form styling ****/
+/**********************************************************/
+
+.formContainer {
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+.formContainer .finePrint {
+  font-size: 11px;
+}
+
+.formContainer .header {
+  display: none;
+}
+
+/* Hide these in normal edit. Used for printing */
+/* see @media print below */
+.formContainer span {
+  display: none;
+  font-size: 14px;
+}
+
+.formContainer .printOnly {
+  display: none;
+}
+
+.formContainer .printNumeric {
+  display: none;
+}
+
+.formContainer input {
+  width: 100%;
+  border: none;
+  box-shadow: none;
+  border-bottom: 1px solid darkgrey;
+  color: #2b669a;
+  font-family: Lato, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 20px;
+  min-height: 20px;
+  padding-left: 5px;
+}
+
+.formHeader input {
+  width: 125%;
+  border: none;
+  box-shadow: none;
+  border-bottom: 2px solid darkgrey;
+  color: #2b669a;
+  background-color: white;
+  font-size: 1em;
+  line-height: 1.5em;
+  padding-left: 5px;
+}
+
+@media print {
+  @page {
+    size: letter;
+    margin-left: 0.25in;
+    margin-right: 0.25in;
+    margin-bottom: 0.25in;
+    margin-top: 0.25in;
+  }
+
+  .formContainer {
+    font-family: sans-serif;
+    font-size: 12px;
+  }
+
+  .formContainer .finePrint {
+    font-size: 11px;
+  }
+
+  .formContainer .header {
+    display: inherit;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  /* Hide all input boxes for printing */
+  .formContainer input {
+    display: none;
+  }
+
+  .formContainer span {
+    display: inline-flex;
+    width: 100%;
+    border: none;
+    box-shadow: none;
+    border-bottom: 1px solid darkgrey;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 17px;
+    min-height: 17px;
+    padding-left: 5px;
+  }
+
+  .formContainer .printOnly {
+    display: inherit;
+    width: 100%;
+    border: none;
+    box-shadow: none;
+    border-bottom: 1px solid darkgrey;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 17px;
+    min-height: 17px;
+    padding-left: 5px;
+  }
+
+  .formContainer .printNumeric {
+    display: inline-flex;
+    border: none;
+    box-shadow: none;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 17px;
+    min-height: 17px;
+    padding-left: 5px;
+  }
+}
+
+.formRow {
+  display: flex;
+  flex-direction: row;
+  min-height: 1em;
+}
+
+.formRow .numeric {
+  text-align: right;
+  padding-right: 5px;
+  float: right;
+}
+
+.formColumn {
+  display: flex;
+  flex-flow: column;
+}
+
+.formTextBox {
+  flex-basis: 50%;
+  flex-grow: 0;
+  align-content: flex-start;
+  border: 1px solid darkgray;
+  padding: 5px;
+  margin: 5px;
+  font-weight: 800;
+}
+
+/************ Form table *************/
+
+.formTableCell {
+  padding: 0;
+  border: none;
+  /* Apply bottom border on the cell */
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  line-height: 30px;
+}
+
+.formTableCell:last-child {
+  border-right: none;
+}
+
+.formTableCell input {
+  border-bottom: none;
+}
+
+.formTableCell span {
+  border-bottom: none;
+}
+
+.formTableCell div {
+  border-bottom: none;
+}
+
+.formTableFooterCell:last-child {
+  border-right: none;
+}
+
+.formTableFooterCell input {
+  border-bottom: none;
+}
+
+.formTableFooterCell span {
+  border-bottom: none;
+}
+
+.formTableFooterCell div {
+  border-bottom: none;
+}
+
+.formTableCell .numeric {
+  text-align: right;
+  padding-right: 5px;
+  float: right;
+}
+
+.formTableFooterCell .numeric {
+  text-align: right;
+  padding-right: 5px;
+  float: right;
+}
+
+.formRowCentered {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.formTableHeaderCell {
+  padding: 0;
+  border: none;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.formTableHeaderCell:last-child {
+  border-right: none;
+}
+
+.formTableFooterCell {
+  padding: 0;
+  border: none;
+  border-right: 1px solid black;
+}
+
+/********************************/
+
+.width3pc {
+  width: 3%;
+}
+
+.width7pc {
+  width: 7%;
+}
+
+.width10pc {
+  width: 10%;
+}
+
+.width15pc {
+  width: 15%;
+}
+
+.width40pc {
+  width: 40%;
+}
+
+.width50pc {
+  width: 50%;
+}
+
+.width60pc {
+  width: 60%;
+}
+
+.width100pc {
+  width: 100%;
+}
