@@ -19,7 +19,7 @@ const Page = () => {
 
   useEffect(() => {
     setClaim(claimsData.filter((i) => i.fileNo == fileNo)[0]);
-  }, [claimsData]);
+  }, [claimsData, fileNo]);
 
   return (
     <>

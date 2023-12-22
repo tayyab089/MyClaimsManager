@@ -703,7 +703,7 @@ export const ProofOfLoss = () => {
         {/* **** SCHEDULE "C" - APPORTIONMENT **** */}
         <div className="formRow topMargin5pc bottomMargin10">
           <div style={{ order: 1, textAlign: "center", flexGrow: 1 }}>
-            <strong>SCHEDULE "C" - APPORTIONMENT</strong>
+            <strong>SCHEDULE &quot;C&quot; - APPORTIONMENT</strong>
           </div>
         </div>
         <div className="formRow">
