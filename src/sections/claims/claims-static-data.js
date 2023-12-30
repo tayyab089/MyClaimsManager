@@ -42,6 +42,6 @@ export const contactCategories = [
   },
 ];
 
-export const policyCoverageObject = { category: "Property Damage", amount: "" };
-export const contactsObject = { category: "Adjuster", contact: { name: "", id: "" } };
+export const policyCoverageObject = { category: "", amount: "" };
+export const contactsObject = { category: "", contact: { name: "", id: "" } };
 export const insuredObject = { name: "", id: "" };

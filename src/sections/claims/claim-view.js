@@ -230,7 +230,7 @@ export const ClaimView = ({ item }) => {
           <Typography variant="formText">{item?.insurance?.issueDate}</Typography>
         </Grid>
         <Grid xs={10} md={4}>
-          <Typography variant="formTag">Expiry: </Typography>
+          <Typography variant="formTag">Expiration: </Typography>
         </Grid>
         <Grid xs={10} md={8}>
           <Typography variant="formText">{item?.insurance?.expiryDate}</Typography>

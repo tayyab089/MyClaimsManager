@@ -76,9 +76,9 @@ export const ClaimsTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((claim) => {
-                const isSelected = selected.includes(claim.id);
-                const timeDiff = new Date() - new Date(claim.lossDate);
+              {items?.map((claim) => {
+                const isSelected = selected.includes(claim?.id);
+                const timeDiff = new Date() - new Date(claim?.lossDate);
                 const age = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
 
                 return (
@@ -90,12 +90,12 @@ export const ClaimsTable = (props) => {
                   >
                     <TableCell>
                       <Stack alignItems="center" direction="row" spacing={2}>
-                        <Typography variant="subtitle2">{claim.fileNo}</Typography>
+                        <Typography variant="subtitle2">{claim?.fileNo}</Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>
                       {claim.insured.map((insured, ind) => (
-                        <div key={ind}>{insured.name}</div>
+                        <div key={ind}>{insured?.name}</div>
                       ))}
                     </TableCell>
                     <TableCell>{claim?.insurance?.company}</TableCell>
@@ -106,7 +106,7 @@ export const ClaimsTable = (props) => {
                           onClick={() => {
                             router.push({
                               pathname: "/claim",
-                              query: { fileNo: claim.fileNo },
+                              query: { fileNo: claim?.fileNo },
                             });
                           }}
                           variant={!lgUp ? "text" : "contained"}

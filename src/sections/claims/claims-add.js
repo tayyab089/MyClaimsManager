@@ -19,11 +19,13 @@ import { FieldArray, Formik } from "formik";
 import React, { useState, useCallback, useEffect, Fragment } from "react";
 import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { saveClaimApi, updateClaimApi } from "src/network/claims-api";
-import { fetchClaims } from "src/store/reducers/claims/thunks";
+import { fetchClaims, addClaim, updateClaim } from "src/store/reducers/claims/thunks";
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setAlertData } from "src/store/reducers/alert/thunks";
+
+import claimSchema from "./claim-schema";
 
 import {
   emptyValues,
@@ -47,6 +49,10 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
   const smUp = useMediaQuery((theme) => theme.breakpoints.up("sm"));
   const [initialValues, setInitialValues] = useState(emptyValues);
   const [contactList, setContactList] = useState([]);
+  const [lossTypeList, setLossTypeList] = useState([]);
+  const [companyList, setCompanyList] = useState([]);
+  const [contactCategoryList, setContactCategoryList] = useState([]);
+  const [pcCategoryList, setPcCategoryList] = useState([]);
   const [expand, setExpand] = useState(false);
 
   // Style Objects =================================================
@@ -80,7 +86,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
           );
           handleClose();
-          dispatch(fetchClaims());
+          dispatch(updateClaim(values));
         } else {
           alert(response.data.message);
         }
@@ -92,7 +98,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
           );
           handleClose();
-          dispatch(fetchClaims());
+          dispatch(addClaim(response.data.value));
         } else {
           dispatch(
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
@@ -119,6 +125,8 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
     setInitialValues(item?.fileNo ? item : emptyValues);
   }, [item]);
 
+  console.log(contactList);
+
   return (
     <Modal
       open={open}
@@ -131,8 +139,17 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
         <Formik
           initialValues={initialValues}
           onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting)}
+          validationSchema={claimSchema}
         >
-          {({ values, errors, handleChange, handleSubmit, isSubmitting, setFieldValue }) => (
+          {({
+            values,
+            errors,
+            handleChange,
+            handleSubmit,
+            isSubmitting,
+            setFieldValue,
+            isValid,
+          }) => (
             <form autoComplete="off" noValidate onSubmit={handleSubmit}>
               <Card sx={{ padding: "10px" }}>
                 <CardHeader
@@ -275,7 +292,6 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                           label="Address,City,State,Zip,Country"
                           name="lossLocation"
                           onChange={handleChange}
-                          required
                           value={values.lossLocation}
                         />
                       </Grid>
@@ -290,13 +306,19 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                         </Grid>
                       )}
                       <Grid xs={12} sm={4} md={4}>
-                        <TextField
-                          fullWidth
-                          label="Type of Loss"
+                        <Autocomplete
+                          disablePortal
+                          id="lossType"
                           name="lossType"
-                          onChange={handleChange}
-                          required
+                          onInputChange={(e, v) => {
+                            setFieldValue("lossType", v);
+                          }}
                           value={values.lossType}
+                          options={lossTypeList}
+                          freeSolo
+                          renderInput={(params) => (
+                            <TextField {...params} label="Type of Loss" size="small" />
+                          )}
                         />
                       </Grid>
                       <Grid
@@ -335,13 +357,19 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                         </Grid>
                       )}
                       <Grid xs={12} sm={4} md={4}>
-                        <TextField
-                          fullWidth
-                          label="Company"
+                        <Autocomplete
+                          disablePortal
+                          id="insurance.company"
                           name="insurance.company"
-                          onChange={handleChange}
-                          required
+                          onInputChange={(e, v) => {
+                            setFieldValue("insurance.company", v);
+                          }}
                           value={values.insurance.company}
+                          options={companyList}
+                          freeSolo
+                          renderInput={(params) => (
+                            <TextField {...params} label="Company" size="small" />
+                          )}
                         />
                       </Grid>
                       {smUp && (
@@ -360,7 +388,6 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                           label="File No."
                           name="insurance.fileNo"
                           onChange={handleChange}
-                          required
                           value={values.insurance.fileNo}
                         />
                       </Grid>
@@ -380,7 +407,6 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                           label="Policy No."
                           name="insurance.policyNo"
                           onChange={handleChange}
-                          required
                           value={values.insurance.policyNo}
                         />
                       </Grid>
@@ -401,7 +427,6 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                           label="Claim No."
                           name="insurance.claimNo"
                           onChange={handleChange}
-                          required
                           value={values.insurance.claimNo}
                         />
                       </Grid>
@@ -458,22 +483,20 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                 values.policyCoverage.map((item, index) => (
                                   <>
                                     <Grid xs={12} sm={4} md={4}>
-                                      <TextField
-                                        fullWidth
-                                        size="small"
-                                        label="Category"
+                                      <Autocomplete
+                                        disablePortal
+                                        id={`policyCoverage.${index}.category`}
                                         name={`policyCoverage.${index}.category`}
-                                        onChange={handleChange}
-                                        select
-                                        SelectProps={{ native: true }}
+                                        onInputChange={(e, v) => {
+                                          setFieldValue(`policyCoverage.${index}.category`, v);
+                                        }}
                                         value={values.policyCoverage[index].category}
-                                      >
-                                        {policyCoverageCategories.map((option) => (
-                                          <option key={option.value} value={option.value}>
-                                            {option.label}
-                                          </option>
-                                        ))}
-                                      </TextField>
+                                        options={pcCategoryList}
+                                        freeSolo
+                                        renderInput={(params) => (
+                                          <TextField {...params} label="Category" size="small" />
+                                        )}
+                                      />
                                     </Grid>
                                     <Grid xs={8} sm={6} md={6}>
                                       <TextField
@@ -538,22 +561,20 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                 values.contacts.map((item, index) => (
                                   <>
                                     <Grid xs={12} sm={3} md={4}>
-                                      <TextField
-                                        fullWidth
-                                        size="small"
-                                        label="Category"
+                                      <Autocomplete
+                                        disablePortal
+                                        id={`contacts.${index}.category`}
                                         name={`contacts.${index}.category`}
-                                        onChange={handleChange}
-                                        select
-                                        SelectProps={{ native: true }}
+                                        onInputChange={(e, v) => {
+                                          setFieldValue(`contacts.${index}.category`, v);
+                                        }}
                                         value={values.contacts[index].category}
-                                      >
-                                        {contactCategories.map((option) => (
-                                          <option key={option.value} value={option.value}>
-                                            {option.label}
-                                          </option>
-                                        ))}
-                                      </TextField>
+                                        options={contactCategoryList}
+                                        freeSolo
+                                        renderInput={(params) => (
+                                          <TextField {...params} label="Category" size="small" />
+                                        )}
+                                      />
                                     </Grid>
                                     <Grid xs={6} sm={5} md={4}>
                                       <Autocomplete
@@ -629,7 +650,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                   <Button variant="contained" color="neutral" onClick={handleClose}>
                     Cancel
                   </Button>
-                  <Button variant="contained" type="submit" disabled={isSubmitting}>
+                  <Button variant="contained" type="submit" disabled={isSubmitting || !isValid}>
                     {isSubmitting ? (
                       <CircularProgress style={{ width: 24, height: 24, color: "white" }} />
                     ) : (

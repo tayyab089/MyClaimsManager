@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Container, Stack, Typography, Button, SvgIcon } from "@mui/material";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 
 import { ClaimView } from "src/sections/claims/claim-view";
@@ -9,6 +9,8 @@ import { InsuraceForms } from "src/sections/claims/insurance-forms";
 import { CustomAlert } from "src/components/custom-alert";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
+
+import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 
 const Page = () => {
   const [claim, setClaim] = useState({});
@@ -39,6 +41,19 @@ const Page = () => {
               <Stack spacing={1}>
                 <Typography variant="h4">{`Claim ${claim?.fileNo}/${claim?.insurance?.fileNo}`}</Typography>
               </Stack>
+              <div>
+                <Button
+                  startIcon={
+                    <SvgIcon fontSize="small">
+                      <ChevronLeftIcon />
+                    </SvgIcon>
+                  }
+                  variant="contained"
+                  onClick={() => router.back()}
+                >
+                  Back
+                </Button>
+              </div>
             </Stack>
             <ClaimView item={claim} />
             <InsuraceForms item={claim} />

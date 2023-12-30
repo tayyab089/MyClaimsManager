@@ -11,7 +11,13 @@ import { ProofOfLoss } from "src/sections/forms/proof-of-loss";
 import { SubrogationReceipt } from "src/sections/forms/subrogation-receipt";
 import { Regulation10 } from "src/sections/forms/regulation-10";
 
-import { TrashIcon, PrinterIcon, DocumentIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
+import {
+  TrashIcon,
+  PrinterIcon,
+  DocumentIcon,
+  EnvelopeIcon,
+  ChevronLeftIcon,
+} from "@heroicons/react/24/outline";
 
 import { addFormsDataToClaim } from "src/store/reducers/claims/thunks";
 
@@ -36,10 +42,16 @@ const footerStyles = {
 };
 
 import { DocumentTextIcon } from "@heroicons/react/24/outline";
+
 const Page = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { formName, fileNo } = router.query;
+  const {
+    claimsData,
+    meta: { isClaimLoading },
+  } = useSelector((state) => state.claims);
+  const [claim, setClaim] = useState({});
 
   const componentRef = useRef();
 
@@ -53,6 +65,29 @@ const Page = () => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
+
+  // Formik functions
+  const reg10formRef = useRef();
+  const subrogationformRef = useRef();
+
+  const handleSubmit = () => {
+    if (formName == "ProofOfLoss") {
+      console.log("Form Not Setup Yet");
+    } else if (formName == "Regulation10") {
+      if (reg10formRef.current) {
+        reg10formRef.current.handleSubmit();
+      }
+    } else {
+      if (subrogationformRef.current) {
+        subrogationformRef.current.handleSubmit();
+      }
+    }
+  };
+
+  // useEffect Hooks
+  useEffect(() => {
+    setClaim(claimsData.filter((item) => item.fileNo == fileNo)[0]);
+  }, []);
 
   return (
     <>
@@ -112,15 +147,23 @@ const Page = () => {
               >
                 EMAIL
               </Button>
+              <Button
+                startIcon={<ChevronLeftIcon style={{ height: 20, width: 20 }} />}
+                variant="contained"
+                sx={{ marginLeft: "20px" }}
+                onClick={() => router.back()}
+              >
+                BACK
+              </Button>
             </Stack>
           </Stack>
           <div ref={componentRef}>
             {formName == "ProofOfLoss" ? (
-              <ProofOfLoss />
+              <ProofOfLoss claim={claim} />
             ) : formName == "Regulation10" ? (
-              <Regulation10 />
+              <Regulation10 formRef={reg10formRef} claim={claim} />
             ) : (
-              <SubrogationReceipt />
+              <SubrogationReceipt formRef={subrogationformRef} claim={claim} />
             )}
           </div>
           <Stack
@@ -141,7 +184,13 @@ const Page = () => {
               </Button>
             </Stack>
             <Stack direction="row" justifyContent="space-between" alignItems="center">
-              <Button variant="contained" size="small" color="neutral" sx={{ marginLeft: "20px" }}>
+              <Button
+                variant="contained"
+                size="small"
+                color="neutral"
+                sx={{ marginLeft: "20px" }}
+                onClick={() => handleSave()}
+              >
                 CLOSE
               </Button>
               <Button
@@ -149,7 +198,7 @@ const Page = () => {
                 size="small"
                 color="primary"
                 sx={{ marginLeft: "20px" }}
-                onClick={() => handleSave()}
+                onClick={() => handleSubmit()}
               >
                 SAVE
               </Button>
