@@ -19,7 +19,7 @@ import { FieldArray, Formik } from "formik";
 import React, { useState, useCallback, useEffect, Fragment } from "react";
 import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { saveClaimApi, updateClaimApi } from "src/network/claims-api";
-import { fetchClaims, addClaim, updateClaim } from "src/store/reducers/claims/thunks";
+import { addClaimToStore, updateClaimInStore } from "src/store/reducers/claims/thunks";
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -86,7 +86,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
           );
           handleClose();
-          dispatch(updateClaim(values));
+          dispatch(updateClaimInStore(values));
         } else {
           alert(response.data.message);
         }
@@ -98,7 +98,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
           );
           handleClose();
-          dispatch(addClaim(response.data.value));
+          dispatch(addClaimToStore(response.data.value));
         } else {
           dispatch(
             setAlertData({ open: true, message: response.data.message, type: response.data.type })

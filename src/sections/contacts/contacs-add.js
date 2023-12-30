@@ -19,7 +19,7 @@ import {
 import { FieldArray, Formik } from "formik";
 import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { saveContactApi, updateContactApi } from "src/network/api";
-import { fetchContacts } from "src/store/reducers/contacts/thunks";
+import { addContactToStore, updateContactInStore } from "src/store/reducers/contacts/thunks";
 
 import { useDispatch } from "react-redux";
 import { setAlertData } from "src/store/reducers/alert/thunks";
@@ -66,7 +66,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
           );
           handleClose();
-          dispatch(fetchContacts());
+          dispatch(updateContactInStore(values));
         } else {
           alert(response.data.message);
         }
@@ -77,7 +77,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
           );
           handleClose();
-          dispatch(fetchContacts());
+          dispatch(addContactToStore(response.data.value));
         } else {
           dispatch(
             setAlertData({ open: true, message: response.data.message, type: response.data.type })

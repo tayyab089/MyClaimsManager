@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts } from "src/store/reducers/contacts/thunks";
 import { ContactsAdd } from "src/sections/contacts/contacs-add";
 import { CustomAlert } from "src/components/custom-alert";
-import { fetchClaims } from "src/store/reducers/claims/thunks";
+import { fetchClaims, deleteClaimFromStore } from "src/store/reducers/claims/thunks";
 import { setAlertData } from "src/store/reducers/alert/thunks";
 import { deleteClaimApi } from "src/network/claims-api";
 
@@ -54,7 +54,9 @@ const Page = () => {
   const deleteClaim = async (claim) => {
     try {
       const response = await deleteClaimApi({ claim: claim });
+      console.log(response);
       if (response && response.data.type !== "error") {
+        dispatch(deleteClaimFromStore(claim));
         dispatch(
           setAlertData({ open: true, message: response.data.message, type: response.data.type })
         );
@@ -63,7 +65,6 @@ const Page = () => {
           setAlertData({ open: true, message: response.data.message, type: response.data.type })
         );
       }
-      dispatch(fetchClaims());
     } catch (e) {
       console.log(e);
     }

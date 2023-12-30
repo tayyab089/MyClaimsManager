@@ -3,6 +3,7 @@ import { getClaimsApi } from "src/network/claims-api";
 
 import { sortClaims } from "src/utils/sort-data";
 
+// Fetch Claims Function ==============================================================
 export const fetchClaims = (refreshDataCallback) => async (dispatch) => {
   dispatch(IS_FETCHING_CLAIMS(true));
   try {
@@ -20,6 +21,7 @@ export const fetchClaims = (refreshDataCallback) => async (dispatch) => {
   }
 };
 
+// Add Forms Function =================================================================
 export const addFormsDataToClaim = (fileNo, formName) => async (dispatch, getState) => {
   const currentState = getState();
   const currentClaims = currentState.claims.claimsData;
@@ -37,7 +39,8 @@ export const addFormsDataToClaim = (fileNo, formName) => async (dispatch, getSta
   dispatch(SET_CLAIMS(updatedClaims));
 };
 
-export const addClaim = (claim) => async (dispatch, getState) => {
+// Add Claim Function ==================================================================
+export const addClaimToStore = (claim) => async (dispatch, getState) => {
   const currentState = getState();
   const currentClaims = currentState.claims.claimsData;
   const updatedClaims = [...currentClaims, claim];
@@ -45,7 +48,8 @@ export const addClaim = (claim) => async (dispatch, getState) => {
   dispatch(SET_CLAIMS(sortClaims(updatedClaims)));
 };
 
-export const updateClaim = (claim) => async (dispatch, getState) => {
+// Update Claim Function ================================================================
+export const updateClaimInStore = (claim) => async (dispatch, getState) => {
   const currentState = getState();
   const currentClaims = currentState.claims.claimsData;
 
@@ -56,6 +60,16 @@ export const updateClaim = (claim) => async (dispatch, getState) => {
       return item;
     }
   });
+
+  dispatch(SET_CLAIMS(sortClaims(updatedClaims)));
+};
+
+// Delete Claim Function ==============================================================
+export const deleteClaimFromStore = (claim) => async (dispatch, getState) => {
+  const currentState = getState();
+  const currentClaims = currentState.claims.claimsData;
+
+  const updatedClaims = currentClaims.filter((item) => item.fileNo !== claim.fileNo);
 
   dispatch(SET_CLAIMS(sortClaims(updatedClaims)));
 };

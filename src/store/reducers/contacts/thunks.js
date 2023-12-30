@@ -1,29 +1,14 @@
 import { SET_CONTACTS, REMOVE_CONTACTS, IS_FETCHING_CONTACTS } from "./actions";
 import { getContactsApi } from "src/network/api";
 
+import { sortContacts } from "src/utils/sort-data";
+
 export const fetchContacts = (refreshDataCallback) => async (dispatch) => {
   dispatch(IS_FETCHING_CONTACTS(true));
   try {
     const response = await getContactsApi();
     if (response && response.data.type !== "error") {
-      console.log(response.data.data);
-      response.data.data.sort((a, b) => {
-        const extractLastName = (fullName) => {
-          const nameParts = fullName.split(" ");
-          return nameParts.length > 1 ? nameParts[nameParts.length - 1] : fullName;
-        };
-        const lastNameA = extractLastName(a.name).toUpperCase();
-        const lastNameB = extractLastName(b.name).toUpperCase();
-
-        if (lastNameA < lastNameB) {
-          return -1; // a should come before b
-        } else if (lastNameA > lastNameB) {
-          return 1; // a should come after b
-        } else {
-          return 0; // names are equal
-        }
-      });
-      dispatch(SET_CONTACTS(response.data.data));
+      dispatch(SET_CONTACTS(sortContacts(response.data.data)));
     }
   } catch (error) {
     console.log(error);
@@ -33,4 +18,39 @@ export const fetchContacts = (refreshDataCallback) => async (dispatch) => {
       refreshDataCallback();
     }
   }
+};
+
+// Add Contact Function ==================================================================
+export const addContactToStore = (contact) => async (dispatch, getState) => {
+  const currentState = getState();
+  const currentContacts = currentState.contacts.contactsData;
+  const updatedContacts = [...currentContacts, contact];
+
+  dispatch(SET_CONTACTS(sortContacts(updatedContacts)));
+};
+
+// Update Contact Function ===============================================================
+export const updateContactInStore = (contact) => async (dispatch, getState) => {
+  const currentState = getState();
+  const currentContacts = currentState.contacts.contactsData;
+
+  const updatedContacts = currentContacts.map((item) => {
+    if (item.id == contact.id) {
+      return contact;
+    } else {
+      return item;
+    }
+  });
+
+  dispatch(SET_CONTACTS(sortContacts(updatedContacts)));
+};
+
+// Delete Contact Function ==============================================================
+export const deleteContactFromStore = (contact) => async (dispatch, getState) => {
+  const currentState = getState();
+  const currentContacts = currentState.contacts.contactsData;
+
+  const updatedContacts = currentContacts.filter((item) => item.id !== contact.id);
+
+  dispatch(SET_CONTACTS(updatedContacts));
 };
