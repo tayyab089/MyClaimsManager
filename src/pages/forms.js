@@ -42,15 +42,13 @@ const footerStyles = {
 };
 
 import { DocumentTextIcon } from "@heroicons/react/24/outline";
+import { deleteFormApi } from "src/network/forms-api";
 
 const Page = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { formName, fileNo } = router.query;
-  const {
-    claimsData,
-    meta: { isClaimLoading },
-  } = useSelector((state) => state.claims);
+  const { claimsData } = useSelector((state) => state.claims);
   const [claim, setClaim] = useState({});
 
   const componentRef = useRef();
@@ -70,12 +68,27 @@ const Page = () => {
   const reg10formRef = useRef();
   const subrogationformRef = useRef();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (formName == "ProofOfLoss") {
       console.log("Form Not Setup Yet");
     } else if (formName == "Regulation10") {
       if (reg10formRef.current) {
-        reg10formRef.current.handleSubmit();
+        await reg10formRef.current.handleSubmit();
+        router.back();
+      }
+    } else {
+      if (subrogationformRef.current) {
+        subrogationformRef.current.handleSubmit();
+      }
+    }
+  };
+
+  const handleDelete = async (form) => {
+    if (formName == "ProofOfLoss") {
+      console.log("Form Not Setup Yet");
+    } else if (formName == "Regulation10") {
+      if (reg10formRef.current) {
+        const response = await deleteFormApi({ form: reg10formRef.current.values });
       }
     } else {
       if (subrogationformRef.current) {

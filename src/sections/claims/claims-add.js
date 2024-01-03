@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { FieldArray, Formik } from "formik";
-import React, { useState, useCallback, useEffect, Fragment } from "react";
+import React, { useState, useCallback, useEffect, useMemo, Fragment } from "react";
 import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { saveClaimApi, updateClaimApi } from "src/network/claims-api";
 import { addClaimToStore, updateClaimInStore } from "src/store/reducers/claims/thunks";
@@ -36,23 +36,57 @@ import {
   contactCategories,
 } from "./claims-static-data";
 
+// Custom Hooks ====================================================
+const useContactList = (contacts) => {
+  return useMemo(() => {
+    return contacts?.map((item) => {
+      return {
+        label: item.name,
+        id: item.id,
+      };
+    });
+  }, [contacts]);
+};
+
+const useClaimLossType = (claims) => {
+  return useMemo(() => {
+    return claims.map((claim) => claim?.lossType);
+  }, [claims]);
+};
+
+const useCompanyList = (claims) => {
+  return useMemo(() => {
+    return claims.map((claim) => claim?.insurance?.company);
+  }, [claims]);
+};
+
+const useContactCategoryList = (claims) => {
+  return useMemo(() => {
+    return claims.flatMap((claim) => claim?.contacts.map((contact) => contact.category));
+  }, [claims]);
+};
+
+const usePCCategoryList = (claims) => {
+  return useMemo(() => {
+    return claims.flatMap((claim) => claim?.policyCoverage.map((pc) => pc.category));
+  }, [claims]);
+};
+
 export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
   // State Variables ==============================================
-  const {
-    contactsData,
-    meta: { isLoading },
-  } = useSelector((state) => state.contacts);
+  const { contactsData } = useSelector((state) => state.contacts);
+  const { claimsData } = useSelector((state) => state.claims);
   const dispatch = useDispatch();
 
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
   const smDown = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const smUp = useMediaQuery((theme) => theme.breakpoints.up("sm"));
   const [initialValues, setInitialValues] = useState(emptyValues);
-  const [contactList, setContactList] = useState([]);
-  const [lossTypeList, setLossTypeList] = useState([]);
-  const [companyList, setCompanyList] = useState([]);
-  const [contactCategoryList, setContactCategoryList] = useState([]);
-  const [pcCategoryList, setPcCategoryList] = useState([]);
+  const contactList = useContactList(contactsData);
+  const lossTypeList = useClaimLossType(claimsData);
+  const companyList = useCompanyList(claimsData);
+  const contactCategoryList = useContactCategoryList(claimsData);
+  const pcCategoryList = usePCCategoryList(claimsData);
   const [expand, setExpand] = useState(false);
 
   // Style Objects =================================================
@@ -110,16 +144,16 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
     [item?.fileNo]
   );
   // UseEffect Calls ===============================================
-  useEffect(() => {
-    setContactList(
-      contactsData?.map((item) => {
-        return {
-          label: item.name,
-          id: item.id,
-        };
-      })
-    );
-  }, []);
+  // useEffect(() => {
+  //   setContactList(
+  //     contactsData?.map((item) => {
+  //       return {
+  //         label: item.name,
+  //         id: item.id,
+  //       };
+  //     })
+  //   );
+  // }, [contactsData]);
 
   useEffect(() => {
     setInitialValues(item?.fileNo ? item : emptyValues);
@@ -195,7 +229,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                             <Grid container spacing={1}>
                               {values.insured && values.insured.length > 0 ? (
                                 values.insured.map((item, index) => (
-                                  <>
+                                  <Fragment key={index}>
                                     {smUp && (
                                       <Grid
                                         xs={2}
@@ -223,7 +257,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                           label: values.insured[index].name,
                                           id: values.insured[index].id,
                                         }}
-                                        options={contactList}
+                                        options={contactList ? contactList : []}
                                         getOptionLabel={(option) => option.label || ""}
                                         renderInput={(params) => (
                                           <TextField {...params} label="Insured" size="small" />
@@ -243,7 +277,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                         <TrashIcon color="red" />
                                       </Button>
                                     </Grid>
-                                  </>
+                                  </Fragment>
                                 ))
                               ) : (
                                 <>
@@ -314,7 +348,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                             setFieldValue("lossType", v);
                           }}
                           value={values.lossType}
-                          options={lossTypeList}
+                          options={lossTypeList ? lossTypeList : []}
                           freeSolo
                           renderInput={(params) => (
                             <TextField {...params} label="Type of Loss" size="small" />
@@ -365,7 +399,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                             setFieldValue("insurance.company", v);
                           }}
                           value={values.insurance.company}
-                          options={companyList}
+                          options={companyList ? companyList : []}
                           freeSolo
                           renderInput={(params) => (
                             <TextField {...params} label="Company" size="small" />
@@ -481,7 +515,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                             <Grid container spacing={1}>
                               {values.policyCoverage && values.policyCoverage.length > 0 ? (
                                 values.policyCoverage.map((item, index) => (
-                                  <>
+                                  <Fragment key={index}>
                                     <Grid xs={12} sm={4} md={4}>
                                       <Autocomplete
                                         disablePortal
@@ -491,7 +525,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                           setFieldValue(`policyCoverage.${index}.category`, v);
                                         }}
                                         value={values.policyCoverage[index].category}
-                                        options={pcCategoryList}
+                                        options={pcCategoryList ? pcCategoryList : []}
                                         freeSolo
                                         renderInput={(params) => (
                                           <TextField {...params} label="Category" size="small" />
@@ -516,7 +550,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                         <TrashIcon color="red" />
                                       </Button>
                                     </Grid>
-                                  </>
+                                  </Fragment>
                                 ))
                               ) : (
                                 <Grid xs={12} sm={12} md={12}>
@@ -559,7 +593,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                             <Grid container spacing={1}>
                               {values.contacts && values.contacts.length > 0 ? (
                                 values.contacts.map((item, index) => (
-                                  <>
+                                  <Fragment key={index}>
                                     <Grid xs={12} sm={3} md={4}>
                                       <Autocomplete
                                         disablePortal
@@ -569,7 +603,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                           setFieldValue(`contacts.${index}.category`, v);
                                         }}
                                         value={values.contacts[index].category}
-                                        options={contactCategoryList}
+                                        options={contactCategoryList ? contactCategoryList : []}
                                         freeSolo
                                         renderInput={(params) => (
                                           <TextField {...params} label="Category" size="small" />
@@ -589,7 +623,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                           label: values.contacts[index].contact.name,
                                           id: values.contacts[index].contact.id,
                                         }}
-                                        options={contactList}
+                                        options={contactList ? contactList : []}
                                         getOptionLabel={(option) => option.label || ""}
                                         renderInput={(params) => (
                                           <TextField {...params} label="Name" size="small" />
@@ -613,7 +647,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                         <TrashIcon color="red" />
                                       </Button>
                                     </Grid>
-                                  </>
+                                  </Fragment>
                                 ))
                               ) : (
                                 <Grid xs={12} sm={12} md={12}>

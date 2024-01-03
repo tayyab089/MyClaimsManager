@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Field, Form } from "formik";
 
+import { saveFormApi } from "src/network/forms-api";
+
 const { format } = require("date-fns");
 
 export const Regulation10 = ({ formRef, claim }) => {
   console.log(claim);
   const [initialValues, setInitialValues] = useState({
+    type: "Regulation10",
+    claimfileNo: "",
     a: "",
     b: "",
     c: "",
@@ -24,14 +28,18 @@ export const Regulation10 = ({ formRef, claim }) => {
     p: "",
   });
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     // Handle form submission
     console.log(values);
+    const response = await saveFormApi({ form: values });
+    console.log(response);
   };
 
   // useEffect Hooks
   useEffect(() => {
     setInitialValues({
+      type: "Regulation10",
+      claimfileNo: claim?.fileNo,
       a: claim?.insured?.map((insured) => insured.name).join(", "),
       b: claim?.fileNo,
       c: claim?.insurance?.policyNo,

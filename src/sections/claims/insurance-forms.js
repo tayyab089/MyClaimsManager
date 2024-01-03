@@ -14,8 +14,19 @@ import {
 import { FormsPopover } from "./forms-popover";
 import { usePopover } from "src/hooks/use-popover";
 import { useSelector } from "react-redux";
+import { deleteFormApi } from "src/network/forms-api";
 
-export const InsuraceForms = ({ item }) => {
+import { styled } from "@mui/material/styles";
+
+const ButtonsContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+  },
+}));
+
+export const InsuraceForms = ({ item, formsData }) => {
   // Style Objects =============================
   const style = {
     boxShadow: 24,
@@ -27,8 +38,12 @@ export const InsuraceForms = ({ item }) => {
 
   const formPopover = usePopover();
 
-  console.log(item?.forms);
+  console.log(item?.forms, formsData);
   // const [formsArray, setFormsArray] = useState([{}]);
+
+  const handleDelete = async (form) => {
+    const response = await deleteFormApi({ form: form });
+  };
 
   return (
     <Stack sx={style} spacing={3}>
@@ -57,14 +72,35 @@ export const InsuraceForms = ({ item }) => {
               <TableCell>Type</TableCell>
               <TableCell>Updated</TableCell>
               <TableCell>Created By</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {item?.forms?.map((item, index) => (
+            {formsData?.map((item, index) => (
               <TableRow key={index}>
                 <TableCell>{item?.type}</TableCell>
-                <TableCell>{item?.updated?.toLocaleString()}</TableCell>
-                <TableCell>{item?.createdBy}</TableCell>
+                <TableCell>{new Date(item?.lastUpdated)?.toLocaleString()}</TableCell>
+                <TableCell>Howie Guttman</TableCell>
+                <TableCell>
+                  <ButtonsContainer>
+                    <Button
+                      onClick={() => handleDelete(item)}
+                      color="primary"
+                      variant="contained"
+                      size="small"
+                    >
+                      View
+                    </Button>
+                    <Button
+                      onClick={() => handleDelete(item)}
+                      color="error"
+                      variant="contained"
+                      size="small"
+                    >
+                      Delete
+                    </Button>
+                  </ButtonsContainer>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

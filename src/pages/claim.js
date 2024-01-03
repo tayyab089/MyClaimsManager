@@ -11,13 +11,33 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 
 import { ChevronLeftIcon } from "@heroicons/react/20/solid";
+import { getFormApi } from "src/network/forms-api";
 
 const Page = () => {
   const [claim, setClaim] = useState({});
   const { claimsData } = useSelector((state) => state.claims);
+  const [formsData, setFormsData] = useState([]);
 
   const router = useRouter();
   const { fileNo } = router.query;
+
+  const fetchForms = async () => {
+    try {
+      const response = await getFormApi(claim.fileNo);
+      if (response && response.data.type !== "error") {
+        setFormsData(response.data.data);
+        console.log(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      console.log("done");
+    }
+  };
+
+  useEffect(() => {
+    fetchForms();
+  }, [claim]);
 
   useEffect(() => {
     setClaim(claimsData.filter((i) => i.fileNo == fileNo)[0]);
@@ -56,7 +76,7 @@ const Page = () => {
               </div>
             </Stack>
             <ClaimView item={claim} />
-            <InsuraceForms item={claim} />
+            <InsuraceForms item={claim} formsData={formsData} />
           </Stack>
           <CustomAlert />
         </Container>
