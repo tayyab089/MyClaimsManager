@@ -32,7 +32,7 @@ export const FormsPopover = (props) => {
           onClick={() =>
             router.push({
               pathname: "/forms",
-              query: { formName: "ProofOfLoss", fileNo: claimFileNo },
+              query: { formType: "ProofOfLoss", fileNo: claimFileNo, isEdit: false },
             })
           }
         >
@@ -42,7 +42,7 @@ export const FormsPopover = (props) => {
           onClick={() =>
             router.push({
               pathname: "/forms",
-              query: { formName: "Regulation10", fileNo: claimFileNo },
+              query: { formType: "Regulation10", fileNo: claimFileNo, isEdit: false },
             })
           }
         >
@@ -52,7 +52,7 @@ export const FormsPopover = (props) => {
           onClick={() =>
             router.push({
               pathname: "/forms",
-              query: { formName: "SubrogationReceipt", fileNo: claimFileNo },
+              query: { formType: "SubrogationReceipt", fileNo: claimFileNo, isEdit: false },
             })
           }
         >

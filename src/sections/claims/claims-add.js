@@ -62,13 +62,13 @@ const useCompanyList = (claims) => {
 
 const useContactCategoryList = (claims) => {
   return useMemo(() => {
-    return claims.flatMap((claim) => claim?.contacts.map((contact) => contact.category));
+    return claims.flatMap((claim) => claim?.contacts?.map((contact) => contact.category));
   }, [claims]);
 };
 
 const usePCCategoryList = (claims) => {
   return useMemo(() => {
-    return claims.flatMap((claim) => claim?.policyCoverage.map((pc) => pc.category));
+    return claims.flatMap((claim) => claim?.policyCoverage?.map((pc) => pc.category));
   }, [claims]);
 };
 

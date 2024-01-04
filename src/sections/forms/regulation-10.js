@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Field, Form } from "formik";
 
-import { saveFormApi } from "src/network/forms-api";
+import { saveFormApi, updateFormApi } from "src/network/forms-api";
+
+import { useDispatch } from "react-redux";
+import { setAlertData } from "src/store/reducers/alert/thunks";
 
 const { format } = require("date-fns");
 
-export const Regulation10 = ({ formRef, claim }) => {
-  console.log(claim);
+export const Regulation10 = ({ formRef, claim, form, formName }) => {
+  const dispatch = useDispatch();
   const [initialValues, setInitialValues] = useState({
-    type: "Regulation10",
-    claimfileNo: "",
     a: "",
     b: "",
     c: "",
@@ -29,34 +30,65 @@ export const Regulation10 = ({ formRef, claim }) => {
   });
 
   const onSubmit = async (values) => {
-    // Handle form submission
     console.log(values);
-    const response = await saveFormApi({ form: values });
-    console.log(response);
+    if (form) {
+      const response = await updateFormApi({
+        form: { ...form, formData: values, name: formName },
+      });
+      if (response && response.data.type !== "error") {
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
+      } else {
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
+      }
+    } else {
+      const response = await saveFormApi({
+        form: {
+          formData: values,
+          type: "Regulation10",
+          claimfileNo: claim?.fileNo,
+          name: formName,
+        },
+      });
+      if (response && response.data.type !== "error") {
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
+      } else {
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
+      }
+    }
   };
 
   // useEffect Hooks
   useEffect(() => {
-    setInitialValues({
-      type: "Regulation10",
-      claimfileNo: claim?.fileNo,
-      a: claim?.insured?.map((insured) => insured.name).join(", "),
-      b: claim?.fileNo,
-      c: claim?.insurance?.policyNo,
-      d: claim?.lossDate ? format(new Date(claim?.lossDate), "dd-MM-yyyy") : "",
-      e: "",
-      f: "",
-      g: "Paul Guttman & Co., Inc. No Fee Being Charged",
-      h: "",
-      i: "",
-      j: "",
-      k: "",
-      l: "",
-      m: "",
-      n: "",
-      o: "",
-      p: "",
-    });
+    if (form) {
+      setInitialValues(form?.formData);
+    } else {
+      setInitialValues({
+        a: claim?.insured?.map((insured) => insured.name).join(", "),
+        b: claim?.fileNo,
+        c: claim?.insurance?.policyNo,
+        d: claim?.lossDate ? format(new Date(claim?.lossDate), "dd-MM-yyyy") : "",
+        e: "",
+        f: "",
+        g: "Paul Guttman & Co., Inc. No Fee Being Charged",
+        h: "",
+        i: "",
+        j: "",
+        k: "",
+        l: "",
+        m: "",
+        n: "",
+        o: "",
+        p: "",
+      });
+    }
   }, [claim]);
 
   return (
@@ -89,28 +121,28 @@ export const Regulation10 = ({ formRef, claim }) => {
                 <div style={{ order: 1, flexBasis: "5em" }}>INSURED:</div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="a" />
-                  <span>{values.a}</span>
+                  <span>{values?.a}</span>
                 </div>
               </div>
               <div className="formRow topMargin15">
                 <div style={{ order: 1, flexBasis: "5em" }}>FILE #</div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="b" />
-                  <span>{values.b}</span>
+                  <span>{values?.b}</span>
                 </div>
               </div>
               <div className="formRow topMargin15">
                 <div style={{ order: 1, flexBasis: "5em" }}>POLICY #</div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="c" />
-                  <span>{values.c}</span>
+                  <span>{values?.c}</span>
                 </div>
               </div>
               <div className="formRow topMargin15 bottomMargin15">
                 <div style={{ order: 1 }}>DATE OF LOSS:</div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="d" />
-                  <span>{values.d}</span>
+                  <span>{values?.d}</span>
                 </div>
               </div>
               <div className="topMargin1pc" />
@@ -144,7 +176,7 @@ export const Regulation10 = ({ formRef, claim }) => {
               <div className="formRow">
                 <div style={{ flexBasis: "5em", flexGrow: 0, order: 1 }}>
                   <Field type="text" name="e" />
-                  <span>{values.e}</span>
+                  <span>{values?.e}</span>
                 </div>
                 <div style={{ order: 2, flexGrow: 1 }}>
                   A CHECK MADE PAYABLE TO BOTH THE PUBLIC ADJUSTER AND THE NAMED
@@ -160,12 +192,12 @@ export const Regulation10 = ({ formRef, claim }) => {
               <div className="formRow">
                 <div style={{ flexBasis: "5em", order: 1 }}>
                   <Field type="text" name="f" />
-                  <span>{values.f}</span>
+                  <span>{values?.f}</span>
                 </div>
                 <div style={{ order: 2, flexGrow: 0 }}>A CHECK MADE PAYABLE TO:</div>
                 <div style={{ flexBasis: "10em", flexGrow: 1, order: 3 }}>
                   <Field type="text" name="g" />
-                  <span>{values.g}</span>
+                  <span>{values?.g}</span>
                 </div>
               </div>
               <div className="formRow">
@@ -177,16 +209,15 @@ export const Regulation10 = ({ formRef, claim }) => {
                 <div style={{ order: 2, flexGrow: 0 }}>$</div>
                 <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
                   <Field type="text" name="h" />
-                  <span>{values.h}</span>
+                  <span>{values?.h}</span>
                 </div>
               </div>
               <div className="topMargin1pc" />
               <div className="formRow">
                 <div style={{ flexBasis: "5em", order: 1 }}>
                   <Field type="text" name="i" />
-                  <span></span>
+                  <span>{values?.i}</span>
                 </div>
-                {values.i}
                 <div style={{ order: 2, flexGrow: 0 }}>
                   A CHECK MADE PAYABLE TO THE INSURED IN THE AMOUNT OF THE BALANCE
                 </div>
@@ -200,7 +231,7 @@ export const Regulation10 = ({ formRef, claim }) => {
                 <div style={{ order: 2, flexGrow: 0 }}>$</div>
                 <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
                   <Field type="text" name="j" />
-                  <span>{values.j}</span>
+                  <span>{values?.j}</span>
                 </div>
               </div>
               <div className="topMargin1pc" />
@@ -209,12 +240,12 @@ export const Regulation10 = ({ formRef, claim }) => {
               <div className="formRow">
                 <div style={{ order: 1, flexBasis: "10em", flexGrow: 0 }}>
                   <Field type="text" name="k" />
-                  <span>{values.k}</span>
+                  <span>{values?.k}</span>
                 </div>
                 <div style={{ order: 2, flexBasis: "10em", flexGrow: 0 }} />
                 <div style={{ order: 3, flexBasis: "20em", flexGrow: 0 }}>
                   <Field type="text" name="l" />
-                  <span>{values.l}</span>
+                  <span>{values?.l}</span>
                 </div>
               </div>
               <div className="formRow">

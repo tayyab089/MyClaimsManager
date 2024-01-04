@@ -8,35 +8,26 @@ import { InsuraceForms } from "src/sections/claims/insurance-forms";
 
 import { CustomAlert } from "src/components/custom-alert";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { ChevronLeftIcon } from "@heroicons/react/20/solid";
-import { getFormApi } from "src/network/forms-api";
+import { fetchForms } from "src/store/reducers/forms/thunks";
 
 const Page = () => {
   const [claim, setClaim] = useState({});
   const { claimsData } = useSelector((state) => state.claims);
-  const [formsData, setFormsData] = useState([]);
+  const {
+    formsData,
+    meta: { isFormLoading },
+  } = useSelector((state) => state.forms);
+
+  const dispatch = useDispatch();
 
   const router = useRouter();
   const { fileNo } = router.query;
 
-  const fetchForms = async () => {
-    try {
-      const response = await getFormApi(claim.fileNo);
-      if (response && response.data.type !== "error") {
-        setFormsData(response.data.data);
-        console.log(response.data);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      console.log("done");
-    }
-  };
-
   useEffect(() => {
-    fetchForms();
+    dispatch(fetchForms(claim?.fileNo));
   }, [claim]);
 
   useEffect(() => {
@@ -76,7 +67,7 @@ const Page = () => {
               </div>
             </Stack>
             <ClaimView item={claim} />
-            <InsuraceForms item={claim} formsData={formsData} />
+            <InsuraceForms item={claim} formsData={formsData} isFormLoading={isFormLoading} />
           </Stack>
           <CustomAlert />
         </Container>

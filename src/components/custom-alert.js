@@ -12,7 +12,7 @@ export const CustomAlert = () => {
   return (
     <div
       style={{
-        position: "absolute",
+        position: "fixed",
         top: 10,
         right: 10,
         zIndex: 9999,

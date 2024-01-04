@@ -6,6 +6,7 @@ import { useReactToPrint } from "react-to-print";
 
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
+import useConfirm from "src/hooks/use-confirm";
 
 import { ProofOfLoss } from "src/sections/forms/proof-of-loss";
 import { SubrogationReceipt } from "src/sections/forms/subrogation-receipt";
@@ -43,20 +44,27 @@ const footerStyles = {
 
 import { DocumentTextIcon } from "@heroicons/react/24/outline";
 import { deleteFormApi } from "src/network/forms-api";
+import { CustomAlert } from "src/components/custom-alert";
 
 const Page = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { formName, fileNo } = router.query;
+  const { formType, fileNo, formId } = router.query;
   const { claimsData } = useSelector((state) => state.claims);
+  const { formsData } = useSelector((state) => state.forms);
   const [claim, setClaim] = useState({});
+  const [form, setForm] = useState({});
+  const [formName, setFormName] = useState(formType);
 
   const componentRef = useRef();
 
-  const handleSave = async () => {
-    console.log(formName, fileNo);
-    dispatch(addFormsDataToClaim(fileNo, formName));
-    router.back();
+  const handleClose = async () => {
+    const customTitle = "Confirm Back";
+    const customMessage = `Are you sure? Any Unsaved Changes will be lost`;
+
+    const ans = await confirmDelete(customTitle, customMessage);
+
+    ans ? router.back() : console.log("Back Canceled");
   };
 
   // Print Function ==============================
@@ -67,14 +75,15 @@ const Page = () => {
   // Formik functions
   const reg10formRef = useRef();
   const subrogationformRef = useRef();
+  const ProofOfLossformRef = useRef();
 
+  // Submit Function ===================================================
   const handleSubmit = async () => {
-    if (formName == "ProofOfLoss") {
+    if (formType == "ProofOfLoss") {
       console.log("Form Not Setup Yet");
-    } else if (formName == "Regulation10") {
+    } else if (formType == "Regulation10") {
       if (reg10formRef.current) {
         await reg10formRef.current.handleSubmit();
-        router.back();
       }
     } else {
       if (subrogationformRef.current) {
@@ -83,24 +92,34 @@ const Page = () => {
     }
   };
 
-  const handleDelete = async (form) => {
-    if (formName == "ProofOfLoss") {
-      console.log("Form Not Setup Yet");
-    } else if (formName == "Regulation10") {
-      if (reg10formRef.current) {
-        const response = await deleteFormApi({ form: reg10formRef.current.values });
+  // Delete Function =====================================================
+  const [Dialog, confirmDelete] = useConfirm();
+
+  const handleDelete = async () => {
+    const customTitle = "Confirm Delete";
+    const customMessage = `Are you sure you want to delete form: <strong> ${form?.type} </strong> along with all its data? Please note that this process is not reversible.`;
+
+    const ans = await confirmDelete(customTitle, customMessage);
+    if (ans) {
+      if (formType == "ProofOfLoss") {
+        console.log("Form Not Setup Yet");
+      } else if (formType == "Regulation10") {
+        await deleteFormApi({
+          form: { claimfileNo: fileNo, formId: formId, userId: form?.userId },
+        });
+        router.push("/claim");
+      } else {
       }
     } else {
-      if (subrogationformRef.current) {
-        subrogationformRef.current.handleSubmit();
-      }
+      console.log("dont delete");
     }
   };
 
   // useEffect Hooks
   useEffect(() => {
     setClaim(claimsData.filter((item) => item.fileNo == fileNo)[0]);
-  }, []);
+    setForm(formsData.filter((item) => item.formId == formId)[0]);
+  }, [claimsData, formsData, fileNo, formId]);
 
   return (
     <>
@@ -127,7 +146,8 @@ const Page = () => {
                 id="outlined-basic"
                 label=""
                 variant="outlined"
-                defaultValue={formName}
+                value={formName}
+                onChange={(event) => setFormName(event.target.value)}
                 sx={{ marginLeft: "20px" }}
               />
             </Stack>
@@ -171,12 +191,22 @@ const Page = () => {
             </Stack>
           </Stack>
           <div ref={componentRef}>
-            {formName == "ProofOfLoss" ? (
-              <ProofOfLoss claim={claim} />
-            ) : formName == "Regulation10" ? (
-              <Regulation10 formRef={reg10formRef} claim={claim} />
+            {formType == "ProofOfLoss" ? (
+              <ProofOfLoss
+                formRef={ProofOfLossformRef}
+                claim={claim}
+                form={form}
+                formName={formName}
+              />
+            ) : formType == "Regulation10" ? (
+              <Regulation10 formRef={reg10formRef} claim={claim} form={form} formName={formName} />
             ) : (
-              <SubrogationReceipt formRef={subrogationformRef} claim={claim} />
+              <SubrogationReceipt
+                formRef={subrogationformRef}
+                claim={claim}
+                form={form}
+                formName={formName}
+              />
             )}
           </div>
           <Stack
@@ -192,6 +222,7 @@ const Page = () => {
                 size="small"
                 color="primary"
                 startIcon={<TrashIcon style={{ height: 20, width: 20 }} />}
+                onClick={() => handleDelete()}
               >
                 DELETE
               </Button>
@@ -202,7 +233,7 @@ const Page = () => {
                 size="small"
                 color="neutral"
                 sx={{ marginLeft: "20px" }}
-                onClick={() => handleSave()}
+                onClick={() => handleClose()}
               >
                 CLOSE
               </Button>
@@ -218,6 +249,8 @@ const Page = () => {
             </Stack>
           </Stack>
         </Container>
+        <CustomAlert />
+        <Dialog />
       </Box>
     </>
   );
