@@ -532,6 +532,13 @@ input.no-border {
     padding-left: 5px;
   }
 
+  .checkboxSpan {
+    /* border: "1px solid #808080"; */
+    text-align: "center";
+    width: "17px";
+    height: "15px";
+  }
+
   .formContainer .printOnly {
     display: inherit;
     width: 100%;
@@ -563,6 +570,11 @@ input.no-border {
   min-height: 1em;
 }
 
+.formHeadContainer {
+  justify-content: space-between;
+  width: 100%;
+}
+
 .formRow .numeric {
   text-align: right;
   padding-right: 5px;
@@ -572,6 +584,12 @@ input.no-border {
 .formColumn {
   display: flex;
   flex-flow: column;
+}
+
+.formColumnCentered {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }
 
 .formTextBox {

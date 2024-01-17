@@ -22,6 +22,12 @@ import {
 
 import { addFormsDataToClaim } from "src/store/reducers/claims/thunks";
 
+import { PDFDownloadLink, BlobProvider, pdf } from "@react-pdf/renderer";
+import { Regulation10Print } from "src/sections/forms/regulation-10-print";
+import html2pdf from "html2pdf.js";
+import { saveAs } from "file-saver";
+import { emailFormApi } from "src/network/forms-api";
+
 const headerStyles = {
   backgroundColor: "white",
   height: 100,
@@ -72,6 +78,16 @@ const Page = () => {
     content: () => componentRef.current,
   });
 
+  // PDF Generation ==============================
+  const generatePDF = () => {
+    // const blob = pdf(Regulation10Print).toBlob();
+    const element = document.getElementById("regulation10");
+    html2pdf()
+      .from(element)
+      .output("blob")
+      .then((blob) => saveAs(blob, formName));
+  };
+
   // Formik functions
   const reg10formRef = useRef();
   const subrogationformRef = useRef();
@@ -121,6 +137,10 @@ const Page = () => {
     setForm(formsData.filter((item) => item.formId == formId)[0]);
   }, [claimsData, formsData, fileNo, formId]);
 
+  useEffect(() => {
+    setFormName(form?.name ? form.name : formType);
+  }, [form]);
+
   return (
     <>
       <Head>
@@ -162,12 +182,25 @@ const Page = () => {
               >
                 PRINT
               </Button>
+              {/* <PDFDownloadLink document={<Regulation10Print />} fileName="MyFile">
+                {({ blob, url, loading, error }) => {
+                  console.log(blob);
+                  return loading ? "Loading..." : "Download";
+                }}
+              </PDFDownloadLink> */}
+              {/* <BlobProvider document={Regulation10Print}>
+                {({ blob, url, loading, error }) => {
+                  console.log(blob);
+                  return <div>There's something going on on the fly</div>;
+                }}
+              </BlobProvider> */}
               <Button
                 variant="outlined"
                 size="small"
                 color="primary"
                 sx={{ marginLeft: "20px" }}
                 startIcon={<DocumentIcon style={{ height: 20, width: 20 }} />}
+                onClick={() => generatePDF()}
               >
                 PDF
               </Button>

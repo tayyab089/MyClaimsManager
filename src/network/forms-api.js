@@ -1,4 +1,4 @@
-import { api, getHeadersConfig } from "./api";
+import { api, getHeadersConfig, getPDFHeadersConfig } from "./api";
 
 export const saveFormApi = async (data) => {
   try {
@@ -35,6 +35,15 @@ export const deleteFormApi = async (data) => {
 export const updateFormApi = async (data) => {
   try {
     const response = await api.patch("forms", data, getHeadersConfig());
+    return response;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const emailFormApi = async (data) => {
+  try {
+    const response = await api.post("/", data, getPDFHeadersConfig());
     return response;
   } catch (error) {
     console.log(error.message);

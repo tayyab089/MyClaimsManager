@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Field, Form } from "formik";
+import { FormsHeader } from "./forms-header";
 
 import { saveFormApi, updateFormApi } from "src/network/forms-api";
 
 import { useDispatch } from "react-redux";
 import { setAlertData } from "src/store/reducers/alert/thunks";
 
-const { format } = require("date-fns");
+// const { format } = require("date-fns");
 
 export const Regulation10 = ({ formRef, claim, form, formName }) => {
   const dispatch = useDispatch();
@@ -26,7 +27,6 @@ export const Regulation10 = ({ formRef, claim, form, formName }) => {
     m: "",
     n: "",
     o: "",
-    p: "",
   });
 
   const onSubmit = async (values) => {
@@ -72,12 +72,13 @@ export const Regulation10 = ({ formRef, claim, form, formName }) => {
     } else {
       setInitialValues({
         a: claim?.insured?.map((insured) => insured.name).join(", "),
-        b: claim?.fileNo,
-        c: claim?.insurance?.policyNo,
-        d: claim?.lossDate ? format(new Date(claim?.lossDate), "dd-MM-yyyy") : "",
+        b: claim?.insurance?.policyNo,
+        c: claim?.claimNo,
+        // d: claim?.lossDate ? format(new Date(claim?.lossDate), "dd-MM-yyyy") : "",
+        d: "Paul Guttman & Co., Inc. No Fee Being Charged",
         e: "",
         f: "",
-        g: "Paul Guttman & Co., Inc. No Fee Being Charged",
+        g: "",
         h: "",
         i: "",
         j: "",
@@ -100,110 +101,114 @@ export const Regulation10 = ({ formRef, claim, form, formName }) => {
     >
       {({ values }) => (
         <Form>
-          <div id="claimFormPrintContainer">
-            <div className="formContainer" style={{ padding: ".8in" }}>
+          <div id="regulation10">
+            <FormsHeader />
+            <div className="formContainer" style={{ padding: "0 .8in .8in .8in" }}>
+              {/* Header===================================================== */}
               <div className="formRow" style={{ justifyContent: "center", fontSize: "1.1em" }}>
-                <div style={{ order: 1, alignContent: "center" }}>PAUL GUTTMAN & CO., INC</div>
-              </div>
-              <div className="formRow" style={{ justifyContent: "center", fontSize: "1.1em" }}>
-                <div style={{ order: 1, alignContent: "center" }}>203 RACKAWAY AVE.</div>
-              </div>
-              <div className="formRow" style={{ justifyContent: "center", fontSize: "1.1em" }}>
-                <div style={{ order: 1, alignContent: "center" }}>VALLEY STREAM, NY 11580</div>
-              </div>
-              <div className="formRow" style={{ justifyContent: "center", fontSize: "1.1em" }}>
-                <div style={{ order: 1, alignContent: "center" }}>
-                  516-825-4800 FAX 516-825-4037
+                <div style={{ order: 1, alignContent: "center", fontWeight: "bold" }}>
+                  DIRECTION TO PAY LETTER
                 </div>
               </div>
-              <div className="formRow" />
-              <div className="formRow topMargin15">
-                <div style={{ order: 1, flexBasis: "5em" }}>INSURED:</div>
+              <div className="formRow" style={{ justifyContent: "center", fontSize: "1.1em" }}>
+                <div style={{ order: 1, alignContent: "center" }}>REGULATION 10</div>
+              </div>
+
+              {/* Section 1===================================================== */}
+              <div className="topMargin5pc" />
+              <div className="topMargin5pc" />
+              <div className="topMargin1pc" />
+              <div className="formRow topMargin10">
+                <div style={{ order: 1 }}>Name(s) of Named Insured(s)</div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="a" />
                   <span>{values?.a}</span>
                 </div>
               </div>
-              <div className="formRow topMargin15">
-                <div style={{ order: 1, flexBasis: "5em" }}>FILE #</div>
+              <div className="formRow topMargin10">
+                <div style={{ order: 1, flexBasis: "5em" }}>Policy No:</div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="b" />
                   <span>{values?.b}</span>
                 </div>
               </div>
-              <div className="formRow topMargin15">
-                <div style={{ order: 1, flexBasis: "5em" }}>POLICY #</div>
+              <div className="formRow topMargin10">
+                <div style={{ order: 1, flexBasis: "5em" }}>Claim No:</div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="c" />
                   <span>{values?.c}</span>
                 </div>
               </div>
-              <div className="formRow topMargin15 bottomMargin15">
-                <div style={{ order: 1 }}>DATE OF LOSS:</div>
+              <div className="formRow topMargin10 bottomMargin15">
+                <div style={{ order: 1 }}>Public Adjuster&apos;s Name</div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="d" />
                   <span>{values?.d}</span>
                 </div>
               </div>
+
+              {/* Section 2===================================================== */}
               <div className="topMargin1pc" />
               <div className="formRow">
-                <div style={{ order: 1 }}>
-                  THE NEW YORK STATE INSURANCE LAW REGULATION 10, 3RD AMENDMENT (11 NYC RR 25.12)
-                </div>
-              </div>
-              <div className="topMargin5pc" />
-              <div className="formRow">
-                <div style={{ order: 1 }}>
-                  &quot;25.12 PAYMENT OF LOSSES. WHEN A CLAIM IS SETTLED WHERE THE INSURED IS
-                  REPRESENTED BY A PUBLIC ADJUSTER, UPON THE REQUEST OF THE INSURED, THE
-                  INSURER&apos;S CHECK MAY BE MADE PAYABLE TO BOTH THE PUBLIC ADJUSTER NAMED AS
-                  PAYEE, BUT NOT IN EXCESS OF THE AMOUNT OF THE PUBLIC ADJUSTER&apos;S FEE, AS
-                  INDICATED IN THE WRITTEN COMPENSATION AGREEMENT SIGNED BY THE INSURED AND FILED
-                  WITH THE INSURER. THE BALANCE OF THE PROCEEDS SHALL BE MADE PAYABLE TO THE INSURED
-                  OR THE LOSS PAYEE, OR BOTH WHICHEVER IS APPROPRIATE.&quot;
-                </div>
-              </div>
-              <div className="formRow topMargin1pc">
-                <div style={{ order: 1 }}>
-                  IN ACCORDANCE WITH THE LAW, PLEASE CHECK THE LINE OF YOUR CHOICE AND SIGN THIS
-                  LETTER WHERE
-                </div>
-              </div>
-              <div className="formRow">
-                <div style={{ order: 1 }}>INDICATED.</div>
-              </div>
-              <div className="topMargin5pc" />
-              <div className="formRow">
-                <div style={{ flexBasis: "5em", flexGrow: 0, order: 1 }}>
+                <div>I hereby direct</div>
+                <div style={{ flexGrow: 1 }}>
                   <Field type="text" name="e" />
                   <span>{values?.e}</span>
                 </div>
-                <div style={{ order: 2, flexGrow: 1 }}>
-                  A CHECK MADE PAYABLE TO BOTH THE PUBLIC ADJUSTER AND THE NAMED
-                </div>
+                <div>to issue a check or checks</div>
               </div>
               <div className="formRow">
-                <div style={{ flexBasis: "5em", flexGrow: 0, order: 1 }} />
-                <div style={{ order: 2 }}>
-                  INSURED. (FOR THE AMOUNT NO GREATER THAN THE PUBLIC ADJUSTER&apos;S FEE)
+                <div>as follows:</div>
+              </div>
+
+              <div className="topMargin5pc" />
+              <div className="formRow">
+                <div style={{ flexGrow: 0, order: 1, paddingRight: 15 }}>
+                  <Field type="checkbox" name="f" />
+                  {values?.f ? (
+                    <span
+                      style={{
+                        border: "1px solid #808080",
+                        textAlign: "center",
+                        width: 17,
+                        height: 15,
+                      }}
+                    >
+                      &#10004;
+                    </span>
+                  ) : (
+                    <span
+                      style={{
+                        border: "1px solid #808080",
+                        textAlign: "center",
+                        width: 17,
+                        height: 15,
+                        lineHeight: 15,
+                      }}
+                    ></span>
+                  )}
+                </div>
+                <div style={{ order: 2, flexGrow: 1 }}>
+                  one check payable to the public adjuster for the public adjuster&apos;s fee
+                  indicated in the written compensation agreement signed by the named insured(s) and
+                  filed with the insurer, less any referral fee set forth in a disclosure statement,
+                  if applicable, and a separate check payable to the named insured(s) or any loss
+                  payee or mortgagee, or both, whichever is appropriate, for the balance
                 </div>
               </div>
+
               <div className="topMargin1pc" />
               <div className="formRow">
-                <div style={{ flexBasis: "5em", order: 1 }}>
-                  <Field type="text" name="f" />
-                  <span>{values?.f}</span>
-                </div>
-                <div style={{ order: 2, flexGrow: 0 }}>A CHECK MADE PAYABLE TO:</div>
-                <div style={{ flexBasis: "10em", flexGrow: 1, order: 3 }}>
+                <div style={{ order: 1, flexBasis: "5em", flexGrow: 0 }}></div>
+                <div style={{ order: 2, flexGrow: 0 }}>$</div>
+                <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
                   <Field type="text" name="g" />
                   <span>{values?.g}</span>
                 </div>
+                <div style={{ order: 4, flexGrow: 0 }}>Public Adjuster&apos;s Fee</div>
               </div>
-              <div className="formRow">
-                <div style={{ flexBasis: "5em", flexGrow: 0, order: 1 }} />
-                <div style={{ order: 1 }}>PUBLIC ADJUSTING FIRM IN THE AMOUNT OF THE FEE OF</div>
-              </div>
+
+              <div className="topMargin1pc" />
               <div className="formRow">
                 <div style={{ order: 1, flexBasis: "5em", flexGrow: 0 }}></div>
                 <div style={{ order: 2, flexGrow: 0 }}>$</div>
@@ -211,21 +216,48 @@ export const Regulation10 = ({ formRef, claim, form, formName }) => {
                   <Field type="text" name="h" />
                   <span>{values?.h}</span>
                 </div>
+                <div style={{ order: 4, flexGrow: 0 }}> Insured(s)</div>
               </div>
+
+              <div className="topMargin5pc" />
+              <div className="formRow">
+                <div style={{ flexGrow: 0, order: 1, marginRight: 15 }}>
+                  <Field type="checkbox" name="i" />
+                  {values?.i ? (
+                    <span
+                      style={{
+                        border: "1px solid #808080",
+                        textAlign: "center",
+                        width: 17,
+                        height: 15,
+                      }}
+                    >
+                      &#10004;
+                    </span>
+                  ) : (
+                    <span
+                      style={{
+                        border: "1px solid #808080",
+                        textAlign: "center",
+                        width: 17,
+                        height: 15,
+                        lineHeight: 15,
+                      }}
+                    ></span>
+                  )}
+                </div>
+                <div style={{ order: 2, flexGrow: 1 }}>
+                  one check payable to both the public adjuster and named insured(s) for the public
+                  adjuster&apos;s fee indicated in the written compensation agreement signed by the
+                  named insured(s) and filed with the insurer, less any referral fee set forth in a
+                  disclosure statement, if applicable, and a separate check payable to the named
+                  insured(s) or any loss payee or mortgagee, or both, whichever is appropriate for
+                  the balance
+                </div>
+              </div>
+
+              {/* Section 3===================================================== */}
               <div className="topMargin1pc" />
-              <div className="formRow">
-                <div style={{ flexBasis: "5em", order: 1 }}>
-                  <Field type="text" name="i" />
-                  <span>{values?.i}</span>
-                </div>
-                <div style={{ order: 2, flexGrow: 0 }}>
-                  A CHECK MADE PAYABLE TO THE INSURED IN THE AMOUNT OF THE BALANCE
-                </div>
-              </div>
-              <div className="formRow">
-                <div style={{ flexBasis: "5em", flexGrow: 0, order: 1 }} />
-                <div style={{ order: 1 }}>PAYABLE.</div>
-              </div>
               <div className="formRow">
                 <div style={{ order: 1, flexBasis: "5em", flexGrow: 0 }}></div>
                 <div style={{ order: 2, flexGrow: 0 }}>$</div>
@@ -233,67 +265,54 @@ export const Regulation10 = ({ formRef, claim, form, formName }) => {
                   <Field type="text" name="j" />
                   <span>{values?.j}</span>
                 </div>
+                <div style={{ order: 4, flexGrow: 0 }}>Public Adjuster&apos;s Fee</div>
               </div>
+
               <div className="topMargin1pc" />
-              <div className="topMargin5pc" />
-              <div className="topMargin5pc" />
               <div className="formRow">
-                <div style={{ order: 1, flexBasis: "10em", flexGrow: 0 }}>
+                <div style={{ order: 1, flexBasis: "5em", flexGrow: 0 }}></div>
+                <div style={{ order: 2, flexGrow: 0 }}>$</div>
+                <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
                   <Field type="text" name="k" />
                   <span>{values?.k}</span>
                 </div>
-                <div style={{ order: 2, flexBasis: "10em", flexGrow: 0 }} />
-                <div style={{ order: 3, flexBasis: "20em", flexGrow: 0 }}>
-                  <Field type="text" name="l" />
-                  <span>{values?.l}</span>
-                </div>
+                <div style={{ order: 4, flexGrow: 0 }}> Insured(s)</div>
               </div>
-              <div className="formRow">
-                <div style={{ order: 1, flexBasis: "10em", flexGrow: 0 }}>DATE SIGNED</div>
-                <div style={{ order: 2, flexBasis: "10em", flexGrow: 0 }} />
-                <div style={{ order: 3, flexBasis: "20em", flexGrow: 0 }}>INSUREDS SIGNATURE</div>
+
+              <div className="formRow topMargin15">
+                NOTICE TO NAMED INSURED(S): You may revoke this direction to pay letter at any time
+                prior to the insurer issuing a check. Your revocation must be in writing and signed
+                by you. You must submit the revocation to the insurer and provide the public
+                adjuster with a copy.
               </div>
+
               <div className="topMargin5pc" />
-              <div className="topMargin5pc" />
-              <div className="formRow">
-                <div style={{ order: 1, flexBasis: "10em", flexGrow: 0 }}>
-                  <Field type="text" name="m" />
-                  <span />
+              <div className="formRow formHeadContainer">
+                <div className="formColumn" style={{ width: "40%" }}>
+                  <div>Signature of Insured(s)</div>
+                  <div className="topMargin5pc" />
+                  <div className="topMargin5pc" />
+                  <div style={{ order: 3, flexBasis: "3em", flexGrow: 0 }}>
+                    <Field type="text" name="l" />
+                    <span>{values?.l}</span>
+                  </div>
+                  <div style={{ order: 3, flexBasis: "3em", flexGrow: 0 }}>
+                    <Field type="text" name="m" />
+                    <span>{values?.m}</span>
+                  </div>
                 </div>
-                <div style={{ order: 2, flexBasis: "10em", flexGrow: 0 }} />
-                <div style={{ order: 3, flexBasis: "20em", flexGrow: 0 }}>
-                  <Field type="text" name="n" />
-                  <span />
-                </div>
-              </div>
-              <div className="formRow">
-                <div style={{ order: 1, flexBasis: "10em", flexGrow: 0 }}>DATE SIGNED</div>
-                <div style={{ order: 2, flexBasis: "10em", flexGrow: 0 }} />
-                <div style={{ order: 3, flexBasis: "20em", flexGrow: 0 }}>INSUREDS SIGNATURE</div>
-              </div>
-              <div className="topMargin5pc" />
-              <div className="topMargin5pc" />
-              <div className="formRow">
-                <div style={{ order: 1, flexBasis: "10em", flexGrow: 0 }}>
-                  <Field type="text" name="o" />
-                  <span />
-                </div>
-                <div style={{ order: 2, flexBasis: "10em", flexGrow: 0 }} />
-                <div style={{ order: 3, flexBasis: "20em", flexGrow: 0 }}>
-                  <Field type="text" name="p" />
-                  <span />
-                </div>
-              </div>
-              <div className="formRow">
-                <div style={{ order: 1, flexBasis: "10em", flexGrow: 0 }}>DATE SIGNED</div>
-                <div style={{ order: 2, flexBasis: "10em", flexGrow: 0 }} />
-                <div style={{ order: 3, flexBasis: "20em", flexGrow: 0 }}>INSUREDS SIGNATURE</div>
-              </div>
-              <div className="topMargin5pc" />
-              <div className="formRow">
-                <div style={{ order: 1 }}>
-                  AN UNALTERED COPY OF THE COMPENSATION AGREEMENT MUST BE ATTACHED TO THIS COMPLETED
-                  FORM
+                <div className="formColumn" style={{ width: "40%" }}>
+                  <div>Date of Signing</div>
+                  <div className="topMargin5pc" />
+                  <div className="topMargin5pc" />
+                  <div style={{ order: 3, flexBasis: "3em", flexGrow: 0 }}>
+                    <Field type="text" name="n" />
+                    <span>{values?.n}</span>
+                  </div>
+                  <div style={{ order: 3, flexBasis: "3em", flexGrow: 0 }}>
+                    <Field type="text" name="o" />
+                    <span>{values?.o}</span>
+                  </div>
                 </div>
               </div>
             </div>
