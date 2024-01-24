@@ -43,7 +43,7 @@ export const updateFormApi = async (data) => {
 
 export const emailFormApi = async (data) => {
   try {
-    const response = await api.post("/", data, getPDFHeadersConfig());
+    const response = await api.post("forms/email", data, getPDFHeadersConfig());
     return response;
   } catch (error) {
     console.log(error.message);

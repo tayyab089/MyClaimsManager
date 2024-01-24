@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
-import { Box, Container, Stack, Typography, Button, TextField } from "@mui/material";
+import { Box, Container, Stack, Button, TextField } from "@mui/material";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { useReactToPrint } from "react-to-print";
 
@@ -14,6 +14,8 @@ import { Regulation10 } from "src/sections/forms/regulation-10";
 import { CompensationAgreement } from "src/sections/forms/compensation-agreement";
 import { DisclosureStatement } from "src/sections/forms/disclosure-statement";
 import { CancellationNotice } from "src/sections/forms/cancellation-notice";
+
+import { EmailToModal } from "src/sections/forms/email-modal";
 
 import {
   TrashIcon,
@@ -51,7 +53,7 @@ const footerStyles = {
 };
 
 import { DocumentTextIcon } from "@heroicons/react/24/outline";
-import { deleteFormApi } from "src/network/forms-api";
+import { deleteFormApi, emailFormApi } from "src/network/forms-api";
 import { CustomAlert } from "src/components/custom-alert";
 
 const Page = () => {
@@ -93,6 +95,48 @@ const Page = () => {
 
     console.log(element);
   };
+
+  // PDF Email =====================================
+  // const emailPDF = async () => {
+  //   const element = document.getElementById(formType);
+  //   console.log(email, eBody);
+  //   html2pdf()
+  //     .from(element)
+  //     .output("blob")
+  //     .then((blob) => {
+  //       response = emailFormApi({ attachment: blob, emailTo: email, eBody: eBody });
+  //     });
+
+  //   console.log(element);
+  // };
+
+  const emailPDF = async () => {
+    const element = document.getElementById(formType);
+    console.log(email, eBody);
+    const formData = new FormData();
+    const jsonData = { emailTo: email, eBody: eBody };
+
+    try {
+      const blob = await html2pdf().from(element).output("blob");
+      formData.append("pdfFile", blob, "document.pdf");
+      formData.append("jsonData", JSON.stringify(jsonData));
+      const response = await emailFormApi(formData);
+
+      // You can use 'response' here if needed
+      console.log(response);
+    } catch (error) {
+      // Handle any errors that occurred during the async operations
+      console.error("Error:", error);
+    }
+
+    console.log(element);
+  };
+
+  // Email Modal Variables
+
+  const [email, setEmail] = useState("");
+  const [eBody, setEBody] = useState("");
+  const [openEmailModal, setOpenEmailModal] = useState(false);
 
   // Formik functions
   const reg10formRef = useRef();
@@ -270,6 +314,7 @@ const Page = () => {
                 color="primary"
                 sx={{ marginLeft: "20px" }}
                 startIcon={<EnvelopeIcon style={{ height: 20, width: 20 }} />}
+                onClick={() => setOpenEmailModal(true)}
               >
                 EMAIL
               </Button>
@@ -345,6 +390,15 @@ const Page = () => {
         </Container>
         <CustomAlert />
         <Dialog />
+        <EmailToModal
+          email={email}
+          setEmail={setEmail}
+          eBody={eBody}
+          setEBody={setEBody}
+          openEmailModal={openEmailModal}
+          setOpenEmailModal={setOpenEmailModal}
+          emailPDF={emailPDF}
+        />
       </Box>
     </>
   );
