@@ -77,7 +77,7 @@ export const SubrogationReceipt = ({ formRef, claim }) => {
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit} innerRef={formRef}>
       {({ values }) => (
-        <Form id="claimFormPrintContainer">
+        <Form id="SubrogationReceipt">
           <div className="formContainer" style={{ padding: ".3in .3in" }}>
             <div className="formRowCentered">
               <h3 style={{ order: 1 }}>SUBROGATION RECEIPT</h3>

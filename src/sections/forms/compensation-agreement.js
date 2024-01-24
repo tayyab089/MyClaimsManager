@@ -9,7 +9,7 @@ import { setAlertData } from "src/store/reducers/alert/thunks";
 
 // const { format } = require("date-fns");
 
-export const Regulation10 = ({ formRef, claim, form, formName }) => {
+export const CompensationAgreement = ({ formRef, claim, form, formName }) => {
   const dispatch = useDispatch();
   const [initialValues, setInitialValues] = useState({
     a: "",
@@ -48,7 +48,7 @@ export const Regulation10 = ({ formRef, claim, form, formName }) => {
       const response = await saveFormApi({
         form: {
           formData: values,
-          type: "Regulation10",
+          type: "CompensationAgreement",
           claimfileNo: claim?.fileNo,
           name: formName,
         },
@@ -101,17 +101,14 @@ export const Regulation10 = ({ formRef, claim, form, formName }) => {
     >
       {({ values }) => (
         <Form>
-          <div id="Regulation10">
+          <div id="CompensationAgreement">
             <FormsHeader />
-            <div className="formContainer" style={{ padding: "0 .8in .8in .8in" }}>
+            <div className="formContainer" style={{ padding: "0 .5in .5in .5in" }}>
               {/* Header===================================================== */}
               <div className="formRow" style={{ justifyContent: "center", fontSize: "1.1em" }}>
                 <div style={{ order: 1, alignContent: "center", fontWeight: "bold" }}>
-                  DIRECTION TO PAY LETTER
+                  PUBLIC ADJUSTER COMPENSATION AGREEMENT
                 </div>
-              </div>
-              <div className="formRow" style={{ justifyContent: "center", fontSize: "1.1em" }}>
-                <div style={{ order: 1, alignContent: "center" }}>REGULATION 10</div>
               </div>
 
               {/* Section 1===================================================== */}
@@ -119,7 +116,7 @@ export const Regulation10 = ({ formRef, claim, form, formName }) => {
               <div className="topMargin5pc" />
               <div className="topMargin1pc" />
               <div className="formRow topMargin10">
-                <div style={{ order: 1 }}>Name(s) of Named Insured(s)</div>
+                <div style={{ order: 1 }}>Name(s) of Namedvfvfvfvfv(s)</div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="a" />
                   <span>{values?.a}</span>

@@ -11,6 +11,9 @@ import useConfirm from "src/hooks/use-confirm";
 import { ProofOfLoss } from "src/sections/forms/proof-of-loss";
 import { SubrogationReceipt } from "src/sections/forms/subrogation-receipt";
 import { Regulation10 } from "src/sections/forms/regulation-10";
+import { CompensationAgreement } from "src/sections/forms/compensation-agreement";
+import { DisclosureStatement } from "src/sections/forms/disclosure-statement";
+import { CancellationNotice } from "src/sections/forms/cancellation-notice";
 
 import {
   TrashIcon,
@@ -20,13 +23,12 @@ import {
   ChevronLeftIcon,
 } from "@heroicons/react/24/outline";
 
-import { addFormsDataToClaim } from "src/store/reducers/claims/thunks";
+// import { addFormsDataToClaim } from "src/store/reducers/claims/thunks";
 
-import { PDFDownloadLink, BlobProvider, pdf } from "@react-pdf/renderer";
-import { Regulation10Print } from "src/sections/forms/regulation-10-print";
+// import { PDFDownloadLink, BlobProvider, pdf } from "@react-pdf/renderer";
 import html2pdf from "html2pdf.js";
 import { saveAs } from "file-saver";
-import { emailFormApi } from "src/network/forms-api";
+// import { emailFormApi } from "src/network/forms-api";
 
 const headerStyles = {
   backgroundColor: "white",
@@ -80,18 +82,25 @@ const Page = () => {
 
   // PDF Generation ==============================
   const generatePDF = () => {
+    console.log("I ran");
+    console.log(formType);
     // const blob = pdf(Regulation10Print).toBlob();
-    const element = document.getElementById("regulation10");
+    const element = document.getElementById(formType);
     html2pdf()
       .from(element)
       .output("blob")
       .then((blob) => saveAs(blob, formName));
+
+    console.log(element);
   };
 
   // Formik functions
   const reg10formRef = useRef();
   const subrogationformRef = useRef();
   const ProofOfLossformRef = useRef();
+  const compensationAgreementformRef = useRef();
+  const disclosureStatementformRef = useRef();
+  const cancellationNoticeformRef = useRef();
 
   // Submit Function ===================================================
   const handleSubmit = async () => {
@@ -114,20 +123,71 @@ const Page = () => {
   const handleDelete = async () => {
     const customTitle = "Confirm Delete";
     const customMessage = `Are you sure you want to delete form: <strong> ${form?.type} </strong> along with all its data? Please note that this process is not reversible.`;
-
-    const ans = await confirmDelete(customTitle, customMessage);
-    if (ans) {
-      if (formType == "ProofOfLoss") {
-        console.log("Form Not Setup Yet");
-      } else if (formType == "Regulation10") {
-        await deleteFormApi({
-          form: { claimfileNo: fileNo, formId: formId, userId: form?.userId },
-        });
-        router.push("/claim");
-      } else {
+    if (form) {
+      const ans = await confirmDelete(customTitle, customMessage);
+      if (ans) {
+        if (formType == "ProofOfLoss") {
+          console.log("Form Not Setup Yet");
+        } else if (formType == "Regulation10") {
+          await deleteFormApi({
+            form: { claimfileNo: fileNo, formId: formId, userId: form?.userId },
+          });
+          router.push("/claim");
+        } else {
+          console.log("Form Not Setup Yet");
+        }
       }
-    } else {
-      console.log("dont delete");
+    }
+  };
+
+  // Form Selector
+
+  const formSelector = () => {
+    switch (formType) {
+      case "ProofOfLoss":
+        return (
+          <ProofOfLoss formRef={ProofOfLossformRef} claim={claim} form={form} formName={formName} />
+        );
+      case "Regulation10":
+        return (
+          <Regulation10 formRef={reg10formRef} claim={claim} form={form} formName={formName} />
+        );
+      case "CompensationAgreement":
+        return (
+          <CompensationAgreement
+            formRef={compensationAgreementformRef}
+            claim={claim}
+            form={form}
+            formName={formName}
+          />
+        );
+      case "DisclosureStatement":
+        return (
+          <DisclosureStatement
+            formRef={disclosureStatementformRef}
+            claim={claim}
+            form={form}
+            formName={formName}
+          />
+        );
+      case "CancellationNotice":
+        return (
+          <CancellationNotice
+            formRef={cancellationNoticeformRef}
+            claim={claim}
+            form={form}
+            formName={formName}
+          />
+        );
+      default:
+        return (
+          <SubrogationReceipt
+            formRef={subrogationformRef}
+            claim={claim}
+            form={form}
+            formName={formName}
+          />
+        );
     }
   };
 
@@ -224,7 +284,8 @@ const Page = () => {
             </Stack>
           </Stack>
           <div ref={componentRef}>
-            {formType == "ProofOfLoss" ? (
+            {formSelector()}
+            {/* {formType == "ProofOfLoss" ? (
               <ProofOfLoss
                 formRef={ProofOfLossformRef}
                 claim={claim}
@@ -240,7 +301,7 @@ const Page = () => {
                 form={form}
                 formName={formName}
               />
-            )}
+            )} */}
           </div>
           <Stack
             direction="row"

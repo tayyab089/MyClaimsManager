@@ -9,7 +9,7 @@ import { setAlertData } from "src/store/reducers/alert/thunks";
 
 // const { format } = require("date-fns");
 
-export const Regulation10 = ({ formRef, claim, form, formName }) => {
+export const DisclosureStatement = ({ formRef, claim, form, formName }) => {
   const dispatch = useDispatch();
   const [initialValues, setInitialValues] = useState({
     a: "",
@@ -48,7 +48,7 @@ export const Regulation10 = ({ formRef, claim, form, formName }) => {
       const response = await saveFormApi({
         form: {
           formData: values,
-          type: "Regulation10",
+          type: "DisclosureStatement",
           claimfileNo: claim?.fileNo,
           name: formName,
         },
@@ -101,7 +101,7 @@ export const Regulation10 = ({ formRef, claim, form, formName }) => {
     >
       {({ values }) => (
         <Form>
-          <div id="Regulation10">
+          <div id="DisclosureStatement">
             <FormsHeader />
             <div className="formContainer" style={{ padding: "0 .8in .8in .8in" }}>
               {/* Header===================================================== */}

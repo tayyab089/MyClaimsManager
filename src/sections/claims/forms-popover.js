@@ -32,6 +32,36 @@ export const FormsPopover = (props) => {
           onClick={() =>
             router.push({
               pathname: "/forms",
+              query: { formType: "CompensationAgreement", fileNo: claimFileNo, isEdit: false },
+            })
+          }
+        >
+          Compensation Agreement
+        </MenuItem>
+        <MenuItem
+          onClick={() =>
+            router.push({
+              pathname: "/forms",
+              query: { formType: "CancellationNotice", fileNo: claimFileNo, isEdit: false },
+            })
+          }
+        >
+          Cancellation Notice
+        </MenuItem>
+        <MenuItem
+          onClick={() =>
+            router.push({
+              pathname: "/forms",
+              query: { formType: "DisclosureStatement", fileNo: claimFileNo, isEdit: false },
+            })
+          }
+        >
+          Disclosure Statement
+        </MenuItem>
+        <MenuItem
+          onClick={() =>
+            router.push({
+              pathname: "/forms",
               query: { formType: "ProofOfLoss", fileNo: claimFileNo, isEdit: false },
             })
           }

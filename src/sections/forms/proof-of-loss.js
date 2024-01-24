@@ -2,10 +2,7 @@
 
 export const ProofOfLoss = () => {
   return (
-    <div
-      id="claimFormPrintContainer"
-      data-bind="template: { name: activeFormTmpl, data: form().data()}"
-    >
+    <div id="ProofOfLoss" data-bind="template: { name: activeFormTmpl, data: form().data()}">
       <div className="formContainer">
         {/* ************************************************************************************************* */}
         {/* NOTE: Input fields do not render in the print layout since the content is not in the DOM */}
