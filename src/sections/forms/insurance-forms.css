@@ -449,6 +449,21 @@ input.no-border {
   display: none;
 }
 
+.formList1 {
+  padding-left: 15px;
+}
+
+.formList1 li {
+  padding-left: 10px;
+  margin-bottom: 3px;
+}
+
+.formList2 {
+  list-style-type: upper-alpha;
+  padding-left: 20px;
+  margin-top: 3px;
+}
+
 /* Hide these in normal edit. Used for printing */
 /* see @media print below */
 .formContainer span {
@@ -492,7 +507,7 @@ input.no-border {
 
 @media print {
   @page {
-    size: letter;
+    size: legal;
     margin-left: 0.25in;
     margin-right: 0.25in;
     margin-bottom: 0.25in;

@@ -28,7 +28,6 @@ import {
 // import { addFormsDataToClaim } from "src/store/reducers/claims/thunks";
 
 // import { PDFDownloadLink, BlobProvider, pdf } from "@react-pdf/renderer";
-import html2pdf from "html2pdf.js";
 import { saveAs } from "file-saver";
 // import { emailFormApi } from "src/network/forms-api";
 
@@ -55,6 +54,7 @@ const footerStyles = {
 import { DocumentTextIcon } from "@heroicons/react/24/outline";
 import { deleteFormApi, emailFormApi } from "src/network/forms-api";
 import { CustomAlert } from "src/components/custom-alert";
+import { setAlertData } from "src/store/reducers/alert/thunks";
 
 const Page = () => {
   const router = useRouter();
@@ -65,6 +65,12 @@ const Page = () => {
   const [claim, setClaim] = useState({});
   const [form, setForm] = useState({});
   const [formName, setFormName] = useState(formType);
+
+  // Email Modal Variables
+
+  const [email, setEmail] = useState("");
+  const [eBody, setEBody] = useState("");
+  const [openEmailModal, setOpenEmailModal] = useState(false);
 
   const componentRef = useRef();
 
@@ -83,60 +89,59 @@ const Page = () => {
   });
 
   // PDF Generation ==============================
-  const generatePDF = () => {
-    console.log("I ran");
-    console.log(formType);
-    // const blob = pdf(Regulation10Print).toBlob();
+  const generatePDF = async () => {
+    const html2pdf = (await import("html2pdf.js")).default;
     const element = document.getElementById(formType);
-    html2pdf()
-      .from(element)
-      .output("blob")
-      .then((blob) => saveAs(blob, formName));
+    var opt = {
+      margin: 0,
+      filename: formName,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "in", format: "legal", orientation: "portrait" },
+    };
+    html2pdf().from(element).set(opt).save();
+    // .output("blob")
+    // .then((blob) => saveAs(blob, formName));
 
     console.log(element);
   };
 
-  // PDF Email =====================================
-  // const emailPDF = async () => {
-  //   const element = document.getElementById(formType);
-  //   console.log(email, eBody);
-  //   html2pdf()
-  //     .from(element)
-  //     .output("blob")
-  //     .then((blob) => {
-  //       response = emailFormApi({ attachment: blob, emailTo: email, eBody: eBody });
-  //     });
-
-  //   console.log(element);
-  // };
-
   const emailPDF = async () => {
+    const html2pdf = (await import("html2pdf.js")).default;
     const element = document.getElementById(formType);
-    console.log(email, eBody);
     const formData = new FormData();
     const jsonData = { emailTo: email, eBody: eBody };
 
+    var opt = {
+      margin: 0,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "in", format: "legal", orientation: "portrait" },
+    };
+
     try {
-      const blob = await html2pdf().from(element).output("blob");
+      const blob = await html2pdf().from(element).set(opt).output("blob");
       formData.append("pdfFile", blob, "document.pdf");
       formData.append("jsonData", JSON.stringify(jsonData));
       const response = await emailFormApi(formData);
-
-      // You can use 'response' here if needed
-      console.log(response);
+      if (response && response.data.type !== "error") {
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
+        setEmail("");
+        setEBody("");
+        setOpenEmailModal(false);
+      } else {
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
+      }
     } catch (error) {
-      // Handle any errors that occurred during the async operations
       console.error("Error:", error);
     }
 
     console.log(element);
   };
-
-  // Email Modal Variables
-
-  const [email, setEmail] = useState("");
-  const [eBody, setEBody] = useState("");
-  const [openEmailModal, setOpenEmailModal] = useState(false);
 
   // Formik functions
   const reg10formRef = useRef();
@@ -148,6 +153,39 @@ const Page = () => {
 
   // Submit Function ===================================================
   const handleSubmit = async () => {
+    switch (formType) {
+      case "ProofOfLoss":
+        if (ProofOfLossformRef.current) {
+          await ProofOfLossformRef.current.handleSubmit();
+        }
+        break;
+      case "Regulation10":
+        if (reg10formRef.current) {
+          await reg10formRef.current.handleSubmit();
+        }
+        break;
+      case "CompensationAgreement":
+        if (compensationAgreementformRef.current) {
+          await compensationAgreementformRef.current.handleSubmit();
+        }
+        break;
+      case "DisclosureStatement":
+        if (disclosureStatementformRef.current) {
+          await disclosureStatementformRef.current.handleSubmit();
+        }
+        break;
+      case "CancellationNotice":
+        if (cancellationNoticeformRef.current) {
+          await cancellationNoticeformRef.current.handleSubmit();
+        }
+        break;
+      default:
+        if (subrogationformRef.current) {
+          subrogationformRef.current.handleSubmit();
+        }
+        break;
+    }
+
     if (formType == "ProofOfLoss") {
       console.log("Form Not Setup Yet");
     } else if (formType == "Regulation10") {
@@ -170,16 +208,10 @@ const Page = () => {
     if (form) {
       const ans = await confirmDelete(customTitle, customMessage);
       if (ans) {
-        if (formType == "ProofOfLoss") {
-          console.log("Form Not Setup Yet");
-        } else if (formType == "Regulation10") {
-          await deleteFormApi({
-            form: { claimfileNo: fileNo, formId: formId, userId: form?.userId },
-          });
-          router.push("/claim");
-        } else {
-          console.log("Form Not Setup Yet");
-        }
+        await deleteFormApi({
+          form: { claimfileNo: fileNo, formId: formId, userId: form?.userId },
+        });
+        router.back();
       }
     }
   };
@@ -322,7 +354,7 @@ const Page = () => {
                 startIcon={<ChevronLeftIcon style={{ height: 20, width: 20 }} />}
                 variant="contained"
                 sx={{ marginLeft: "20px" }}
-                onClick={() => router.back()}
+                onClick={() => handleClose()}
               >
                 BACK
               </Button>

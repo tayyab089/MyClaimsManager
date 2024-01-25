@@ -217,6 +217,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                           name="fileNo"
                           onChange={handleChange}
                           required
+                          disabled={item?.fileNo}
                           value={values.fileNo}
                         />
                       </Grid>

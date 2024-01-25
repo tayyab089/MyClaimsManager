@@ -3,7 +3,7 @@ import { Formik, Field, Form } from "formik";
 
 const { format } = require("date-fns");
 
-export const SubrogationReceipt = ({ formRef, claim }) => {
+export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
   const [initialValues, setInitialValues] = useState({
     a: "Fireman's Fund Insurance",
     b: "Three Thousand Twenty and 88/100",
@@ -35,43 +35,78 @@ export const SubrogationReceipt = ({ formRef, claim }) => {
     ab: "",
   });
 
-  const onSubmit = (values) => {
-    // Handle form submission
+  const onSubmit = async (values) => {
     console.log(values);
+    if (form) {
+      const response = await updateFormApi({
+        form: { ...form, formData: values, name: formName },
+      });
+      if (response && response.data.type !== "error") {
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
+      } else {
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
+      }
+    } else {
+      const response = await saveFormApi({
+        form: {
+          formData: values,
+          type: "SubrogationReceipt",
+          claimfileNo: claim?.fileNo,
+          name: formName,
+        },
+      });
+      if (response && response.data.type !== "error") {
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
+      } else {
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
+      }
+    }
   };
 
   // useEffect Hooks
   useEffect(() => {
-    setInitialValues({
-      a: "Fireman's Fund Insurance",
-      b: "Three Thousand Twenty and 88/100",
-      c: "3,020.88",
-      d: "NYP2005065-11",
-      e: "Fire",
-      f: "",
-      g: "8th",
-      h: "March",
-      i: "13",
-      j: "",
-      k: "20",
-      l: "BR Affordable Housing, LLP",
-      m: "",
-      n: "",
-      o: "",
-      p: "",
-      q: "",
-      r: "",
-      s: "",
-      t: "",
-      u: "",
-      v: "",
-      w: "",
-      x: "",
-      y: "",
-      z: "",
-      aa: "",
-      ab: "",
-    });
+    if (form) {
+      setInitialValues(form?.formData);
+    } else {
+      setInitialValues({
+        a: "Fireman's Fund Insurance",
+        b: "Three Thousand Twenty and 88/100",
+        c: "3,020.88",
+        d: "NYP2005065-11",
+        e: "Fire",
+        f: "",
+        g: "8th",
+        h: "March",
+        i: "13",
+        j: "",
+        k: "20",
+        l: "BR Affordable Housing, LLP",
+        m: "",
+        n: "",
+        o: "",
+        p: "",
+        q: "",
+        r: "",
+        s: "",
+        t: "",
+        u: "",
+        v: "",
+        w: "",
+        x: "",
+        y: "",
+        z: "",
+        aa: "",
+        ab: "",
+      });
+    }
   }, [claim]);
 
   return (

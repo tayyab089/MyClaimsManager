@@ -17,16 +17,14 @@ export const CompensationAgreement = ({ formRef, claim, form, formName }) => {
     c: "",
     d: "",
     e: "",
-    f: "X",
-    g: "Paul Guttman & Co., Inc. No Fee Being Charged",
-    h: "0.00",
-    i: "X",
-    j: "3,020.88",
-    k: "X",
+    f: "",
+    g: "",
+    h: "",
+    i: "",
+    j: "",
+    k: "",
     l: "",
     m: "",
-    n: "",
-    o: "",
   });
 
   const onSubmit = async (values) => {
@@ -75,7 +73,7 @@ export const CompensationAgreement = ({ formRef, claim, form, formName }) => {
         b: claim?.insurance?.policyNo,
         c: claim?.claimNo,
         // d: claim?.lossDate ? format(new Date(claim?.lossDate), "dd-MM-yyyy") : "",
-        d: "Paul Guttman & Co., Inc. No Fee Being Charged",
+        d: "",
         e: "",
         f: "",
         g: "",
@@ -113,203 +111,185 @@ export const CompensationAgreement = ({ formRef, claim, form, formName }) => {
 
               {/* Section 1===================================================== */}
               <div className="topMargin5pc" />
-              <div className="topMargin5pc" />
-              <div className="topMargin1pc" />
-              <div className="formRow topMargin10">
-                <div style={{ order: 1 }}>Name(s) of Namedvfvfvfvfv(s)</div>
+              <div className="formRow topMargin5">
+                <div style={{ order: 1 }}>Date and Time of Initial Contact: </div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="a" />
                   <span>{values?.a}</span>
                 </div>
               </div>
-              <div className="formRow topMargin10">
-                <div style={{ order: 1, flexBasis: "5em" }}>Policy No:</div>
+              <div className="formRow topMargin5">
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="b" />
                   <span>{values?.b}</span>
                 </div>
               </div>
-              <div className="formRow topMargin10">
-                <div style={{ order: 1, flexBasis: "5em" }}>Claim No:</div>
+              <div className="formRow topMargin5">
+                <div style={{ order: 1, flexBasis: "10em" }}>residing/located at</div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="c" />
                   <span>{values?.c}</span>
                 </div>
               </div>
-              <div className="formRow topMargin10 bottomMargin15">
-                <div style={{ order: 1 }}>Public Adjuster&apos;s Name</div>
+              <div className="formRow topMargin5">
+                <div style={{ order: 1, flexGrow: 1 }}>
+                  hereby retains Paul Guttman & Co., Inc. to act or aid in preparation,
+                  presentation, adjustment, and negotiation,
+                </div>
+              </div>
+              <div className="formRow topMargin5">
+                <div style={{ order: 1 }}>
+                  or effecting the settlement, of claim for the loss or damage by
+                </div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="d" />
                   <span>{values?.d}</span>
                 </div>
               </div>
-
-              {/* Section 2===================================================== */}
-              <div className="topMargin1pc" />
-              <div className="formRow">
-                <div>I hereby direct</div>
+              <div className="formRow topMargin5">
+                <div>sustained at</div>
                 <div style={{ flexGrow: 1 }}>
                   <Field type="text" name="e" />
                   <span>{values?.e}</span>
                 </div>
-                <div>to issue a check or checks</div>
-              </div>
-              <div className="formRow">
-                <div>as follows:</div>
               </div>
 
-              <div className="topMargin5pc" />
-              <div className="formRow">
-                <div style={{ flexGrow: 0, order: 1, paddingRight: 15 }}>
-                  <Field type="checkbox" name="f" />
-                  {values?.f ? (
-                    <span
-                      style={{
-                        border: "1px solid #808080",
-                        textAlign: "center",
-                        width: 17,
-                        height: 15,
-                      }}
-                    >
-                      &#10004;
-                    </span>
-                  ) : (
-                    <span
-                      style={{
-                        border: "1px solid #808080",
-                        textAlign: "center",
-                        width: 17,
-                        height: 15,
-                        lineHeight: 15,
-                      }}
-                    ></span>
-                  )}
+              <div className="formRow topMargin5">
+                <div style={{ order: 1 }}>on,</div>
+                <div style={{ order: 2, flexBasis: "5em" }}>
+                  <Field type="text" name="f" />
+                  <span>{values?.f}</span>
                 </div>
-                <div style={{ order: 2, flexGrow: 1 }}>
-                  one check payable to the public adjuster for the public adjuster&apos;s fee
-                  indicated in the written compensation agreement signed by the named insured(s) and
-                  filed with the insurer, less any referral fee set forth in a disclosure statement,
-                  if applicable, and a separate check payable to the named insured(s) or any loss
-                  payee or mortgagee, or both, whichever is appropriate, for the balance
-                </div>
-              </div>
-
-              <div className="topMargin1pc" />
-              <div className="formRow">
-                <div style={{ order: 1, flexBasis: "5em", flexGrow: 0 }}></div>
-                <div style={{ order: 2, flexGrow: 0 }}>$</div>
-                <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
+                <div style={{ order: 3 }}>20</div>
+                <div style={{ order: 4, flexBasis: "2em" }}>
                   <Field type="text" name="g" />
                   <span>{values?.g}</span>
                 </div>
-                <div style={{ order: 4, flexGrow: 0 }}>Public Adjuster&apos;s Fee</div>
-              </div>
-
-              <div className="topMargin1pc" />
-              <div className="formRow">
-                <div style={{ order: 1, flexBasis: "5em", flexGrow: 0 }}></div>
-                <div style={{ order: 2, flexGrow: 0 }}>$</div>
-                <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
+                <div style={{ order: 5 }}>
+                  , and agrees to pay the Adjuster for such service a fee of
+                </div>
+                <div style={{ order: 6, flexGrow: 1, flexBasis: "5em" }}>
                   <Field type="text" name="h" />
                   <span>{values?.h}</span>
                 </div>
-                <div style={{ order: 4, flexGrow: 0 }}> Insured(s)</div>
+                <div style={{ order: 7 }}>percent ( INITIAL HERE)</div>
               </div>
 
-              <div className="topMargin5pc" />
-              <div className="formRow">
-                <div style={{ flexGrow: 0, order: 1, marginRight: 15 }}>
-                  <Field type="checkbox" name="i" />
-                  {values?.i ? (
-                    <span
-                      style={{
-                        border: "1px solid #808080",
-                        textAlign: "center",
-                        width: 17,
-                        height: 15,
-                      }}
-                    >
-                      &#10004;
-                    </span>
-                  ) : (
-                    <span
-                      style={{
-                        border: "1px solid #808080",
-                        textAlign: "center",
-                        width: 17,
-                        height: 15,
-                        lineHeight: 15,
-                      }}
-                    ></span>
-                  )}
+              <div className="formRow topMargin5">
+                <div>
+                  of the amount of the loss, including salvage, when adjusted or otherwise recoverd
+                  from the insurance companies.
                 </div>
-                <div style={{ order: 2, flexGrow: 1 }}>
-                  one check payable to both the public adjuster and named insured(s) for the public
-                  adjuster&apos;s fee indicated in the written compensation agreement signed by the
-                  named insured(s) and filed with the insurer, less any referral fee set forth in a
-                  disclosure statement, if applicable, and a separate check payable to the named
-                  insured(s) or any loss payee or mortgagee, or both, whichever is appropriate for
-                  the balance
+              </div>
+
+              <div className="formRow topMargin5">
+                <div style={{ order: 0, flexBasis: "10em" }}>
+                  <Field type="text" name="i" />
+                  <span>{values?.i}</span>
                 </div>
+                <div>disclosure statements are attached hereto.</div>
+              </div>
+
+              <div className="formRow topMargin10" style={{ borderTop: "1.5px dashed #000" }}></div>
+
+              {/* Section 2===================================================== */}
+              <div className="formRow" style={{ justifyContent: "center", fontSize: "1.1em" }}>
+                <div style={{ order: 1, alignContent: "center", fontWeight: "bold" }}>
+                  NOTICE TO INSURED
+                </div>
+              </div>
+              <div>
+                <ol className="formList1">
+                  <li>
+                    The Adjuster may not receive any compensation unless the Adjuster discloses the
+                    compensation to you.
+                  </li>
+                  <li>
+                    The Adjuster may not charge you any fees that total more than 12.5% of the
+                    recovery for services rendered by the Adjuster, except that the Adjuster may
+                    charge a fee of up to 20% on a supplemental claim if the aggregate fee charged
+                    is less than or equal to 12.5% of the full claim payment. A supplemental claim
+                    is a claim made to an insurer in a situation in which you did not retain a
+                    public adjuster when you made an initial claim, the insurer made a payment to
+                    you, and then you retained a public adjuster to prove the amount of the loss and
+                    extent of the loss and not the cause of the loss.
+                    <ol className="formList2">
+                      <li>
+                        The limit on the total fees that may be charged includes services rendered
+                        by an outside expert or consultant retained or employed by the Adjuster that
+                        directly relate to the adjusting function of the Adjuster.
+                      </li>
+                      <li>
+                        The limit on total fees also includes any referral of an individual or
+                        entity for services, work, or repairs relating to any insurance claim for
+                        which the Adjuster represents or represented you or has negotiated or
+                        effected a settlement.
+                      </li>
+                      <li>
+                        If the Adjuster refers you to an individual or entity, including after you
+                        sign this compensation agreement, then the Adjuster must obtain an
+                        acknowledged disclosure statement from you at the time of the referral.{" "}
+                      </li>
+                      <li>
+                        YOU ARE NOT REQUIRED TO USE ANY INDIVIDUAL OR ENTITY TO WHOM OR WHICH THE
+                        ADJUSTER REFERS YOU.
+                      </li>
+                    </ol>
+                  </li>
+                  <li>
+                    The Adjuster must compute the fee based upon any monies paid by the insurer for
+                    any insurance claim for which the public adjuster represents or represented you
+                    or has negotiated or effected a settlement, after you have retained the
+                    Adjuster&apos;s services.
+                  </li>
+                  <li>
+                    The fee to be charged under this compensation agreement may be negotiated
+                    between the parties for less than 12.5%, or with regard to a supplemental claim,
+                    for less than 20%. You should discuss the amount of the fee with the Adjuster
+                    before signing any compensation agreement. You must initial the amount upon
+                    which you have agreed.
+                  </li>
+                  <li>
+                    This compensation agreement is valid only if both this agreement and the
+                    attached notice of cancellation are written in the same language as that
+                    principally used in the oral negotiations and presentation.
+                  </li>
+                  <li>
+                    You may cancel this compensation agreement at any time prior to midnight of the
+                    third business day after you signed this compensation agreement. Please read the
+                    attached &quot;Notice of Cancellation&quot; form for an explanation of this
+                    right.
+                  </li>
+                </ol>
               </div>
 
               {/* Section 3===================================================== */}
-              <div className="topMargin1pc" />
-              <div className="formRow">
-                <div style={{ order: 1, flexBasis: "5em", flexGrow: 0 }}></div>
-                <div style={{ order: 2, flexGrow: 0 }}>$</div>
-                <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
-                  <Field type="text" name="j" />
-                  <span>{values?.j}</span>
-                </div>
-                <div style={{ order: 4, flexGrow: 0 }}>Public Adjuster&apos;s Fee</div>
-              </div>
-
-              <div className="topMargin1pc" />
-              <div className="formRow">
-                <div style={{ order: 1, flexBasis: "5em", flexGrow: 0 }}></div>
-                <div style={{ order: 2, flexGrow: 0 }}>$</div>
-                <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
-                  <Field type="text" name="k" />
-                  <span>{values?.k}</span>
-                </div>
-                <div style={{ order: 4, flexGrow: 0 }}> Insured(s)</div>
-              </div>
-
-              <div className="formRow topMargin15">
-                NOTICE TO NAMED INSURED(S): You may revoke this direction to pay letter at any time
-                prior to the insurer issuing a check. Your revocation must be in writing and signed
-                by you. You must submit the revocation to the insurer and provide the public
-                adjuster with a copy.
-              </div>
-
               <div className="topMargin5pc" />
               <div className="formRow formHeadContainer">
                 <div className="formColumn" style={{ width: "40%" }}>
-                  <div>Signature of Insured(s)</div>
-                  <div className="topMargin5pc" />
-                  <div className="topMargin5pc" />
-                  <div style={{ order: 3, flexBasis: "3em", flexGrow: 0 }}>
+                  <div style={{ order: 0 }}>
+                    <Field type="text" name="j" />
+                    <span>{values?.j}</span>
+                  </div>
+                  <div style={{ order: 1 }}>Signature of Public Adjuster</div>
+                  <div style={{ order: 2 }}>or Licensed Representative Thereof</div>
+                  <div style={{ order: 3, marginTop: 10 }}>
+                    <Field type="text" name="k" />
+                    <span>{values?.k}</span>
+                  </div>
+                  <div style={{ order: 4 }}>Date and Time of Signing</div>
+                </div>
+                <div className="formColumn" style={{ width: "40%" }}>
+                  <div style={{ order: 0 }}>
                     <Field type="text" name="l" />
                     <span>{values?.l}</span>
                   </div>
-                  <div style={{ order: 3, flexBasis: "3em", flexGrow: 0 }}>
+                  <div style={{ order: 1 }}>Signature of Insured</div>
+                  <div style={{ order: 2, marginTop: 20 }}>
                     <Field type="text" name="m" />
                     <span>{values?.m}</span>
                   </div>
-                </div>
-                <div className="formColumn" style={{ width: "40%" }}>
-                  <div>Date of Signing</div>
-                  <div className="topMargin5pc" />
-                  <div className="topMargin5pc" />
-                  <div style={{ order: 3, flexBasis: "3em", flexGrow: 0 }}>
-                    <Field type="text" name="n" />
-                    <span>{values?.n}</span>
-                  </div>
-                  <div style={{ order: 3, flexBasis: "3em", flexGrow: 0 }}>
-                    <Field type="text" name="o" />
-                    <span>{values?.o}</span>
-                  </div>
+                  <div style={{ order: 3 }}>Signature of Insured</div>
                 </div>
               </div>
             </div>
