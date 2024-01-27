@@ -10,12 +10,22 @@ import {
   Button,
   Paper,
   Stack,
+  Box,
+  LinearProgress,
+  useMediaQuery,
 } from "@mui/material";
 import { FormsPopover } from "./forms-popover";
 import { usePopover } from "src/hooks/use-popover";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { deleteFormApi } from "src/network/forms-api";
+import useConfirm from "src/hooks/use-confirm";
+import { setAlertData } from "src/store/reducers/alert/thunks";
+import { deleteFormFromStore } from "src/store/reducers/forms/thunks";
 
-export const InsuraceForms = ({ item }) => {
+import { ButtonsContainer } from "src/components/styled-components";
+import { useRouter } from "next/router";
+
+export const InsuraceForms = ({ item, formsData, isFormLoading }) => {
   // Style Objects =============================
   const style = {
     boxShadow: 24,
@@ -25,10 +35,37 @@ export const InsuraceForms = ({ item }) => {
     padding: "20px",
   };
 
+  const router = useRouter();
+
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
   const formPopover = usePopover();
 
-  console.log(item?.forms);
-  // const [formsArray, setFormsArray] = useState([{}]);
+  const dispatch = useDispatch();
+
+  // Delete Function =====================================================
+  const [Dialog, confirmDelete] = useConfirm();
+
+  const handleDelete = async (form) => {
+    const customTitle = "Confirm Delete";
+    const customMessage = `Are you sure you want to delete form: <strong> ${form?.type} </strong> along with all its data? Please note that this process is not reversible.`;
+
+    const ans = await confirmDelete(customTitle, customMessage);
+    if (ans) {
+      const response = await deleteFormApi({ form: form });
+      if (response && response.data.type !== "error") {
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
+        dispatch(deleteFormFromStore(form));
+      } else {
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
+      }
+    } else {
+      console.log("dont delete");
+    }
+  };
 
   return (
     <Stack sx={style} spacing={3}>
@@ -50,26 +87,64 @@ export const InsuraceForms = ({ item }) => {
         />
       </Stack>
 
-      <TableContainer component={Paper}>
-        <Table aria-label="insurance forms table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Type</TableCell>
-              <TableCell>Updated</TableCell>
-              <TableCell>Created By</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {item?.forms?.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell>{item?.type}</TableCell>
-                <TableCell>{item?.updated?.toLocaleString()}</TableCell>
-                <TableCell>{item?.createdBy}</TableCell>
+      {isFormLoading ? (
+        <Box sx={{ width: "100%" }}>
+          <LinearProgress />
+        </Box>
+      ) : (
+        <TableContainer component={Paper}>
+          <Table aria-label="insurance forms table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Updated</TableCell>
+                <TableCell>Created By</TableCell>
+                <TableCell style={{ width: "20%" }}>Actions</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {formsData?.map((form, index) => (
+                <TableRow key={index}>
+                  <TableCell>{form?.name}</TableCell>
+                  <TableCell>{new Date(form?.lastUpdated)?.toLocaleString()}</TableCell>
+                  <TableCell>Howie Guttman</TableCell>
+                  <TableCell>
+                    <ButtonsContainer>
+                      <Button
+                        onClick={() =>
+                          router.push({
+                            pathname: "/forms",
+                            query: {
+                              formType: form?.type,
+                              fileNo: form?.claimfileNo,
+                              isEdit: true,
+                              formId: form?.formId,
+                            },
+                          })
+                        }
+                        color="primary"
+                        variant={!lgUp ? "text" : "contained"}
+                        size="small"
+                      >
+                        View
+                      </Button>
+                      <Button
+                        onClick={() => handleDelete(form)}
+                        color="error"
+                        variant={!lgUp ? "text" : "outlined"}
+                        size="small"
+                      >
+                        Delete
+                      </Button>
+                    </ButtonsContainer>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+      <Dialog />
     </Stack>
   );
 };

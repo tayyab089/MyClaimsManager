@@ -32,7 +32,37 @@ export const FormsPopover = (props) => {
           onClick={() =>
             router.push({
               pathname: "/forms",
-              query: { formName: "ProofOfLoss", fileNo: claimFileNo },
+              query: { formType: "CompensationAgreement", fileNo: claimFileNo, isEdit: false },
+            })
+          }
+        >
+          Compensation Agreement
+        </MenuItem>
+        <MenuItem
+          onClick={() =>
+            router.push({
+              pathname: "/forms",
+              query: { formType: "CancellationNotice", fileNo: claimFileNo, isEdit: false },
+            })
+          }
+        >
+          Cancellation Notice
+        </MenuItem>
+        <MenuItem
+          onClick={() =>
+            router.push({
+              pathname: "/forms",
+              query: { formType: "DisclosureStatement", fileNo: claimFileNo, isEdit: false },
+            })
+          }
+        >
+          Disclosure Statement
+        </MenuItem>
+        <MenuItem
+          onClick={() =>
+            router.push({
+              pathname: "/forms",
+              query: { formType: "ProofOfLoss", fileNo: claimFileNo, isEdit: false },
             })
           }
         >
@@ -42,7 +72,7 @@ export const FormsPopover = (props) => {
           onClick={() =>
             router.push({
               pathname: "/forms",
-              query: { formName: "Regulation10", fileNo: claimFileNo },
+              query: { formType: "Regulation10", fileNo: claimFileNo, isEdit: false },
             })
           }
         >
@@ -52,7 +82,7 @@ export const FormsPopover = (props) => {
           onClick={() =>
             router.push({
               pathname: "/forms",
-              query: { formName: "SubrogationReceipt", fileNo: claimFileNo },
+              query: { formType: "SubrogationReceipt", fileNo: claimFileNo, isEdit: false },
             })
           }
         >

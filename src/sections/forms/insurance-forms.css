@@ -449,6 +449,21 @@ input.no-border {
   display: none;
 }
 
+.formList1 {
+  padding-left: 15px;
+}
+
+.formList1 li {
+  padding-left: 10px;
+  margin-bottom: 3px;
+}
+
+.formList2 {
+  list-style-type: upper-alpha;
+  padding-left: 20px;
+  margin-top: 3px;
+}
+
 /* Hide these in normal edit. Used for printing */
 /* see @media print below */
 .formContainer span {
@@ -492,7 +507,7 @@ input.no-border {
 
 @media print {
   @page {
-    size: letter;
+    size: legal;
     margin-left: 0.25in;
     margin-right: 0.25in;
     margin-bottom: 0.25in;
@@ -532,6 +547,13 @@ input.no-border {
     padding-left: 5px;
   }
 
+  .checkboxSpan {
+    /* border: "1px solid #808080"; */
+    text-align: "center";
+    width: "17px";
+    height: "15px";
+  }
+
   .formContainer .printOnly {
     display: inherit;
     width: 100%;
@@ -563,6 +585,11 @@ input.no-border {
   min-height: 1em;
 }
 
+.formHeadContainer {
+  justify-content: space-between;
+  width: 100%;
+}
+
 .formRow .numeric {
   text-align: right;
   padding-right: 5px;
@@ -572,6 +599,12 @@ input.no-border {
 .formColumn {
   display: flex;
   flex-flow: column;
+}
+
+.formColumnCentered {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }
 
 .formTextBox {

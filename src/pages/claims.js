@@ -12,45 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts } from "src/store/reducers/contacts/thunks";
 import { ContactsAdd } from "src/sections/contacts/contacs-add";
 import { CustomAlert } from "src/components/custom-alert";
-import { fetchClaims } from "src/store/reducers/claims/thunks";
+import { fetchClaims, deleteClaimFromStore } from "src/store/reducers/claims/thunks";
 import { setAlertData } from "src/store/reducers/alert/thunks";
 import { deleteClaimApi } from "src/network/claims-api";
-
-const claim = {
-  id: "5e887ac47eed25309112fvcb",
-  fileNo: "223021",
-  insured: [
-    { name: "Dan Roussis", id: "970249f1-cb29-44ba-9d6a-bd3363e5774a" },
-    { name: "Anika Viser", id: "99235a6d-b99a-4d74-b477-2dda8b06635f" },
-  ],
-  lossLocation: "1038 Boston Rd, The Bronx, NY 10456, USA",
-  lossType: "Fire",
-  lossDate: new Date(),
-  insurance: {
-    company: "State Farm Insurance Co.",
-    fileNo: "549123",
-    policyNo: "NYP2005065-11",
-    claimNo: "P13 2602",
-    issueDate: new Date(),
-    expiryDate: new Date(),
-  },
-  policyCoverage: [{ category: "Property Damage", amount: "23000" }],
-  contacts: [
-    {
-      category: "Adjuster",
-      contact: { name: "Howard Guttman", id: "20441dae-40dc-49a5-85fa-e570706b912b" },
-    },
-    {
-      category: "Adjuster",
-      contact: { name: "Anika Viser", id: "99235a6d-b99a-4d74-b477-2dda8b06635f" },
-    },
-  ],
-  docs: ["", "", ""],
-  tasks: ["", "", ""],
-  forms: ["", "", ""],
-};
-
-const data = Array.from({ length: 10 }, () => claim);
 
 const useClaims = (claimsData, page, rowsPerPage) => {
   return useMemo(() => {
@@ -60,7 +24,7 @@ const useClaims = (claimsData, page, rowsPerPage) => {
 
 const useClaimIds = (claims) => {
   return useMemo(() => {
-    return claims.map((claim) => claim.id);
+    return claims.map((claim) => claim?.id);
   }, [claims]);
 };
 
@@ -88,7 +52,9 @@ const Page = () => {
   const deleteClaim = async (claim) => {
     try {
       const response = await deleteClaimApi({ claim: claim });
+      console.log(response);
       if (response && response.data.type !== "error") {
+        dispatch(deleteClaimFromStore(claim));
         dispatch(
           setAlertData({ open: true, message: response.data.message, type: response.data.type })
         );
@@ -97,7 +63,6 @@ const Page = () => {
           setAlertData({ open: true, message: response.data.message, type: response.data.type })
         );
       }
-      dispatch(fetchClaims());
     } catch (e) {
       console.log(e);
     }
@@ -140,6 +105,23 @@ const Page = () => {
     }
   };
 
+  // Search Functions and State=========================================
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredClaims, setFilteredClaims] = useState([]);
+
+  const filterData = (val) => {
+    console.log(claims);
+    const lowercaseVal = val.toLowerCase();
+    const filteredData = claims.filter(
+      (obj) =>
+        obj.fileNo.toLowerCase().includes(lowercaseVal) ||
+        obj.lossLocation.toLowerCase().includes(lowercaseVal)
+    );
+    console.log(filteredData);
+    setSearchValue(val);
+    setFilteredClaims(filteredData);
+  };
+
   // UseEffect Calls=======================================
 
   useEffect(() => {
@@ -155,8 +137,13 @@ const Page = () => {
   }, [claimsModalData]);
 
   useEffect(() => {
-    dispatch(fetchClaims());
-    dispatch(fetchContacts());
+    if (claimsData.length == 0 || contactsData.length == 0) {
+      console.log("Data Fetched");
+      dispatch(fetchClaims());
+      dispatch(fetchContacts());
+    } else {
+      console.log("Data Not Fetched");
+    }
   }, []);
 
   return (
@@ -191,15 +178,15 @@ const Page = () => {
                 </Button>
               </div>
             </Stack>
-            <ClaimsSearch />
+            <ClaimsSearch filterData={filterData} />
             {isClaimLoading ? (
               <Box sx={{ width: "100%" }}>
                 <LinearProgress />
               </Box>
-            ) : (
+            ) : filteredClaims.length > 0 || !searchValue ? (
               <ClaimsTable
-                count={data.length}
-                items={claims}
+                count={filteredClaims.length > 0 ? filteredClaims.length : claims.length}
+                items={filteredClaims.length > 0 ? filteredClaims : claims}
                 onDeselectAll={claimsSelection.handleDeselectAll}
                 onDeselectOne={claimsSelection.handleDeselectOne}
                 onPageChange={handlePageChange}
@@ -212,6 +199,8 @@ const Page = () => {
                 deleteClaim={deleteClaim}
                 handleEditModalOpen={handleEditModalOpen}
               />
+            ) : (
+              <Typography variant="h6">No claim found</Typography>
             )}
           </Stack>
           <ClaimsAdd

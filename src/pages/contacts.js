@@ -11,7 +11,7 @@ import { ContactsView } from "src/sections/contacts/contacts-view";
 import { applyPagination } from "src/utils/apply-pagination";
 import { deleteContactApi } from "src/network/api";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchContacts } from "src/store/reducers/contacts/thunks";
+import { fetchContacts, deleteContactFromStore } from "src/store/reducers/contacts/thunks";
 import { CustomAlert } from "src/components/custom-alert";
 import { setAlertData } from "src/store/reducers/alert/thunks";
 
@@ -63,12 +63,12 @@ const Page = () => {
         dispatch(
           setAlertData({ open: true, message: response.data.message, type: response.data.type })
         );
+        dispatch(deleteContactFromStore(contact));
       } else {
         dispatch(
           setAlertData({ open: true, message: response.data.message, type: response.data.type })
         );
       }
-      dispatch(fetchContacts());
     } catch (e) {
       console.log(e);
     }
@@ -130,7 +130,12 @@ const Page = () => {
 
   // Useffect Calls =====================================================
   useEffect(() => {
-    dispatch(fetchContacts());
+    if (contactsData.length == 0) {
+      dispatch(fetchContacts());
+      console.log("Contacts Fetched");
+    } else {
+      console.log("Contacts Not Fetched");
+    }
   }, []);
 
   return (

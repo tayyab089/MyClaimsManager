@@ -12,7 +12,7 @@ export const CustomAlert = () => {
   return (
     <div
       style={{
-        position: "absolute",
+        position: "fixed",
         top: 10,
         right: 10,
         zIndex: 9999,
@@ -25,7 +25,7 @@ export const CustomAlert = () => {
             <SvgIcon
               fontSize="small"
               onClick={() => {
-                dispatch(setAlertData({ open: false, message: "", type: "" }));
+                dispatch(setAlertData({ open: false, message: "", type: "success" }));
               }}
               style={{ marginTop: 4.5, cursor: "pointer" }}
             >

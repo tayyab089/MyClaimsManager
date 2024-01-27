@@ -21,6 +21,16 @@ export const getHeadersConfig = () => {
   };
 };
 
+export const getPDFHeadersConfig = () => {
+  //   const accessToken = store.getState().auth.accessToken;
+  return {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: "fe5daa66-05c0-4e48-9235-95ae370ded9d",
+    },
+  };
+};
+
 export const getContactsApi = async () => {
   try {
     const response = await api.get("contacts", getHeadersConfig());

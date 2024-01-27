@@ -19,7 +19,7 @@ import {
 import { FieldArray, Formik } from "formik";
 import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { saveContactApi, updateContactApi } from "src/network/api";
-import { fetchContacts } from "src/store/reducers/contacts/thunks";
+import { addContactToStore, updateContactInStore } from "src/store/reducers/contacts/thunks";
 
 import { useDispatch } from "react-redux";
 import { setAlertData } from "src/store/reducers/alert/thunks";
@@ -66,7 +66,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
           );
           handleClose();
-          dispatch(fetchContacts());
+          dispatch(updateContactInStore(values));
         } else {
           alert(response.data.message);
         }
@@ -77,7 +77,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
           );
           handleClose();
-          dispatch(fetchContacts());
+          dispatch(addContactToStore(response.data.value));
         } else {
           dispatch(
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
@@ -184,7 +184,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                               </Grid>
                               {values.address && values.address.length > 0 ? (
                                 values.address.map((item, index) => (
-                                  <>
+                                  <Fragment key={index}>
                                     <Grid xs={12} md={2}>
                                       <TextField
                                         fullWidth
@@ -254,7 +254,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                                     <Grid xs={12} md={12}>
                                       <Divider />
                                     </Grid>
-                                  </>
+                                  </Fragment>
                                 ))
                               ) : (
                                 <Grid xs={12} md={12}>
@@ -303,7 +303,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                               </Grid>
                               {values.email && values.email.length > 0 ? (
                                 values.email.map((item, index) => (
-                                  <>
+                                  <Fragment key={index}>
                                     <Grid xs={12} md={4}>
                                       <TextField
                                         fullWidth
@@ -346,7 +346,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                                         <TrashIcon color="red" />
                                       </Button>
                                     </Grid>
-                                  </>
+                                  </Fragment>
                                 ))
                               ) : (
                                 <Grid xs={12} md={12}>
@@ -395,7 +395,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                               </Grid>
                               {values.phNo && values.phNo.length > 0 ? (
                                 values.phNo.map((item, index) => (
-                                  <>
+                                  <Fragment key={index}>
                                     <Grid xs={12} md={3}>
                                       <TextField
                                         fullWidth
@@ -453,7 +453,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                                         <TrashIcon color="red" />
                                       </Button>
                                     </Grid>
-                                  </>
+                                  </Fragment>
                                 ))
                               ) : (
                                 <Grid xs={12} md={12}>

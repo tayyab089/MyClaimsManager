@@ -5,7 +5,7 @@ const initialState = {
   alertData: {
     open: false,
     message: "",
-    type: "",
+    type: "success",
   },
 };
 
