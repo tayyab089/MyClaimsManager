@@ -60,7 +60,7 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName }) => {
           setAlertData({ open: true, message: response.data.message, type: response.data.type })
         );
         dispatch(addFormToStore(response.data.value));
-        // setForm(response.data.value);
+        setForm(response.data.value);
       } else {
         dispatch(
           setAlertData({ open: true, message: response?.data?.message, type: response?.data?.type })
@@ -94,7 +94,7 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName }) => {
         p: "",
       });
     }
-  }, [claim]);
+  }, [form]);
 
   return (
     <Formik

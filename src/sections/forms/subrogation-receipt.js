@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Field, Form } from "formik";
 
-const { format } = require("date-fns");
+import { saveFormApi, updateFormApi } from "src/network/forms-api";
+
+import { useDispatch } from "react-redux";
+import { setAlertData } from "src/store/reducers/alert/thunks";
+import { addFormToStore, updateFormInStore } from "src/store/reducers/forms/thunks";
 
 export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
+  const dispatch = useDispatch();
   const [initialValues, setInitialValues] = useState({
     a: "Fireman's Fund Insurance",
     b: "Three Thousand Twenty and 88/100",
@@ -45,9 +50,10 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
         dispatch(
           setAlertData({ open: true, message: response.data.message, type: response.data.type })
         );
+        dispatch(updateFormInStore({ ...form, formData: values, name: formName }));
       } else {
         dispatch(
-          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          setAlertData({ open: true, message: response?.data?.message, type: response?.data?.type })
         );
       }
     } else {
@@ -63,9 +69,11 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
         dispatch(
           setAlertData({ open: true, message: response.data.message, type: response.data.type })
         );
+        dispatch(addFormToStore(response.data.value));
+        setForm(response.data.value);
       } else {
         dispatch(
-          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          setAlertData({ open: true, message: response?.data?.message, type: response?.data?.type })
         );
       }
     }
@@ -107,7 +115,7 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
         ab: "",
       });
     }
-  }, [claim]);
+  }, [form]);
 
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit} innerRef={formRef}>

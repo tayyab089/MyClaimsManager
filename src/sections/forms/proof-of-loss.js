@@ -5,6 +5,7 @@ import { saveFormApi, updateFormApi } from "src/network/forms-api";
 
 import { useDispatch } from "react-redux";
 import { setAlertData } from "src/store/reducers/alert/thunks";
+import { addFormToStore, updateFormInStore } from "src/store/reducers/forms/thunks";
 
 export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
   const dispatch = useDispatch();
@@ -148,9 +149,10 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
         dispatch(
           setAlertData({ open: true, message: response.data.message, type: response.data.type })
         );
+        dispatch(updateFormInStore({ ...form, formData: values, name: formName }));
       } else {
         dispatch(
-          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          setAlertData({ open: true, message: response?.data?.message, type: response?.data?.type })
         );
       }
     } else {
@@ -166,9 +168,11 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
         dispatch(
           setAlertData({ open: true, message: response.data.message, type: response.data.type })
         );
+        dispatch(addFormToStore(response.data.value));
+        setForm(response.data.value);
       } else {
         dispatch(
-          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          setAlertData({ open: true, message: response?.data?.message, type: response?.data?.type })
         );
       }
     }
@@ -309,7 +313,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
         dw: "",
       });
     }
-  }, [claim]);
+  }, [form]);
 
   return (
     <Formik

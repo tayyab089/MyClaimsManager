@@ -99,7 +99,7 @@ export const AuthProvider = (props) => {
 
   useEffect(
     () => {
-      skip();
+      initialize();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -126,7 +126,7 @@ export const AuthProvider = (props) => {
   };
 
   const signIn = async (email, password) => {
-    if (email !== "demo@devias.io" || password !== "Password123!") {
+    if (email !== "myclaimsmanager@gmail.com" || password !== "Password123!") {
       throw new Error("Please check your email and password");
     }
 

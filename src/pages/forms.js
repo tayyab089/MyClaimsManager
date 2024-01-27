@@ -25,7 +25,7 @@ import {
   ChevronLeftIcon,
 } from "@heroicons/react/24/outline";
 
-// import { addFormsDataToClaim } from "src/store/reducers/claims/thunks";
+import { deleteFormFromStore } from "src/store/reducers/forms/thunks";
 
 const headerStyles = {
   backgroundColor: "white",
@@ -210,10 +210,22 @@ const Page = () => {
       if (form) {
         const ans = await confirmDelete(customTitle, customMessage);
         if (ans) {
-          await deleteFormApi({
-            form: { claimfileNo: fileNo, formId: formId, userId: form?.userId },
+          const response = await deleteFormApi({
+            form: form,
           });
-          router.back();
+          if (response && response.data.type !== "error") {
+            dispatch(deleteFormFromStore(form));
+            router.back();
+          } else {
+            dispatch(
+              setAlertData({
+                open: true,
+                message: response?.data?.message,
+                type: response?.data?.type,
+              })
+            );
+            setDeletingForm(false);
+          }
         }
       }
     } catch (e) {
@@ -283,8 +295,11 @@ const Page = () => {
   // useEffect Hooks
   useEffect(() => {
     setClaim(claimsData.filter((item) => item.fileNo == fileNo)[0]);
+  }, []);
+
+  useEffect(() => {
     setForm(formsData.filter((item) => item.formId == formId)[0]);
-  }, [claimsData, formsData, fileNo, formId]);
+  }, [claim]);
 
   useEffect(() => {
     setFormName(form?.name ? form.name : formType);
