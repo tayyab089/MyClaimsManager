@@ -9,6 +9,8 @@ import { deleteClaimApi } from "src/network/claims-api";
 import { useRouter } from "next/router";
 import { useReactToPrint } from "react-to-print";
 
+const { format } = require("date-fns");
+
 export const ClaimView = ({ item }) => {
   const dispatch = useDispatch();
   const { contactsData } = useSelector((state) => state.contacts);
@@ -194,7 +196,9 @@ export const ClaimView = ({ item }) => {
           <Typography variant="formTag">Date of Loss: </Typography>
         </Grid>
         <Grid xs={10} md={8}>
-          <Typography variant="formText">{item?.lossDate}</Typography>
+          <Typography variant="formText">
+            {item?.lossDate ? format(new Date(item?.lossDate), "do MMMM yyyy") : ""}
+          </Typography>
         </Grid>
 
         {/* Insurance Company Data */}
@@ -227,13 +231,22 @@ export const ClaimView = ({ item }) => {
           <Typography variant="formTag">Issued: </Typography>
         </Grid>
         <Grid xs={10} md={8}>
-          <Typography variant="formText">{item?.insurance?.issueDate}</Typography>
+          <Typography variant="formText">
+            {item?.insurance?.issueDate
+              ? format(new Date(item?.insurance?.issueDate), "do MMMM yyyy")
+              : ""}
+          </Typography>
         </Grid>
         <Grid xs={10} md={4}>
           <Typography variant="formTag">Expiration: </Typography>
         </Grid>
         <Grid xs={10} md={8}>
-          <Typography variant="formText">{item?.insurance?.expiryDate}</Typography>
+          <Typography variant="formText">
+            {" "}
+            {item?.insurance?.expiryDate
+              ? format(new Date(item?.insurance?.expiryDate), "do MMMM yyyy")
+              : ""}
+          </Typography>
         </Grid>
 
         {/* Policy Coverages */}

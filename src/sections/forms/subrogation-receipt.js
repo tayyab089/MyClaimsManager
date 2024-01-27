@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux";
 import { setAlertData } from "src/store/reducers/alert/thunks";
 import { addFormToStore, updateFormInStore } from "src/store/reducers/forms/thunks";
 
+const { format } = require("date-fns");
+
 export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
   const dispatch = useDispatch();
   const [initialValues, setInitialValues] = useState({
@@ -84,19 +86,20 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
     if (form) {
       setInitialValues(form?.formData);
     } else {
+      console.log(claim);
       setInitialValues({
-        a: "Fireman's Fund Insurance",
-        b: "Three Thousand Twenty and 88/100",
-        c: "3,020.88",
-        d: "NYP2005065-11",
-        e: "Fire",
+        a: claim?.insurance?.company,
+        b: "",
+        c: "",
+        d: claim?.insurance?.policyNo,
+        e: claim?.lossType,
         f: "",
-        g: "8th",
-        h: "March",
-        i: "13",
+        g: claim?.lossDate ? format(new Date(claim?.lossDate), "do") : "",
+        h: claim?.lossDate ? format(new Date(claim?.lossDate), "MMMM") : "",
+        i: claim?.lossDate ? format(new Date(claim?.lossDate), "yy") : "",
         j: "",
-        k: "20",
-        l: "BR Affordable Housing, LLP",
+        k: "",
+        l: "",
         m: "",
         n: "",
         o: "",
@@ -118,7 +121,12 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
   }, [form]);
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit} innerRef={formRef}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      innerRef={formRef}
+      enableReinitialize={true}
+    >
       {({ values }) => (
         <Form id="SubrogationReceipt">
           <div className="formContainer" style={{ padding: ".3in .3in" }}>
@@ -129,19 +137,19 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
               <div style={{ order: 1 }}>Received of the</div>
               <div style={{ flexGrow: 1, order: 2 }}>
                 <Field type="text" name="a" />
-                <span>{values.a}</span>
+                <span>{values?.a}</span>
               </div>
               <div style={{ order: 3 }}>company the sum of</div>
             </div>
             <div className="formRow topMargin10">
               <div style={{ flexGrow: 1, order: 1 }}>
                 <Field type="text" name="b" />
-                <span>{values.b}</span>
+                <span>{values?.b}</span>
               </div>
               <div style={{ order: 2 }}>Dollars ($</div>
               <div style={{ flexGrow: 0, flexBasis: "10em", order: 3 }}>
                 <Field type="text" name="c" />
-                <span>{values.c}</span>
+                <span>{values?.c}</span>
               </div>
               <div style={{ order: 4 }}>) in full satisfaction of all</div>
             </div>
@@ -151,7 +159,7 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
               </div>
               <div style={{ flexGrow: 0, flexBasis: "10em", order: 2 }}>
                 <Field type="text" name="d" />
-                <span>{values.d}</span>
+                <span>{values?.d}</span>
               </div>
             </div>
             <div className="formRow topMargin10">
@@ -160,30 +168,30 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
               </div>
               <div style={{ flexGrow: 1, order: 2 }}>
                 <Field type="text" name="e" />
-                <span>{values.e}</span>
+                <span>{values?.e}</span>
               </div>
             </div>
             <div className="formRow topMargin10">
               <div style={{ flexGrow: 1, order: 1 }}>
                 <Field type="text" name="f" />
-                <span>{values.f}</span>
+                <span>{values?.f}</span>
               </div>
             </div>
             <div className="formRow topMargin10">
               <div style={{ order: 1 }}>which loss or damage occurred on or about the</div>
               <div style={{ flexGrow: 1, flexBasis: "5em", order: 2 }}>
                 <Field type="text" name="g" />
-                <span>{values.g}</span>
+                <span>{values?.g}</span>
               </div>
               <div style={{ order: 3 }}>day of</div>
               <div style={{ flexGrow: 1, order: 4 }}>
                 <Field type="text" name="h" />
-                <span>{values.h}</span>
+                <span>{values?.h}</span>
               </div>
               <div style={{ order: 5 }}>20</div>
               <div style={{ flexGrow: 0, flexBasis: "5em", order: 6 }}>
                 <Field type="text" name="i" />
-                <span>{values.i}</span>
+                <span>{values?.i}</span>
               </div>
             </div>
             <div className="formRow bottomMargin15" />
@@ -239,12 +247,12 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
                 <div style={{ order: 1 }}>Dated:</div>
                 <div style={{ flexGrow: 1, flexBasis: "10em", order: 2 }}>
                   <Field type="text" name="j" />
-                  <span>{values.j}</span>
+                  <span>{values?.j}</span>
                 </div>
                 <div style={{ order: 3 }}>20</div>
                 <div style={{ flexGrow: 0, flexBasis: "5em", order: 4 }}>
                   <Field type="text" name="k" />
-                  <span>{values.k}</span>
+                  <span>{values?.k}</span>
                 </div>
               </div>
             </div>
@@ -267,7 +275,7 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
               >
                 <div style={{ flexGrow: 1, flexBasis: "5em", order: 4 }}>
                   <Field type="text" name="l" />
-                  <span>{values.l}</span>
+                  <span>{values?.l}</span>
                 </div>
               </div>
             </div>
@@ -284,7 +292,7 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
               >
                 <div style={{ flexGrow: 1, flexBasis: "5em", order: 4 }}>
                   <Field type="text" name="m" />
-                  <span>{values.m}</span>
+                  <span>{values?.m}</span>
                 </div>
               </div>
               <div
@@ -293,7 +301,7 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
               >
                 <div style={{ flexGrow: 1, flexBasis: "5em", order: 4 }}>
                   <Field type="text" name="n" />
-                  <span>{values.n}</span>
+                  <span>{values?.n}</span>
                 </div>
               </div>
             </div>
@@ -310,7 +318,7 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
               >
                 <div style={{ flexGrow: 1, flexBasis: "5em", order: 1 }}>
                   <Field type="text" name="o" />
-                  <span>{values.o}</span>
+                  <span>{values?.o}</span>
                 </div>
               </div>
               <div
@@ -320,7 +328,7 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
                 <div style={{ order: 1 }}>By</div>
                 <div style={{ flexGrow: 1, flexBasis: "5em", order: 1 }}>
                   <Field type="text" name="p" />
-                  <span>{values.p}</span>
+                  <span>{values?.p}</span>
                 </div>
               </div>
             </div>
@@ -345,17 +353,17 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
                   <div>On the</div>
                   <div style={{ flexGrow: 0, flexBasis: "4em" }}>
                     <Field type="text" name="q" />
-                    <span>{values.q}</span>
+                    <span>{values?.q}</span>
                   </div>
                   <div>day of</div>
                   <div style={{ flexGrow: 1, flexBasis: "5em" }}>
                     <Field type="text" name="r" />
-                    <span>{values.r}</span>
+                    <span>{values?.r}</span>
                   </div>
                   <div>20</div>
                   <div style={{ flexGrow: 0, flexBasis: "3em" }}>
                     <Field type="text" name="s" />
-                    <span>{values.s}</span>
+                    <span>{values?.s}</span>
                   </div>
                 </div>
                 {/* Before he came ... */}
@@ -363,7 +371,7 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
                   <div>Before he came</div>
                   <div style={{ flexGrow: 1, flexBasis: "4em" }}>
                     <Field type="text" name="t" />
-                    <span>{values.t}</span>
+                    <span>{values?.t}</span>
                   </div>
                 </div>
                 <div className="formRow">
@@ -377,7 +385,7 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
                   <div>acknowledged that</div>
                   <div style={{ flexGrow: 0, flexBasis: "4em" }}>
                     <Field type="text" name="u" />
-                    <span>{values.u}</span>
+                    <span>{values?.u}</span>
                   </div>
                   <div>executed the same.</div>
                 </div>
@@ -400,17 +408,17 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
                     <div>On the</div>
                     <div style={{ flexGrow: 0, flexBasis: "4em" }}>
                       <Field type="text" name="v" />
-                      <span>{values.v}</span>
+                      <span>{values?.v}</span>
                     </div>
                     <div>day of</div>
                     <div style={{ flexGrow: 1, flexBasis: "5em" }}>
                       <Field type="text" name="w" />
-                      <span>{values.w}</span>
+                      <span>{values?.w}</span>
                     </div>
                     <div>20</div>
                     <div style={{ flexGrow: 0, flexBasis: "3em" }}>
                       <Field type="text" name="x" />
-                      <span>{values.x}</span>
+                      <span>{values?.x}</span>
                     </div>
                   </div>
                   {/* Before he came ... */}
@@ -418,7 +426,7 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
                     <div>Before he came</div>
                     <div style={{ flexGrow: 1, flexBasis: "4em" }}>
                       <Field type="text" name="y" />
-                      <span>{values.y}</span>
+                      <span>{values?.y}</span>
                     </div>
                   </div>
                   <div className="formRow">
@@ -428,7 +436,7 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
                     <div>depose and say that he resides in</div>
                     <div style={{ flexGrow: 1, flexBasis: "6em" }}>
                       <Field type="text" name="z" />
-                      <span>{values.z}</span>
+                      <span>{values?.z}</span>
                     </div>
                   </div>
                   {/* that he is the ... */}
@@ -436,13 +444,13 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
                     <div>that he is the</div>
                     <div style={{ flexGrow: 1, flexBasis: "5em" }}>
                       <Field type="text" name="aa" />
-                      <span>{values.aa}</span>
+                      <span>{values?.aa}</span>
                     </div>
                   </div>
                   <div className="formRow">
                     <div style={{ flexGrow: 1, flexBasis: "10em" }}>
                       <Field type="text" name="ab" />
-                      <span>{values.ab}</span>
+                      <span>{values?.ab}</span>
                     </div>
                     <div>the corporation</div>
                   </div>

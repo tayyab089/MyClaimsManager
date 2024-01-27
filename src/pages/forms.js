@@ -356,7 +356,7 @@ const Page = () => {
                 disabled={generatingPDF}
               >
                 {generatingPDF ? (
-                  <CircularProgress style={{ width: 24, height: 24, color: "white" }} />
+                  <CircularProgress style={{ width: 24, height: 24, color: "primary" }} />
                 ) : (
                   "PDF"
                 )}
@@ -371,7 +371,7 @@ const Page = () => {
                 disabled={emailingPDF}
               >
                 {emailingPDF ? (
-                  <CircularProgress style={{ width: 24, height: 24, color: "white" }} />
+                  <CircularProgress style={{ width: 24, height: 24, color: "primary" }} />
                 ) : (
                   "EMAIL"
                 )}
@@ -404,7 +404,7 @@ const Page = () => {
                 disabled={deletingForm}
               >
                 {deletingForm ? (
-                  <CircularProgress style={{ width: 24, height: 24, color: "white" }} />
+                  <CircularProgress style={{ width: 24, height: 24, color: "primary" }} />
                 ) : (
                   "DELETE"
                 )}

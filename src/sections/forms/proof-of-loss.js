@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux";
 import { setAlertData } from "src/store/reducers/alert/thunks";
 import { addFormToStore, updateFormInStore } from "src/store/reducers/forms/thunks";
 
+const { format } = require("date-fns");
+
 export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
   const dispatch = useDispatch();
   const [initialValues, setInitialValues] = useState({
@@ -43,9 +45,13 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
     ae: "",
     af: "",
     ag: "",
+    eg: "", // eSeries
     ah: "",
+    eh: "", // eSeries
     ai: "",
+    ei: "", // eSeries
     aj: "",
+    ej: "", // eSeries
     ak: "",
     al: "",
     am: "",
@@ -64,6 +70,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
     az: "",
     ba: "",
     bb: "",
+    ef: "", // eSeries
     bc: "",
     bd: "",
     be: "",
@@ -94,7 +101,10 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
     cd: "",
     ce: "",
     cf: "",
-    cg: "",
+    cg: "", // Was used twice
+    ed: "", // First cg Replaced with this
+    dx: "", // dSeries
+    dy: "", // dSeries
     ch: "",
     ci: "",
     cj: "",
@@ -124,6 +134,10 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
     dh: "",
     di: "",
     dj: "",
+    dz: "", //dSeries
+    ea: "", //eSeries
+    eb: "", //eSeries
+    ec: "", //eSeries
     dk: "",
     dl: "",
     dm: "",
@@ -184,12 +198,16 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
       setInitialValues(form?.formData);
     } else {
       setInitialValues({
-        a: "",
+        a: claim?.insurance?.policyNo,
         b: "",
-        c: "",
-        d: "",
-        e: "",
-        f: "",
+        c: claim?.insurance?.issueDate
+          ? format(new Date(claim?.insurance?.issueDate), "do MMMM yyyy")
+          : "",
+        d: claim?.insurance?.expiryDate
+          ? format(new Date(claim?.insurance?.expiryDate), "do MMMM yyyy")
+          : "",
+        e: claim?.fileNo,
+        f: claim?.insurance?.claimNo,
         g: "",
         h: "",
         i: "",
@@ -217,9 +235,13 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
         ae: "",
         af: "",
         ag: "",
+        eg: "", // eSeries
         ah: "",
+        eh: "", // eSeries
         ai: "",
+        ei: "", // eSeries
         aj: "",
+        ej: "", // eSeries
         ak: "",
         al: "",
         am: "",
@@ -238,6 +260,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
         az: "",
         ba: "",
         bb: "",
+        ef: claim?.lossLocation, // eSeries
         bc: "",
         bd: "",
         be: "",
@@ -268,7 +291,10 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
         cd: "",
         ce: "",
         cf: "",
-        cg: "",
+        cg: "", // Was used twice
+        ed: "", // First cg Replaced with this
+        dx: "", // dSeries
+        dy: "", // dSeries
         ch: "",
         ci: "",
         cj: "",
@@ -298,6 +324,10 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
         dh: "",
         di: "",
         dj: "",
+        dz: "", //dSeries
+        ea: "", //eSeries
+        eb: "", //eSeries
+        ec: "", //eSeries
         dk: "",
         dl: "",
         dm: "",
@@ -343,24 +373,24 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                   style={{ flexBasis: "25%", flexGrow: 0, alignContent: "flex-start" }}
                 >
                   <div className="formRow">
-                    <Field type="text" name="a" />
+                    <Field type="text" name="a" style={{ textAlign: "center" }} />
                     <span>{values?.a}</span>
                   </div>
                   <div className="formRowCentered">POLICY NUMBER</div>
                   <div className="formRow">
-                    <Field type="text" name="b" />
+                    <Field type="text" name="b" style={{ textAlign: "center" }} />
                     <span>{values?.b}</span>
                   </div>
                   <div className="formRowCentered" style={{ fontSize: "0.75em" }}>
                     AMOUNT OF POLICY AT TIME OF LOSS
                   </div>
                   <div className="formRow">
-                    <Field type="text" name="c" />
+                    <Field type="text" name="c" style={{ textAlign: "center" }} />
                     <span>{values?.c}</span>
                   </div>
                   <div className="formRowCentered">DATE ISSUED</div>
                   <div className="formRow">
-                    <Field type="text" name="d" />
+                    <Field type="text" name="d" style={{ textAlign: "center" }} />
                     <span>{values?.d}</span>
                   </div>
                   <div className="formRowCentered">DATE EXPIRES</div>
@@ -376,22 +406,22 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                   style={{ flexBasis: "25%", flexGrow: 0, alignContent: "flex-end" }}
                 >
                   <div className="formRow">
-                    <Field type="text" name="e" />
+                    <Field type="text" name="e" style={{ textAlign: "center" }} />
                     <span>{values?.e}</span>
                   </div>
                   <div className="formRowCentered">OUR FILE No.</div>
                   <div className="formRow">
-                    <Field type="text" name="f" />
+                    <Field type="text" name="f" style={{ textAlign: "center" }} />
                     <span>{values?.f}</span>
                   </div>
                   <div className="formRowCentered">COMPANY CLAIM NO.</div>
                   <div className="formRow">
-                    <Field type="text" name="g" />
+                    <Field type="text" name="g" style={{ textAlign: "center" }} />
                     <span>{values?.g}</span>
                   </div>
                   <div className="formRowCentered">AGENCY AT</div>
                   <div className="formRow">
-                    <Field type="text" name="h" />
+                    <Field type="text" name="h" style={{ textAlign: "center" }} />
                     <span>{values?.h}</span>
                   </div>
                   <div className="formRowCentered">AGENT</div>
@@ -617,13 +647,13 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                   loss was
                 </div>
                 <div style={{ order: 2, flexGrow: 1 }}>
-                  <input className="bottomBorderDashed" data-bind="value: eg" />
-                  <span className="bottomBorderDashed" data-bind="text: eg" />
+                  <Field type="text" className="bottomBorderDashed" name="eg" />
+                  <span className="bottomBorderDashed">{values?.eg}</span>
                 </div>
                 <div style={{ order: 3 }}>$</div>
                 <div style={{ order: 4, flexGrow: 0, flexBasis: "10em" }}>
-                  <input className="numeric" data-bind="value: ag" />
-                  <div className="printOnly numeric" data-bind="text: ag" />
+                  <Field type="text" className="numeric" name="ag" />
+                  <div className="printOnly numeric">{values?.ag}</div>
                 </div>
               </div>
               {/* **** 7. Whole loss and damage **** */}
@@ -632,13 +662,13 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                   <strong>7. The Whole Loss and Damage </strong> was
                 </div>
                 <div style={{ order: 2, flexGrow: 1 }}>
-                  <input className="bottomBorderDashed" data-bind="value: eh" />
-                  <span className="bottomBorderDashed" data-bind="text: eh" />
+                  <Field type="text" className="bottomBorderDashed" name="eh" />
+                  <span className="bottomBorderDashed">{values?.eh}</span>
                 </div>
                 <div style={{ order: 3 }}>$</div>
                 <div style={{ order: 4, flexGrow: 0, flexBasis: "10em" }}>
-                  <input className="numeric" data-bind="value: ah" />
-                  <div className="printOnly numeric" data-bind="text: ah" />
+                  <Field type="text" className="numeric" name="ah" />
+                  <div className="printOnly numeric">{values?.ah}</div>
                 </div>
               </div>
               {/* **** 8. Less amt **** */}
@@ -647,13 +677,13 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                   <strong>8. Less Amount of Deductible </strong>
                 </div>
                 <div style={{ order: 2, flexGrow: 1 }}>
-                  <input className="bottomBorderDashed" data-bind="value: ei" />
-                  <span className="bottomBorderDashed" data-bind="text: ei" />
+                  <Field type="text" className="bottomBorderDashed" name="ei" />
+                  <span className="bottomBorderDashed">{values?.ei}</span>
                 </div>
                 <div style={{ order: 3 }}>$</div>
                 <div style={{ order: 4, flexGrow: 0, flexBasis: "10em" }}>
-                  <input className="numeric" data-bind="value: ai" />
-                  <div className="printOnly numeric" data-bind="text: ai" />
+                  <Field type="text" className="numeric" name="ai" />
+                  <div className="printOnly numeric">{values?.ai}</div>
                 </div>
               </div>
               {/* **** 9. Amt claimed **** */}
@@ -662,13 +692,13 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                   <strong>9. The Amount Claimed </strong> under the above numbered policy is
                 </div>
                 <div style={{ order: 2, flexGrow: 1 }}>
-                  <input className="bottomBorderDashed" data-bind="value: ej" />
-                  <span className="bottomBorderDashed" data-bind="text: ej" />
+                  <Field type="text" className="bottomBorderDashed" name="ej" />
+                  <span className="bottomBorderDashed">{values?.ej}</span>
                 </div>
                 <div style={{ order: 3 }}>$</div>
                 <div style={{ order: 4, flexGrow: 0, flexBasis: "10em" }}>
-                  <input className="numeric" data-bind="value: aj" />
-                  <div className="printOnly numeric" data-bind="text: aj" />
+                  <Field type="text" className="numeric" name="aj" />
+                  <div className="printOnly numeric">{values?.aj}</div>
                 </div>
               </div>
               {/* **** Disclaimer **** */}
@@ -830,6 +860,10 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
               <div className="formRow">
                 <div style={{ order: 1 }}>Situated</div>
                 <div style={{ order: 2, flexGrow: 1 }}>
+                  {/* 
+                  ============================================================================
+                  ============================================================================
+                  */}
                   <Field type="text" name="ef" />
                   <span>{values?.ef}</span>
                 </div>
@@ -877,128 +911,128 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                   <tbody>
                     <tr>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc" data-bind="value: be" />
+                        <Field type="text" className="width100pc" name="be" />
                         <span>{values?.be}</span>
                       </td>
                       <td className="formTableCell width60pc">
-                        <input className="width100pc" data-bind="value: bf" />
+                        <Field type="text" className="width100pc" name="bf" />
                         <span>{values?.bf}</span>
                       </td>
                       <td className="formTableCell width15pc">
-                        <input className="width100pc numeric" data-bind="value: bg" />
-                        <div className="numeric printNumeric" data-bind="text: bg" />
+                        <Field type="text" className="width100pc numeric" name="bg" />
+                        <div className="numeric printNumeric">{values?.bg}</div>
                       </td>
                       <td className="formTableCell width15pc">
-                        <input className="width100pc numeric" data-bind="value: bh" />
-                        <div className="numeric printNumeric" data-bind="text: bh" />
+                        <Field type="text" className="width100pc numeric" name="bh" />
+                        <div className="numeric printNumeric">{values?.bh}</div>
                       </td>
                     </tr>
                     <tr>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc" data-bind="value: bi" />
+                        <Field type="text" className="width100pc" name="bi" />
                         <span>{values?.bi}</span>
                       </td>
                       <td className="formTableCell width60pc">
-                        <input className="width100pc" data-bind="value: bj" />
+                        <Field type="text" className="width100pc" name="bj" />
                         <span>{values?.bj}</span>
                       </td>
                       <td className="formTableCell width15pc">
-                        <input className="width100pc numeric" data-bind="value: bk" />
-                        <div className="numeric printNumeric" data-bind="text: bk" />
+                        <Field type="text" className="width100pc numeric" name="bk" />
+                        <div className="numeric printNumeric">{values?.bk}</div>
                       </td>
                       <td className="formTableCell width15pc">
-                        <input className="width100pc numeric" data-bind="value: bl" />
-                        <div className="numeric printNumeric" data-bind="text: bl" />
+                        <Field type="text" className="width100pc numeric" name="bl" />
+                        <div className="numeric printNumeric">{values?.bl}</div>
                       </td>
                     </tr>
                     <tr>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc" data-bind="value: bm" />
+                        <Field type="text" className="width100pc" name="bm" />
                         <span>{values?.bm}</span>
                       </td>
                       <td className="formTableCell width60pc">
-                        <input className="width100pc" data-bind="value: bn" />
+                        <Field type="text" className="width100pc" name="bn" />
                         <span>{values?.bn}</span>
                       </td>
                       <td className="formTableCell width15pc">
-                        <input className="width100pc numeric" data-bind="value: bo" />
-                        <div className="numeric printNumeric" data-bind="text: bo" />
+                        <Field type="text" className="width100pc numeric" name="bo" />
+                        <div className="numeric printNumeric">{values?.bo}</div>
                       </td>
                       <td className="formTableCell width15pc">
-                        <input className="width100pc numeric" data-bind="value: bp" />
-                        <div className="numeric printNumeric" data-bind="text: bp" />
+                        <Field type="text" className="width100pc numeric" name="bp" />
+                        <div className="numeric printNumeric">{values?.bp}</div>
                       </td>
                     </tr>
                     <tr>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc" data-bind="value: bq" />
+                        <Field type="text" className="width100pc" name="bq" />
                         <span>{values?.bq}</span>
                       </td>
                       <td className="formTableCell width60pc">
-                        <input className="width100pc" data-bind="value: br" />
+                        <Field type="text" className="width100pc" name="br" />
                         <span>{values?.br}</span>
                       </td>
                       <td className="formTableCell width15pc">
-                        <input className="width100pc numeric" data-bind="value: bs" />
-                        <div className="numeric printNumeric" data-bind="text: bs" />
+                        <Field type="text" className="width100pc numeric" name="bs" />
+                        <div className="numeric printNumeric">{values?.bs}</div>
                       </td>
                       <td className="formTableCell width15pc">
-                        <input className="width100pc numeric" data-bind="value: bt" />
-                        <div className="numeric printNumeric" data-bind="text: bt" />
+                        <Field type="text" className="width100pc numeric" name="bt" />
+                        <div className="numeric printNumeric">{values?.bt}</div>
                       </td>
                     </tr>
                     <tr>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc" data-bind="value: bu" />
+                        <Field type="text" className="width100pc" name="bu" />
                         <span>{values?.bu}</span>
                       </td>
                       <td className="formTableCell width60pc">
-                        <input className="width100pc" data-bind="value: bv" />
+                        <Field type="text" className="width100pc" name="bv" />
                         <span>{values?.bv}</span>
                       </td>
                       <td className="formTableCell width15pc">
-                        <input className="width100pc numeric" data-bind="value: bw" />
-                        <div className="numeric printNumeric" data-bind="text: bw" />
+                        <Field type="text" className="width100pc numeric" name="bw" />
+                        <div className="numeric printNumeric">{values?.bw}</div>
                       </td>
                       <td className="formTableCell width15pc">
-                        <input className="width100pc numeric" data-bind="value: bx" />
-                        <div className="numeric printNumeric" data-bind="text: bx" />
+                        <Field type="text" className="width100pc numeric" name="bx" />
+                        <div className="numeric printNumeric">{values?.bx}</div>
                       </td>
                     </tr>
                     <tr>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc" data-bind="value: by" />
+                        <Field type="text" className="width100pc" name="by" />
                         <span>{values?.by}</span>
                       </td>
                       <td className="formTableCell width60pc">
-                        <input className="width100pc" data-bind="value: bx" />
+                        <Field type="text" className="width100pc" name="bz" />
                         <span>{values?.bz}</span>
                       </td>
                       <td className="formTableCell width15pc">
-                        <input className="width100pc numeric" data-bind="value: ca" />
-                        <div className="numeric printNumeric" data-bind="text: ca" />
+                        <Field type="text" className="width100pc numeric" name="ca" />
+                        <div className="numeric printNumeric">{values?.ca}</div>
                       </td>
                       <td className="formTableCell width15pc">
-                        <input className="width100pc numeric" data-bind="value: cb" />
-                        <div className="numeric printNumeric" data-bind="text: cb" />
+                        <Field type="text" className="width100pc numeric" name="cb" />
+                        <div className="numeric printNumeric">{values?.cb}</div>
                       </td>
                     </tr>
                     <tr>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc" data-bind="value: cc" />
+                        <Field type="text" className="width100pc" name="cc" />
                         <span>{values?.cc}</span>
                       </td>
                       <td className="formTableCell width60pc">
-                        <input className="width100pc" data-bind="value: cd" />
+                        <Field type="text" className="width100pc" name="cd" />
                         <span>{values?.cd}</span>
                       </td>
                       <td className="formTableCell width15pc">
-                        <input className="width100pc numeric" data-bind="value: ce" />
-                        <div className="numeric printNumeric" data-bind="text: ce" />
+                        <Field type="text" className="width100pc numeric" name="ce" />
+                        <div className="numeric printNumeric">{values?.ce}</div>
                       </td>
                       <td className="formTableCell width15pc">
-                        <input className="width100pc numeric" data-bind="value: cf" />
-                        <div className="numeric printNumeric" data-bind="text: cf" />
+                        <Field type="text" className="width100pc numeric" name="cf" />
+                        <div className="numeric printNumeric">{values?.cf}</div>
                       </td>
                     </tr>
                   </tbody>
@@ -1008,16 +1042,20 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                         <strong>Totals</strong>
                       </td>
                       <td className="formTableFooterCell width60pc">
-                        <input className="width100pc" data-bind="value: cg" />
+                        <Field type="text" className="width100pc" name="cg" />
                         <span>{values?.cg}</span>
                       </td>
+                      {/* 
+                  ============================================================================
+                  ============================================================================
+                  */}
                       <td className="formTableFooterCell width15pc">
-                        <input className="width100pc numeric" data-bind="value: dx" />
-                        <div className="numeric printNumeric" data-bind="text: dx" />
+                        <Field type="text" className="width100pc numeric" name="dx" />
+                        <div className="numeric printNumeric">{values?.dx}</div>
                       </td>
                       <td className="formTableFooterCell width15pc">
-                        <input className="width100pc numeric" data-bind="value: dy" />
-                        <div className="numeric printNumeric" data-bind="text: dy" />
+                        <Field type="text" className="width100pc numeric" name="dy" />
+                        <div className="numeric printNumeric">{values?.dy}</div>
                       </td>
                     </tr>
                   </tfoot>
@@ -1054,124 +1092,128 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                     </tr>
                   </tbody>
                   <tbody>
+                    {/* 
+                  ============================================================================
+                  ============================================================================
+                  */}
                     <tr>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc" data-bind="value: cg" />
-                        <span>{values?.cg}</span>
+                        <Field type="text" className="width100pc" name="ed" />
+                        <span>{values?.ed}</span>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc" data-bind="value: ch" />
+                        <Field type="text" className="width100pc" name="ch" />
                         <span>{values?.ch}</span>
                       </td>
                       <td className="formTableCell width40pc">
-                        <input className="width100pc" data-bind="value: ci" />
+                        <Field type="text" className="width100pc" name="ci" />
                         <span>{values?.ci}</span>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: cj" />
-                        <div className="numeric printNumeric" data-bind="text: cj" />
+                        <Field type="text" className="width100pc numeric" name="cj" />
+                        <div className="numeric printNumeric">{values?.cj}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: ck" />
-                        <div className="numeric printNumeric" data-bind="text: ck" />
+                        <Field type="text" className="width100pc numeric" name="ck" />
+                        <div className="numeric printNumeric">{values?.ck}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: cl" />
-                        <div className="numeric printNumeric" data-bind="text: cl" />
+                        <Field type="text" className="width100pc numeric" name="cl" />
+                        <div className="numeric printNumeric">{values?.cl}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: cm" />
-                        <div className="numeric printNumeric" data-bind="text: cm" />
+                        <Field type="text" className="width100pc numeric" name="cm" />
+                        <div className="numeric printNumeric">{values?.cm}</div>
                       </td>
                     </tr>
                     <tr>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc" data-bind="value: cn" />
+                        <Field type="text" className="width100pc" name="cn" />
                         <span>{values?.cn}</span>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc" data-bind="value: co" />
+                        <Field type="text" className="width100pc" name="co" />
                         <span>{values?.co}</span>
                       </td>
                       <td className="formTableCell width40pc">
-                        <input className="width100pc" data-bind="value: cp" />
+                        <Field type="text" className="width100pc" name="cp" />
                         <span>{values?.cp}</span>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: cq" />
-                        <div className="numeric printNumeric" data-bind="text: cq" />
+                        <Field type="text" className="width100pc numeric" name="cq" />
+                        <div className="numeric printNumeric">{values?.cq}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: cr" />
-                        <div className="numeric printNumeric" data-bind="text: cr" />
+                        <Field type="text" className="width100pc numeric" name="cr" />
+                        <div className="numeric printNumeric">{values?.cr}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: cs" />
-                        <div className="numeric printNumeric" data-bind="text: cs" />
+                        <Field type="text" className="width100pc numeric" name="cs" />
+                        <div className="numeric printNumeric">{values?.cs}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: ct" />
-                        <div className="numeric printNumeric" data-bind="text: ct" />
+                        <Field type="text" className="width100pc numeric" name="ct" />
+                        <div className="numeric printNumeric">{values?.ct}</div>
                       </td>
                     </tr>
                     <tr>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc" data-bind="value: cu" />
+                        <Field type="text" className="width100pc" name="cu" />
                         <span>{values?.cu}</span>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc" data-bind="value: cv" />
+                        <Field type="text" className="width100pc" name="cv" />
                         <span>{values?.cv}</span>
                       </td>
                       <td className="formTableCell width40pc">
-                        <input className="width100pc" data-bind="value: cw" />
+                        <Field type="text" className="width100pc" name="cw" />
                         <span>{values?.cw}</span>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: cx" />
-                        <div className="numeric printNumeric" data-bind="text: cx" />
+                        <Field type="text" className="width100pc numeric" name="cx" />
+                        <div className="numeric printNumeric">{values?.cx}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: cy" />
-                        <div className="numeric printNumeric" data-bind="text: cy" />
+                        <Field type="text" className="width100pc numeric" name="cy" />
+                        <div className="numeric printNumeric">{values?.cy}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: cz" />
-                        <div className="numeric printNumeric" data-bind="text: cz" />
+                        <Field type="text" className="width100pc numeric" name="cz" />
+                        <div className="numeric printNumeric">{values?.cz}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: da" />
-                        <div className="numeric printNumeric" data-bind="text: da" />
+                        <Field type="text" className="width100pc numeric" name="da" />
+                        <div className="numeric printNumeric">{values?.da}</div>
                       </td>
                     </tr>
                     <tr>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc" data-bind="value: db" />
+                        <Field type="text" className="width100pc" name="db" />
                         <span>{values?.db}</span>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc" data-bind="value: dc" />
+                        <Field type="text" className="width100pc" name="dc" />
                         <span>{values?.dc}</span>
                       </td>
                       <td className="formTableCell width40pc">
-                        <input className="width100pc" data-bind="value: dd" />
+                        <Field type="text" className="width100pc" name="dd" />
                         <span>{values?.dd}</span>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: de" />
-                        <div className="numeric printNumeric" data-bind="text: de" />
+                        <Field type="text" className="width100pc numeric" name="de" />
+                        <div className="numeric printNumeric">{values?.de}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: df" />
-                        <div className="numeric printNumeric" data-bind="text: df" />
+                        <Field type="text" className="width100pc numeric" name="df" />
+                        <div className="numeric printNumeric">{values?.df}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: dg" />
-                        <div className="numeric printNumeric" data-bind="text: dg" />
+                        <Field type="text" className="width100pc numeric" name="dg" />
+                        <div className="numeric printNumeric">{values?.dg}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: dh" />
-                        <div className="numeric printNumeric" data-bind="text: dh" />
+                        <Field type="text" className="width100pc numeric" name="dh" />
+                        <div className="numeric printNumeric">{values?.dh}</div>
                       </td>
                     </tr>
                   </tbody>
@@ -1181,28 +1223,32 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                         <strong>Totals</strong>
                       </td>
                       <td className="formTableFooterCell width10pc">
-                        <input className="width100pc" data-bind="value: di" />
+                        <Field type="text" className="width100pc" name="di" />
                         <span>{values?.di}</span>
                       </td>
                       <td className="formTableFooterCell width40pc">
-                        <input className="width100pc" data-bind="value: dj" />
+                        <Field type="text" className="width100pc" name="dj" />
                         <span>{values?.dj}</span>
                       </td>
+                      {/* 
+                  ============================================================================
+                  ============================================================================
+                  */}
                       <td className="formTableFooterCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: dz" />
-                        <div className="numeric printNumeric" data-bind="text: dz" />
+                        <Field type="text" className="width100pc numeric" name="dz" />
+                        <div className="numeric printNumeric">{values?.dz}</div>
                       </td>
                       <td className="formTableFooterCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: ea" />
-                        <div className="numeric printNumeric" data-bind="text: ea" />
+                        <Field type="text" className="width100pc numeric" name="ea" />
+                        <div className="numeric printNumeric">{values?.ea}</div>
                       </td>
                       <td className="formTableFooterCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: eb" />
-                        <div className="numeric printNumeric" data-bind="text: eb" />
+                        <Field type="text" className="width100pc numeric" name="eb" />
+                        <div className="numeric printNumeric">{values?.eb}</div>
                       </td>
                       <td className="formTableFooterCell width10pc">
-                        <input className="width100pc numeric" data-bind="value: ec" />
-                        <div className="numeric printNumeric" data-bind="text: ec" />
+                        <Field type="text" className="width100pc numeric" name="ec" />
+                        <div className="numeric printNumeric">{values?.ec}</div>
                       </td>
                     </tr>
                   </tfoot>

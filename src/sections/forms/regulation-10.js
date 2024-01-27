@@ -18,12 +18,12 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName }) => {
     c: "",
     d: "",
     e: "",
-    f: "X",
+    f: false,
     g: "Paul Guttman & Co., Inc. No Fee Being Charged",
-    h: "0.00",
-    i: "X",
-    j: "3,020.88",
-    k: "X",
+    h: "",
+    i: false,
+    j: "",
+    k: "",
     l: "",
     m: "",
     n: "",
@@ -74,13 +74,14 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName }) => {
     if (form) {
       setInitialValues(form?.formData);
     } else {
+      console.log(claim);
       setInitialValues({
         a: claim?.insured?.map((insured) => insured.name).join(", "),
         b: claim?.insurance?.policyNo,
-        c: claim?.claimNo,
+        c: claim?.insurance?.claimNo,
         // d: claim?.lossDate ? format(new Date(claim?.lossDate), "dd-MM-yyyy") : "",
         d: "Paul Guttman & Co., Inc. No Fee Being Charged",
-        e: "",
+        e: claim?.insurance?.company,
         f: "",
         g: "",
         h: "",
