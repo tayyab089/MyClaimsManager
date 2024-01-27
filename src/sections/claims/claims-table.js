@@ -106,7 +106,7 @@ export const ClaimsTable = (props) => {
                           onClick={() => {
                             router.push({
                               pathname: "/claim",
-                              query: { fileNo: claim?.fileNo },
+                              query: { fileNo: claim?.fileNo, fromPush: true },
                             });
                           }}
                           variant={!lgUp ? "text" : "contained"}

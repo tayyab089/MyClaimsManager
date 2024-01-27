@@ -50,18 +50,18 @@ export const InsuraceForms = ({ item, formsData, isFormLoading }) => {
     const customMessage = `Are you sure you want to delete form: <strong> ${form?.type} </strong> along with all its data? Please note that this process is not reversible.`;
 
     const ans = await confirmDelete(customTitle, customMessage);
-    const response = await deleteFormApi({ form: form });
-    if (response && response.data.type !== "error") {
-      dispatch(
-        setAlertData({ open: true, message: response.data.message, type: response.data.type })
-      );
-      dispatch(deleteFormFromStore(form));
-    } else {
-      dispatch(
-        setAlertData({ open: true, message: response.data.message, type: response.data.type })
-      );
-    }
     if (ans) {
+      const response = await deleteFormApi({ form: form });
+      if (response && response.data.type !== "error") {
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
+        dispatch(deleteFormFromStore(form));
+      } else {
+        dispatch(
+          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+        );
+      }
     } else {
       console.log("dont delete");
     }
@@ -103,10 +103,10 @@ export const InsuraceForms = ({ item, formsData, isFormLoading }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {formsData?.map((item, index) => (
+              {formsData?.map((form, index) => (
                 <TableRow key={index}>
-                  <TableCell>{item?.name}</TableCell>
-                  <TableCell>{new Date(item?.lastUpdated)?.toLocaleString()}</TableCell>
+                  <TableCell>{form?.name}</TableCell>
+                  <TableCell>{new Date(form?.lastUpdated)?.toLocaleString()}</TableCell>
                   <TableCell>Howie Guttman</TableCell>
                   <TableCell>
                     <ButtonsContainer>
@@ -115,10 +115,10 @@ export const InsuraceForms = ({ item, formsData, isFormLoading }) => {
                           router.push({
                             pathname: "/forms",
                             query: {
-                              formType: item?.type,
-                              fileNo: item?.claimfileNo,
+                              formType: form?.type,
+                              fileNo: form?.claimfileNo,
                               isEdit: true,
-                              formId: item?.formId,
+                              formId: form?.formId,
                             },
                           })
                         }
@@ -129,7 +129,7 @@ export const InsuraceForms = ({ item, formsData, isFormLoading }) => {
                         View
                       </Button>
                       <Button
-                        onClick={() => handleDelete(item)}
+                        onClick={() => handleDelete(form)}
                         color="error"
                         variant={!lgUp ? "text" : "outlined"}
                         size="small"

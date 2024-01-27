@@ -159,8 +159,6 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
     setInitialValues(item?.fileNo ? item : emptyValues);
   }, [item]);
 
-  console.log(contactList);
-
   return (
     <Modal
       open={open}

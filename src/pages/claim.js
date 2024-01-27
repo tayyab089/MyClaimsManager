@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 import { fetchForms } from "src/store/reducers/forms/thunks";
+import { fetchClaims } from "src/store/reducers/claims/thunks";
 
 const Page = () => {
   const [claim, setClaim] = useState({});
@@ -27,8 +28,25 @@ const Page = () => {
   const { fileNo } = router.query;
 
   useEffect(() => {
-    dispatch(fetchForms(claim?.fileNo));
-  }, [claim]);
+    if (claim?.fileNo) {
+      const isValuePresent = formsData.some((obj) => obj.claimfileNo === claim?.fileNo);
+      if (formsData.length == 0 || !isValuePresent) {
+        dispatch(fetchForms(claim?.fileNo));
+        console.log("Forms Fetched");
+      } else {
+        console.log("Forms Not Fetched");
+      }
+    }
+  }, [claim, dispatch]);
+
+  useEffect(() => {
+    if (claimsData.length == 0) {
+      dispatch(fetchClaims());
+      console.log("Claims Fetched");
+    } else {
+      console.log("Claims Not Fetched");
+    }
+  }, []);
 
   useEffect(() => {
     setClaim(claimsData.filter((i) => i.fileNo == fileNo)[0]);

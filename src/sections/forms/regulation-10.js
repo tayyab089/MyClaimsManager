@@ -6,10 +6,11 @@ import { saveFormApi, updateFormApi } from "src/network/forms-api";
 
 import { useDispatch } from "react-redux";
 import { setAlertData } from "src/store/reducers/alert/thunks";
+import { addFormToStore, updateFormInStore } from "src/store/reducers/forms/thunks";
 
 // const { format } = require("date-fns");
 
-export const Regulation10 = ({ formRef, claim, form, formName }) => {
+export const Regulation10 = ({ formRef, claim, form, setForm, formName }) => {
   const dispatch = useDispatch();
   const [initialValues, setInitialValues] = useState({
     a: "",
@@ -39,9 +40,10 @@ export const Regulation10 = ({ formRef, claim, form, formName }) => {
         dispatch(
           setAlertData({ open: true, message: response.data.message, type: response.data.type })
         );
+        dispatch(updateFormInStore({ ...form, formData: values, name: formName }));
       } else {
         dispatch(
-          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          setAlertData({ open: true, message: response?.data?.message, type: response?.data?.type })
         );
       }
     } else {
@@ -57,9 +59,11 @@ export const Regulation10 = ({ formRef, claim, form, formName }) => {
         dispatch(
           setAlertData({ open: true, message: response.data.message, type: response.data.type })
         );
+        dispatch(addFormToStore(response.data.value));
+        // setForm(response.data.value);
       } else {
         dispatch(
-          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          setAlertData({ open: true, message: response?.data?.message, type: response?.data?.type })
         );
       }
     }

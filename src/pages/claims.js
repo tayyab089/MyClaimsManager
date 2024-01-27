@@ -48,8 +48,6 @@ const Page = () => {
   const [contactsModalData, setContactsModalData] = useState();
   const [isEdit, setIsEdit] = useState(false);
 
-  console.log(claimsData, claims);
-
   // API Functions====================================================
   const deleteClaim = async (claim) => {
     try {
@@ -139,8 +137,13 @@ const Page = () => {
   }, [claimsModalData]);
 
   useEffect(() => {
-    dispatch(fetchClaims());
-    dispatch(fetchContacts());
+    if (claimsData.length == 0 || contactsData.length == 0) {
+      console.log("Data Fetched");
+      dispatch(fetchClaims());
+      dispatch(fetchContacts());
+    } else {
+      console.log("Data Not Fetched");
+    }
   }, []);
 
   return (

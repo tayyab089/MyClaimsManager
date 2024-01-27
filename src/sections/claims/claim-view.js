@@ -1,7 +1,7 @@
 import { Grid, Box, Typography, Button, useMediaQuery } from "@mui/material";
 import { ClaimsAdd } from "./claims-add";
 import { ContactsAdd } from "../contacts/contacs-add";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setAlertData } from "src/store/reducers/alert/thunks";
 import useConfirm from "src/hooks/use-confirm";
@@ -242,14 +242,14 @@ export const ClaimView = ({ item }) => {
           <Typography variant="formTag">Policy Coverages: </Typography>
         </Grid>
         {item?.policyCoverage?.map((coverage, index) => (
-          <>
+          <Fragment key={index}>
             <Grid xs={10} md={4}>
               <Typography variant="formText">{coverage?.category}: </Typography>
             </Grid>
             <Grid xs={10} md={8}>
               <Typography variant="formText">${coverage?.amount}</Typography>
             </Grid>
-          </>
+          </Fragment>
         ))}
 
         {/* Contacts */}
@@ -258,7 +258,7 @@ export const ClaimView = ({ item }) => {
           <Typography variant="formTag">Contacts: </Typography>
         </Grid>
         {item?.contacts?.map((contact, index) => (
-          <>
+          <Fragment key={index}>
             <Grid xs={10} md={4}>
               <Typography variant="formText">{contact?.category}: </Typography>
             </Grid>
@@ -267,7 +267,7 @@ export const ClaimView = ({ item }) => {
                 {contact?.contact?.name}
               </Typography>
             </Grid>
-          </>
+          </Fragment>
         ))}
       </Grid>
       <ClaimsAdd

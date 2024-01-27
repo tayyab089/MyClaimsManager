@@ -25,7 +25,7 @@ export const CustomAlert = () => {
             <SvgIcon
               fontSize="small"
               onClick={() => {
-                dispatch(setAlertData({ open: false, message: "", type: "" }));
+                dispatch(setAlertData({ open: false, message: "", type: "success" }));
               }}
               style={{ marginTop: 4.5, cursor: "pointer" }}
             >

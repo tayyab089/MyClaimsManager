@@ -130,7 +130,12 @@ const Page = () => {
 
   // Useffect Calls =====================================================
   useEffect(() => {
-    dispatch(fetchContacts());
+    if (contactsData.length == 0) {
+      dispatch(fetchContacts());
+      console.log("Contacts Fetched");
+    } else {
+      console.log("Contacts Not Fetched");
+    }
   }, []);
 
   return (

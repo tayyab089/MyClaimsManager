@@ -8,6 +8,7 @@ import {
   CardContent,
   CardActions,
   CardHeader,
+  CircularProgress,
 } from "@mui/material";
 import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 
@@ -19,6 +20,7 @@ export const EmailToModal = ({
   eBody,
   setEBody,
   emailPDF,
+  emailingPDF,
 }) => {
   // Style Objects ===================================================
   const style = {
@@ -78,8 +80,12 @@ export const EmailToModal = ({
             </Stack>
           </CardContent>
           <CardActions sx={{ justifyContent: "flex-end" }}>
-            <Button variant="contained" onClick={() => emailPDF()}>
-              Send Email
+            <Button variant="contained" onClick={() => emailPDF()} disabled={emailingPDF}>
+              {emailingPDF ? (
+                <CircularProgress style={{ width: 24, height: 24, color: "white" }} />
+              ) : (
+                "SEND EMAIL"
+              )}
             </Button>
           </CardActions>
         </Card>

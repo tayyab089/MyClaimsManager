@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
-import { Box, Container, Stack, Button, TextField } from "@mui/material";
+import { Box, Container, Stack, Button, TextField, CircularProgress } from "@mui/material";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { useReactToPrint } from "react-to-print";
 
@@ -26,10 +26,6 @@ import {
 } from "@heroicons/react/24/outline";
 
 // import { addFormsDataToClaim } from "src/store/reducers/claims/thunks";
-
-// import { PDFDownloadLink, BlobProvider, pdf } from "@react-pdf/renderer";
-import { saveAs } from "file-saver";
-// import { emailFormApi } from "src/network/forms-api";
 
 const headerStyles = {
   backgroundColor: "white",
@@ -66,8 +62,13 @@ const Page = () => {
   const [form, setForm] = useState({});
   const [formName, setFormName] = useState(formType);
 
-  // Email Modal Variables
+  // Loader Variables
+  const [savingForm, setSavingForm] = useState(false);
+  const [deletingForm, setDeletingForm] = useState(false);
+  const [generatingPDF, setGeneratingPDF] = useState(false);
+  const [emailingPDF, setEmailingPDF] = useState(false);
 
+  // Email Modal Variables
   const [email, setEmail] = useState("");
   const [eBody, setEBody] = useState("");
   const [openEmailModal, setOpenEmailModal] = useState(false);
@@ -90,27 +91,31 @@ const Page = () => {
 
   // PDF Generation ==============================
   const generatePDF = async () => {
-    const html2pdf = (await import("html2pdf.js")).default;
-    const element = document.getElementById(formType);
-    var opt = {
-      margin: 0,
-      filename: formName,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "in", format: "legal", orientation: "portrait" },
-    };
-    html2pdf().from(element).set(opt).save();
-    // .output("blob")
-    // .then((blob) => saveAs(blob, formName));
-
-    console.log(element);
+    setGeneratingPDF(true);
+    try {
+      const html2pdf = (await import("html2pdf.js")).default;
+      const element = document.getElementById(formType);
+      var opt = {
+        margin: 0,
+        filename: formName,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "in", format: "legal", orientation: "portrait" },
+      };
+      html2pdf().from(element).set(opt).save();
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setGeneratingPDF(false);
+    }
   };
 
   const emailPDF = async () => {
+    setEmailingPDF(true);
     const html2pdf = (await import("html2pdf.js")).default;
     const element = document.getElementById(formType);
     const formData = new FormData();
-    const jsonData = { emailTo: email, eBody: eBody };
+    const jsonData = { emailTo: email, eBody: eBody, formName: formName };
 
     var opt = {
       margin: 0,
@@ -138,9 +143,9 @@ const Page = () => {
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setEmailingPDF(false);
     }
-
-    console.log(element);
   };
 
   // Formik functions
@@ -153,49 +158,44 @@ const Page = () => {
 
   // Submit Function ===================================================
   const handleSubmit = async () => {
-    switch (formType) {
-      case "ProofOfLoss":
-        if (ProofOfLossformRef.current) {
-          await ProofOfLossformRef.current.handleSubmit();
-        }
-        break;
-      case "Regulation10":
-        if (reg10formRef.current) {
-          await reg10formRef.current.handleSubmit();
-        }
-        break;
-      case "CompensationAgreement":
-        if (compensationAgreementformRef.current) {
-          await compensationAgreementformRef.current.handleSubmit();
-        }
-        break;
-      case "DisclosureStatement":
-        if (disclosureStatementformRef.current) {
-          await disclosureStatementformRef.current.handleSubmit();
-        }
-        break;
-      case "CancellationNotice":
-        if (cancellationNoticeformRef.current) {
-          await cancellationNoticeformRef.current.handleSubmit();
-        }
-        break;
-      default:
-        if (subrogationformRef.current) {
-          subrogationformRef.current.handleSubmit();
-        }
-        break;
-    }
-
-    if (formType == "ProofOfLoss") {
-      console.log("Form Not Setup Yet");
-    } else if (formType == "Regulation10") {
-      if (reg10formRef.current) {
-        await reg10formRef.current.handleSubmit();
+    setSavingForm(true);
+    try {
+      switch (formType) {
+        case "ProofOfLoss":
+          if (ProofOfLossformRef.current) {
+            await ProofOfLossformRef.current.handleSubmit();
+          }
+          break;
+        case "Regulation10":
+          if (reg10formRef.current) {
+            await reg10formRef.current.handleSubmit();
+          }
+          break;
+        case "CompensationAgreement":
+          if (compensationAgreementformRef.current) {
+            await compensationAgreementformRef.current.handleSubmit();
+          }
+          break;
+        case "DisclosureStatement":
+          if (disclosureStatementformRef.current) {
+            await disclosureStatementformRef.current.handleSubmit();
+          }
+          break;
+        case "CancellationNotice":
+          if (cancellationNoticeformRef.current) {
+            await cancellationNoticeformRef.current.handleSubmit();
+          }
+          break;
+        default:
+          if (subrogationformRef.current) {
+            subrogationformRef.current.handleSubmit();
+          }
+          break;
       }
-    } else {
-      if (subrogationformRef.current) {
-        subrogationformRef.current.handleSubmit();
-      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setSavingForm(false);
     }
   };
 
@@ -203,16 +203,23 @@ const Page = () => {
   const [Dialog, confirmDelete] = useConfirm();
 
   const handleDelete = async () => {
-    const customTitle = "Confirm Delete";
-    const customMessage = `Are you sure you want to delete form: <strong> ${form?.type} </strong> along with all its data? Please note that this process is not reversible.`;
-    if (form) {
-      const ans = await confirmDelete(customTitle, customMessage);
-      if (ans) {
-        await deleteFormApi({
-          form: { claimfileNo: fileNo, formId: formId, userId: form?.userId },
-        });
-        router.back();
+    setDeletingForm(true);
+    try {
+      const customTitle = "Confirm Delete";
+      const customMessage = `Are you sure you want to delete form: <strong> ${form?.type} </strong> along with all its data? Please note that this process is not reversible.`;
+      if (form) {
+        const ans = await confirmDelete(customTitle, customMessage);
+        if (ans) {
+          await deleteFormApi({
+            form: { claimfileNo: fileNo, formId: formId, userId: form?.userId },
+          });
+          router.back();
+        }
       }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      // setDeletingForm(false);
     }
   };
 
@@ -226,7 +233,13 @@ const Page = () => {
         );
       case "Regulation10":
         return (
-          <Regulation10 formRef={reg10formRef} claim={claim} form={form} formName={formName} />
+          <Regulation10
+            formRef={reg10formRef}
+            claim={claim}
+            form={form}
+            formName={formName}
+            setForm={setForm}
+          />
         );
       case "CompensationAgreement":
         return (
@@ -318,18 +331,6 @@ const Page = () => {
               >
                 PRINT
               </Button>
-              {/* <PDFDownloadLink document={<Regulation10Print />} fileName="MyFile">
-                {({ blob, url, loading, error }) => {
-                  console.log(blob);
-                  return loading ? "Loading..." : "Download";
-                }}
-              </PDFDownloadLink> */}
-              {/* <BlobProvider document={Regulation10Print}>
-                {({ blob, url, loading, error }) => {
-                  console.log(blob);
-                  return <div>There's something going on on the fly</div>;
-                }}
-              </BlobProvider> */}
               <Button
                 variant="outlined"
                 size="small"
@@ -337,8 +338,13 @@ const Page = () => {
                 sx={{ marginLeft: "20px" }}
                 startIcon={<DocumentIcon style={{ height: 20, width: 20 }} />}
                 onClick={() => generatePDF()}
+                disabled={generatingPDF}
               >
-                PDF
+                {generatingPDF ? (
+                  <CircularProgress style={{ width: 24, height: 24, color: "white" }} />
+                ) : (
+                  "PDF"
+                )}
               </Button>
               <Button
                 variant="outlined"
@@ -347,8 +353,13 @@ const Page = () => {
                 sx={{ marginLeft: "20px" }}
                 startIcon={<EnvelopeIcon style={{ height: 20, width: 20 }} />}
                 onClick={() => setOpenEmailModal(true)}
+                disabled={emailingPDF}
               >
-                EMAIL
+                {emailingPDF ? (
+                  <CircularProgress style={{ width: 24, height: 24, color: "white" }} />
+                ) : (
+                  "EMAIL"
+                )}
               </Button>
               <Button
                 startIcon={<ChevronLeftIcon style={{ height: 20, width: 20 }} />}
@@ -360,26 +371,7 @@ const Page = () => {
               </Button>
             </Stack>
           </Stack>
-          <div ref={componentRef}>
-            {formSelector()}
-            {/* {formType == "ProofOfLoss" ? (
-              <ProofOfLoss
-                formRef={ProofOfLossformRef}
-                claim={claim}
-                form={form}
-                formName={formName}
-              />
-            ) : formType == "Regulation10" ? (
-              <Regulation10 formRef={reg10formRef} claim={claim} form={form} formName={formName} />
-            ) : (
-              <SubrogationReceipt
-                formRef={subrogationformRef}
-                claim={claim}
-                form={form}
-                formName={formName}
-              />
-            )} */}
-          </div>
+          <div ref={componentRef}>{formSelector()}</div>
           <Stack
             direction="row"
             justifyContent="space-between"
@@ -394,8 +386,13 @@ const Page = () => {
                 color="primary"
                 startIcon={<TrashIcon style={{ height: 20, width: 20 }} />}
                 onClick={() => handleDelete()}
+                disabled={deletingForm}
               >
-                DELETE
+                {deletingForm ? (
+                  <CircularProgress style={{ width: 24, height: 24, color: "white" }} />
+                ) : (
+                  "DELETE"
+                )}
               </Button>
             </Stack>
             <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -414,8 +411,13 @@ const Page = () => {
                 color="primary"
                 sx={{ marginLeft: "20px" }}
                 onClick={() => handleSubmit()}
+                disabled={savingForm}
               >
-                SAVE
+                {savingForm ? (
+                  <CircularProgress style={{ width: 24, height: 24, color: "white" }} />
+                ) : (
+                  "SAVE"
+                )}
               </Button>
             </Stack>
           </Stack>
@@ -430,6 +432,7 @@ const Page = () => {
           openEmailModal={openEmailModal}
           setOpenEmailModal={setOpenEmailModal}
           emailPDF={emailPDF}
+          emailingPDF={emailingPDF}
         />
       </Box>
     </>

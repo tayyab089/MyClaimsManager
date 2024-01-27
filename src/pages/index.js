@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Box, Container, Stack, Typography, Unstable_Grid2 as Grid } from "@mui/material";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { CompanyCard } from "src/sections/companies/company-card";
 import { items } from "src/layouts/dashboard/config";
@@ -48,13 +48,13 @@ const Page = () => {
             </Stack>
             <Grid container spacing={3}>
               {items.map((item, index) => (
-                <>
+                <Fragment key={index}>
                   {index !== 0 && (
                     <Grid xs={12} md={6} lg={4} key={item.title}>
                       <CompanyCard company={item} />
                     </Grid>
                   )}
-                </>
+                </Fragment>
               ))}
             </Grid>
           </Stack>

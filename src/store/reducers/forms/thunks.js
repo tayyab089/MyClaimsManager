@@ -9,7 +9,6 @@ export const fetchForms = (fileNo) => async (dispatch) => {
     const response = await getFormApi(fileNo);
     if (response && response.data.type !== "error") {
       dispatch(SET_FORMS(response.data.data));
-      console.log(response.data);
     }
   } catch (error) {
     console.log(error);
@@ -18,50 +17,34 @@ export const fetchForms = (fileNo) => async (dispatch) => {
   }
 };
 
-// // Add Forms Function =================================================================
-// export const addFormsDataToClaim = (fileNo, formName) => async (dispatch, getState) => {
-//   const currentState = getState();
-//   const currentClaims = currentState.claims.claimsData;
-//   const updatedData = { type: formName, updated: new Date(), createdBy: "Howie Guttman" };
+// Add Form Function ==================================================================
+export const addFormToStore = (form) => async (dispatch, getState) => {
+  const currentState = getState();
+  const currentForms = currentState.forms.formsData;
+  const updatedForms = [...currentForms, form];
 
-//   const updatedClaims = currentClaims.map((claim) => {
-//     console.log(claim.fileNo, fileNo);
-//     if (claim.fileNo == fileNo) {
-//       console.log("Match Found, I Ran");
-//       return { ...claim, forms: [...claim.forms, updatedData] };
-//     }
-//     return claim;
-//   });
+  dispatch(SET_FORMS(updatedForms));
+};
 
-//   dispatch(SET_CLAIMS(updatedClaims));
-// };
+// Update Form Function ================================================================
+export const updateFormInStore = (form) => async (dispatch, getState) => {
+  const currentState = getState();
+  const currentforms = currentState.forms.formsData;
 
-// // Add Claim Function ==================================================================
-// export const addClaimToStore = (claim) => async (dispatch, getState) => {
-//   const currentState = getState();
-//   const currentClaims = currentState.claims.claimsData;
-//   const updatedClaims = [...currentClaims, claim];
+  const updatedforms = currentforms.map((item) => {
+    if (item.formId == form.formId) {
+      return form;
+    } else {
+      return item;
+    }
+  });
 
-//   dispatch(SET_CLAIMS(sortClaims(updatedClaims)));
-// };
+  console.log(updatedforms);
 
-// // Update Claim Function ================================================================
-// export const updateClaimInStore = (claim) => async (dispatch, getState) => {
-//   const currentState = getState();
-//   const currentClaims = currentState.claims.claimsData;
+  dispatch(SET_FORMS(updatedforms));
+};
 
-//   const updatedClaims = currentClaims.map((item) => {
-//     if (item.fileNo == claim.fileNo) {
-//       return claim;
-//     } else {
-//       return item;
-//     }
-//   });
-
-//   dispatch(SET_CLAIMS(sortClaims(updatedClaims)));
-// };
-
-// Delete Claim Function ==============================================================
+// Delete Form Function ==============================================================
 export const deleteFormFromStore = (form) => async (dispatch, getState) => {
   const currentState = getState();
   const currentForms = currentState.forms.formsData;
