@@ -67,6 +67,7 @@ const Page = () => {
   const [deletingForm, setDeletingForm] = useState(false);
   const [generatingPDF, setGeneratingPDF] = useState(false);
   const [emailingPDF, setEmailingPDF] = useState(false);
+  const [Dialog, confirmDialog] = useConfirm();
 
   // Email Modal Variables
   const [email, setEmail] = useState("");
@@ -79,7 +80,7 @@ const Page = () => {
     const customTitle = "Confirm Back";
     const customMessage = `Are you sure? Any Unsaved Changes will be lost`;
 
-    const ans = await confirmDelete(customTitle, customMessage);
+    const ans = await confirmDialog(customTitle, customMessage);
 
     ans ? router.back() : console.log("Back Canceled");
   };
@@ -200,16 +201,14 @@ const Page = () => {
   };
 
   // Delete Function =====================================================
-  const [Dialog, confirmDelete] = useConfirm();
-
   const handleDelete = async () => {
-    setDeletingForm(true);
     try {
       const customTitle = "Confirm Delete";
       const customMessage = `Are you sure you want to delete form: <strong> ${form?.type} </strong> along with all its data? Please note that this process is not reversible.`;
       if (form) {
-        const ans = await confirmDelete(customTitle, customMessage);
+        const ans = await confirmDialog(customTitle, customMessage);
         if (ans) {
+          setDeletingForm(true);
           const response = await deleteFormApi({
             form: form,
           });
@@ -375,14 +374,6 @@ const Page = () => {
                 ) : (
                   "EMAIL"
                 )}
-              </Button>
-              <Button
-                startIcon={<ChevronLeftIcon style={{ height: 20, width: 20 }} />}
-                variant="contained"
-                sx={{ marginLeft: "20px" }}
-                onClick={() => handleClose()}
-              >
-                BACK
               </Button>
             </Stack>
           </Stack>

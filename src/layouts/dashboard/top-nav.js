@@ -3,9 +3,11 @@ import BellIcon from "@heroicons/react/24/solid/BellIcon";
 import UsersIcon from "@heroicons/react/24/solid/UsersIcon";
 import Bars3Icon from "@heroicons/react/24/solid/Bars3Icon";
 import HomeIcon from "@heroicons/react/24/solid/HomeIcon";
+import ChevronLeftIcon from "@heroicons/react/20/solid/ChevronLeftIcon";
 import MagnifyingGlassIcon from "@heroicons/react/24/solid/MagnifyingGlassIcon";
 import {
   Avatar,
+  Button,
   Badge,
   Box,
   IconButton,
@@ -21,6 +23,7 @@ import { useRouter } from "next/router";
 import { getInitials } from "src/utils/get-initials";
 import { useContext } from "react";
 import { AuthContext } from "src/contexts/auth-context";
+import useConfirm from "src/hooks/use-confirm";
 
 const SIDE_NAV_WIDTH = 280;
 const TOP_NAV_HEIGHT = 64;
@@ -31,6 +34,25 @@ export const TopNav = (props) => {
   const accountPopover = usePopover();
   const router = useRouter();
   const { user } = useContext(AuthContext);
+  const [Dialog, confirmDialog] = useConfirm();
+  const is_home =
+    router.pathname === "/" || router.pathname === "/claims" || router.pathname === "/contacts";
+  const is_forms = router.pathname === "/forms";
+
+  console.log(is_home);
+
+  const handleClose = async () => {
+    if (is_forms) {
+      const customTitle = "Confirm Back";
+      const customMessage = `Are you sure? Any Unsaved Changes will be lost`;
+
+      const ans = await confirmDialog(customTitle, customMessage);
+
+      ans ? router.back() : console.log("Back Canceled");
+    } else {
+      router.back();
+    }
+  };
 
   return (
     <>
@@ -68,13 +90,21 @@ export const TopNav = (props) => {
                 </SvgIcon>
               </IconButton>
             )}
-            {/* <Tooltip title="Search">
-              <IconButton>
-                <SvgIcon fontSize="small">
-                  <MagnifyingGlassIcon />
-                </SvgIcon>
-              </IconButton>
-            </Tooltip> */}
+            {!is_home && (
+              <Button
+                startIcon={
+                  <SvgIcon fontSize="small">
+                    <ChevronLeftIcon />
+                  </SvgIcon>
+                }
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={() => handleClose()}
+              >
+                Back
+              </Button>
+            )}
           </Stack>
           <Stack alignItems="center" direction="row" spacing={2}>
             <Tooltip title="Home">
@@ -113,6 +143,7 @@ export const TopNav = (props) => {
         open={accountPopover.open}
         onClose={accountPopover.handleClose}
       />
+      <Dialog />
     </>
   );
 };

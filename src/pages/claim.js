@@ -70,19 +70,6 @@ const Page = () => {
               <Stack spacing={1}>
                 <Typography variant="h4">{`Claim ${claim?.fileNo}/${claim?.insurance?.fileNo}`}</Typography>
               </Stack>
-              <div>
-                <Button
-                  startIcon={
-                    <SvgIcon fontSize="small">
-                      <ChevronLeftIcon />
-                    </SvgIcon>
-                  }
-                  variant="contained"
-                  onClick={() => router.back()}
-                >
-                  Back
-                </Button>
-              </div>
             </Stack>
             <ClaimView item={claim} />
             <InsuraceForms item={claim} formsData={formsData} isFormLoading={isFormLoading} />
