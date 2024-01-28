@@ -63,7 +63,7 @@ export const CancellationNotice = ({ formRef, claim, form, formName }) => {
       setInitialValues(form?.formData);
     } else {
       setInitialValues({
-        a: claim?.insured?.map((insured) => insured.name).join(", "),
+        a: "",
         b: "",
         c: "",
       });

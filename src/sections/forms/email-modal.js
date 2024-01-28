@@ -11,6 +11,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import { Fragment } from "react";
 
 export const EmailToModal = ({
   openEmailModal,
@@ -82,7 +83,12 @@ export const EmailToModal = ({
           <CardActions sx={{ justifyContent: "flex-end" }}>
             <Button variant="contained" onClick={() => emailPDF()} disabled={emailingPDF}>
               {emailingPDF ? (
-                <CircularProgress style={{ width: 24, height: 24, color: "white" }} />
+                <Fragment>
+                  <CircularProgress
+                    style={{ width: 24, height: 24, color: "white", marginRight: 10 }}
+                  />
+                  SENDING
+                </Fragment>
               ) : (
                 "SEND EMAIL"
               )}

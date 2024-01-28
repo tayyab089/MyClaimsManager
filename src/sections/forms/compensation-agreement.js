@@ -73,10 +73,9 @@ export const CompensationAgreement = ({ formRef, claim, form, formName }) => {
       setInitialValues(form?.formData);
     } else {
       setInitialValues({
-        a: claim?.insured?.map((insured) => insured.name).join(", "),
-        b: claim?.insurance?.policyNo,
-        c: claim?.claimNo,
-        // d: claim?.lossDate ? format(new Date(claim?.lossDate), "dd-MM-yyyy") : "",
+        a: "",
+        b: "",
+        c: "",
         d: "",
         e: "",
         f: "",

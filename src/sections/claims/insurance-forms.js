@@ -99,7 +99,7 @@ export const InsuraceForms = ({ item, formsData, isFormLoading }) => {
                 <TableCell>Name</TableCell>
                 <TableCell>Updated</TableCell>
                 <TableCell>Created By</TableCell>
-                <TableCell style={{ width: "20%" }}>Actions</TableCell>
+                <TableCell style={{ width: "15%" }}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -125,6 +125,7 @@ export const InsuraceForms = ({ item, formsData, isFormLoading }) => {
                         color="primary"
                         variant={!lgUp ? "text" : "contained"}
                         size="small"
+                        style={{ marginRight: 5 }}
                       >
                         View
                       </Button>
