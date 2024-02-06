@@ -22,7 +22,7 @@ const claimSchema = Yup.object().shape({
   policyCoverage: Yup.array().of(
     Yup.object().shape({
       category: Yup.string(),
-      amount: Yup.number(),
+      amount: Yup.string(),
     })
   ),
   contacts: Yup.array().of(

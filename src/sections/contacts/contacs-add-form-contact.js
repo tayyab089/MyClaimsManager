@@ -40,13 +40,14 @@ import {
 import { showAlert } from "src/utils/show-alert";
 import { insuredObject } from "../claims/claims-static-data";
 
-export const ContactsAddFormInsured = ({
+export const ContactsAddFormContact = ({
   item,
   isEdit,
   setFieldValue,
   ix,
   values,
   contactList,
+  contactCategoryList,
   contactsData,
 }) => {
   // State Variables =================================================
@@ -74,7 +75,7 @@ export const ContactsAddFormInsured = ({
     async (values, setSubmitting) => {
       console.log(values);
       if (isEdit) {
-        const response = await updateContactApi({ contact: { ...values, category: "Insured" } });
+        const response = await updateContactApi({ contact: values });
         if (response && response.data.type !== "error") {
           showAlert(response, dispatch);
           dispatch(updateContactInStore(values));
@@ -82,12 +83,13 @@ export const ContactsAddFormInsured = ({
           showAlert(response, dispatch);
         }
       } else {
-        const response = await saveContactApi({ contact: { ...values, category: "Insured" } });
+        const response = await saveContactApi({ contact: values });
         if (response && response.data.type !== "error") {
           showAlert(response, dispatch);
           dispatch(addContactToStore(response?.data?.value));
-          setFieldValue(`insured.${ix}.name`, response?.data?.value?.name);
-          setFieldValue(`insured.${ix}.id`, response?.data?.value?.id);
+          setFieldValue(`contacts.${ix}.contact.name`, response?.data?.value?.name);
+          setFieldValue(`contacts.${ix}.contact.id`, response?.data?.value?.id);
+          setFieldValue(`contacts.${ix}.category`, response?.data?.value?.category);
         } else {
           showAlert(response, dispatch);
         }
@@ -108,32 +110,45 @@ export const ContactsAddFormInsured = ({
         <>
           <Stack direction="row" justifyContent="space-arround" spacing={1}>
             <Autocomplete
-              sx={{ width: "80%" }}
+              sx={{ width: "25%" }}
               disablePortal
-              id="Insured"
-              name={`insured.${ix}.name`}
+              id={`contacts.${ix}.category`}
+              name={`contacts.${ix}.category`}
+              onInputChange={(e, v) => {
+                setFieldValue(`contacts.${ix}.category`, v);
+              }}
+              value={values.contacts[ix].category}
+              options={contactCategoryList ? contactCategoryList : []}
+              freeSolo
+              renderInput={(params) => <TextField {...params} label="Category" size="small" />}
+            />
+            <Autocomplete
+              sx={{ width: "65%" }}
+              disablePortal
+              id="Contacts"
+              name={`contacts.${ix}.contact.name`}
               onChange={(e, v) => {
-                console.log("I Ran");
-                console.log(v);
                 if (v) {
                   if (v?.id !== "") {
-                    setFieldValue(`insured.${ix}.name`, v?.label);
-                    setFieldValue(`insured.${ix}.id`, v?.id);
+                    const category = contactsData.find((x) => x.id === v?.id).category;
+                    setFieldValue(`contacts.${ix}.contact.name`, v?.label);
+                    setFieldValue(`contacts.${ix}.contact.id`, v?.id);
+                    setFieldValue(`contacts.${ix}.category`, category);
                   }
                 } else {
-                  setFieldValue(`insured.${ix}`, insuredObject);
+                  setFieldValue(`contacts.${ix}.contact`, { name: "", id: "" });
                 }
               }}
               onInputChange={(e, v) => {
                 console.log(v);
-                setFieldValue(`insured.${ix}.name`, v);
-                setFieldValue(`insured.${ix}.id`, "");
+                setFieldValue(`contacts.${ix}.contact.name`, v);
+                setFieldValue(`contacts.${ix}.contact.id`, "");
               }}
               // value={{
               //   label: values.insured[ix].name,
               //   id: values.insured[ix].id,
               // }}
-              inputValue={values.insured[ix].name}
+              inputValue={values?.contacts[ix]?.contact?.name}
               freeSolo
               options={contactList ? contactList : []}
               getOptionLabel={(option) => option.label || ""}
@@ -152,7 +167,16 @@ export const ContactsAddFormInsured = ({
           enableReinitialize
           validateOnMount
         >
-          {({ values, errors, handleBlur, handleChange, handleSubmit, isSubmitting, isValid }) => (
+          {({
+            values,
+            errors,
+            handleBlur,
+            handleChange,
+            handleSubmit,
+            isSubmitting,
+            isValid,
+            setFieldValue,
+          }) => (
             <form autoComplete="off" noValidate onSubmit={handleSubmit}>
               {console.log(errors)}
               <Card sx={{ pt: 0, backgroundColor: "#ECFDFF", border: "2px solid black" }}>
@@ -177,7 +201,34 @@ export const ContactsAddFormInsured = ({
                           </Grid>
                         </>
                       )}
-                      <Grid xs={12} md={8.5}>
+                      <Grid xs={12} md={4}>
+                        <Autocomplete
+                          id="Category"
+                          name="category"
+                          // disablePortal
+                          onChange={handleChange}
+                          onInputChange={(e, v) => {
+                            setFieldValue("category", v);
+                          }}
+                          inputValue={values.category}
+                          value={values.category}
+                          options={contactCategoryList ? contactCategoryList : []}
+                          freeSolo
+                          renderInput={(params) => (
+                            <TextField {...params} label="Category" size="small" />
+                          )}
+                        />
+                        {/* <TextField
+                          fullWidth
+                          label="Category"
+                          name="category"
+                          onChange={handleChange}
+                          required
+                          value={values.category}
+                          size="small"
+                        /> */}
+                      </Grid>
+                      <Grid xs={12} md={4}>
                         <TextField
                           fullWidth
                           label="Name"
@@ -185,9 +236,11 @@ export const ContactsAddFormInsured = ({
                           onChange={handleChange}
                           required
                           value={values.name}
+                          size="small"
                         />
                         <FormHelperText error>{errors.name}</FormHelperText>
                       </Grid>
+
                       {smUp && (
                         <Grid xs={2} md={2}>
                           <Button onClick={() => setExpand(false)}>Collapse</Button>

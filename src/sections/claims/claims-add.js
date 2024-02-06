@@ -25,8 +25,8 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setAlertData } from "src/store/reducers/alert/thunks";
 
-import { ContactsAddForm } from "../contacts/contacs-add-form";
 import { ContactsAddFormInsured } from "../contacts/contacs-add-form-insured";
+import { ContactsAddFormContact } from "../contacts/contacs-add-form-contact";
 
 import claimSchema from "./claim-schema";
 
@@ -55,25 +55,45 @@ const useContactList = (contacts) => {
 
 const useClaimLossType = (claims) => {
   return useMemo(() => {
-    return claims.map((claim) => claim?.lossType);
+    const lossTypeSet = new Set();
+    claims.forEach((claim) => {
+      lossTypeSet.add(claim?.lossType);
+    });
+    return Array.from(lossTypeSet);
   }, [claims]);
 };
 
 const useCompanyList = (claims) => {
   return useMemo(() => {
-    return claims.map((claim) => claim?.insurance?.company);
+    const companySet = new Set();
+    claims.forEach((claim) => {
+      companySet.add(claim?.insurance?.company);
+    });
+    return Array.from(companySet);
   }, [claims]);
 };
 
 const useContactCategoryList = (claims) => {
   return useMemo(() => {
-    return claims.flatMap((claim) => claim?.contacts?.map((contact) => contact.category));
+    const categorySet = new Set();
+    claims.forEach((claim) => {
+      claim?.contacts?.forEach((contact) => {
+        categorySet.add(contact.category);
+      });
+    });
+    return Array.from(categorySet);
   }, [claims]);
 };
 
 const usePCCategoryList = (claims) => {
   return useMemo(() => {
-    return claims.flatMap((claim) => claim?.policyCoverage?.map((pc) => pc.category));
+    const categorySet = new Set();
+    claims.forEach((claim) => {
+      claim?.policyCoverage?.forEach((pc) => {
+        categorySet.add(pc.category);
+      });
+    });
+    return Array.from(categorySet);
   }, [claims]);
 };
 
@@ -84,7 +104,6 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
   const dispatch = useDispatch();
 
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
-  const smDown = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const smUp = useMediaQuery((theme) => theme.breakpoints.up("sm"));
   const [initialValues, setInitialValues] = useState(emptyValues);
   const contactList = useContactList(contactsData);
@@ -118,49 +137,55 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
   const handleSubmit = useCallback(
     async (values, setSubmitting) => {
       console.log(values);
-      alert(JSON.stringify(values));
-      // if (item?.fileNo) {
-      //   const response = await updateClaimApi({ claim: values });
-      //   if (response && response.data.type !== "error") {
-      //     dispatch(
-      //       setAlertData({ open: true, message: response.data.message, type: response.data.type })
-      //     );
-      //     handleClose();
-      //     dispatch(updateClaimInStore(values));
-      //   } else {
-      //     alert(response.data.message);
-      //   }
-      // } else {
-      //   const response = await saveClaimApi({ claim: values });
-      //   console.log(response);
-      //   if (response && response.data.type !== "error") {
-      //     dispatch(
-      //       setAlertData({ open: true, message: response.data.message, type: response.data.type })
-      //     );
-      //     handleClose();
-      //     dispatch(addClaimToStore(response.data.value));
-      //   } else {
-      //     dispatch(
-      //       setAlertData({ open: true, message: response.data.message, type: response.data.type })
-      //     );
-      //   }
-      // }
+      if (item?.fileNo) {
+        const response = await updateClaimApi({ claim: values });
+        if (response && response.data.type !== "error") {
+          dispatch(
+            setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          );
+          handleClose();
+          dispatch(updateClaimInStore(values));
+        } else {
+          alert(response.data.message);
+        }
+      } else {
+        const response = await saveClaimApi({ claim: values });
+        console.log(response);
+        if (response && response.data.type !== "error") {
+          dispatch(
+            setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          );
+          handleClose();
+          dispatch(addClaimToStore(response.data.value));
+        } else {
+          dispatch(
+            setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          );
+        }
+      }
       setSubmitting(false);
     },
     [item?.fileNo]
   );
-  // UseEffect Calls ===============================================
-  // useEffect(() => {
-  //   setContactList(
-  //     contactsData?.map((item) => {
-  //       return {
-  //         label: item.name,
-  //         id: item.id,
-  //       };
-  //     })
-  //   );
-  // }, [contactsData]);
 
+  // Function to format currency
+  const formatCurrency = (value) => {
+    const numericValue = value.replace(/\D/g, "");
+    let integerPart = numericValue.substring(0, numericValue.length - 2) || "0";
+    const decimalPart = numericValue.substring(numericValue.length - 2);
+    integerPart = integerPart.replace(/^0+/, "");
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const formattedValue = `${integerPart}.${decimalPart}`;
+
+    return formattedValue;
+  };
+
+  // Function to parse currency value for form submission
+  const parseCurrency = (value) => {
+    return value.replace(/,/g, "");
+  };
+
+  // UseEffect Calls ===============================================
   useEffect(() => {
     setInitialValues(item?.fileNo ? item : emptyValues);
   }, [item]);
@@ -250,18 +275,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                         <Typography variant="overline">Insured:</Typography>
                                       </Grid>
                                     )}
-                                    <Grid xs={8} sm={9} md={9}>
-                                      {/* <ContactsAddForm
-                                        // setExpand={setExpand}
-                                        handleBlur={handleBlur}
-                                        values={values}
-                                        ix={index}
-                                        handleChange={handleChange}
-                                        errors={errors}
-                                        setFieldValue={setFieldValue}
-                                        contactList={contactList}
-                                        contactsData={contactsData}
-                                      /> */}
+                                    <Grid xs={10} sm={9} md={9}>
                                       <ContactsAddFormInsured
                                         setFieldValue={setFieldValue}
                                         ix={index}
@@ -550,7 +564,21 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                         size="small"
                                         label="$"
                                         name={`policyCoverage.${index}.amount`}
-                                        onChange={handleChange}
+                                        onChange={(e) => {
+                                          const formattedValue = formatCurrency(e.target.value);
+                                          setFieldValue(
+                                            `policyCoverage.${index}.amount`,
+                                            formattedValue
+                                          );
+                                        }}
+                                        handleBlur={() => {
+                                          const { value } = field;
+                                          const parsedValue = parseCurrency(value);
+                                          setFieldValue(
+                                            `policyCoverage.${index}.amount`,
+                                            parsedValue
+                                          );
+                                        }}
                                         value={values.policyCoverage[index].amount}
                                       />
                                     </Grid>
@@ -606,67 +634,31 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                               {values.contacts && values.contacts.length > 0 ? (
                                 values.contacts.map((item, index) => (
                                   <Fragment key={index}>
-                                    <Grid xs={12} sm={3} md={4}>
-                                      <Autocomplete
-                                        disablePortal
-                                        id={`contacts.${index}.category`}
-                                        name={`contacts.${index}.category`}
-                                        onInputChange={(e, v) => {
-                                          setFieldValue(`contacts.${index}.category`, v);
-                                        }}
-                                        value={values.contacts[index].category}
-                                        options={contactCategoryList ? contactCategoryList : []}
-                                        freeSolo
-                                        renderInput={(params) => (
-                                          <TextField {...params} label="Category" size="small" />
-                                        )}
+                                    <Grid xs={10} sm={11} md={11}>
+                                      <ContactsAddFormContact
+                                        setFieldValue={setFieldValue}
+                                        ix={index}
+                                        values={values}
+                                        contactList={contactList}
+                                        contactCategoryList={contactCategoryList}
+                                        item={
+                                          values?.contacts[index]?.contact?.id !== ""
+                                            ? {
+                                                ...contactsData.find(
+                                                  (x) =>
+                                                    x.id === values?.contacts[index]?.contact?.id
+                                                ),
+                                                category: values?.contacts[index]?.category,
+                                              }
+                                            : {
+                                                ...contactEmptyValues,
+                                                name: values?.contacts[index]?.contact?.name,
+                                                category: values?.contacts[index]?.category,
+                                              }
+                                        }
+                                        isEdit={values?.contacts[index]?.contact?.id !== ""}
+                                        contactsData={contactsData}
                                       />
-                                    </Grid>
-                                    <Grid xs={6} sm={5} md={4}>
-                                      <Autocomplete
-                                        disablePortal
-                                        id="Contact"
-                                        name={`contacts.${index}.contact`}
-                                        onChange={(e, v) => {
-                                          if (v) {
-                                            if (v?.id !== "") {
-                                              setFieldValue(
-                                                `contacts.${index}.contact.name`,
-                                                v?.label
-                                              );
-                                              setFieldValue(`contacts.${index}.contact.id`, v?.id);
-                                            }
-                                          } else {
-                                            setFieldValue(`contacts.${index}.contact`, {
-                                              name: "",
-                                              id: "",
-                                            });
-                                          }
-                                        }}
-                                        // value={{
-                                        //   label: values.contacts[index].contact.name,
-                                        //   id: values.contacts[index].contact.id,
-                                        // }}
-                                        onInputChange={(e, v) => {
-                                          console.log(v);
-                                          setFieldValue(`contacts.${index}.contact.name`, v);
-                                          setFieldValue(`contacts.${index}.contact.id`, "");
-                                        }}
-                                        inputValue={values?.contacts[index].contact.name}
-                                        freeSolo
-                                        options={contactList ? contactList : []}
-                                        getOptionLabel={(option) => option.label || ""}
-                                        renderInput={(params) => (
-                                          <TextField {...params} label="Name" size="small" />
-                                        )}
-                                      />
-                                    </Grid>
-                                    <Grid xs={2} sm={2} md={2}>
-                                      <Button
-                                        onClick={() => editContact(values.contacts[index].contact)}
-                                      >
-                                        Edit
-                                      </Button>
                                     </Grid>
                                     <Grid xs={2} sm={1} md={1}>
                                       <Button
@@ -691,12 +683,15 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                               {values.contacts.length > 0 && (
                                 <Fragment>
                                   {/* <Grid xs={10} md={11}></Grid> */}
-                                  <Grid xs={2} sm={1} md={1}>
+                                  <Grid xs={12} sm={12} md={12}>
                                     <Button
                                       type="button"
                                       onClick={() => arrayHelpers.push(contactsObject)}
+                                      startIcon={
+                                        <PlusCircleIcon style={{ height: 30, width: 30 }} />
+                                      }
                                     >
-                                      <PlusCircleIcon />
+                                      ADD
                                     </Button>
                                   </Grid>
                                 </Fragment>
