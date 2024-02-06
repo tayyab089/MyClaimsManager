@@ -25,12 +25,9 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setAlertData } from "src/store/reducers/alert/thunks";
 
-import { ContactsAddFormInsured } from "../contacts/contacs-add-form-insured";
-import { ContactsAddFormContact } from "../contacts/contacs-add-form-contact";
+import { ContactsAddForm } from "../contacts/contacs-add-form";
 
 import claimSchema from "./claim-schema";
-
-import { emptyValues as contactEmptyValues } from "../contacts/contacts-static-data";
 
 import {
   emptyValues,
@@ -55,45 +52,25 @@ const useContactList = (contacts) => {
 
 const useClaimLossType = (claims) => {
   return useMemo(() => {
-    const lossTypeSet = new Set();
-    claims.forEach((claim) => {
-      lossTypeSet.add(claim?.lossType);
-    });
-    return Array.from(lossTypeSet);
+    return claims.map((claim) => claim?.lossType);
   }, [claims]);
 };
 
 const useCompanyList = (claims) => {
   return useMemo(() => {
-    const companySet = new Set();
-    claims.forEach((claim) => {
-      companySet.add(claim?.insurance?.company);
-    });
-    return Array.from(companySet);
+    return claims.map((claim) => claim?.insurance?.company);
   }, [claims]);
 };
 
 const useContactCategoryList = (claims) => {
   return useMemo(() => {
-    const categorySet = new Set();
-    claims.forEach((claim) => {
-      claim?.contacts?.forEach((contact) => {
-        categorySet.add(contact.category);
-      });
-    });
-    return Array.from(categorySet);
+    return claims.flatMap((claim) => claim?.contacts?.map((contact) => contact.category));
   }, [claims]);
 };
 
 const usePCCategoryList = (claims) => {
   return useMemo(() => {
-    const categorySet = new Set();
-    claims.forEach((claim) => {
-      claim?.policyCoverage?.forEach((pc) => {
-        categorySet.add(pc.category);
-      });
-    });
-    return Array.from(categorySet);
+    return claims.flatMap((claim) => claim?.policyCoverage?.map((pc) => pc.category));
   }, [claims]);
 };
 
@@ -104,6 +81,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
   const dispatch = useDispatch();
 
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const smDown = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const smUp = useMediaQuery((theme) => theme.breakpoints.up("sm"));
   const [initialValues, setInitialValues] = useState(emptyValues);
   const contactList = useContactList(contactsData);
@@ -111,7 +89,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
   const companyList = useCompanyList(claimsData);
   const contactCategoryList = useContactCategoryList(claimsData);
   const pcCategoryList = usePCCategoryList(claimsData);
-  // const [expand, setExpand] = useState(false);
+  const [expand, setExpand] = useState(false);
 
   // Style Objects =================================================
   const style = {
@@ -167,25 +145,18 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
     },
     [item?.fileNo]
   );
-
-  // Function to format currency
-  const formatCurrency = (value) => {
-    const numericValue = value.replace(/\D/g, "");
-    let integerPart = numericValue.substring(0, numericValue.length - 2) || "0";
-    const decimalPart = numericValue.substring(numericValue.length - 2);
-    integerPart = integerPart.replace(/^0+/, "");
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    const formattedValue = `${integerPart}.${decimalPart}`;
-
-    return formattedValue;
-  };
-
-  // Function to parse currency value for form submission
-  const parseCurrency = (value) => {
-    return value.replace(/,/g, "");
-  };
-
   // UseEffect Calls ===============================================
+  // useEffect(() => {
+  //   setContactList(
+  //     contactsData?.map((item) => {
+  //       return {
+  //         label: item.name,
+  //         id: item.id,
+  //       };
+  //     })
+  //   );
+  // }, [contactsData]);
+
   useEffect(() => {
     setInitialValues(item?.fileNo ? item : emptyValues);
   }, [item]);
@@ -212,7 +183,6 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
             isSubmitting,
             setFieldValue,
             isValid,
-            handleBlur,
           }) => (
             <form autoComplete="off" noValidate onSubmit={handleSubmit}>
               <Card sx={{ padding: "10px" }}>
@@ -269,31 +239,36 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                         sx={{
                                           display: "flex",
                                           justifyContent: "flex-end",
-                                          alignItems: "flex-start",
+                                          alignItems: "center",
                                         }}
                                       >
                                         <Typography variant="overline">Insured:</Typography>
                                       </Grid>
                                     )}
-                                    <Grid xs={10} sm={9} md={9}>
-                                      <ContactsAddFormInsured
-                                        setFieldValue={setFieldValue}
-                                        ix={index}
-                                        values={values}
-                                        contactList={contactList}
-                                        item={
-                                          values?.insured[index].id !== ""
-                                            ? contactsData.find(
-                                                (x) => x.id === values?.insured[index].id
-                                              )
-                                            : {
-                                                ...contactEmptyValues,
-                                                name: values?.insured[index].name,
-                                              }
-                                        }
-                                        isEdit={values.insured[index].id !== ""}
-                                        contactsData={contactsData}
+                                    <Grid xs={6} sm={6} md={6}>
+                                      <Autocomplete
+                                        disablePortal
+                                        id="Insured"
+                                        name={`insured.${index}.name`}
+                                        onChange={(e, v) => {
+                                          setFieldValue(`insured.${index}.name`, v?.label);
+                                          setFieldValue(`insured.${index}.id`, v?.id);
+                                        }}
+                                        value={{
+                                          label: values.insured[index].name,
+                                          id: values.insured[index].id,
+                                        }}
+                                        options={contactList ? contactList : []}
+                                        getOptionLabel={(option) => option.label || ""}
+                                        renderInput={(params) => (
+                                          <TextField {...params} label="Name" size="small" />
+                                        )}
                                       />
+                                    </Grid>
+                                    <Grid xs={2} sm={2} md={2}>
+                                      <Button onClick={() => editContact(values.insured[index].id)}>
+                                        Edit
+                                      </Button>
                                     </Grid>
                                     <Grid xs={2} sm={1} md={1}>
                                       <Button
@@ -320,13 +295,13 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                               )}
                               {values.insured.length > 0 && (
                                 <Fragment>
-                                  <Grid xs={2} sm={2} md={2}></Grid>
-                                  <Grid xs={10} sm={10} md={10}>
+                                  {/* <Grid xs={10} md={11}></Grid> */}
+                                  <Grid xs={2} sm={1} md={1}>
                                     <Button
                                       type="button"
                                       onClick={() => arrayHelpers.push(insuredObject)}
                                     >
-                                      Add Insured
+                                      <PlusCircleIcon />
                                     </Button>
                                   </Grid>
                                 </Fragment>
@@ -564,21 +539,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                         size="small"
                                         label="$"
                                         name={`policyCoverage.${index}.amount`}
-                                        onChange={(e) => {
-                                          const formattedValue = formatCurrency(e.target.value);
-                                          setFieldValue(
-                                            `policyCoverage.${index}.amount`,
-                                            formattedValue
-                                          );
-                                        }}
-                                        handleBlur={() => {
-                                          const { value } = field;
-                                          const parsedValue = parseCurrency(value);
-                                          setFieldValue(
-                                            `policyCoverage.${index}.amount`,
-                                            parsedValue
-                                          );
-                                        }}
+                                        onChange={handleChange}
                                         value={values.policyCoverage[index].amount}
                                       />
                                     </Grid>
@@ -634,31 +595,50 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                               {values.contacts && values.contacts.length > 0 ? (
                                 values.contacts.map((item, index) => (
                                   <Fragment key={index}>
-                                    <Grid xs={10} sm={11} md={11}>
-                                      <ContactsAddFormContact
-                                        setFieldValue={setFieldValue}
-                                        ix={index}
-                                        values={values}
-                                        contactList={contactList}
-                                        contactCategoryList={contactCategoryList}
-                                        item={
-                                          values?.contacts[index]?.contact?.id !== ""
-                                            ? {
-                                                ...contactsData.find(
-                                                  (x) =>
-                                                    x.id === values?.contacts[index]?.contact?.id
-                                                ),
-                                                category: values?.contacts[index]?.category,
-                                              }
-                                            : {
-                                                ...contactEmptyValues,
-                                                name: values?.contacts[index]?.contact?.name,
-                                                category: values?.contacts[index]?.category,
-                                              }
-                                        }
-                                        isEdit={values?.contacts[index]?.contact?.id !== ""}
-                                        contactsData={contactsData}
+                                    <Grid xs={12} sm={3} md={4}>
+                                      <Autocomplete
+                                        disablePortal
+                                        id={`contacts.${index}.category`}
+                                        name={`contacts.${index}.category`}
+                                        onInputChange={(e, v) => {
+                                          setFieldValue(`contacts.${index}.category`, v);
+                                        }}
+                                        value={values.contacts[index].category}
+                                        options={contactCategoryList ? contactCategoryList : []}
+                                        freeSolo
+                                        renderInput={(params) => (
+                                          <TextField {...params} label="Category" size="small" />
+                                        )}
                                       />
+                                    </Grid>
+                                    <Grid xs={6} sm={5} md={4}>
+                                      <Autocomplete
+                                        disablePortal
+                                        id="Contact"
+                                        name={`contacts.${index}.contact`}
+                                        onChange={(e, v) => {
+                                          setFieldValue(`contacts.${index}.contact.name`, v?.label);
+                                          setFieldValue(`contacts.${index}.contact.id`, v?.id);
+                                        }}
+                                        value={{
+                                          label: values.contacts[index].contact.name,
+                                          id: values.contacts[index].contact.id,
+                                        }}
+                                        options={contactList ? contactList : []}
+                                        getOptionLabel={(option) => option.label || ""}
+                                        renderInput={(params) => (
+                                          <TextField {...params} label="Name" size="small" />
+                                        )}
+                                      />
+                                    </Grid>
+                                    <Grid xs={2} sm={2} md={2}>
+                                      <Button
+                                        onClick={() =>
+                                          editContact(values.contacts[index].contact.id)
+                                        }
+                                      >
+                                        Edit
+                                      </Button>
                                     </Grid>
                                     <Grid xs={2} sm={1} md={1}>
                                       <Button
@@ -683,15 +663,12 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                               {values.contacts.length > 0 && (
                                 <Fragment>
                                   {/* <Grid xs={10} md={11}></Grid> */}
-                                  <Grid xs={12} sm={12} md={12}>
+                                  <Grid xs={2} sm={1} md={1}>
                                     <Button
                                       type="button"
                                       onClick={() => arrayHelpers.push(contactsObject)}
-                                      startIcon={
-                                        <PlusCircleIcon style={{ height: 30, width: 30 }} />
-                                      }
                                     >
-                                      ADD
+                                      <PlusCircleIcon />
                                     </Button>
                                   </Grid>
                                 </Fragment>

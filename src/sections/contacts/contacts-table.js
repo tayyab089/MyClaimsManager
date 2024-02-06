@@ -69,7 +69,8 @@ export const ContactsTable = (props) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell style={{ width: "75%" }}>Name</TableCell>
+                <TableCell style={{ width: "60%" }}>Name</TableCell>
+                <TableCell style={{ width: "15%" }}>Category</TableCell>
                 <TableCell style={{ width: "25%" }}>Action</TableCell>
               </TableRow>
             </TableHead>
@@ -87,6 +88,9 @@ export const ContactsTable = (props) => {
                         <Avatar src={contact.avatar}>{getInitials(contact.name)}</Avatar>
                         <Typography variant="subtitle2">{contact.name}</Typography>
                       </Stack>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="subtitle2">{contact?.category}</Typography>
                     </TableCell>
                     <TableCell>
                       <ButtonsContainer>

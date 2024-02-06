@@ -5,7 +5,7 @@ const claimSchema = Yup.object().shape({
   insured: Yup.array().of(
     Yup.object().shape({
       name: Yup.string().required("Insured name is required"),
-      id: Yup.string().required("Insured ID is required"),
+      id: Yup.string(),
     })
   ),
   lossLocation: Yup.string(),
@@ -22,7 +22,7 @@ const claimSchema = Yup.object().shape({
   policyCoverage: Yup.array().of(
     Yup.object().shape({
       category: Yup.string(),
-      amount: Yup.number(),
+      amount: Yup.string(),
     })
   ),
   contacts: Yup.array().of(

@@ -16,6 +16,8 @@ import { fetchClaims, deleteClaimFromStore } from "src/store/reducers/claims/thu
 import { setAlertData } from "src/store/reducers/alert/thunks";
 import { deleteClaimApi } from "src/network/claims-api";
 
+import { emptyValues } from "src/sections/contacts/contacts-static-data";
+
 const useClaims = (claimsData, page, rowsPerPage) => {
   return useMemo(() => {
     return applyPagination(claimsData, page, rowsPerPage);
@@ -88,12 +90,16 @@ const Page = () => {
 
   // Contact Modal================================
   const handleContactClick = (item) => {
-    const foundContact = contactsData.find((x) => x.id === item);
+    console.log(item);
+    const foundContact = contactsData.find((x) => x.id === item.id);
     if (foundContact) {
       setContactsModalData(foundContact);
       setIsEdit(true);
     } else {
-      console.log("Contact Not Found, You might have deleted it");
+      // console.log("Contact Not Found, You might have deleted it");
+      setContactsModalData({ ...emptyValues, name: item.name });
+      setOpenContactsModal(true);
+      // setIsEdit(true);
     }
   };
 

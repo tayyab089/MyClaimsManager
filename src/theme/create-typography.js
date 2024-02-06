@@ -1,14 +1,19 @@
+const normal = "1.1rem";
+const small = "0.9rem";
+const large = "1.1rem";
+
 export const createTypography = () => {
   return {
     fontFamily:
-      '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
+      '"Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
+    fontSize: 16,
     body1: {
-      fontSize: "1rem",
+      fontSize: large,
       fontWeight: 400,
       lineHeight: 1.5,
     },
     body2: {
-      fontSize: "0.875rem",
+      fontSize: normal,
       fontWeight: 400,
       lineHeight: 1.57,
     },
@@ -16,47 +21,47 @@ export const createTypography = () => {
       fontWeight: 600,
     },
     caption: {
-      fontSize: "0.75rem",
+      fontSize: small,
       fontWeight: 500,
       lineHeight: 1.66,
     },
     subtitle1: {
-      fontSize: "1rem",
+      fontSize: large,
       fontWeight: 500,
       lineHeight: 1.57,
     },
     subtitle2: {
-      fontSize: "0.875rem",
+      fontSize: normal,
       fontWeight: 500,
       lineHeight: 1.57,
     },
     formSubHeading: {
-      fontSize: "1rem",
+      fontSize: large,
       fontWeight: 700,
       lineHeight: 1.57,
     },
     overline: {
-      fontSize: "0.75rem",
+      fontSize: small,
       fontWeight: 600,
       letterSpacing: "0.5px",
       lineHeight: 2.5,
       textTransform: "uppercase",
     },
     formTag: {
-      fontSize: "0.75rem",
+      fontSize: small,
       fontWeight: 600,
       lineHeight: 1.57,
       letterSpacing: "0.5px",
       textTransform: "uppercase",
     },
     formText: {
-      fontSize: "0.75rem",
+      fontSize: small,
       fontWeight: 400,
       lineHeight: 1.57,
       letterSpacing: "0.5px",
     },
     link: {
-      fontSize: "0.75rem",
+      fontSize: small,
       fontWeight: 400,
       lineHeight: 1.57,
       letterSpacing: "0.5px",

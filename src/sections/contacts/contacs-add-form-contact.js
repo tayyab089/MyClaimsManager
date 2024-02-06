@@ -15,6 +15,8 @@ import {
   Unstable_Grid2 as Grid,
   FormHelperText,
   CircularProgress,
+  Stack,
+  Autocomplete,
 } from "@mui/material";
 import { FieldArray, Formik } from "formik";
 import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
@@ -36,12 +38,24 @@ import {
   emailObject,
 } from "./contacts-static-data";
 import { showAlert } from "src/utils/show-alert";
+import { insuredObject } from "../claims/claims-static-data";
 
-export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
+export const ContactsAddFormContact = ({
+  item,
+  isEdit,
+  setFieldValue,
+  ix,
+  values,
+  contactList,
+  contactCategoryList,
+  contactsData,
+}) => {
   // State Variables =================================================
   const dispatch = useDispatch();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const smUp = useMediaQuery((theme) => theme.breakpoints.up("sm"));
   const [initialValues, setInitialValues] = useState(emptyValues);
+  const [expand, setExpand] = useState(false);
 
   // Style Objects ===================================================
   const style = {
@@ -64,7 +78,6 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
         const response = await updateContactApi({ contact: values });
         if (response && response.data.type !== "error") {
           showAlert(response, dispatch);
-          handleClose();
           dispatch(updateContactInStore(values));
         } else {
           showAlert(response, dispatch);
@@ -73,8 +86,10 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
         const response = await saveContactApi({ contact: values });
         if (response && response.data.type !== "error") {
           showAlert(response, dispatch);
-          handleClose();
-          dispatch(addContactToStore(response.data.value));
+          dispatch(addContactToStore(response?.data?.value));
+          setFieldValue(`contacts.${ix}.contact.name`, response?.data?.value?.name);
+          setFieldValue(`contacts.${ix}.contact.id`, response?.data?.value?.id);
+          setFieldValue(`contacts.${ix}.category`, response?.data?.value?.category);
         } else {
           showAlert(response, dispatch);
         }
@@ -90,14 +105,61 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
   }, [item]);
 
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-      disableEscapeKeyDown
-    >
-      <Box sx={style}>
+    <Fragment>
+      {!expand ? (
+        <>
+          <Stack direction="row" justifyContent="space-arround" spacing={1}>
+            <Autocomplete
+              sx={{ width: "25%" }}
+              disablePortal
+              id={`contacts.${ix}.category`}
+              name={`contacts.${ix}.category`}
+              onInputChange={(e, v) => {
+                setFieldValue(`contacts.${ix}.category`, v);
+              }}
+              value={values.contacts[ix].category}
+              options={contactCategoryList ? contactCategoryList : []}
+              freeSolo
+              renderInput={(params) => <TextField {...params} label="Category" size="small" />}
+            />
+            <Autocomplete
+              sx={{ width: "65%" }}
+              disablePortal
+              id="Contacts"
+              name={`contacts.${ix}.contact.name`}
+              onChange={(e, v) => {
+                if (v) {
+                  if (v?.id !== "") {
+                    const category = contactsData.find((x) => x.id === v?.id).category;
+                    setFieldValue(`contacts.${ix}.contact.name`, v?.label);
+                    setFieldValue(`contacts.${ix}.contact.id`, v?.id);
+                    setFieldValue(`contacts.${ix}.category`, category);
+                  }
+                } else {
+                  setFieldValue(`contacts.${ix}.contact`, { name: "", id: "" });
+                }
+              }}
+              onInputChange={(e, v) => {
+                console.log(v);
+                setFieldValue(`contacts.${ix}.contact.name`, v);
+                setFieldValue(`contacts.${ix}.contact.id`, "");
+              }}
+              // value={{
+              //   label: values.insured[ix].name,
+              //   id: values.insured[ix].id,
+              // }}
+              inputValue={values?.contacts[ix]?.contact?.name}
+              freeSolo
+              options={contactList ? contactList : []}
+              getOptionLabel={(option) => option.label || ""}
+              renderInput={(params) => <TextField {...params} label="Name" size="small" />}
+            />
+            {/* </Grid>
+         <Grid xs={2} sm={2} md={2}> */}
+            <Button onClick={() => setExpand(true)}>Expand</Button>
+          </Stack>
+        </>
+      ) : (
         <Formik
           initialValues={initialValues}
           onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting)}
@@ -105,31 +167,68 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
           enableReinitialize
           validateOnMount
         >
-          {({ values, errors, handleBlur, handleChange, handleSubmit, isSubmitting, isValid }) => (
+          {({
+            values,
+            errors,
+            handleBlur,
+            handleChange,
+            handleSubmit,
+            isSubmitting,
+            isValid,
+            setFieldValue,
+          }) => (
             <form autoComplete="off" noValidate onSubmit={handleSubmit}>
               {console.log(errors)}
-              <Card>
-                <CardHeader
-                  subheader=""
-                  title={isEdit ? "Edit Existing Contact" : "Add New Contact"}
-                  style={{ marginBottom: 20 }}
-                />
-                <CardContent sx={{ pt: 0 }}>
+              <Card sx={{ pt: 0, backgroundColor: "#ECFDFF", border: "2px solid black" }}>
+                {/* <CardHeader
+                subheader=""
+                title={isEdit ? "Edit Existing Contact" : "Add New Contact"}
+                style={{ marginBottom: 20 }}
+              /> */}
+                <CardContent>
                   <Box sx={{ m: -1.5 }}>
-                    <Button
-                      type="button"
-                      onClick={handleClose}
-                      style={{ position: "absolute", top: 20, right: 10, zIndex: 99 }}
-                    >
-                      <XMarkIcon />
-                    </Button>
                     <Grid container spacing={2}>
                       <Grid xs={2} md={1.5}>
                         <Button>
                           <Avatar src={values.avatar} alt="Selected Avatar" />
                         </Button>
                       </Grid>
-                      <Grid xs={10} md={10.5}>
+                      {!smUp && (
+                        <>
+                          <Grid xs={3} md={2}></Grid>
+                          <Grid xs={7} md={2}>
+                            <Button onClick={() => setExpand(false)}>Collapse</Button>
+                          </Grid>
+                        </>
+                      )}
+                      <Grid xs={12} md={4}>
+                        <Autocomplete
+                          id="Category"
+                          name="category"
+                          // disablePortal
+                          onChange={handleChange}
+                          onInputChange={(e, v) => {
+                            setFieldValue("category", v);
+                          }}
+                          inputValue={values.category}
+                          value={values.category}
+                          options={contactCategoryList ? contactCategoryList : []}
+                          freeSolo
+                          renderInput={(params) => (
+                            <TextField {...params} label="Category" size="small" />
+                          )}
+                        />
+                        {/* <TextField
+                          fullWidth
+                          label="Category"
+                          name="category"
+                          onChange={handleChange}
+                          required
+                          value={values.category}
+                          size="small"
+                        /> */}
+                      </Grid>
+                      <Grid xs={12} md={4}>
                         <TextField
                           fullWidth
                           label="Name"
@@ -137,9 +236,16 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                           onChange={handleChange}
                           required
                           value={values.name}
+                          size="small"
                         />
                         <FormHelperText error>{errors.name}</FormHelperText>
                       </Grid>
+
+                      {smUp && (
+                        <Grid xs={2} md={2}>
+                          <Button onClick={() => setExpand(false)}>Collapse</Button>
+                        </Grid>
+                      )}
 
                       <Grid xs={12} md={6}>
                         <TextField
@@ -177,7 +283,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                                   Address
                                 </Typography>
                               </Grid>
-                              {values.address && values.address.length > 0 ? (
+                              {values.address && values.address?.length > 0 ? (
                                 values.address.map((item, index) => (
                                   <Fragment key={index}>
                                     <Grid xs={12} md={2}>
@@ -261,7 +367,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                                   </Button>
                                 </Grid>
                               )}
-                              {values.address.length > 0 && (
+                              {values.address?.length > 0 && (
                                 <Fragment>
                                   <Grid xs={10} md={11}></Grid>
                                   <Grid xs={2} md={1}>
@@ -296,7 +402,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                                   Email
                                 </Typography>
                               </Grid>
-                              {values.email && values.email.length > 0 ? (
+                              {values.email && values.email?.length > 0 ? (
                                 values.email.map((item, index) => (
                                   <Fragment key={index}>
                                     <Grid xs={12} md={4}>
@@ -353,7 +459,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                                   </Button>
                                 </Grid>
                               )}
-                              {values.email.length > 0 && (
+                              {values.email?.length > 0 && (
                                 <Fragment>
                                   <Grid xs={10} md={11}></Grid>
                                   <Grid xs={2} md={1}>
@@ -388,7 +494,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                                   Phone Number
                                 </Typography>
                               </Grid>
-                              {values.phNo && values.phNo.length > 0 ? (
+                              {values.phNo && values.phNo?.length > 0 ? (
                                 values.phNo.map((item, index) => (
                                   <Fragment key={index}>
                                     <Grid xs={12} md={3}>
@@ -460,7 +566,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                                   </Button>
                                 </Grid>
                               )}
-                              {values.phNo.length > 0 && (
+                              {values.phNo?.length > 0 && (
                                 <Fragment>
                                   <Grid xs={10} md={11}></Grid>
                                   <Grid xs={2} md={1}>
@@ -482,10 +588,11 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                 </CardContent>
                 <Divider />
                 <CardActions sx={{ justifyContent: "flex-end" }}>
-                  <Button variant="contained" color="neutral" onClick={handleClose}>
-                    Cancel
-                  </Button>
-                  <Button variant="contained" type="submit" disabled={isSubmitting || !isValid}>
+                  <Button
+                    variant="contained"
+                    onClick={handleSubmit}
+                    disabled={isSubmitting || !isValid}
+                  >
                     {isSubmitting ? (
                       <CircularProgress style={{ width: 24, height: 24, color: "white" }} />
                     ) : isEdit ? (
@@ -499,7 +606,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
             </form>
           )}
         </Formik>
-      </Box>
-    </Modal>
+      )}
+    </Fragment>
   );
 };
