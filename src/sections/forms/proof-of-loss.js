@@ -197,9 +197,24 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
     if (form) {
       setInitialValues(form?.formData);
     } else {
+      // const ploicyCoverage = claim?.policyCoverage?.filter(
+      //   (item) => item.category.toLowerCase() != "deductible"
+      // );
+      var policyCoverage = claim?.policyCoverage?.reduce(
+        (acc, item) => {
+          if (item.category.toLowerCase() === "deductible") {
+            acc.deductibleItems.push(item);
+          } else {
+            acc.nonDeductibleItems.push(item);
+          }
+          return acc;
+        },
+        { deductibleItems: [], nonDeductibleItems: [] }
+      );
+
       setInitialValues({
         a: claim?.insurance?.policyNo,
-        b: "",
+        b: 'See Schedule "A"',
         c: claim?.insurance?.issueDate
           ? format(new Date(claim?.insurance?.issueDate), "do MMMM yyyy")
           : "",
@@ -210,30 +225,31 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
         f: claim?.insurance?.claimNo,
         g: "",
         h: "",
-        i: "",
+        i: claim?.insurance?.company,
         j: "",
-        k: "",
-        l: "",
-        m: "",
+        k: claim?.insured?.map((insured) => insured.name).join(", "),
+        ek: "",
+        l: claim?.lossType,
+        m: claim?.lossType,
         n: "",
         o: "",
-        p: "",
-        q: "",
-        r: "",
-        s: "",
+        p: claim?.lossDate ? format(new Date(claim?.lossDate), "do") : "",
+        q: claim?.lossDate ? format(new Date(claim?.lossDate), "MMM") : "",
+        r: claim?.lossDate ? format(new Date(claim?.lossDate), "yy") : "",
+        s: claim?.lossType,
         t: "",
         u: "",
-        v: "",
+        v: "As Permitted",
         w: "",
         x: "",
-        y: "",
+        y: "Owner",
         z: "",
         aa: "",
         ab: "",
-        ac: "",
+        ac: "As Per Policy",
         ad: "",
         ae: "",
-        af: "",
+        af: 'See Schedule "A"',
         ag: "",
         eg: "", // eSeries
         ah: "",
@@ -243,7 +259,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
         aj: "",
         ej: "", // eSeries
         ak: "",
-        al: "",
+        al: claim?.insured?.map((insured) => insured.name).join(", "),
         am: "",
         an: "",
         ao: "",
@@ -252,16 +268,16 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
         ar: "",
         as: "",
         at: "",
-        au: "",
-        av: "",
-        aw: "",
-        ax: "",
-        ay: "",
-        az: "",
-        ba: "",
-        bb: "",
+        au: policyCoverage.nonDeductibleItems[0]?.amount,
+        av: policyCoverage.nonDeductibleItems[0]?.category,
+        aw: policyCoverage.nonDeductibleItems[1]?.amount,
+        ax: policyCoverage.nonDeductibleItems[1]?.category,
+        ay: policyCoverage.nonDeductibleItems[2]?.amount,
+        az: policyCoverage.nonDeductibleItems[2]?.category,
+        ba: policyCoverage.nonDeductibleItems[3]?.amount,
+        bb: policyCoverage.nonDeductibleItems[3]?.category,
         ef: claim?.lossLocation, // eSeries
-        bc: "",
+        bc: policyCoverage.deductibleItems?.map((item) => item.amount).join(", "),
         bd: "",
         be: "",
         bf: "",
@@ -454,8 +470,8 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
               </div>
               <div className="formRow">
                 <div style={{ order: 1, flexGrow: 1 }}>
-                  <Field type="text" name="ed" />
-                  <span>{values?.d}</span>
+                  <Field type="text" name="ek" />
+                  <span>{values?.ek}</span>
                 </div>
               </div>
               <div className="formRow">
