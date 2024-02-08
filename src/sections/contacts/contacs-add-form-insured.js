@@ -44,13 +44,13 @@ const useTypes = (contacts) => {
   return useMemo(() => {
     const typeSet = new Set();
     contacts?.forEach((contact) => {
-      contact?.address.forEach((address) => {
+      contact?.address?.forEach((address) => {
         typeSet.add(address?.type);
       });
-      contact?.email.forEach((email) => {
+      contact?.email?.forEach((email) => {
         typeSet.add(email?.type);
       });
-      contact?.phNo.forEach((phNo) => {
+      contact?.phNo?.forEach((phNo) => {
         typeSet.add(phNo?.type);
       });
     });

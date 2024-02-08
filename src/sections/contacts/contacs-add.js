@@ -42,13 +42,13 @@ const useTypes = (contacts) => {
   return useMemo(() => {
     const typeSet = new Set();
     contacts?.forEach((contact) => {
-      contact?.address.forEach((address) => {
+      contact?.address?.forEach((address) => {
         typeSet.add(address?.type);
       });
-      contact?.email.forEach((email) => {
+      contact?.email?.forEach((email) => {
         typeSet.add(email?.type);
       });
-      contact?.phNo.forEach((phNo) => {
+      contact?.phNo?.forEach((phNo) => {
         typeSet.add(phNo?.type);
       });
     });
@@ -207,8 +207,8 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                                   Address
                                 </Typography>
                               </Grid>
-                              {values.address && values.address.length > 0 ? (
-                                values.address.map((item, index) => (
+                              {values?.address && values?.address?.length > 0 ? (
+                                values?.address?.map((item, index) => (
                                   <Fragment key={index}>
                                     <Grid xs={12} md={3}>
                                       <Autocomplete
@@ -306,7 +306,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                                   </Button>
                                 </Grid>
                               )}
-                              {values.address.length > 0 && (
+                              {values?.address?.length > 0 && (
                                 <Fragment>
                                   <Grid xs={10} md={11}></Grid>
                                   <Grid xs={2} md={1}>
@@ -341,7 +341,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                                   Email
                                 </Typography>
                               </Grid>
-                              {values.email && values.email.length > 0 ? (
+                              {values?.email && values?.email?.length > 0 ? (
                                 values.email.map((item, index) => (
                                   <Fragment key={index}>
                                     <Grid xs={12} md={4}>
@@ -413,7 +413,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                                   </Button>
                                 </Grid>
                               )}
-                              {values.email.length > 0 && (
+                              {values?.email?.length > 0 && (
                                 <Fragment>
                                   <Grid xs={10} md={11}></Grid>
                                   <Grid xs={2} md={1}>
@@ -448,8 +448,8 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                                   Phone Number
                                 </Typography>
                               </Grid>
-                              {values.phNo && values.phNo.length > 0 ? (
-                                values.phNo.map((item, index) => (
+                              {values?.phNo && values?.phNo?.length > 0 ? (
+                                values?.phNo?.map((item, index) => (
                                   <Fragment key={index}>
                                     <Grid xs={12} md={3}>
                                       <Autocomplete
@@ -535,7 +535,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                                   </Button>
                                 </Grid>
                               )}
-                              {values.phNo.length > 0 && (
+                              {values?.phNo?.length > 0 && (
                                 <Fragment>
                                   <Grid xs={10} md={11}></Grid>
                                   <Grid xs={2} md={1}>

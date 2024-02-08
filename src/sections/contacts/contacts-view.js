@@ -74,7 +74,7 @@ export const ContactsView = ({ item, handleClose, open, handleViewEdit }) => {
               <Grid xs={10} md={12} sx={subheaderStyles}>
                 <Typography variant="overline">Address</Typography>
               </Grid>
-              {contact.address.map((address, index) => {
+              {contact?.address?.map((address, index) => {
                 return (
                   <Fragment key={index}>
                     <Grid xs={4} md={3} sx={contentStyle}>
@@ -92,7 +92,7 @@ export const ContactsView = ({ item, handleClose, open, handleViewEdit }) => {
               <Grid xs={10} md={12} sx={subheaderStyles}>
                 <Typography variant="overline">Emails</Typography>
               </Grid>
-              {contact.email.map((email, index) => {
+              {contact?.email?.map((email, index) => {
                 return (
                   <Fragment key={index}>
                     <Grid xs={4} md={3} sx={contentStyle}>
@@ -107,7 +107,7 @@ export const ContactsView = ({ item, handleClose, open, handleViewEdit }) => {
               <Grid xs={10} md={12} sx={subheaderStyles}>
                 <Typography variant="overline">Phone Numbers</Typography>
               </Grid>
-              {contact.phNo.map((phNo, index) => {
+              {contact?.phNo?.map((phNo, index) => {
                 return (
                   <Fragment key={index}>
                     <Grid xs={4} md={3} sx={contentStyle}>
