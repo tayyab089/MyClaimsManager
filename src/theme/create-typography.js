@@ -1,6 +1,8 @@
 const normal = "1.1rem";
 const small = "0.9rem";
 const large = "1.1rem";
+const printText = "1.3rem";
+const printFontFamily = "Inter";
 
 export const createTypography = () => {
   return {
@@ -103,6 +105,39 @@ export const createTypography = () => {
       fontWeight: 700,
       fontSize: "1.125rem",
       lineHeight: 1.2,
+    },
+    claimPrintHeading: {
+      // fontFamily: printFontFamily,
+      fontSize: printText,
+      fontWeight: 700,
+      lineHeight: 1.1,
+      // letterSpacing: "0.5px",
+      marginRight: 5,
+    },
+    claimPrintType: {
+      // fontFamily: printFontFamily,
+      fontSize: printText,
+      fontWeight: 400,
+      lineHeight: 1.1,
+      // letterSpacing: "0.5px",
+      fontStyle: "italic",
+      // textDecoration: "underline",
+      marginRight: 5,
+    },
+    claimPrintText: {
+      // fontFamily: printFontFamily,
+      fontSize: printText,
+      fontWeight: 400,
+      lineHeight: 1.1,
+      // letterSpacing: "0.5px",
+    },
+    claimPrintTextBold: {
+      // fontFamily: printFontFamily,
+      fontSize: printText,
+      fontWeight: 600,
+      lineHeight: 1.1,
+      marginRight: 5,
+      // letterSpacing: "0.5px",
     },
   };
 };

@@ -17,7 +17,7 @@ const schema = Yup.object().shape({
   email: Yup.array().of(
     Yup.object().shape({
       type: Yup.string().notRequired(),
-      email: Yup.string().email("Invalid email format").required("Email is required"),
+      email: Yup.string().email("Invalid email format").notRequired(),
     })
   ),
   name: Yup.string().required("Name is required"),
@@ -26,7 +26,7 @@ const schema = Yup.object().shape({
   phNo: Yup.array().of(
     Yup.object().shape({
       type: Yup.string().notRequired(),
-      no: Yup.string().required("Phone number is required"),
+      no: Yup.string().notRequired(),
       ext: Yup.string(),
     })
   ),

@@ -8,6 +8,7 @@ import { setAlertData } from "src/store/reducers/alert/thunks";
 import { addFormToStore, updateFormInStore } from "src/store/reducers/forms/thunks";
 
 const { format } = require("date-fns");
+import { formatDate } from "src/utils/format-date";
 
 export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
   const dispatch = useDispatch();
@@ -215,12 +216,8 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
       setInitialValues({
         a: claim?.insurance?.policyNo,
         b: 'See Schedule "A"',
-        c: claim?.insurance?.issueDate
-          ? format(new Date(claim?.insurance?.issueDate), "do MMMM yyyy")
-          : "",
-        d: claim?.insurance?.expiryDate
-          ? format(new Date(claim?.insurance?.expiryDate), "do MMMM yyyy")
-          : "",
+        c: formatDate(claim?.insurance?.issueDate),
+        d: formatDate(claim?.insurance?.expiryDate),
         e: claim?.fileNo,
         f: claim?.insurance?.claimNo,
         g: "",

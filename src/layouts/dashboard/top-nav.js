@@ -39,8 +39,6 @@ export const TopNav = (props) => {
     router.pathname === "/" || router.pathname === "/claims" || router.pathname === "/contacts";
   const is_forms = router.pathname === "/forms";
 
-  console.log(is_home);
-
   const handleClose = async () => {
     if (is_forms) {
       const customTitle = "Confirm Back";

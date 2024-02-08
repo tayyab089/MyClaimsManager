@@ -439,25 +439,6 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                           md={2}
                           sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
                         >
-                          <Typography variant="overline">File #:</Typography>
-                        </Grid>
-                      )}
-                      <Grid xs={12} sm={4} md={4}>
-                        <TextField
-                          fullWidth
-                          label="File No."
-                          name="insurance.fileNo"
-                          onChange={handleChange}
-                          value={values.insurance.fileNo}
-                        />
-                      </Grid>
-                      {smUp && (
-                        <Grid
-                          xs={2}
-                          sm={2}
-                          md={2}
-                          sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
-                        >
                           <Typography variant="overline">Policy #:</Typography>
                         </Grid>
                       )}
@@ -488,6 +469,26 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                           name="insurance.claimNo"
                           onChange={handleChange}
                           value={values.insurance.claimNo}
+                        />
+                      </Grid>
+
+                      {smUp && (
+                        <Grid
+                          xs={2}
+                          sm={2}
+                          md={2}
+                          sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
+                        >
+                          <Typography variant="overline">File #:</Typography>
+                        </Grid>
+                      )}
+                      <Grid xs={12} sm={4} md={4}>
+                        <TextField
+                          fullWidth
+                          label="File No."
+                          name="insurance.fileNo"
+                          onChange={handleChange}
+                          value={values.insurance.fileNo}
                         />
                       </Grid>
 

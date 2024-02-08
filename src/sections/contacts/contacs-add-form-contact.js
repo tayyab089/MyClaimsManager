@@ -1,4 +1,4 @@
-import React, { useState, useCallback, Fragment, useEffect } from "react";
+import React, { useState, useCallback, Fragment, useEffect, useMemo } from "react";
 import {
   Modal,
   Box,
@@ -40,6 +40,24 @@ import {
 import { showAlert } from "src/utils/show-alert";
 import { insuredObject } from "../claims/claims-static-data";
 
+const useTypes = (contacts) => {
+  return useMemo(() => {
+    const typeSet = new Set();
+    contacts?.forEach((contact) => {
+      contact?.address.forEach((address) => {
+        typeSet.add(address?.type);
+      });
+      contact?.email.forEach((email) => {
+        typeSet.add(email?.type);
+      });
+      contact?.phNo.forEach((phNo) => {
+        typeSet.add(phNo?.type);
+      });
+    });
+    return Array.from(typeSet);
+  }, [contacts]);
+};
+
 export const ContactsAddFormContact = ({
   item,
   isEdit,
@@ -56,6 +74,7 @@ export const ContactsAddFormContact = ({
   const smUp = useMediaQuery((theme) => theme.breakpoints.up("sm"));
   const [initialValues, setInitialValues] = useState(emptyValues);
   const [expand, setExpand] = useState(false);
+  const types = useTypes(contactsData);
 
   // Style Objects ===================================================
   const style = {
@@ -286,8 +305,23 @@ export const ContactsAddFormContact = ({
                               {values.address && values.address?.length > 0 ? (
                                 values.address.map((item, index) => (
                                   <Fragment key={index}>
-                                    <Grid xs={12} md={2}>
-                                      <TextField
+                                    <Grid xs={12} md={3}>
+                                      <Autocomplete
+                                        disablePortal
+                                        id={`address.${index}.type`}
+                                        name={`address.${index}.type`}
+                                        // onChange={handleChange}
+                                        onInputChange={(e, v) => {
+                                          setFieldValue(`address.${index}.type`, v);
+                                        }}
+                                        value={values?.address[index]?.type}
+                                        options={types ? types : []}
+                                        freeSolo
+                                        renderInput={(params) => (
+                                          <TextField {...params} label="Type" size="small" />
+                                        )}
+                                      />
+                                      {/* <TextField
                                         fullWidth
                                         size="small"
                                         label="Type"
@@ -302,9 +336,9 @@ export const ContactsAddFormContact = ({
                                             {option.label}
                                           </option>
                                         ))}
-                                      </TextField>
+                                      </TextField> */}
                                     </Grid>
-                                    <Grid xs={12} md={10}>
+                                    <Grid xs={12} md={9}>
                                       <TextField
                                         fullWidth
                                         size="small"
@@ -406,7 +440,22 @@ export const ContactsAddFormContact = ({
                                 values.email.map((item, index) => (
                                   <Fragment key={index}>
                                     <Grid xs={12} md={4}>
-                                      <TextField
+                                      <Autocomplete
+                                        disablePortal
+                                        id={`email.${index}.type`}
+                                        name={`email.${index}.type`}
+                                        // onChange={handleChange}
+                                        onInputChange={(e, v) => {
+                                          setFieldValue(`email.${index}.type`, v);
+                                        }}
+                                        value={values?.email[index]?.type}
+                                        options={types ? types : []}
+                                        freeSolo
+                                        renderInput={(params) => (
+                                          <TextField {...params} label="Type" size="small" />
+                                        )}
+                                      />
+                                      {/* <TextField
                                         fullWidth
                                         size="small"
                                         label="Type"
@@ -421,7 +470,7 @@ export const ContactsAddFormContact = ({
                                             {option.label}
                                           </option>
                                         ))}
-                                      </TextField>
+                                      </TextField> */}
                                     </Grid>
                                     <Grid xs={10} md={7}>
                                       <TextField
@@ -498,7 +547,22 @@ export const ContactsAddFormContact = ({
                                 values.phNo.map((item, index) => (
                                   <Fragment key={index}>
                                     <Grid xs={12} md={3}>
-                                      <TextField
+                                      <Autocomplete
+                                        disablePortal
+                                        id={`phNo.${index}.type`}
+                                        name={`phNo.${index}.type`}
+                                        // onChange={handleChange}
+                                        onInputChange={(e, v) => {
+                                          setFieldValue(`phNo.${index}.type`, v);
+                                        }}
+                                        value={values?.phNo[index]?.type}
+                                        options={types ? types : []}
+                                        freeSolo
+                                        renderInput={(params) => (
+                                          <TextField {...params} label="Type" size="small" />
+                                        )}
+                                      />
+                                      {/* <TextField
                                         fullWidth
                                         size="small"
                                         label="Type"
@@ -513,7 +577,7 @@ export const ContactsAddFormContact = ({
                                             {option.label}
                                           </option>
                                         ))}
-                                      </TextField>
+                                      </TextField> */}
                                     </Grid>
                                     <Grid xs={8} md={6}>
                                       <InputMask

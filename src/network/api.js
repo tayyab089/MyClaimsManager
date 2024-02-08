@@ -5,7 +5,10 @@ import axios from "axios";
 import { useAuthContext } from "src/contexts/auth-context";
 
 export const api = axios.create({
-  baseURL: "https://s4r7rz1w2m.execute-api.us-east-1.amazonaws.com/dev",
+  baseURL:
+    process.env.NODE_ENV == "development"
+      ? "http://localhost:3001/"
+      : "https://s4r7rz1w2m.execute-api.us-east-1.amazonaws.com/dev",
   // baseURL: "http://localhost:3001/",
 });
 

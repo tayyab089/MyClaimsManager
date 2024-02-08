@@ -1,7 +1,7 @@
-import { Grid, Box, Typography, Button, useMediaQuery } from "@mui/material";
+import { Grid, Box, Typography, Button, useMediaQuery, Stack } from "@mui/material";
 import { ClaimsAdd } from "./claims-add";
 import { ContactsAdd } from "../contacts/contacs-add";
-import { useEffect, useState, useRef, Fragment } from "react";
+import { useEffect, useState, useRef, Fragment, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setAlertData } from "src/store/reducers/alert/thunks";
 import useConfirm from "src/hooks/use-confirm";
@@ -9,7 +9,31 @@ import { deleteClaimApi } from "src/network/claims-api";
 import { useRouter } from "next/router";
 import { useReactToPrint } from "react-to-print";
 
-const { format } = require("date-fns");
+import { ClaimPrintView } from "./claim-print-view";
+
+import { formatDate } from "src/utils/format-date";
+
+const useInsured = (contacts, claim) => {
+  return useMemo(() => {
+    const insuredContacts = new Set();
+    claim?.insured?.forEach((item) => {
+      var filteredContacts = contacts.filter((contact) => contact.id == item.id);
+      filteredContacts.length > 0 && insuredContacts.add(...filteredContacts);
+    });
+    return Array.from(insuredContacts);
+  }, [contacts, claim]);
+};
+
+const useOther = (contacts, claim) => {
+  return useMemo(() => {
+    const otherContacts = new Set();
+    claim?.contacts?.forEach((item) => {
+      var filteredContacts = contacts.filter((contact) => contact.id == item.contact.id);
+      filteredContacts.length > 0 && otherContacts.add(...filteredContacts);
+    });
+    return Array.from(otherContacts);
+  }, [contacts, claim]);
+};
 
 export const ClaimView = ({ item }) => {
   const dispatch = useDispatch();
@@ -20,6 +44,9 @@ export const ClaimView = ({ item }) => {
   const [openContactsModal, setOpenContactsModal] = useState(false);
   const [contactsModalData, setContactsModalData] = useState();
   const [isEdit, setIsEdit] = useState(false);
+
+  const insuredContacts = useInsured(contactsData, item);
+  const otherContacts = useOther(contactsData, item);
 
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
@@ -110,18 +137,21 @@ export const ClaimView = ({ item }) => {
 
   return (
     <Box sx={style} ref={componentRef}>
-      <Box
+      <ClaimPrintView
+        claim={item}
+        insuredContacts={insuredContacts}
+        otherContacts={otherContacts}
+        formatDate={formatDate}
+      />
+      <Grid
+        container
+        spacing={1}
         sx={{
           "@media print": {
-            display: "block",
-            marginBottom: "100px",
+            display: "none",
           },
-          display: "none",
         }}
       >
-        <Typography variant="h4">{`Claim ${item?.fileNo}/${item?.insurance?.fileNo}`}</Typography>
-      </Box>
-      <Grid container spacing={1}>
         {/* Insured Section */}
         <Grid xs={6} sm={7.5} md={9}>
           <Typography variant="formTag">Insured</Typography>
@@ -196,9 +226,7 @@ export const ClaimView = ({ item }) => {
           <Typography variant="formTag">Date of Loss: </Typography>
         </Grid>
         <Grid xs={10} md={8}>
-          <Typography variant="formText">
-            {item?.lossDate ? format(new Date(item?.lossDate), "do MMMM yyyy") : ""}
-          </Typography>
+          <Typography variant="formText">{formatDate(item?.lossDate)}</Typography>
         </Grid>
 
         {/* Insurance Company Data */}
@@ -231,22 +259,13 @@ export const ClaimView = ({ item }) => {
           <Typography variant="formTag">Issued: </Typography>
         </Grid>
         <Grid xs={10} md={8}>
-          <Typography variant="formText">
-            {item?.insurance?.issueDate
-              ? format(new Date(item?.insurance?.issueDate), "do MMMM yyyy")
-              : ""}
-          </Typography>
+          <Typography variant="formText">{formatDate(item?.insurance?.issueDate)}</Typography>
         </Grid>
         <Grid xs={10} md={4}>
           <Typography variant="formTag">Expiration: </Typography>
         </Grid>
         <Grid xs={10} md={8}>
-          <Typography variant="formText">
-            {" "}
-            {item?.insurance?.expiryDate
-              ? format(new Date(item?.insurance?.expiryDate), "do MMMM yyyy")
-              : ""}
-          </Typography>
+          <Typography variant="formText">{formatDate(item?.insurance?.expiryDate)}</Typography>
         </Grid>
 
         {/* Policy Coverages */}
