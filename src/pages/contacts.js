@@ -122,7 +122,12 @@ const Page = () => {
 
   const filterData = (val) => {
     const lowercaseVal = val.toLowerCase();
-    const filteredData = contacts.filter((obj) => obj.name.toLowerCase().includes(lowercaseVal));
+    const filteredData = contacts.filter(
+      (obj) =>
+        obj?.name?.toLowerCase().includes(lowercaseVal) ||
+        obj?.category?.toLowerCase().includes(lowercaseVal) ||
+        obj?.businessName?.toLowerCase().includes(lowercaseVal)
+    );
     console.log(filteredData);
     setSearchValue(val);
     setFilteredContacts(filteredData);

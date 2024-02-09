@@ -40,6 +40,7 @@ import {
   insuredObject,
   contactCategories,
 } from "./claims-static-data";
+import { addContactToStore } from "src/store/reducers/contacts/thunks";
 
 // Custom Hooks ====================================================
 const useContactList = (contacts) => {
@@ -78,7 +79,7 @@ const useContactCategoryList = (claims) => {
     const categorySet = new Set();
     claims.forEach((claim) => {
       claim?.contacts?.forEach((contact) => {
-        categorySet.add(contact.category);
+        contact.category && categorySet.add(contact.category);
       });
     });
     return Array.from(categorySet);
@@ -113,13 +114,15 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
   const pcCategoryList = usePCCategoryList(claimsData);
   // const [expand, setExpand] = useState(false);
 
+  console.log(contactCategoryList);
+
   // Style Objects =================================================
   const style = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: lgUp ? 800 : smUp ? "95%" : 400,
+    width: lgUp ? 900 : smUp ? "95%" : "100%",
     boxShadow: 24,
     p: 1,
     overflow: "auto",
@@ -144,7 +147,11 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
           );
           handleClose();
-          dispatch(updateClaimInStore(values));
+          console.log(response?.data);
+          dispatch(updateClaimInStore(response?.data?.value?.claim));
+          response?.data?.value?.contactsToSave?.forEach((item) => {
+            dispatch(addContactToStore(item));
+          });
         } else {
           alert(response.data.message);
         }
@@ -156,7 +163,11 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
           );
           handleClose();
-          dispatch(addClaimToStore(response.data.value));
+          console.log(response?.data);
+          dispatch(addClaimToStore(response?.data?.value?.claim));
+          response?.data?.value?.contactsToSave?.forEach((item) => {
+            dispatch(addContactToStore(item));
+          });
         } else {
           dispatch(
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
@@ -258,8 +269,8 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                           name="insured"
                           render={(arrayHelpers) => (
                             <Grid container spacing={1}>
-                              {values.insured && values.insured.length > 0 ? (
-                                values.insured.map((item, index) => (
+                              {values?.insured && values?.insured?.length > 0 ? (
+                                values?.insured?.map((item, index) => (
                                   <Fragment key={index}>
                                     {smUp && (
                                       <Grid
@@ -318,7 +329,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                   </Grid>
                                 </>
                               )}
-                              {values.insured.length > 0 && (
+                              {values?.insured?.length > 0 && (
                                 <Fragment>
                                   <Grid xs={2} sm={2} md={2}></Grid>
                                   <Grid xs={10} sm={10} md={10}>
@@ -439,25 +450,6 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                           md={2}
                           sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
                         >
-                          <Typography variant="overline">File #:</Typography>
-                        </Grid>
-                      )}
-                      <Grid xs={12} sm={4} md={4}>
-                        <TextField
-                          fullWidth
-                          label="File No."
-                          name="insurance.fileNo"
-                          onChange={handleChange}
-                          value={values.insurance.fileNo}
-                        />
-                      </Grid>
-                      {smUp && (
-                        <Grid
-                          xs={2}
-                          sm={2}
-                          md={2}
-                          sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
-                        >
                           <Typography variant="overline">Policy #:</Typography>
                         </Grid>
                       )}
@@ -488,6 +480,26 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                           name="insurance.claimNo"
                           onChange={handleChange}
                           value={values.insurance.claimNo}
+                        />
+                      </Grid>
+
+                      {smUp && (
+                        <Grid
+                          xs={2}
+                          sm={2}
+                          md={2}
+                          sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
+                        >
+                          <Typography variant="overline">File #:</Typography>
+                        </Grid>
+                      )}
+                      <Grid xs={12} sm={4} md={4}>
+                        <TextField
+                          fullWidth
+                          label="File No."
+                          name="insurance.fileNo"
+                          onChange={handleChange}
+                          value={values.insurance.fileNo}
                         />
                       </Grid>
 
@@ -539,8 +551,8 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                           name="policyCoverage"
                           render={(arrayHelpers) => (
                             <Grid container spacing={1}>
-                              {values.policyCoverage && values.policyCoverage.length > 0 ? (
-                                values.policyCoverage.map((item, index) => (
+                              {values?.policyCoverage && values?.policyCoverage?.length > 0 ? (
+                                values?.policyCoverage?.map((item, index) => (
                                   <Fragment key={index}>
                                     <Grid xs={12} sm={4} md={4}>
                                       <Autocomplete
@@ -602,7 +614,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                   </Button>
                                 </Grid>
                               )}
-                              {values.policyCoverage.length > 0 && (
+                              {values?.policyCoverage?.length > 0 && (
                                 <Fragment>
                                   {/* <Grid xs={10} md={11}></Grid> */}
                                   <Grid xs={2} sm={1} md={1}>
@@ -631,8 +643,8 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                           name="contacts"
                           render={(arrayHelpers) => (
                             <Grid container spacing={1}>
-                              {values.contacts && values.contacts.length > 0 ? (
-                                values.contacts.map((item, index) => (
+                              {values?.contacts && values?.contacts?.length > 0 ? (
+                                values?.contacts?.map((item, index) => (
                                   <Fragment key={index}>
                                     <Grid xs={10} sm={11} md={11}>
                                       <ContactsAddFormContact
@@ -680,7 +692,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                   </Button>
                                 </Grid>
                               )}
-                              {values.contacts.length > 0 && (
+                              {values?.contacts?.length > 0 && (
                                 <Fragment>
                                   {/* <Grid xs={10} md={11}></Grid> */}
                                   <Grid xs={12} sm={12} md={12}>

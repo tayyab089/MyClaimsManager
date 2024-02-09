@@ -4,7 +4,7 @@ export const emptyValues = {
   category: "Contact",
   address: [
     {
-      type: "work",
+      type: "",
       city: "",
       state: "",
       zip: "",
@@ -12,11 +12,11 @@ export const emptyValues = {
     },
   ],
   avatar: "",
-  email: [{ type: "work", email: "" }],
+  email: [{ type: "", email: "" }],
   name: "",
   businessName: "",
   jobTitle: "",
-  phNo: [{ type: "work", no: "", ext: "" }],
+  phNo: [{ type: "", no: "", ext: "" }],
 };
 
 export const addressTypes = [
@@ -42,12 +42,12 @@ export const phEmailTypes = [
 ];
 
 export const addressObject = {
-  type: "work",
+  type: "",
   city: "",
   code: "",
   zip: "",
   street: "",
 };
 
-export const phNoObject = { type: "work", no: "", ext: "" };
-export const emailObject = { type: "work", email: "" };
+export const phNoObject = { type: "", no: "", ext: "" };
+export const emailObject = { type: "", email: "" };
