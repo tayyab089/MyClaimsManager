@@ -127,9 +127,14 @@ export const ContactsAddFormContact = ({
     <Fragment>
       {!expand ? (
         <>
-          <Stack direction="row" justifyContent="space-arround" spacing={1}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            spacing={!smUp ? 0 : 1}
+            flexWrap={!smUp && "wrap"}
+          >
             <Autocomplete
-              sx={{ width: "25%" }}
+              sx={{ width: "25%", minWidth: "250px" }}
               disablePortal
               id={`contacts.${ix}.category`}
               name={`contacts.${ix}.category`}
@@ -141,8 +146,9 @@ export const ContactsAddFormContact = ({
               freeSolo
               renderInput={(params) => <TextField {...params} label="Category" size="small" />}
             />
+            {/* {!smUp && <Button onClick={() => setExpand(true)}>Expand</Button>} */}
             <Autocomplete
-              sx={{ width: "65%" }}
+              sx={{ width: "65%", minWidth: "170px", marginTop: !smUp ? 1 : 0 }}
               disablePortal
               id="Contacts"
               name={`contacts.${ix}.contact.name`}
@@ -175,7 +181,9 @@ export const ContactsAddFormContact = ({
             />
             {/* </Grid>
          <Grid xs={2} sm={2} md={2}> */}
-            <Button onClick={() => setExpand(true)}>Expand</Button>
+            <Button onClick={() => setExpand(true)} sx={{ marginTop: !smUp ? 1 : 0 }}>
+              Expand
+            </Button>
           </Stack>
         </>
       ) : (
@@ -579,7 +587,7 @@ export const ContactsAddFormContact = ({
                                         ))}
                                       </TextField> */}
                                     </Grid>
-                                    <Grid xs={8} md={6}>
+                                    <Grid xs={12} md={6}>
                                       <InputMask
                                         mask="999-999-9999"
                                         onChange={handleChange}
@@ -600,7 +608,7 @@ export const ContactsAddFormContact = ({
                                         </FormHelperText>
                                       )}
                                     </Grid>
-                                    <Grid xs={2} md={2}>
+                                    <Grid xs={10} md={2}>
                                       <TextField
                                         fullWidth
                                         size="small"

@@ -47,14 +47,14 @@ export const createTypography = () => {
       fontWeight: 600,
       letterSpacing: "0.5px",
       lineHeight: 2.5,
-      textTransform: "uppercase",
+      textTransform: "capitalize",
     },
     formTag: {
       fontSize: small,
       fontWeight: 600,
       lineHeight: 1.57,
       letterSpacing: "0.5px",
-      textTransform: "uppercase",
+      // textTransform: "uppercase",
     },
     formText: {
       fontSize: small,

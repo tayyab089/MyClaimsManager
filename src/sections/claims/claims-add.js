@@ -122,7 +122,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: lgUp ? 800 : smUp ? "95%" : 400,
+    width: lgUp ? 900 : smUp ? "95%" : "100%",
     boxShadow: 24,
     p: 1,
     overflow: "auto",

@@ -526,7 +526,7 @@ export const ContactsAddFormInsured = ({
                                         ))}
                                       </TextField> */}
                                     </Grid>
-                                    <Grid xs={8} md={6}>
+                                    <Grid xs={12} md={6}>
                                       <InputMask
                                         mask="999-999-9999"
                                         onChange={handleChange}
@@ -547,7 +547,7 @@ export const ContactsAddFormInsured = ({
                                         </FormHelperText>
                                       )}
                                     </Grid>
-                                    <Grid xs={2} md={2}>
+                                    <Grid xs={10} md={2}>
                                       <TextField
                                         fullWidth
                                         size="small"

@@ -69,9 +69,11 @@ export const ClaimView = ({ item }) => {
   };
 
   // Claim Modal ================================
-  const handleClose = () => {
-    setModalData([]);
-    setOpenModal(false);
+  const handleClose = (event, reason) => {
+    if (reason !== "backdropClick") {
+      setModalData([]);
+      setOpenModal(false);
+    }
   };
 
   useEffect(() => {

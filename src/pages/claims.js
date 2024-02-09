@@ -71,9 +71,11 @@ const Page = () => {
   };
 
   // Modal Functions======================================
-  const handleClose = () => {
-    setClaimsModalData({});
-    setOpenModal(false);
+  const handleClose = (event, reason) => {
+    if (reason !== "backdropClick") {
+      setClaimsModalData({});
+      setOpenModal(false);
+    }
   };
 
   const handlePageChange = useCallback((event, value) => {
@@ -120,10 +122,10 @@ const Page = () => {
     const lowercaseVal = val.toLowerCase();
     const filteredData = claims.filter(
       (obj) =>
-        obj.fileNo.toLowerCase().includes(lowercaseVal) ||
-        obj.lossLocation.toLowerCase().includes(lowercaseVal)
+        obj?.fileNo?.toLowerCase().includes(lowercaseVal) ||
+        obj?.lossLocation?.toLowerCase().includes(lowercaseVal) ||
+        obj?.insured?.some((insured) => insured.name.toLowerCase().includes(lowercaseVal))
     );
-    console.log(filteredData);
     setSearchValue(val);
     setFilteredClaims(filteredData);
   };
