@@ -193,6 +193,23 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
     }
   };
 
+  // Function to format currency
+  const formatCurrency = (value) => {
+    const numericValue = value.replace(/\D/g, "");
+    let integerPart = numericValue.substring(0, numericValue.length - 2) || "0";
+    const decimalPart = numericValue.substring(numericValue.length - 2);
+    integerPart = integerPart.replace(/^0+/, "");
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const formattedValue = `${integerPart}.${decimalPart}`;
+
+    return formattedValue;
+  };
+
+  // Function to parse currency value for form submission
+  const parseCurrency = (value) => {
+    return value.replace(/,/g, "");
+  };
+
   // useEffect Hooks
   useEffect(() => {
     if (form) {
@@ -241,7 +258,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
         x: "",
         y: "Owner",
         z: "",
-        aa: "",
+        aa: "As Per Policy",
         ab: "",
         ac: "As Per Policy",
         ad: "",
@@ -265,16 +282,16 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
         ar: "",
         as: "",
         at: "",
-        au: policyCoverage.nonDeductibleItems[0]?.amount,
-        av: policyCoverage.nonDeductibleItems[0]?.category,
-        aw: policyCoverage.nonDeductibleItems[1]?.amount,
-        ax: policyCoverage.nonDeductibleItems[1]?.category,
-        ay: policyCoverage.nonDeductibleItems[2]?.amount,
-        az: policyCoverage.nonDeductibleItems[2]?.category,
-        ba: policyCoverage.nonDeductibleItems[3]?.amount,
-        bb: policyCoverage.nonDeductibleItems[3]?.category,
+        au: policyCoverage?.nonDeductibleItems[0]?.amount,
+        av: policyCoverage?.nonDeductibleItems[0]?.category,
+        aw: policyCoverage?.nonDeductibleItems[1]?.amount,
+        ax: policyCoverage?.nonDeductibleItems[1]?.category,
+        ay: policyCoverage?.nonDeductibleItems[2]?.amount,
+        az: policyCoverage?.nonDeductibleItems[2]?.category,
+        ba: policyCoverage?.nonDeductibleItems[3]?.amount,
+        bb: policyCoverage?.nonDeductibleItems[3]?.category,
         ef: claim?.lossLocation, // eSeries
-        bc: policyCoverage.deductibleItems?.map((item) => item.amount).join(", "),
+        bc: policyCoverage?.deductibleItems?.map((item) => item.amount).join(", "),
         bd: "",
         be: "",
         bf: "",
@@ -365,10 +382,10 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
       innerRef={formRef}
       enableReinitialize={true}
     >
-      {({ values }) => (
+      {({ values, setFieldValue }) => (
         <Form>
           <div id="ProofOfLoss">
-            <div className="formContainer" style={{ padding: "0 .2in .2in .2in" }}>
+            <div className="formContainer" style={{ padding: "0 .1in .2in .15in" }}>
               {/* ************************************************************************************************* */}
               {/* NOTE: Input fields do not render in the print layout since the content is not in the DOM */}
               {/* Hence there is a span for every input. In the @media print css inputs are hidden and spans shown */}
@@ -665,7 +682,13 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                 </div>
                 <div style={{ order: 3 }}>$</div>
                 <div style={{ order: 4, flexGrow: 0, flexBasis: "10em" }}>
-                  <Field type="text" className="numeric" name="ag" />
+                  <Field
+                    type="text"
+                    className="numeric"
+                    name="ag"
+                    onChange={(e) => setFieldValue("ag", formatCurrency(e.target.value))}
+                    value={values?.ag}
+                  />
                   <div className="printOnly numeric">{values?.ag}</div>
                 </div>
               </div>
@@ -680,7 +703,13 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                 </div>
                 <div style={{ order: 3 }}>$</div>
                 <div style={{ order: 4, flexGrow: 0, flexBasis: "10em" }}>
-                  <Field type="text" className="numeric" name="ah" />
+                  <Field
+                    type="text"
+                    className="numeric"
+                    name="ah"
+                    onChange={(e) => setFieldValue("ah", formatCurrency(e.target.value))}
+                    value={values?.ah}
+                  />
                   <div className="printOnly numeric">{values?.ah}</div>
                 </div>
               </div>
@@ -695,7 +724,13 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                 </div>
                 <div style={{ order: 3 }}>$</div>
                 <div style={{ order: 4, flexGrow: 0, flexBasis: "10em" }}>
-                  <Field type="text" className="numeric" name="ai" />
+                  <Field
+                    type="text"
+                    className="numeric"
+                    name="ai"
+                    onChange={(e) => setFieldValue("ai", formatCurrency(e.target.value))}
+                    value={values?.ai}
+                  />
                   <div className="printOnly numeric">{values?.ai}</div>
                 </div>
               </div>
@@ -710,7 +745,13 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                 </div>
                 <div style={{ order: 3 }}>$</div>
                 <div style={{ order: 4, flexGrow: 0, flexBasis: "10em" }}>
-                  <Field type="text" className="numeric" name="aj" />
+                  <Field
+                    type="text"
+                    className="numeric"
+                    name="aj"
+                    onChange={(e) => setFieldValue("aj", formatCurrency(e.target.value))}
+                    value={values?.aj}
+                  />
                   <div className="printOnly numeric">{values?.aj}</div>
                 </div>
               </div>
@@ -821,7 +862,12 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
               <div className="formRow">
                 <div style={{ order: 1 }}>Item 1. $</div>
                 <div style={{ order: 2, flexGrow: 0, flexBasis: "10em" }}>
-                  <Field type="text" name="au" />
+                  <Field
+                    type="text"
+                    name="au"
+                    onChange={(e) => setFieldValue("au", formatCurrency(e.target.value))}
+                    value={values?.au}
+                  />
                   <span>{values?.au}</span>
                 </div>
                 <div style={{ order: 3 }}>on</div>
@@ -834,7 +880,12 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
               <div className="formRow">
                 <div style={{ order: 1 }}>Item 2. $</div>
                 <div style={{ order: 2, flexGrow: 0, flexBasis: "10em" }}>
-                  <Field type="text" name="aw" />
+                  <Field
+                    type="text"
+                    name="aw"
+                    onChange={(e) => setFieldValue("aw", formatCurrency(e.target.value))}
+                    value={values?.aw}
+                  />
                   <span>{values?.aw}</span>
                 </div>
                 <div style={{ order: 3 }}>on</div>
@@ -847,7 +898,12 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
               <div className="formRow">
                 <div style={{ order: 1 }}>Item 3. $</div>
                 <div style={{ order: 2, flexGrow: 0, flexBasis: "10em" }}>
-                  <Field type="text" name="ay" />
+                  <Field
+                    type="text"
+                    name="ay"
+                    onChange={(e) => setFieldValue("ay", formatCurrency(e.target.value))}
+                    value={values?.ay}
+                  />
                   <span>{values?.ay}</span>
                 </div>
                 <div style={{ order: 3 }}>on</div>
@@ -860,7 +916,12 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
               <div className="formRow">
                 <div style={{ order: 1 }}>Item 4. $</div>
                 <div style={{ order: 2, flexGrow: 0, flexBasis: "10em" }}>
-                  <Field type="text" name="ba" />
+                  <Field
+                    type="text"
+                    name="ba"
+                    onChange={(e) => setFieldValue("ba", formatCurrency(e.target.value))}
+                    value={values?.ba}
+                  />
                   <span>{values?.ba}</span>
                 </div>
                 <div style={{ order: 3 }}>on</div>
@@ -932,11 +993,23 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                         <span>{values?.bf}</span>
                       </td>
                       <td className="formTableCell width15pc">
-                        <Field type="text" className="width100pc numeric" name="bg" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="bg"
+                          onChange={(e) => setFieldValue("bg", formatCurrency(e.target.value))}
+                          value={values?.bg}
+                        />
                         <div className="numeric printNumeric">{values?.bg}</div>
                       </td>
                       <td className="formTableCell width15pc">
-                        <Field type="text" className="width100pc numeric" name="bh" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="bh"
+                          onChange={(e) => setFieldValue("bh", formatCurrency(e.target.value))}
+                          value={values?.bh}
+                        />
                         <div className="numeric printNumeric">{values?.bh}</div>
                       </td>
                     </tr>
@@ -950,11 +1023,23 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                         <span>{values?.bj}</span>
                       </td>
                       <td className="formTableCell width15pc">
-                        <Field type="text" className="width100pc numeric" name="bk" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="bk"
+                          onChange={(e) => setFieldValue("bk", formatCurrency(e.target.value))}
+                          value={values?.bk}
+                        />
                         <div className="numeric printNumeric">{values?.bk}</div>
                       </td>
                       <td className="formTableCell width15pc">
-                        <Field type="text" className="width100pc numeric" name="bl" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="bl"
+                          onChange={(e) => setFieldValue("bl", formatCurrency(e.target.value))}
+                          value={values?.bl}
+                        />
                         <div className="numeric printNumeric">{values?.bl}</div>
                       </td>
                     </tr>
@@ -968,11 +1053,23 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                         <span>{values?.bn}</span>
                       </td>
                       <td className="formTableCell width15pc">
-                        <Field type="text" className="width100pc numeric" name="bo" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="bo"
+                          onChange={(e) => setFieldValue("bo", formatCurrency(e.target.value))}
+                          value={values?.bo}
+                        />
                         <div className="numeric printNumeric">{values?.bo}</div>
                       </td>
                       <td className="formTableCell width15pc">
-                        <Field type="text" className="width100pc numeric" name="bp" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="bp"
+                          onChange={(e) => setFieldValue("bp", formatCurrency(e.target.value))}
+                          value={values?.bp}
+                        />
                         <div className="numeric printNumeric">{values?.bp}</div>
                       </td>
                     </tr>
@@ -986,11 +1083,23 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                         <span>{values?.br}</span>
                       </td>
                       <td className="formTableCell width15pc">
-                        <Field type="text" className="width100pc numeric" name="bs" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="bs"
+                          onChange={(e) => setFieldValue("bs", formatCurrency(e.target.value))}
+                          value={values?.bs}
+                        />
                         <div className="numeric printNumeric">{values?.bs}</div>
                       </td>
                       <td className="formTableCell width15pc">
-                        <Field type="text" className="width100pc numeric" name="bt" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="bt"
+                          onChange={(e) => setFieldValue("bt", formatCurrency(e.target.value))}
+                          value={values?.bt}
+                        />
                         <div className="numeric printNumeric">{values?.bt}</div>
                       </td>
                     </tr>
@@ -1004,11 +1113,23 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                         <span>{values?.bv}</span>
                       </td>
                       <td className="formTableCell width15pc">
-                        <Field type="text" className="width100pc numeric" name="bw" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="bw"
+                          onChange={(e) => setFieldValue("bw", formatCurrency(e.target.value))}
+                          value={values?.bw}
+                        />
                         <div className="numeric printNumeric">{values?.bw}</div>
                       </td>
                       <td className="formTableCell width15pc">
-                        <Field type="text" className="width100pc numeric" name="bx" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="bx"
+                          onChange={(e) => setFieldValue("bx", formatCurrency(e.target.value))}
+                          value={values?.bx}
+                        />
                         <div className="numeric printNumeric">{values?.bx}</div>
                       </td>
                     </tr>
@@ -1022,11 +1143,23 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                         <span>{values?.bz}</span>
                       </td>
                       <td className="formTableCell width15pc">
-                        <Field type="text" className="width100pc numeric" name="ca" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="ca"
+                          onChange={(e) => setFieldValue("ca", formatCurrency(e.target.value))}
+                          value={values?.ca}
+                        />
                         <div className="numeric printNumeric">{values?.ca}</div>
                       </td>
                       <td className="formTableCell width15pc">
-                        <Field type="text" className="width100pc numeric" name="cb" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="cb"
+                          onChange={(e) => setFieldValue("cb", formatCurrency(e.target.value))}
+                          value={values?.cb}
+                        />
                         <div className="numeric printNumeric">{values?.cb}</div>
                       </td>
                     </tr>
@@ -1040,11 +1173,23 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                         <span>{values?.cd}</span>
                       </td>
                       <td className="formTableCell width15pc">
-                        <Field type="text" className="width100pc numeric" name="ce" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="ce"
+                          onChange={(e) => setFieldValue("ce", formatCurrency(e.target.value))}
+                          value={values?.ce}
+                        />
                         <div className="numeric printNumeric">{values?.ce}</div>
                       </td>
                       <td className="formTableCell width15pc">
-                        <Field type="text" className="width100pc numeric" name="cf" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="cf"
+                          onChange={(e) => setFieldValue("cf", formatCurrency(e.target.value))}
+                          value={values?.cf}
+                        />
                         <div className="numeric printNumeric">{values?.cf}</div>
                       </td>
                     </tr>
@@ -1063,11 +1208,23 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                   ============================================================================
                   */}
                       <td className="formTableFooterCell width15pc">
-                        <Field type="text" className="width100pc numeric" name="dx" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="dx"
+                          onChange={(e) => setFieldValue("dx", formatCurrency(e.target.value))}
+                          value={values?.dx}
+                        />
                         <div className="numeric printNumeric">{values?.dx}</div>
                       </td>
                       <td className="formTableFooterCell width15pc">
-                        <Field type="text" className="width100pc numeric" name="dy" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="dy"
+                          onChange={(e) => setFieldValue("dy", formatCurrency(e.target.value))}
+                          value={values?.dy}
+                        />
                         <div className="numeric printNumeric">{values?.dy}</div>
                       </td>
                     </tr>
@@ -1123,19 +1280,43 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                         <span>{values?.ci}</span>
                       </td>
                       <td className="formTableCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="cj" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="cj"
+                          onChange={(e) => setFieldValue("cj", formatCurrency(e.target.value))}
+                          value={values?.cj}
+                        />
                         <div className="numeric printNumeric">{values?.cj}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="ck" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="ck"
+                          onChange={(e) => setFieldValue("ck", formatCurrency(e.target.value))}
+                          value={values?.ck}
+                        />
                         <div className="numeric printNumeric">{values?.ck}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="cl" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="cl"
+                          onChange={(e) => setFieldValue("cl", formatCurrency(e.target.value))}
+                          value={values?.cl}
+                        />
                         <div className="numeric printNumeric">{values?.cl}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="cm" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="cm"
+                          onChange={(e) => setFieldValue("cm", formatCurrency(e.target.value))}
+                          value={values?.cm}
+                        />
                         <div className="numeric printNumeric">{values?.cm}</div>
                       </td>
                     </tr>
@@ -1153,19 +1334,43 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                         <span>{values?.cp}</span>
                       </td>
                       <td className="formTableCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="cq" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="cq"
+                          onChange={(e) => setFieldValue("cq", formatCurrency(e.target.value))}
+                          value={values?.cq}
+                        />
                         <div className="numeric printNumeric">{values?.cq}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="cr" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="cr"
+                          onChange={(e) => setFieldValue("cr", formatCurrency(e.target.value))}
+                          value={values?.cr}
+                        />
                         <div className="numeric printNumeric">{values?.cr}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="cs" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="cs"
+                          onChange={(e) => setFieldValue("cs", formatCurrency(e.target.value))}
+                          value={values?.cs}
+                        />
                         <div className="numeric printNumeric">{values?.cs}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="ct" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="ct"
+                          onChange={(e) => setFieldValue("ct", formatCurrency(e.target.value))}
+                          value={values?.ct}
+                        />
                         <div className="numeric printNumeric">{values?.ct}</div>
                       </td>
                     </tr>
@@ -1183,19 +1388,43 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                         <span>{values?.cw}</span>
                       </td>
                       <td className="formTableCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="cx" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="cx"
+                          onChange={(e) => setFieldValue("cx", formatCurrency(e.target.value))}
+                          value={values?.cx}
+                        />
                         <div className="numeric printNumeric">{values?.cx}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="cy" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="cy"
+                          onChange={(e) => setFieldValue("cy", formatCurrency(e.target.value))}
+                          value={values?.cy}
+                        />
                         <div className="numeric printNumeric">{values?.cy}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="cz" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="cz"
+                          onChange={(e) => setFieldValue("cz", formatCurrency(e.target.value))}
+                          value={values?.cz}
+                        />
                         <div className="numeric printNumeric">{values?.cz}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="da" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="da"
+                          onChange={(e) => setFieldValue("da", formatCurrency(e.target.value))}
+                          value={values?.da}
+                        />
                         <div className="numeric printNumeric">{values?.da}</div>
                       </td>
                     </tr>
@@ -1213,19 +1442,43 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                         <span>{values?.dd}</span>
                       </td>
                       <td className="formTableCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="de" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="de"
+                          onChange={(e) => setFieldValue("de", formatCurrency(e.target.value))}
+                          value={values?.de}
+                        />
                         <div className="numeric printNumeric">{values?.de}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="df" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="df"
+                          onChange={(e) => setFieldValue("df", formatCurrency(e.target.value))}
+                          value={values?.df}
+                        />
                         <div className="numeric printNumeric">{values?.df}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="dg" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="dg"
+                          onChange={(e) => setFieldValue("dg", formatCurrency(e.target.value))}
+                          value={values?.dg}
+                        />
                         <div className="numeric printNumeric">{values?.dg}</div>
                       </td>
                       <td className="formTableCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="dh" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="dh"
+                          onChange={(e) => setFieldValue("dh", formatCurrency(e.target.value))}
+                          value={values?.dh}
+                        />
                         <div className="numeric printNumeric">{values?.dh}</div>
                       </td>
                     </tr>
@@ -1248,19 +1501,43 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                   ============================================================================
                   */}
                       <td className="formTableFooterCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="dz" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="dz"
+                          onChange={(e) => setFieldValue("dz", formatCurrency(e.target.value))}
+                          value={values?.dz}
+                        />
                         <div className="numeric printNumeric">{values?.dz}</div>
                       </td>
                       <td className="formTableFooterCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="ea" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="ea"
+                          onChange={(e) => setFieldValue("ea", formatCurrency(e.target.value))}
+                          value={values?.ea}
+                        />
                         <div className="numeric printNumeric">{values?.ea}</div>
                       </td>
                       <td className="formTableFooterCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="eb" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="eb"
+                          onChange={(e) => setFieldValue("eb", formatCurrency(e.target.value))}
+                          value={values?.eb}
+                        />
                         <div className="numeric printNumeric">{values?.eb}</div>
                       </td>
                       <td className="formTableFooterCell width10pc">
-                        <Field type="text" className="width100pc numeric" name="ec" />
+                        <Field
+                          type="text"
+                          className="width100pc numeric"
+                          name="ec"
+                          onChange={(e) => setFieldValue("ec", formatCurrency(e.target.value))}
+                          value={values?.ec}
+                        />
                         <div className="numeric printNumeric">{values?.ec}</div>
                       </td>
                     </tr>
@@ -1301,7 +1578,12 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                 </div>
                 <div style={{ order: 2 }}>Dollars ($</div>
                 <div style={{ order: 3, flexGrow: 0, flexBasis: "10em" }}>
-                  <Field type="text" name="dp" />
+                  <Field
+                    type="text"
+                    name="dp"
+                    onChange={(e) => setFieldValue("dp", formatCurrency(e.target.value))}
+                    value={values?.dp}
+                  />
                   <span>{values?.dp}</span>
                 </div>
                 <div style={{ order: 4 }}>)</div>

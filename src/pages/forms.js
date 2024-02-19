@@ -97,10 +97,10 @@ const Page = () => {
       const html2pdf = (await import("html2pdf.js")).default;
       const element = document.getElementById(formType);
       var opt = {
-        margin: 0,
+        margin: [0.2, 0],
         filename: formName,
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
+        image: { type: "jpeg", quality: 1 },
+        html2canvas: { scale: 1 },
         jsPDF: { unit: "in", format: "legal", orientation: "portrait" },
       };
       html2pdf().from(element).set(opt).save();
@@ -119,7 +119,7 @@ const Page = () => {
     const jsonData = { emailTo: email, eBody: eBody, formName: formName };
 
     var opt = {
-      margin: 0,
+      margin: [0.2, 0],
       image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2 },
       jsPDF: { unit: "in", format: "legal", orientation: "portrait" },
