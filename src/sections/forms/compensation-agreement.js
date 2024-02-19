@@ -104,7 +104,7 @@ export const CompensationAgreement = ({ formRef, claim, form, formName }) => {
         <Form>
           <div id="CompensationAgreement">
             <FormsHeader />
-            <div className="formContainer" style={{ padding: "0 .5in .5in .5in" }}>
+            <div className="formContainer" style={{ padding: "0 .5in 0 .5in" }}>
               {/* Header===================================================== */}
               <div className="formRow" style={{ justifyContent: "center", fontSize: "1.1em" }}>
                 <div style={{ order: 1, alignContent: "center", fontWeight: "bold" }}>
