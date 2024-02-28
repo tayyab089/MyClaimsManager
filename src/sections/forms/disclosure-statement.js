@@ -261,7 +261,7 @@ export const DisclosureStatement = ({ formRef, claim, form, formName }) => {
                   )}
                 </div>
                 <div style={{ order: 2, flexGrow: 1, marginTop: 5 }}>
-                  he Adjuster is related to the individual listed above by blood or affinity within
+                  The Adjuster is related to the individual listed above by blood or affinity within
                   the second degree of consanguinity (which includes an individual&apos;s parents,
                   grandparents, children, grandchildren, siblings, and any spouse thereof).
                 </div>
@@ -301,8 +301,8 @@ export const DisclosureStatement = ({ formRef, claim, form, formName }) => {
                 </div>
               </div>
               <div className="formRow topMargin15">
-                NOTICE TO NAMED INSURED(S): YOU ARE NOT REQUIRED TO USE ANY INDIVIDUAL OR ENTITY TO
-                WHOM OR WHICH THE PUBLIC ADJUSTER REFERS YOU.
+                NOTICE TO INSURED(S): YOU ARE NOT REQUIRED TO USE ANY INDIVIDUAL OR ENTITY TO WHOM
+                OR WHICH THE PUBLIC ADJUSTER REFERS YOU.
               </div>
               <div className="formRow topMargin15">
                 This disclosure statement must be written in the same language as that principally
