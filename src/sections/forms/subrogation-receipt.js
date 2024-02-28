@@ -40,6 +40,8 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
     z: "",
     aa: "",
     ab: "",
+    ac: "",
+    ad: "",
   });
 
   const onSubmit = async (values) => {
@@ -116,6 +118,8 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
         z: "",
         aa: "",
         ab: "",
+        ac: "",
+        ad: "",
       });
     }
   }, [form]);
@@ -375,7 +379,7 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
                   </div>
                 </div>
                 <div className="formRow">
-                  <div>to me known to be the individual described in,</div>
+                  <div>to me known to be the individual describe therein,</div>
                 </div>
                 <div className="formRow">
                   <div>and who executed, the foregoing instrument, and</div>
@@ -433,24 +437,34 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
                     <div>to me known, who, being by me duly sworn, did</div>
                   </div>
                   <div className="formRow">
-                    <div>depose and say that he resides in</div>
-                    <div style={{ flexGrow: 1, flexBasis: "6em" }}>
+                    <div>depose and say that</div>
+                    <div style={{ flexBasis: "6em" }}>
                       <Field type="text" name="z" />
                       <span>{values?.z}</span>
                     </div>
-                  </div>
-                  {/* that he is the ... */}
-                  <div className="formRow">
-                    <div>that he is the</div>
-                    <div style={{ flexGrow: 1, flexBasis: "5em" }}>
+                    <div>resides at</div>
+                    <div style={{ flexGrow: 1, flexBasis: "6em" }}>
                       <Field type="text" name="aa" />
                       <span>{values?.aa}</span>
                     </div>
                   </div>
+                  {/* that he is the ... */}
                   <div className="formRow">
-                    <div style={{ flexGrow: 1, flexBasis: "10em" }}>
+                    <div>that</div>
+                    <div style={{ flexBasis: "6em" }}>
                       <Field type="text" name="ab" />
                       <span>{values?.ab}</span>
+                    </div>
+                    <div>is the</div>
+                    <div style={{ flexGrow: 1, flexBasis: "5em" }}>
+                      <Field type="text" name="ac" />
+                      <span>{values?.ac}</span>
+                    </div>
+                  </div>
+                  <div className="formRow">
+                    <div style={{ flexGrow: 1, flexBasis: "10em" }}>
+                      <Field type="text" name="ad" />
+                      <span>{values?.ad}</span>
                     </div>
                     <div>the corporation</div>
                   </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { Formik, Field, Form } from "formik";
 import { FormsHeader } from "./forms-header";
 
@@ -142,7 +142,7 @@ export const CompensationAgreement = ({ formRef, claim, form, formName }) => {
               </div>
               <div className="formRow topMargin5">
                 <div style={{ order: 1 }}>
-                  or effecting the settlement, of claim for the loss or damage by
+                  or effecting the settlement, of the claim for the loss or damage by
                 </div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="d" />
@@ -158,7 +158,7 @@ export const CompensationAgreement = ({ formRef, claim, form, formName }) => {
               </div>
 
               <div className="formRow topMargin5">
-                <div style={{ order: 1 }}>on,</div>
+                <div style={{ order: 1 }}>on</div>
                 <div style={{ order: 2, flexBasis: "5em" }}>
                   <Field type="text" name="f" />
                   <span>{values?.f}</span>
@@ -175,12 +175,27 @@ export const CompensationAgreement = ({ formRef, claim, form, formName }) => {
                   <Field type="text" name="h" />
                   <span>{values?.h}</span>
                 </div>
-                <div style={{ order: 7 }}>percent ( INITIAL HERE)</div>
+                <div style={{ order: 7 }}>percent </div>
+                <div
+                  style={{
+                    order: 8,
+                    color: "#aaaaaa",
+                    fontWeight: "lighter",
+                    fontSize: 11,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    display: "flex",
+                    marginLeft: 3,
+                    borderBottom: "1px solid #999",
+                  }}
+                >
+                  ( INITIAL HERE )
+                </div>
               </div>
 
               <div className="formRow topMargin5">
                 <div>
-                  of the amount of the loss, including salvage, when adjusted or otherwise recoverd
+                  of the amount of the loss, including salvage, when adjusted or otherwise recovered
                   from the insurance companies.
                 </div>
               </div>

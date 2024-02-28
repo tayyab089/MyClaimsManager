@@ -7,7 +7,7 @@ export const FormsHeader = () => (
       <div className="formColumn">
         <div>140 ATLANTIC AVENUE</div>
         <div>UNIT 406</div>
-        <div>OCENSIDE, NY 11572</div>
+        <div>OCEANSIDE, NY 11572</div>
       </div>
       <div className="formColumnCentered">
         <div>Licensed Adjusters For The Insured</div>
@@ -16,7 +16,7 @@ export const FormsHeader = () => (
       <div className="formColumn" style={{ alignItems: "flex-end" }}>
         <div>BUS: 516-825-4800</div>
         <div>FAX: 516-825-4037</div>
-        <div>BUS: 516-524-5353</div>
+        <div>CELL: 516-524-5353</div>
         <div>hugttmanpa@aol.com</div>
       </div>
     </div>
