@@ -372,7 +372,7 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
                 </div>
                 {/* Before he came ... */}
                 <div className="formRow">
-                  <div>Before he came</div>
+                  <div>Before me came</div>
                   <div style={{ flexGrow: 1, flexBasis: "4em" }}>
                     <Field type="text" name="t" />
                     <span>{values?.t}</span>
@@ -427,7 +427,7 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
                   </div>
                   {/* Before he came ... */}
                   <div className="formRow">
-                    <div>Before he came</div>
+                    <div>Before me came</div>
                     <div style={{ flexGrow: 1, flexBasis: "4em" }}>
                       <Field type="text" name="y" />
                       <span>{values?.y}</span>
