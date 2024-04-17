@@ -148,7 +148,8 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
     dq: "",
     dr: "",
     ds: "",
-    dt: "",
+    dt1: "",
+    dt2: "",
     du: "",
     dv: "",
     dw: "",
@@ -367,7 +368,8 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
         dq: "",
         dr: "",
         ds: "",
-        dt: "",
+        dt1: "",
+        dt2: "",
         du: "",
         dv: "",
         dw: "",
@@ -1619,9 +1621,13 @@ export const ProofOfLoss = ({ formRef, claim, form, formName }) => {
                   <span>{values?.ds}</span>
                 </div>
                 <div style={{ order: 5, flexGrow: 0, flexBasis: "10em" }} />
-                <div style={{ order: 6, flexGrow: 1, flexBasis: "20em" }}>
-                  <Field type="text" name="dt" />
-                  <span>{values?.dt}</span>
+                <div style={{ order: 6, flexGrow: 1, flexBasis: "10em" }}>
+                  <Field type="text" name="dt1" />
+                  <span>{values?.dt1}</span>
+                </div>
+                <div style={{ order: 6, flexGrow: 1, flexBasis: "10em" }}>
+                  <Field type="text" name="dt2" />
+                  <span>{values?.dt2}</span>
                 </div>
               </div>
               <div className="formRow" style={{ justifyContent: "flex-end" }}>

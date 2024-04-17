@@ -26,6 +26,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDa
               spacing={2}
               sx={{ marginTop: 4, width: "50%" }}
             >
+              <Typography variant="claimPrintText">{item?.category}</Typography>
               <Typography variant="claimPrintHeading">{item?.name}</Typography>
               <Stack>
                 <Typography variant="claimPrintText">{item?.businessName}</Typography>
@@ -50,7 +51,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDa
                       justifyContent="flex-start"
                       alignItems="flex-start"
                     >
-                      <Typography variant="claimPrintType">{it?.type}:</Typography>
+                      <Typography variant="claimPrintType">{it?.type}</Typography>
                       <Typography variant="claimPrintText">{it?.email}</Typography>
                     </Stack>
                   );
@@ -63,9 +64,9 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDa
                       justifyContent="flex-start"
                       alignItems="flex-start"
                     >
-                      <Typography variant="claimPrintType">{it?.type}:</Typography>
+                      <Typography variant="claimPrintType">{it?.type}</Typography>
                       <Typography variant="claimPrintText">{it?.no}</Typography>
-                      <Typography variant="claimPrintText">x{it?.ext}</Typography>
+                      {it?.ext && <Typography variant="claimPrintText">x{it?.ext}</Typography>}
                     </Stack>
                   );
                 })}
@@ -176,6 +177,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDa
               spacing={2}
               sx={{ marginTop: 4, width: "50%" }}
             >
+              <Typography variant="claimPrintText">{item?.category}</Typography>
               <Typography variant="claimPrintHeading">{item?.name}</Typography>
               <Stack>
                 <Typography variant="claimPrintText">{item?.businessName}</Typography>
@@ -200,7 +202,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDa
                       justifyContent="flex-start"
                       alignItems="flex-start"
                     >
-                      <Typography variant="claimPrintType">{it?.type}:</Typography>
+                      <Typography variant="claimPrintType">{it?.type}</Typography>
                       <Typography variant="claimPrintText">{it?.email}</Typography>
                     </Stack>
                   );
@@ -213,9 +215,9 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDa
                       justifyContent="flex-start"
                       alignItems="flex-start"
                     >
-                      <Typography variant="claimPrintType">{it?.type}:</Typography>
+                      <Typography variant="claimPrintType">{it?.type}</Typography>
                       <Typography variant="claimPrintText">{it?.no}</Typography>
-                      <Typography variant="claimPrintText">x{it?.ext}</Typography>
+                      {it?.ext && <Typography variant="claimPrintText">x{it?.ext}</Typography>}
                     </Stack>
                   );
                 })}

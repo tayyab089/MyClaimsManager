@@ -1,14 +1,20 @@
-const normal = "1.1rem";
-const small = "0.9rem";
-const large = "1.1rem";
+// const normal = "1.1rem";
+// const small = "0.9rem";
+// const large = "1.1rem";
 const printText = "1.3rem";
-const printFontFamily = "Inter";
+const baseFontSize = 17;
+
+// const printFontFamily = "Inter";
+const normal = `${baseFontSize * 1.1}px`;
+const small = `${baseFontSize * 0.9}px`;
+const large = `${baseFontSize * 1.1}px`;
+// const printText = `${baseFontSize * 1.3}px`;
 
 export const createTypography = () => {
   return {
     fontFamily:
       '"Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
-    fontSize: 16,
+    fontSize: baseFontSize,
     body1: {
       fontSize: large,
       fontWeight: 400,
