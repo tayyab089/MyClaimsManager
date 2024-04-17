@@ -19,10 +19,12 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName }) => {
     d: "",
     e: "",
     f: false,
-    g: "Paul Guttman & Co., Inc. No Fee Being Charged",
+    g: "",
+    g_explanation: "",
     h: "",
     i: false,
     j: "",
+    j_explanation: "",
     k: "",
     l: "",
     m: "",
@@ -84,9 +86,11 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName }) => {
         e: claim?.insurance?.company,
         f: "",
         g: "",
+        g_explanation: "",
         h: "",
         i: "",
         j: "",
+        j_explanation: "",
         k: "",
         l: "",
         m: "",
@@ -211,6 +215,10 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName }) => {
                   <span>{values?.g}</span>
                 </div>
                 <div style={{ order: 4, flexGrow: 0 }}>Public Adjuster&apos;s Fee</div>
+                <div style={{ order: 5, flexBasis: "20em", flexGrow: 0 }}>
+                  <Field type="text" name="g_explanation" />
+                  <span>{values?.g_explanation}</span>
+                </div>
               </div>
 
               <div className="topMargin1pc" />
@@ -271,6 +279,10 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName }) => {
                   <span>{values?.j}</span>
                 </div>
                 <div style={{ order: 4, flexGrow: 0 }}>Public Adjuster&apos;s Fee</div>
+                <div style={{ order: 5, flexBasis: "20em", flexGrow: 0 }}>
+                  <Field type="text" name="j_explanation" />
+                  <span>{values?.j_explanation}</span>
+                </div>
               </div>
 
               <div className="topMargin1pc" />
