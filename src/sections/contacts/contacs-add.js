@@ -531,7 +531,7 @@ export const ContactsAdd = ({ open, handleClose, item, isEdit }) => {
                                     type="button"
                                     onClick={() => arrayHelpers.push(phNoObject)}
                                   >
-                                    Add a phNo Number
+                                    Add a Phone Number
                                   </Button>
                                 </Grid>
                               )}
