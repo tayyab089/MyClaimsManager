@@ -1,16 +1,9 @@
+/* eslint-disable react/jsx-key */
 import { Grid, Box, Typography, Button, useMediaQuery, Stack } from "@mui/material";
 
 export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDate }) => {
-  return (
-    <Box
-      sx={{
-        "@media print": {
-          display: "block",
-          marginBottom: "100px",
-        },
-        display: "none",
-      }}
-    >
+  const content = [
+    <div>
       <Typography variant="h4">{`Claim ${claim?.fileNo}`}</Typography>
       <hr />
       <Typography variant="h5">Insured</Typography>
@@ -33,7 +26,9 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDa
                 {item?.address?.map((it, ix) => {
                   return (
                     <Stack key={ix}>
-                      <Typography variant="claimPrintType">{it?.type}:</Typography>
+                      <Typography variant="claimPrintType">
+                        {it?.type ? it?.type : "address"}:
+                      </Typography>
                       <Typography variant="claimPrintText">{it?.street}</Typography>
                       <Stack direction="row" justifyContent="space-between" alignItems="center">
                         <Typography variant="claimPrintText">{it?.city}</Typography>
@@ -51,7 +46,9 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDa
                       justifyContent="flex-start"
                       alignItems="flex-start"
                     >
-                      <Typography variant="claimPrintType">{it?.type}</Typography>
+                      <Typography variant="claimPrintType">
+                        {it?.type ? it?.type : "email"}:
+                      </Typography>
                       <Typography variant="claimPrintText">{it?.email}</Typography>
                     </Stack>
                   );
@@ -64,7 +61,9 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDa
                       justifyContent="flex-start"
                       alignItems="flex-start"
                     >
-                      <Typography variant="claimPrintType">{it?.type}</Typography>
+                      <Typography variant="claimPrintType">
+                        {it?.type ? it?.type : "phone"}:
+                      </Typography>
                       <Typography variant="claimPrintText">{it?.no}</Typography>
                       {it?.ext && <Typography variant="claimPrintText">x{it?.ext}</Typography>}
                     </Stack>
@@ -75,7 +74,8 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDa
           );
         })}
       </Stack>
-
+    </div>,
+    <div>
       <Grid container sx={{ marginTop: 5, padding: 0 }}>
         <Grid xs={3} sm={3} md={3}>
           <Typography variant="claimPrintTextBold">Loss Location:</Typography>
@@ -161,7 +161,8 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDa
           );
         })}
       </Grid>
-
+    </div>,
+    <div>
       <Typography variant="h5" sx={{ marginTop: 5 }}>
         Contacts
       </Typography>
@@ -184,7 +185,9 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDa
                 {item?.address?.map((it, ix) => {
                   return (
                     <Stack key={ix}>
-                      <Typography variant="claimPrintType">{it?.type}:</Typography>
+                      <Typography variant="claimPrintType">
+                        {it?.type ? it?.type : "address"}:
+                      </Typography>
                       <Typography variant="claimPrintText">{it?.street}</Typography>
                       <Stack direction="row" justifyContent="space-between" alignItems="center">
                         <Typography variant="claimPrintText">{it?.city}</Typography>
@@ -202,7 +205,9 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDa
                       justifyContent="flex-start"
                       alignItems="flex-start"
                     >
-                      <Typography variant="claimPrintType">{it?.type}</Typography>
+                      <Typography variant="claimPrintType">
+                        {it?.type ? it?.type : "email"}:
+                      </Typography>
                       <Typography variant="claimPrintText">{it?.email}</Typography>
                     </Stack>
                   );
@@ -215,7 +220,9 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDa
                       justifyContent="flex-start"
                       alignItems="flex-start"
                     >
-                      <Typography variant="claimPrintType">{it?.type}</Typography>
+                      <Typography variant="claimPrintType">
+                        {it?.type ? it?.type : "phone"}:
+                      </Typography>
                       <Typography variant="claimPrintText">{it?.no}</Typography>
                       {it?.ext && <Typography variant="claimPrintText">x{it?.ext}</Typography>}
                     </Stack>
@@ -226,6 +233,24 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDa
           );
         })}
       </Stack>
+    </div>,
+  ];
+
+  return (
+    <Box
+      sx={{
+        "@media print": {
+          display: "block",
+          marginBottom: "100px",
+        },
+        display: "none",
+      }}
+    >
+      {content.map((section, index) => (
+        <div key={index} className="print-section">
+          {section}
+        </div>
+      ))}
     </Box>
   );
 };

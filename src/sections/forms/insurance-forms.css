@@ -8,6 +8,13 @@
   font-style: normal;
 }
 
+/* React To Print */
+
+.print-section {
+  page-break-inside: avoid;
+  page-break-before: auto;
+}
+
 /**********************************************************/
 /**** Alignment ****/
 /**********************************************************/

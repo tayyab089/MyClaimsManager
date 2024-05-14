@@ -446,7 +446,7 @@ export const ContactsAddForm = ({
                         ) : (
                           <Grid xs={12} md={12}>
                             <Button type="button" onClick={() => arrayHelpers.push(phNoObject)}>
-                              Add a phNo Number
+                              Add a Phone Number
                             </Button>
                           </Grid>
                         )}

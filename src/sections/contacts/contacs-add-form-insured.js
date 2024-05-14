@@ -573,7 +573,7 @@ export const ContactsAddFormInsured = ({
                                     type="button"
                                     onClick={() => arrayHelpers.push(phNoObject)}
                                   >
-                                    Add a phNo Number
+                                    Add a Phone Number
                                   </Button>
                                 </Grid>
                               )}
