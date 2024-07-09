@@ -82,7 +82,7 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName }) => {
         b: claim?.insurance?.policyNo,
         c: claim?.insurance?.claimNo,
         // d: claim?.lossDate ? format(new Date(claim?.lossDate), "dd-MM-yyyy") : "",
-        d: "Paul Guttman & Co., Inc. No Fee Being Charged",
+        d: "Paul Guttman & Co., Inc.",
         e: claim?.insurance?.company,
         f: "",
         g: "",

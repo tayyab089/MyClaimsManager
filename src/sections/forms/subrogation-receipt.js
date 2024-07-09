@@ -124,6 +124,18 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
     }
   }, [form]);
 
+  // Function to format currency
+  const formatCurrency = (value) => {
+    const numericValue = value.replace(/\D/g, "");
+    let integerPart = numericValue.substring(0, numericValue.length - 2) || "0";
+    const decimalPart = numericValue.substring(numericValue.length - 2);
+    integerPart = integerPart.replace(/^0+/, "");
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const formattedValue = `${integerPart}.${decimalPart}`;
+
+    return formattedValue;
+  };
+
   return (
     <Formik
       initialValues={initialValues}
@@ -131,7 +143,7 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
       innerRef={formRef}
       enableReinitialize={true}
     >
-      {({ values }) => (
+      {({ values, setFieldValue }) => (
         <Form id="SubrogationReceipt">
           <div className="formContainer" style={{ padding: ".3in .3in" }}>
             <div className="formRowCentered">
@@ -152,7 +164,14 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
               </div>
               <div style={{ order: 2 }}>Dollars ($</div>
               <div style={{ flexGrow: 0, flexBasis: "10em", order: 3 }}>
-                <Field type="text" name="c" />
+                <Field
+                  type="text"
+                  className="numeric"
+                  name="c"
+                  onChange={(e) => setFieldValue("c", formatCurrency(e.target.value))}
+                  value={values?.c}
+                />
+                {/* <Field type="text" name="c" /> */}
                 <span>{values?.c}</span>
               </div>
               <div style={{ order: 4 }}>) in full satisfaction of all</div>
