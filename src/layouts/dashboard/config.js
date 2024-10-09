@@ -10,15 +10,17 @@ import HomeIcon from "@heroicons/react/24/solid/HomeIcon";
 import { SvgIcon } from "@mui/material";
 
 export const items = [
+
   {
-    title: "Home",
+    title: "Claims",
     path: "/",
+    description: "Manage Your Claims",
     icon: (
       <SvgIcon fontSize="small">
-        <HomeIcon />
+        <ClipboardDocumentListIcon />
       </SvgIcon>
     ),
-  },
+  },  
   {
     title: "Contacts",
     path: "/contacts",
@@ -26,26 +28,6 @@ export const items = [
     icon: (
       <SvgIcon fontSize="small">
         <UsersIcon />
-      </SvgIcon>
-    ),
-  },
-  {
-    title: "Claims",
-    path: "/claims",
-    description: "Manage Your Claims",
-    icon: (
-      <SvgIcon fontSize="small">
-        <ClipboardDocumentListIcon />
-      </SvgIcon>
-    ),
-  },
-  {
-    title: "Profile",
-    path: "/account",
-    description: "Manage Your Profile",
-    icon: (
-      <SvgIcon fontSize="small">
-        <UserIcon />
       </SvgIcon>
     ),
   },

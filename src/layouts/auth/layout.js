@@ -81,10 +81,6 @@ export const Layout = (props) => {
                 My Claims Manager
               </Box>
             </Typography>
-            <Typography align="center" sx={{ mb: 3 }} variant="subtitle1">
-              Managing Your Claims was never this easy.
-            </Typography>
-            <img alt="" src="/assets/auth-illustration.svg" />
           </Box>
         </Grid>
       </Grid>
