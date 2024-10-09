@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useReducer, useRef } from "react";
 import PropTypes from "prop-types";
+import { signInApi, signUpApi, validateTokenApi } from "../network/auth-api";
 
 const HANDLERS = {
   INITIALIZE: "INITIALIZE",
@@ -16,11 +17,9 @@ const initialState = {
 const handlers = {
   [HANDLERS.INITIALIZE]: (state, action) => {
     const user = action.payload;
-
     return {
       ...state,
-      ...// if payload (user) is provided, then is authenticated
-      (user
+      ...(user
         ? {
             isAuthenticated: true,
             isLoading: false,
@@ -33,7 +32,6 @@ const handlers = {
   },
   [HANDLERS.SIGN_IN]: (state, action) => {
     const user = action.payload;
-
     return {
       ...state,
       isAuthenticated: true,
@@ -53,117 +51,74 @@ const handlers = {
 const reducer = (state, action) =>
   handlers[action.type] ? handlers[action.type](state, action) : state;
 
-// The role of this context is to propagate authentication state through the App tree.
+export const AuthContext = createContext(null);
 
-export const AuthContext = createContext({ undefined });
-
-export const AuthProvider = (props) => {
-  const { children } = props;
+export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const initialized = useRef(false);
 
   const initialize = async () => {
-    // Prevent from calling twice in development mode with React.StrictMode enabled
     if (initialized.current) {
       return;
     }
 
     initialized.current = true;
 
-    let isAuthenticated = false;
-
     try {
-      isAuthenticated = window.sessionStorage.getItem("authenticated") === "true";
+      const response = await validateTokenApi(); // Call API to validate token
+      if (response?.data?.user) {
+        dispatch({
+          type: HANDLERS.INITIALIZE,
+          payload: response.data.user,
+        });
+      } else {
+        dispatch({ type: HANDLERS.INITIALIZE });
+      }
     } catch (err) {
-      console.error(err);
-    }
-
-    if (isAuthenticated) {
-      const user = {
-        id: "fe5daa66-05c0-4e48-9235-95ae370ded9d",
-        avatar: "",
-        name: "Howie Guttman",
-        email: "howie.guttman@outlook.com",
-      };
-
-      dispatch({
-        type: HANDLERS.INITIALIZE,
-        payload: user,
-      });
-    } else {
-      dispatch({
-        type: HANDLERS.INITIALIZE,
-      });
+      console.error("Initialization failed:", err);
+      dispatch({ type: HANDLERS.INITIALIZE });
     }
   };
 
-  useEffect(
-    () => {
-      initialize();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-
-  const skip = () => {
-    try {
-      window.sessionStorage.setItem("authenticated", "true");
-    } catch (err) {
-      console.error(err);
-    }
-
-    const user = {
-      id: "fe5daa66-05c0-4e48-9235-95ae370ded9d",
-      avatar: "",
-      name: "Howie Guttman",
-      email: "howie.guttman@outlook.com",
-    };
-
-    dispatch({
-      type: HANDLERS.SIGN_IN,
-      payload: user,
-    });
-  };
+  useEffect(() => {
+    initialize();
+  }, []);
 
   const signIn = async (email, password) => {
-    if (email !== "myclaimsmanager@gmail.com" || password !== "Password123!") {
+    try {
+      const response = await signInApi(email, password); // Call API to sign in
+      const user = response.data.user;
+      window.sessionStorage.setItem("authenticated", "true");
+      window.sessionStorage.setItem("user", JSON.stringify(user));
+      dispatch({
+        type: HANDLERS.SIGN_IN,
+        payload: user,
+      });
+    } catch (error) {
+      console.error("Sign-in failed:", error);
       throw new Error("Please check your email and password");
     }
-
-    try {
-      window.sessionStorage.setItem("authenticated", "true");
-    } catch (err) {
-      console.error(err);
-    }
-
-    const user = {
-      id: "fe5daa66-05c0-4e48-9235-95ae370ded9d",
-      avatar: "/assets/avatars/avatar-siegbert-gottfried.png",
-      name: "Howie Guttman",
-      email: "howie.guttman@outlook.com",
-    };
-
-    dispatch({
-      type: HANDLERS.SIGN_IN,
-      payload: user,
-    });
   };
 
   const signUp = async (email, name, password) => {
-    throw new Error("Sign up is not implemented");
+    try {
+      await signUpApi({ email, name, password }); // Call API to sign up
+    } catch (error) {
+      console.error("Sign-up failed:", error);
+      throw new Error("Sign-up failed");
+    }
   };
 
   const signOut = () => {
-    dispatch({
-      type: HANDLERS.SIGN_OUT,
-    });
+    window.sessionStorage.removeItem("authenticated");
+    window.sessionStorage.removeItem("user");
+    dispatch({ type: HANDLERS.SIGN_OUT });
   };
 
   return (
     <AuthContext.Provider
       value={{
         ...state,
-        skip,
         signIn,
         signUp,
         signOut,
@@ -177,7 +132,5 @@ export const AuthProvider = (props) => {
 AuthProvider.propTypes = {
   children: PropTypes.node,
 };
-
-export const AuthConsumer = AuthContext.Consumer;
 
 export const useAuthContext = () => useContext(AuthContext);

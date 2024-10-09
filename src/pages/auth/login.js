@@ -16,17 +16,17 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useAuth } from "src/hooks/use-auth";
 import { Layout as AuthLayout } from "src/layouts/auth/layout";
+import { useAuthContext } from 'src/contexts/auth-context';
 
 const Page = () => {
   const router = useRouter();
-  const auth = useAuth();
   const [method, setMethod] = useState("email");
+  const { signIn } = useAuthContext();
   const formik = useFormik({
     initialValues: {
-      email: "myclaimsmanager@gmail.com",
-      password: "Password123!",
+      email: "",
+      password: "",
       submit: null,
     },
     validationSchema: Yup.object({
@@ -35,7 +35,7 @@ const Page = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        await auth.signIn(values.email, values.password);
+        await signIn(values.email, values.password);
         router.push("/");
       } catch (err) {
         helpers.setStatus({ success: false });

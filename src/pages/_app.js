@@ -4,7 +4,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import { AuthConsumer, AuthProvider } from "src/contexts/auth-context";
+import { AuthProvider } from "src/contexts/auth-context";
 import { useNProgress } from "src/hooks/use-nprogress";
 import { createTheme } from "src/theme";
 import { createEmotionCache } from "src/utils/create-emotion-cache";
@@ -26,6 +26,7 @@ const App = (props) => {
 
   const theme = createTheme();
 
+
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -37,11 +38,7 @@ const App = (props) => {
           <AuthProvider>
             <ThemeProvider theme={theme}>
               <CssBaseline />
-              <AuthConsumer>
-                {(auth) =>
-                  auth.isLoading ? <SplashScreen /> : getLayout(<Component {...pageProps} />)
-                }
-              </AuthConsumer>
+              {getLayout(<Component {...pageProps} />)}
             </ThemeProvider>
           </AuthProvider>
         </LocalizationProvider>
