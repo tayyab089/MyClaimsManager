@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useReducer, useRef } from "react";
 import PropTypes from "prop-types";
-import { signInApi, signUpApi, validateTokenApi } from "../network/auth-api";
+import { signInApi, signUpApi, validateTokenApi, verifyUserApi } from "../network/auth-api";
 
 const HANDLERS = {
   INITIALIZE: "INITIALIZE",
@@ -46,6 +46,15 @@ const handlers = {
     user: null,
   }),
   [HANDLERS.SIGN_UP]: (state, action) => {
+    const email = action.payload;
+    return {
+      ...state,
+      isAuthenticated: true,
+      isLoading: false,
+      user: { email },
+    };
+  },
+  [HANDLERS.VERIFY]: (state, action) => {
     const user = action.payload;
     return {
       ...state,
@@ -111,6 +120,37 @@ export const AuthProvider = ({ children }) => {
   const signUp = async (email, password) => {
     try {
       const response = await signUpApi({ email, password, username: email });
+      if (response?.data?.type == "success") {
+        // After registeration but before verification, only save the email in reduc
+        dispatch({
+          type: HANDLERS.SIGN_UP,
+          payload: email,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+
+      if (error.response) {
+        const { status, data } = error.response;
+
+        const errorMessage =
+          data?.error?.message || "An unexpected error occurred. Please try again.";
+
+        switch (status) {
+          case 400:
+            throw new Error(errorMessage);
+          default:
+            throw new Error(errorMessage);
+        }
+      } else {
+        throw new Error("Network error: Please check your connection and try again.");
+      }
+    }
+  };
+
+  const verifyUser = async (code) => {
+    try {
+      const response = await verifyUserApi({ code, email: state.user.email });
       if (response?.data?.user) {
         const user = response.data.user;
         // Store authentication state in session
@@ -119,7 +159,7 @@ export const AuthProvider = ({ children }) => {
 
         // Dispatch sign-up action with user data
         dispatch({
-          type: HANDLERS.SIGN_UP,
+          type: HANDLERS.VERIFY,
           payload: user,
         });
       }
@@ -157,6 +197,7 @@ export const AuthProvider = ({ children }) => {
         signIn,
         signUp,
         signOut,
+        verifyUser,
       }}
     >
       {children}

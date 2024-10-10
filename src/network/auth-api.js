@@ -23,7 +23,7 @@ export const signInApi = async (data) => {
 export const validateTokenApi = async (token) => {
   try {
     const config = { ...getHeadersConfig(), headers: { Authorization: `Bearer ${token}` }};
-    const response = await api.get('/validate-token', config);
+    const response = await api.get('auth/validate-token', config);
     return response;
   } catch (error) {
     console.error("Token validation error:", error.message);
@@ -33,7 +33,7 @@ export const validateTokenApi = async (token) => {
 
 export const verifyUserApi = async (data) => {
   try {
-    const response = await api.post('/verify', data, getHeadersConfig());
+    const response = await api.post('/auth/verify', data, getHeadersConfig());
     return response;
   } catch (error) {
     console.error("User verification error:", error.message);

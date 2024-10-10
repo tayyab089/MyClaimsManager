@@ -50,7 +50,7 @@ const Page = () => {
       setIsLoading(true);
       try {
         await signUp(values.email, values.password);
-        // router.push("/");
+        router.push("/auth/verify");
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
