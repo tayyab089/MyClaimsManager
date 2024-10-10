@@ -19,7 +19,6 @@ export const getHeadersConfig = () => {
   return {
     headers: {
       "Content-Type": "application/json",
-      Authorization: "fe5daa66-05c0-4e48-9235-95ae370ded9d",
     },
   };
 };

@@ -12,7 +12,7 @@ export const signUpApi = async (data) => {
 
 export const signInApi = async (data) => {
   try {
-    const response = await api.post('/signin', data, getHeadersConfig());
+    const response = await api.post('auth/signin', data, getHeadersConfig());
     return response;
   } catch (error) {
     console.log(error.message);

@@ -86,7 +86,7 @@ export const AuthProvider = ({ children }) => {
 
   const signIn = async (email, password) => {
     try {
-      const response = await signInApi(email, password); // Call API to sign in
+      const response = await signInApi({email: email, password: password, username: email});
       const user = response.data.user;
       window.sessionStorage.setItem("authenticated", "true");
       window.sessionStorage.setItem("user", JSON.stringify(user));
