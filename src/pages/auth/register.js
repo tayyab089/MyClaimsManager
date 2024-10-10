@@ -3,31 +3,60 @@ import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Box, Button, Link, Stack, TextField, Typography } from "@mui/material";
-import { useAuth } from "src/hooks/use-auth";
+import {
+  Box,
+  Button,
+  Link,
+  Stack,
+  TextField,
+  Typography,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
+import { useAuthContext } from "src/contexts/auth-context";
 import { Layout as AuthLayout } from "src/layouts/auth/layout";
+import { useState } from "react";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid"; // Import Heroicons
 
 const Page = () => {
   const router = useRouter();
-  const auth = useAuth();
+  const { signUp } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRetypePassword, setShowRetypePassword] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
+      retypePassword: "", // Add retype password field
       submit: null,
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
-      password: Yup.string().max(255).required("Password is required"),
+      password: Yup.string()
+        .required("Password is required")
+        .min(8, "Password must be at least 8 characters long")
+        .max(255)
+        .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+        .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+        .matches(/[0-9]/, "Password must contain at least one number")
+        .matches(/[@$!%*?&]/, "Password must contain at least one special character"),
+      retypePassword: Yup.string()
+        .oneOf([Yup.ref("password"), null], "Passwords must match")
+        .required("Please retype your password"), // Validation for retype password
     }),
     onSubmit: async (values, helpers) => {
+      setIsLoading(true);
       try {
-        await auth.signUp(values.email, values.password);
-        router.push("/");
+        await signUp(values.email, values.password);
+        // router.push("/");
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
+      } finally {
+        setIsLoading(false);
       }
     },
   });
@@ -84,8 +113,53 @@ const Page = () => {
                   name="password"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  type="password"
+                  type={showPassword ? "text" : "password"} // Toggle password visibility
                   value={formik.values.password}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => setShowPassword((prev) => !prev)}
+                          edge="end"
+                          style={{ padding: 10 }}
+                        >
+                          {showPassword ? (
+                            <EyeSlashIcon style={{ height: 24, width: 24, color: "#4338CA" }} />
+                          ) : (
+                            <EyeIcon style={{ height: 24, width: 24, color: "#4338CA" }} />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <TextField
+                  error={!!(formik.touched.retypePassword && formik.errors.retypePassword)}
+                  fullWidth
+                  helperText={formik.touched.retypePassword && formik.errors.retypePassword}
+                  label="Retype Password"
+                  name="retypePassword"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type={showRetypePassword ? "text" : "password"} // Toggle password visibility
+                  value={formik.values.retypePassword}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => setShowRetypePassword((prev) => !prev)}
+                          edge="end"
+                          style={{ padding: 10 }}
+                        >
+                          {showPassword ? (
+                            <EyeSlashIcon style={{ height: 24, width: 24, color: "#4338CA" }} />
+                          ) : (
+                            <EyeIcon style={{ height: 24, width: 24, color: "#4338CA" }} />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Stack>
               {formik.errors.submit && (
@@ -93,8 +167,15 @@ const Page = () => {
                   {formik.errors.submit}
                 </Typography>
               )}
-              <Button fullWidth size="large" sx={{ mt: 3 }} type="submit" variant="contained">
-                Continue
+              <Button
+                disabled={isLoading}
+                fullWidth
+                size="large"
+                sx={{ mt: 3 }}
+                type="submit"
+                variant="contained"
+              >
+                {isLoading ? "Signing up..." : "Sign Up"}
               </Button>
             </form>
           </div>

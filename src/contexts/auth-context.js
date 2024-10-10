@@ -6,6 +6,7 @@ const HANDLERS = {
   INITIALIZE: "INITIALIZE",
   SIGN_IN: "SIGN_IN",
   SIGN_OUT: "SIGN_OUT",
+  SIGN_UP: "SIGN_UP",
 };
 
 const initialState = {
@@ -39,11 +40,18 @@ const handlers = {
       user,
     };
   },
-  [HANDLERS.SIGN_OUT]: (state) => {
+  [HANDLERS.SIGN_OUT]: (state) => ({
+    ...state,
+    isAuthenticated: false,
+    user: null,
+  }),
+  [HANDLERS.SIGN_UP]: (state, action) => {
+    const user = action.payload;
     return {
       ...state,
-      isAuthenticated: false,
-      user: null,
+      isAuthenticated: true,
+      isLoading: false,
+      user,
     };
   },
 };
@@ -65,7 +73,7 @@ export const AuthProvider = ({ children }) => {
     initialized.current = true;
 
     try {
-      const response = await validateTokenApi(); // Call API to validate token
+      const response = await validateTokenApi();
       if (response?.data?.user) {
         dispatch({
           type: HANDLERS.INITIALIZE,
@@ -86,7 +94,7 @@ export const AuthProvider = ({ children }) => {
 
   const signIn = async (email, password) => {
     try {
-      const response = await signInApi({email: email, password: password, username: email});
+      const response = await signInApi({ email, password, username: email });
       const user = response.data.user;
       window.sessionStorage.setItem("authenticated", "true");
       window.sessionStorage.setItem("user", JSON.stringify(user));
@@ -100,12 +108,39 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signUp = async (email, name, password) => {
+  const signUp = async (email, password) => {
     try {
-      await signUpApi({ email, name, password }); // Call API to sign up
+      const response = await signUpApi({ email, password, username: email });
+      if (response?.data?.user) {
+        const user = response.data.user;
+        // Store authentication state in session
+        window.sessionStorage.setItem("authenticated", "true");
+        window.sessionStorage.setItem("user", JSON.stringify(user));
+
+        // Dispatch sign-up action with user data
+        dispatch({
+          type: HANDLERS.SIGN_UP,
+          payload: user,
+        });
+      }
     } catch (error) {
-      console.error("Sign-up failed:", error);
-      throw new Error("Sign-up failed");
+      console.error(error);
+
+      if (error.response) {
+        const { status, data } = error.response;
+
+        const errorMessage =
+          data?.error?.message || "An unexpected error occurred. Please try again.";
+
+        switch (status) {
+          case 400:
+            throw new Error(errorMessage);
+          default:
+            throw new Error(errorMessage);
+        }
+      } else {
+        throw new Error("Network error: Please check your connection and try again.");
+      }
     }
   };
 
