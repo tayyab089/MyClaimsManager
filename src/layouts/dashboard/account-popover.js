@@ -8,7 +8,7 @@ import { useAuthContext } from 'src/contexts/auth-context';
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open } = props;
   const router = useRouter();
-  const { signOut } = useAuthContext();
+  const { signOut, user } = useAuthContext();
 
   const handleSignOut = useCallback(() => {
     onClose?.();
@@ -25,7 +25,7 @@ export const AccountPopover = (props) => {
       }}
       onClose={onClose}
       open={open}
-      PaperProps={{ sx: { width: 200 } }}
+      PaperProps={{ sx: { width: 300 } }}
     >
       <Box
         sx={{
@@ -35,7 +35,7 @@ export const AccountPopover = (props) => {
       >
         <Typography variant="overline">Account</Typography>
         <Typography color="text.secondary" variant="body2">
-          Howie Guttman
+          {user?.email}
         </Typography>
       </Box>
       <Divider />

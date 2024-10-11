@@ -131,7 +131,7 @@ export const TopNav = (props) => {
               }}
               src=""
             >
-              {getInitials(user?.name)}
+              {getInitials(user?.email)}
             </Avatar>
           </Stack>
         </Stack>
