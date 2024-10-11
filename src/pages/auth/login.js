@@ -8,7 +8,10 @@ import {
   Alert,
   Box,
   Button,
+  CircularProgress,
   FormHelperText,
+  IconButton,
+  InputAdornment,
   Link,
   Stack,
   Tab,
@@ -17,12 +20,15 @@ import {
   Typography,
 } from "@mui/material";
 import { Layout as AuthLayout } from "src/layouts/auth/layout";
-import { useAuthContext } from 'src/contexts/auth-context';
+import { useAuthContext } from "src/contexts/auth-context";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 
 const Page = () => {
   const router = useRouter();
-  const [method, setMethod] = useState("email");
   const { signIn, user } = useAuthContext();
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       email: user?.email,
@@ -34,6 +40,7 @@ const Page = () => {
       password: Yup.string().max(255).required("Password is required"),
     }),
     onSubmit: async (values, helpers) => {
+      setIsLoading(true);
       try {
         await signIn(values.email, values.password);
         router.push("/");
@@ -41,6 +48,8 @@ const Page = () => {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
+      } finally {
+        setIsLoading(false);
       }
     },
   });
@@ -82,43 +91,66 @@ const Page = () => {
                 </Link>
               </Typography>
             </Stack>
-         
-              <form noValidate onSubmit={formik.handleSubmit}>
-                <Stack spacing={3}>
-                  <TextField
-                    error={!!(formik.touched.email && formik.errors.email)}
-                    fullWidth
-                    helperText={formik.touched.email && formik.errors.email}
-                    label="Email Address"
-                    name="email"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="email"
-                    value={formik.values.email}
-                  />
-                  <TextField
-                    error={!!(formik.touched.password && formik.errors.password)}
-                    fullWidth
-                    helperText={formik.touched.password && formik.errors.password}
-                    label="Password"
-                    name="password"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="password"
-                    value={formik.values.password}
-                  />
-                </Stack>
-                {formik.errors.submit && (
-                  <Typography color="error" sx={{ mt: 3 }} variant="body2">
-                    {formik.errors.submit}
-                  </Typography>
-                )}
-                <Button fullWidth size="large" sx={{ mt: 3 }} type="submit" variant="contained">
-                  Continue
-                </Button>
-              
-              </form>
-            
+
+            <form noValidate onSubmit={formik.handleSubmit}>
+              <Stack spacing={3}>
+                <TextField
+                  error={!!(formik.touched.email && formik.errors.email)}
+                  fullWidth
+                  helperText={formik.touched.email && formik.errors.email}
+                  label="Email Address"
+                  name="email"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="email"
+                  value={formik.values.email}
+                />
+                <TextField
+                  error={!!(formik.touched.password && formik.errors.password)}
+                  fullWidth
+                  helperText={formik.touched.password && formik.errors.password}
+                  label="Password"
+                  name="password"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type={showPassword ? "text" : "password"} // Toggle password visibility
+                  value={formik.values.password}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => setShowPassword((prev) => !prev)}
+                          edge="end"
+                          style={{ padding: 10 }}
+                        >
+                          {showPassword ? (
+                            <EyeSlashIcon style={{ height: 24, width: 24, color: "#4338CA" }} />
+                          ) : (
+                            <EyeIcon style={{ height: 24, width: 24, color: "#4338CA" }} />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Stack>
+              {formik.errors.submit && (
+                <Typography color="error" sx={{ mt: 3 }} variant="body2">
+                  {formik.errors.submit}
+                </Typography>
+              )}
+              <Button
+                fullWidth
+                size="large"
+                sx={{ mt: 3 }}
+                type="submit"
+                variant="contained"
+                disabled={isLoading}
+              >
+                Sign In
+                {isLoading && <CircularProgress size={28} color="inherit" />}
+              </Button>
+            </form>
           </div>
         </Box>
       </Box>

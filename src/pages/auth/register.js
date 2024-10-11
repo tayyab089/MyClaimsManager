@@ -175,7 +175,13 @@ const Page = () => {
                 type="submit"
                 variant="contained"
               >
-                {isLoading ? "Signing up..." : "Sign Up"}
+                {isLoading ? (
+                  <Box display="flex" alignItems="center" justifyContent="center" gap={1}>
+                    <CircularProgress size={20} color="inherit" /> Signing up...
+                  </Box>
+                ) : (
+                  "Sign Up"
+                )}
               </Button>
             </form>
           </div>
