@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
-import { useAuthContext } from 'src/contexts/auth-context';
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
+import PropTypes from "prop-types";
+import { useAuthContext } from "src/contexts/auth-context";
+import { Box, CircularProgress, Typography } from '@mui/material';
+
 
 export const AuthGuard = (props) => {
   const { children } = props;
@@ -15,10 +17,10 @@ export const AuthGuard = (props) => {
       if (isLoading) return;
 
       if (!isAuthenticated) {
-        console.log('Not authenticated, redirecting');
+        console.log("Not authenticated, redirecting");
         await router.replace({
-          pathname: '/auth/login',
-          query: router.asPath !== '/' ? { continueUrl: router.asPath } : undefined
+          pathname: "/auth/login",
+          query: router.asPath !== "/" ? { continueUrl: router.asPath } : undefined,
         });
       } else {
         setChecked(true);
@@ -30,8 +32,28 @@ export const AuthGuard = (props) => {
   }, [isAuthenticated, isLoading, router]); // Remove router.isReady to avoid redundant checks
 
   if (!checked || isLoading) {
-    return null; // Render nothing while loading or checking authentication
-  }
+    return (
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+        bgcolor="#f8f9fa" // Tailwind bg-gray-50 equivalent
+      >
+        <Typography variant="h4" component="h1" color="primary" gutterBottom>
+          My Claims Manager
+        </Typography>
+        <CircularProgress size={60} color="primary" />
+        <Typography variant="h6" color="textSecondary" marginTop={2}>
+          Loading...
+        </Typography>
+        <Typography variant="body2" color="textSecondary">
+          Please wait while we process your request.
+        </Typography>
+      </Box>
+    );
+  } // Render nothing while loading or checking authentication
 
   // If we reach here, the user is authenticated
   return children;
@@ -40,4 +62,3 @@ export const AuthGuard = (props) => {
 AuthGuard.propTypes = {
   children: PropTypes.node,
 };
-

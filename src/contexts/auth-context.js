@@ -85,15 +85,26 @@ export const AuthProvider = ({ children }) => {
 
   const initialize = async () => {
     console.log("initialize run");
+  
+    // Prevent re-initialization
     if (initialized.current) {
       return;
     }
-
+  
     initialized.current = true;
-
+  
+    // Get the token from cookies
+    const token = getTokenCookies();
+  
+    // If no token exists, dispatch to finish loading and exit
+    if (!token) {
+      dispatch({ type: HANDLERS.INITIALIZE }); // Finish loading if no token
+      return;
+    }
+  
     try {
-      const token = getTokenCookies();
       const response = await validateTokenApi(token);
+  
       if (response.data.type === "success") {
         const user = {
           name: response.data.value?.Username || null, // Using optional chaining
@@ -106,19 +117,21 @@ export const AuthProvider = ({ children }) => {
           id:
             response.data.value?.UserAttributes?.find((attr) => attr.Name === "sub")?.Value || null,
         };
-        console.log(user);
         dispatch({
           type: HANDLERS.INITIALIZE,
           payload: user,
         });
       } else {
+        signOut();
         dispatch({ type: HANDLERS.INITIALIZE }); // Dispatch to finish loading
       }
     } catch (err) {
+      signOut();
       console.error("Initialization failed:", err);
       dispatch({ type: HANDLERS.INITIALIZE }); // Dispatch to finish loading on error
     }
   };
+  
 
   useEffect(() => {
     initialize();
