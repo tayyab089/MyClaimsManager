@@ -2,7 +2,6 @@
 
 import axios from "axios";
 // import store from "../store";
-import { useAuthContext } from "src/contexts/auth-context";
 
 export const api = axios.create({
   baseURL:
@@ -16,6 +15,15 @@ export const api = axios.create({
 
 export const getHeadersConfig = () => {
   //   const accessToken = store.getState().auth.accessToken;
+  return {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+};
+
+export const getSecureHeadersConfig = () => {
+     const accessToken = store.getState().auth.accessToken;
   return {
     headers: {
       "Content-Type": "application/json",

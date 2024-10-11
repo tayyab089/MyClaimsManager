@@ -22,10 +22,10 @@ import { useAuthContext } from 'src/contexts/auth-context';
 const Page = () => {
   const router = useRouter();
   const [method, setMethod] = useState("email");
-  const { signIn } = useAuthContext();
+  const { signIn, user } = useAuthContext();
   const formik = useFormik({
     initialValues: {
-      email: "",
+      email: user?.email,
       password: "",
       submit: null,
     },

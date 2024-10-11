@@ -6,52 +6,38 @@ import { useAuthContext } from 'src/contexts/auth-context';
 export const AuthGuard = (props) => {
   const { children } = props;
   const router = useRouter();
-  const { isAuthenticated } = useAuthContext();
-  const ignore = useRef(false);
+  const { isAuthenticated, isLoading } = useAuthContext();
   const [checked, setChecked] = useState(false);
 
-  // Only do authentication check on component mount.
-  // This flow allows you to manually redirect the user after sign-out, otherwise this will be
-  // triggered and will automatically redirect to sign-in page.
-
-  useEffect(
-    () => {
-      if (!router.isReady) {
-        return;
-      }
-
-      // Prevent from calling twice in development mode with React.StrictMode enabled
-      if (ignore.current) {
-        return;
-      }
-
-      ignore.current = true;
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      // Check if we are still loading
+      if (isLoading) return;
 
       if (!isAuthenticated) {
         console.log('Not authenticated, redirecting');
-        router
-          .replace({
-            pathname: '/auth/login',
-            query: router.asPath !== '/' ? { continueUrl: router.asPath } : undefined
-          })
-          .catch(console.error);
+        await router.replace({
+          pathname: '/auth/login',
+          query: router.asPath !== '/' ? { continueUrl: router.asPath } : undefined
+        });
       } else {
         setChecked(true);
       }
-    },
-    [router.isReady]
-  );
+    };
 
-  if (!checked) {
-    return null;
+    // Run check authentication whenever isAuthenticated or isLoading changes
+    checkAuthentication();
+  }, [isAuthenticated, isLoading, router]); // Remove router.isReady to avoid redundant checks
+
+  if (!checked || isLoading) {
+    return null; // Render nothing while loading or checking authentication
   }
 
-  // If got here, it means that the redirect did not occur, and that tells us that the user is
-  // authenticated / authorized.
-
+  // If we reach here, the user is authenticated
   return children;
 };
 
 AuthGuard.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
 };
+
