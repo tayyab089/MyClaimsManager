@@ -1,4 +1,4 @@
-import { api, getHeadersConfig, getPDFHeadersConfig } from "./api";
+import { api, getHeadersConfig, getPDFHeadersConfig, getSecureHeadersConfig } from "./api";
 
 export const saveFormApi = async (data) => {
   try {
@@ -12,7 +12,7 @@ export const saveFormApi = async (data) => {
 export const getFormApi = async (claimfileNo) => {
   const userId = "fe5daa66-05c0-4e48-9235-95ae370ded9d";
   try {
-    const response = await api.get(`forms/user/${userId}/claim/${claimfileNo}`, getHeadersConfig());
+    const response = await api.get(`forms/user/${userId}/claim/${claimfileNo}`, getSecureHeadersConfig());
     return response;
   } catch (error) {
     console.log(error.message);

@@ -18,6 +18,17 @@ export const getClaimsApi = async () => {
   }
 };
 
+export const getSingleClaimApi = async (id) => {
+  try {
+    const response = await api.get(`claims/${id}`, getSecureHeadersConfig());
+    return response;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+
+
 export const deleteClaimApi = async (data) => {
   console.log(data);
   try {

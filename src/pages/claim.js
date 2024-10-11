@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import { Box, Container, Stack, Typography, Button, SvgIcon } from "@mui/material";
+import {
+  Box,
+  Container,
+  Stack,
+  Typography,
+  Button,
+  SvgIcon,
+  CircularProgress,
+} from "@mui/material";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 
 import { ClaimView } from "src/sections/claims/claim-view";
@@ -13,19 +21,38 @@ import { useSelector, useDispatch } from "react-redux";
 import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 import { fetchForms } from "src/store/reducers/forms/thunks";
 import { fetchClaims } from "src/store/reducers/claims/thunks";
+import { getSingleClaimApi } from "src/network/claims-api";
 
 const Page = () => {
-  const [claim, setClaim] = useState({});
-  const { claimsData } = useSelector((state) => state.claims);
+  const dispatch = useDispatch();
+  const [claim, setClaim] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const {
     formsData,
     meta: { isFormLoading },
   } = useSelector((state) => state.forms);
 
-  const dispatch = useDispatch();
-
   const router = useRouter();
   const { fileNo } = router.query;
+
+  const getClaim = async (fileNo) => {
+    setIsLoading(true);
+    setIsError(false);
+    try {
+      const { data } = await getSingleClaimApi(fileNo);
+      console.log(data);
+      setClaim(data);
+    } catch (error) {
+      setIsError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(async () => {
+    if (fileNo) getClaim(fileNo);
+  }, [fileNo]);
 
   useEffect(() => {
     if (claim?.fileNo) {
@@ -38,19 +65,6 @@ const Page = () => {
       }
     }
   }, [claim, dispatch]);
-
-  useEffect(() => {
-    if (claimsData.length == 0) {
-      dispatch(fetchClaims());
-      console.log("Claims Fetched");
-    } else {
-      console.log("Claims Not Fetched");
-    }
-  }, []);
-
-  useEffect(() => {
-    setClaim(claimsData.filter((i) => i.fileNo == fileNo)[0]);
-  }, [claimsData, fileNo]);
 
   return (
     <>
@@ -68,11 +82,43 @@ const Page = () => {
           <Stack spacing={3}>
             <Stack direction="row" justifyContent="space-between" spacing={4}>
               <Stack spacing={1}>
-                <Typography variant="h4">{`Claim ${claim?.fileNo}/${claim?.insurance?.fileNo}`}</Typography>
+                {claim?.fileNo && (
+                  <Typography variant="h4">
+                    {`Claim ${claim.fileNo}${
+                      claim?.insurance?.fileNo ? `/${claim.insurance.fileNo}` : ""
+                    }`}
+                  </Typography>
+                )}{" "}
               </Stack>
             </Stack>
-            <ClaimView item={claim} />
-            <InsuraceForms item={claim} formsData={formsData} isFormLoading={isFormLoading} />
+            {isLoading ? (
+              <div className="flex items-center justify-center h-screen w-screen bg-gray-100">
+                <CircularProgress size={60} thickness={4} />
+              </div>
+            ) : (
+              <>
+                {isError ? (
+                  <div className="flex items-center justify-center h-screen w-screen bg-red-50">
+                    <Typography variant="h5" color="error" className="font-semibold">
+                      Claim Not Found
+                    </Typography>
+                    <Typography variant="body1" className="mt-2 text-gray-700">
+                      Please ensure you are on the correct page or check the claim number you
+                      entered.
+                    </Typography>
+                  </div>
+                ) : (
+                  <>
+                    <ClaimView item={claim} />
+                    <InsuraceForms
+                      item={claim}
+                      formsData={formsData}
+                      isFormLoading={isFormLoading}
+                    />
+                  </>
+                )}
+              </>
+            )}
           </Stack>
           <CustomAlert />
         </Container>
