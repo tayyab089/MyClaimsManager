@@ -1,6 +1,7 @@
 // apiEndpoints.js
 
 import axios from "axios";
+import { getTokenCookies } from 'src/contexts/auth-context';
 // import store from "../store";
 
 export const api = axios.create({
@@ -23,14 +24,15 @@ export const getHeadersConfig = () => {
 };
 
 export const getSecureHeadersConfig = () => {
-     const accessToken = store.getState().auth.accessToken;
+  const token = getTokenCookies();
+
   return {
     headers: {
       "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }), // Add Authorization header if token exists
     },
   };
 };
-
 export const getPDFHeadersConfig = () => {
   //   const accessToken = store.getState().auth.accessToken;
   return {

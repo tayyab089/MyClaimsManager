@@ -1,4 +1,4 @@
-import { api, getHeadersConfig } from "./api";
+import { api, getHeadersConfig, getSecureHeadersConfig } from "./api";
 
 export const saveClaimApi = async (data) => {
   try {
@@ -11,7 +11,7 @@ export const saveClaimApi = async (data) => {
 
 export const getClaimsApi = async () => {
   try {
-    const response = await api.get("claims", getHeadersConfig());
+    const response = await api.get("claims", getSecureHeadersConfig());
     return response;
   } catch (error) {
     console.log(error.message);

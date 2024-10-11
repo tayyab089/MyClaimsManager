@@ -63,11 +63,7 @@ const reducer = (state, action) =>
 
 export const AuthContext = createContext(null);
 
-export const AuthProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const initialized = useRef(false);
-
-  const getTokenCookies = () => {
+  export const getTokenCookies = () => {
     const name = "token=";
     const decodedCookie = decodeURIComponent(document.cookie);
     const cookieArray = decodedCookie.split(";");
@@ -82,6 +78,11 @@ export const AuthProvider = ({ children }) => {
     console.log("No token found in cookies.");
     return null; // Return null if the token is not found
   };
+
+export const AuthProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const initialized = useRef(false);
+
 
   const initialize = async () => {
     console.log("initialize run");
