@@ -18,7 +18,7 @@ import InputMask from "react-input-mask";
 import { FieldArray, Formik } from "formik";
 import React, { useState, useCallback, Fragment, useEffect } from "react";
 import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
-import { saveContactApi, updateContactApi } from "src/network/api";
+import { saveContactApi, updateContactApi } from "src/network/contacts-api";
 import contactSchema from "./contacts-schema";
 import { fetchContacts } from "src/store/reducers/contacts/thunks";
 import { useDispatch } from "react-redux";

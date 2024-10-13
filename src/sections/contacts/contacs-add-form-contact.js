@@ -20,7 +20,7 @@ import {
 } from "@mui/material";
 import { FieldArray, Formik } from "formik";
 import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
-import { saveContactApi, updateContactApi } from "src/network/api";
+import { saveContactApi, updateContactApi } from "src/network/claims-api";
 import { addContactToStore, updateContactInStore } from "src/store/reducers/contacts/thunks";
 
 import { useDispatch } from "react-redux";

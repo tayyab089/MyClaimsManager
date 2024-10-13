@@ -1,5 +1,5 @@
+import { getContactsApi } from 'src/network/contacts-api';
 import { SET_CONTACTS, REMOVE_CONTACTS, IS_FETCHING_CONTACTS } from "./actions";
-import { getContactsApi } from "src/network/api";
 
 import { sortContacts } from "src/utils/sort-data";
 
