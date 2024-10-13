@@ -36,23 +36,25 @@ const Page = () => {
   const router = useRouter();
   const { fileNo } = router.query;
 
-  const getClaim = async (fileNo) => {
-    setIsLoading(true);
-    setIsError(false);
-    try {
-      const { data } = await getSingleClaimApi(fileNo);
-      console.log(data);
-      setClaim(data);
-    } catch (error) {
-      setIsError(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(async () => {
-    if (fileNo) getClaim(fileNo);
+  useEffect(() => {
+    const fetchClaim = async () => {
+      if (fileNo) {
+        setIsLoading(true);
+        setIsError(false);
+        try {
+          const { data } = await getSingleClaimApi(fileNo);
+          console.log(data);
+          setClaim(data);
+        } catch (error) {
+          setIsError(true);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+    fetchClaim();
   }, [fileNo]);
+  
 
   useEffect(() => {
     if (claim?.fileNo) {
