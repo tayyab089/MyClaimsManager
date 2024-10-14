@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useReducer, useRef } from "react";
 import PropTypes from "prop-types";
-import { signInApi, signUpApi, validateTokenApi, verifyUserApi } from "../network/auth-api";
+import { signInApi, signUpApi, validateTokenApi, verifyUserApi, requestPasswordResetApi, forgotPasswordApi} from "../network/auth-api";
 
 const HANDLERS = {
   INITIALIZE: "INITIALIZE",
@@ -63,49 +63,48 @@ const reducer = (state, action) =>
 
 export const AuthContext = createContext(null);
 
-  export const getTokenCookies = () => {
-    const name = "token=";
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const cookieArray = decodedCookie.split(";");
+export const getTokenCookies = () => {
+  const name = "token=";
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const cookieArray = decodedCookie.split(";");
 
-    for (let i = 0; i < cookieArray.length; i++) {
-      let cookie = cookieArray[i].trim();
-      if (cookie.indexOf(name) === 0) {
-        return cookie.substring(name.length, cookie.length);
-      }
+  for (let i = 0; i < cookieArray.length; i++) {
+    let cookie = cookieArray[i].trim();
+    if (cookie.indexOf(name) === 0) {
+      return cookie.substring(name.length, cookie.length);
     }
+  }
 
-    console.log("No token found in cookies.");
-    return null; // Return null if the token is not found
-  };
+  console.log("No token found in cookies.");
+  return null; // Return null if the token is not found
+};
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const initialized = useRef(false);
 
-
   const initialize = async () => {
     console.log("initialize run");
-  
+
     // Prevent re-initialization
     if (initialized.current) {
       return;
     }
-  
+
     initialized.current = true;
-  
+
     // Get the token from cookies
     const token = getTokenCookies();
-  
+
     // If no token exists, dispatch to finish loading and exit
     if (!token) {
       dispatch({ type: HANDLERS.INITIALIZE }); // Finish loading if no token
       return;
     }
-  
+
     try {
       const response = await validateTokenApi(token);
-  
+
       if (response.data.type === "success") {
         const user = {
           name: response.data.value?.Username || null, // Using optional chaining
@@ -132,7 +131,6 @@ export const AuthProvider = ({ children }) => {
       dispatch({ type: HANDLERS.INITIALIZE }); // Dispatch to finish loading on error
     }
   };
-  
 
   useEffect(() => {
     initialize();
@@ -227,6 +225,61 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const sendPasswordReset = async (email) => {
+    try {
+      const response = await requestPasswordResetApi({ email });
+      dispatch({
+        type: HANDLERS.SIGN_UP,
+        payload: email,
+      });
+      if (response.data.type === "success") return true;
+    } catch (error) {
+      console.error(error);
+
+      if (error.response) {
+        const { status, data } = error.response;
+
+        const errorMessage =
+          data?.error?.message || "An unexpected error occurred. Please try again.";
+
+        switch (status) {
+          case 400:
+            throw new Error(errorMessage);
+          default:
+            throw new Error(errorMessage);
+        }
+      } else {
+        throw new Error("Network error: Please check your connection and try again.");
+      }
+    }
+  };
+
+  const forgotPassword = async (email, newPassword, code) => {
+    try {
+      const response = await forgotPasswordApi({ email, newPassword, code });
+      if (response.data.type === "success") return true;
+    } catch (error) {
+      console.error(error);
+  
+      if (error.response) {
+        const { status, data } = error.response;
+  
+        const errorMessage =
+          data?.message || "Incorrect Code. Please try again.";
+  
+        switch (status) {
+          case 400:
+            throw new Error(errorMessage); // Throws the specific error message for client errors
+          default:
+            throw new Error(errorMessage); // Throws a default error message for other status codes
+        }
+      } else {
+        throw new Error("Network error: Please check your connection and try again.");
+      }
+    }
+  };
+  
+
   const signOut = () => {
     deleteCookie("token");
     dispatch({ type: HANDLERS.SIGN_OUT });
@@ -240,6 +293,8 @@ export const AuthProvider = ({ children }) => {
         signUp,
         signOut,
         verifyUser,
+        sendPasswordReset,
+        forgotPassword
       }}
     >
       {children}

@@ -9,7 +9,7 @@ import { ContactsSearch } from "src/sections/contacts/contacts-search";
 import { ContactsAdd } from "src/sections/contacts/contacs-add";
 import { ContactsView } from "src/sections/contacts/contacts-view";
 import { applyPagination } from "src/utils/apply-pagination";
-import { deleteContactApi } from "src/network/api";
+import { deleteContactApi } from "src/network/contacts-api";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts, deleteContactFromStore } from "src/store/reducers/contacts/thunks";
 import { CustomAlert } from "src/components/custom-alert";

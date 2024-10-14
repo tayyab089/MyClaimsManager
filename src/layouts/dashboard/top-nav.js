@@ -40,16 +40,7 @@ export const TopNav = (props) => {
   const is_forms = router.pathname === "/forms";
 
   const handleClose = async () => {
-    if (is_forms) {
-      const customTitle = "Confirm Back";
-      const customMessage = `Are you sure? Any Unsaved Changes will be lost`;
-
-      const ans = await confirmDialog(customTitle, customMessage);
-
-      ans ? router.back() : console.log("Back Canceled");
-    } else {
-      router.back();
-    }
+    router.back();
   };
 
   return (

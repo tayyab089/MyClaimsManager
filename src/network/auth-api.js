@@ -40,3 +40,24 @@ export const verifyUserApi = async (data) => {
     throw error; // Pass the error to the caller
   }
 };
+
+export const requestPasswordResetApi = async (data) => {
+  try {
+    const response = await api.post('/auth/request-password-reset', data, getHeadersConfig());
+    return response;
+  } catch (error) {
+    console.error("User verification error:", error.message);
+    throw error; 
+  }
+};
+
+
+export const forgotPasswordApi = async (data) => {
+  try {
+    const response = await api.post('/auth/forgot-password', data, getHeadersConfig());
+    return response;
+  } catch (error) {
+    console.error("User verification error:", error.message);
+    throw error; 
+  }
+};

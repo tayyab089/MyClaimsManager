@@ -42,9 +42,14 @@ export const updateFormApi = async (data) => {
 
 export const emailFormApi = async (data) => {
   try {
-    const response = await api.post("forms/email", data, getPDFHeadersConfig());
+    const response = await api.post("forms/email", data, {
+      headers: {
+        ...getSecureHeadersConfig().headers,
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response;
   } catch (error) {
-    console.log(error.message);
+    console.log("Error in emailFormApi:", error.response ? error.response.data : error.message);
   }
 };
