@@ -12,6 +12,7 @@ import {
   Typography,
   IconButton,
   InputAdornment,
+  CircularProgress,
 } from "@mui/material";
 import { useAuthContext } from "src/contexts/auth-context";
 import { Layout as AuthLayout } from "src/layouts/auth/layout";
