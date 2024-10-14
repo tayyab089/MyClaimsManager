@@ -1,8 +1,8 @@
-import { api, getHeadersConfig, getSecureHeadersConfig } from "./api";
+import { api, getSecureHeadersConfig } from "./api";
 
 export const saveClaimApi = async (data) => {
   try {
-    const response = await api.post("claims", data, getHeadersConfig());
+    const response = await api.post("claims", data, getSecureHeadersConfig());
     return response;
   } catch (error) {
     console.log(error.message);
@@ -33,7 +33,7 @@ export const deleteClaimApi = async (data) => {
   console.log(data);
   try {
     const response = await api.delete(`claims/${data.claim.fileNo}`, {
-      ...getHeadersConfig(),
+      ...getSecureHeadersConfig(),
       data: data,
     });
     return response;
@@ -44,7 +44,7 @@ export const deleteClaimApi = async (data) => {
 
 export const updateClaimApi = async (data) => {
   try {
-    const response = await api.patch("claims", data, getHeadersConfig());
+    const response = await api.patch("claims", data, getSecureHeadersConfig());
     return response;
   } catch (error) {
     console.log(error.message);

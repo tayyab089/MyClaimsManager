@@ -10,6 +10,7 @@ export const getContactsApi = async () => {
 };
 
 export const saveContactApi = async (data) => {
+  console.log(getSecureHeadersConfig())
   try {
     const response = await api.post("contacts", data, getSecureHeadersConfig());
     return response;

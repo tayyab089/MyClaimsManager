@@ -77,12 +77,7 @@ const Page = () => {
   const componentRef = useRef();
 
   const handleClose = async () => {
-    const customTitle = "Confirm Back";
-    const customMessage = `Are you sure? Any Unsaved Changes will be lost`;
-
-    const ans = await confirmDialog(customTitle, customMessage);
-
-    ans ? router.back() : console.log("Back Canceled");
+    router.back()
   };
 
   // Print Function ==============================

@@ -1,8 +1,8 @@
-import { api, getHeadersConfig, getPDFHeadersConfig, getSecureHeadersConfig } from "./api";
+import { api, getSecureHeadersConfig } from "./api";
 
 export const saveFormApi = async (data) => {
   try {
-    const response = await api.post("forms", data, getHeadersConfig());
+    const response = await api.post("forms", data, getSecureHeadersConfig());
     return response;
   } catch (error) {
     console.log(error.message);
@@ -10,9 +10,8 @@ export const saveFormApi = async (data) => {
 };
 
 export const getFormApi = async (claimfileNo) => {
-  const userId = "fe5daa66-05c0-4e48-9235-95ae370ded9d";
   try {
-    const response = await api.get(`forms/user/${userId}/claim/${claimfileNo}`, getSecureHeadersConfig());
+    const response = await api.get(`forms/claim/${claimfileNo}`, getSecureHeadersConfig());
     return response;
   } catch (error) {
     console.log(error.message);
@@ -23,7 +22,7 @@ export const deleteFormApi = async (data) => {
   console.log(data);
   try {
     const response = await api.delete(`forms/${data.form.formId}`, {
-      ...getHeadersConfig(),
+      ...getSecureHeadersConfig(),
       data: data,
     });
     return response;
@@ -34,7 +33,7 @@ export const deleteFormApi = async (data) => {
 
 export const updateFormApi = async (data) => {
   try {
-    const response = await api.patch("forms", data, getHeadersConfig());
+    const response = await api.patch("forms", data, getSecureHeadersConfig());
     return response;
   } catch (error) {
     console.log(error.message);
