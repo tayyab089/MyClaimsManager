@@ -8,7 +8,7 @@ export const api = axios.create({
   baseURL:
     process.env.NODE_ENV == "development"
       ? "http://localhost:3001/"
-      : "https://s4r7rz1w2m.execute-api.us-east-1.amazonaws.com/dev",
+      : "https://9izta92tph.execute-api.us-east-1.amazonaws.com/dev",
   // baseURL: "http://localhost:3001/",
 });
 
