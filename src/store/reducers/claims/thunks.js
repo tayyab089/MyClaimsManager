@@ -12,7 +12,6 @@ export const fetchClaims = (refreshDataCallback) => async (dispatch) => {
       dispatch(SET_CLAIMS(sortClaims(response.data.data)));
     }
   } catch (error) {
-    console.log(error);
   } finally {
     dispatch(IS_FETCHING_CLAIMS(false));
     if (typeof refreshDataCallback === "function") {
@@ -28,9 +27,7 @@ export const addFormsDataToClaim = (fileNo, formName) => async (dispatch, getSta
   const updatedData = { type: formName, updated: new Date(), createdBy: "Howie Guttman" };
 
   const updatedClaims = currentClaims.map((claim) => {
-    console.log(claim.fileNo, fileNo);
     if (claim.fileNo == fileNo) {
-      console.log("Match Found, I Ran");
       return { ...claim, forms: [...claim.forms, updatedData] };
     }
     return claim;

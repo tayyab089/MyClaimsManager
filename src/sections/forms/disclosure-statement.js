@@ -29,7 +29,6 @@ export const DisclosureStatement = ({ formRef, claim, form, formName }) => {
   });
 
   const onSubmit = async (values) => {
-    console.log(values);
     if (form) {
       const response = await updateFormApi({
         form: { ...form, formData: values, name: formName },

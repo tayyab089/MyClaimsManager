@@ -5,10 +5,7 @@ import { getTokenCookies } from 'src/contexts/auth-context';
 // import store from "../store";
 
 export const api = axios.create({
-  baseURL:
-    process.env.NODE_ENV == "development"
-      ? "http://localhost:3001/"
-      : "https://9izta92tph.execute-api.us-east-1.amazonaws.com/dev",
+  baseURL: "https://9izta92tph.execute-api.us-east-1.amazonaws.com/dev"
   // baseURL: "http://localhost:3001/",
 });
 

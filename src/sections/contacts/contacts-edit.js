@@ -47,7 +47,6 @@ export const ContactsEdit = ({ open, handleClose, item, isEdit, setExpand }) => 
   // Submit Function ==================================================
   const handleSubmit = useCallback(
     async (values, setSubmitting) => {
-      console.log(values);
       if (isEdit) {
         const response = await updateContactApi({ contact: values });
         if (response && response.data.type !== "error") {
@@ -103,7 +102,6 @@ export const ContactsEdit = ({ open, handleClose, item, isEdit, setExpand }) => 
       >
         {({ values, errors, handleBlur, handleChange, handleSubmit, isSubmitting, isValid }) => (
           <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-            {console.log(errors)}
             <Card sx={{ backgroundColor: "#3FC79A" }}>
               <CardHeader />
               <CardContent sx={{ pt: 0 }}>

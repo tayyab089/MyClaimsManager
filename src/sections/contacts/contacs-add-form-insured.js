@@ -91,7 +91,6 @@ export const ContactsAddFormInsured = ({
   // Submit Function ==================================================
   const handleSubmit = useCallback(
     async (values, setSubmitting) => {
-      console.log(values);
       if (isEdit) {
         const response = await updateContactApi({ contact: { ...values, category: "Insured" } });
         if (response && response.data.type !== "error") {
@@ -132,8 +131,6 @@ export const ContactsAddFormInsured = ({
               id="Insured"
               name={`insured.${ix}.name`}
               onChange={(e, v) => {
-                console.log("I Ran");
-                console.log(v);
                 if (v) {
                   if (v?.id !== "") {
                     setFieldValue(`insured.${ix}.name`, v?.label);
@@ -144,7 +141,6 @@ export const ContactsAddFormInsured = ({
                 }
               }}
               onInputChange={(e, v) => {
-                console.log(v);
                 setFieldValue(`insured.${ix}.name`, v);
                 setFieldValue(`insured.${ix}.id`, "");
               }}
@@ -173,7 +169,6 @@ export const ContactsAddFormInsured = ({
         >
           {({ values, errors, handleBlur, handleChange, handleSubmit, isSubmitting, isValid }) => (
             <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-              {console.log(errors)}
               <Card sx={{ pt: 0, backgroundColor: "#ECFDFF", border: "2px solid black" }}>
                 {/* <CardHeader
                 subheader=""

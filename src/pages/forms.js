@@ -100,7 +100,6 @@ const Page = () => {
       };
       html2pdf().from(element).set(opt).save();
     } catch (e) {
-      console.log(e);
     } finally {
       setGeneratingPDF(false);
     }
@@ -189,7 +188,6 @@ const Page = () => {
           break;
       }
     } catch (e) {
-      console.log(e);
     } finally {
       setSavingForm(false);
     }
@@ -223,7 +221,6 @@ const Page = () => {
         }
       }
     } catch (e) {
-      console.log(e);
     } finally {
       // setDeletingForm(false);
     }

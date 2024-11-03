@@ -54,7 +54,6 @@ const Page = () => {
   const deleteClaim = async (claim) => {
     try {
       const response = await deleteClaimApi({ claim: claim });
-      console.log(response);
       if (response && response.data.type !== "error") {
         dispatch(deleteClaimFromStore(claim));
         dispatch(
@@ -66,7 +65,6 @@ const Page = () => {
         );
       }
     } catch (e) {
-      console.log(e);
     }
   };
 
@@ -92,16 +90,13 @@ const Page = () => {
 
   // Contact Modal================================
   const handleContactClick = (item) => {
-    console.log(item);
     const foundContact = contactsData.find((x) => x.id === item.id);
     if (foundContact) {
       setContactsModalData(foundContact);
       setIsEdit(true);
     } else {
-      // console.log("Contact Not Found, You might have deleted it");
       setContactsModalData({ ...emptyValues, name: item.name });
       setOpenContactsModal(true);
-      // setIsEdit(true);
     }
   };
 
@@ -118,7 +113,6 @@ const Page = () => {
   const [filteredClaims, setFilteredClaims] = useState([]);
 
   const filterData = (val) => {
-    console.log(claims);
     const lowercaseVal = val.toLowerCase();
     const filteredData = claims.filter(
       (obj) =>
@@ -146,11 +140,9 @@ const Page = () => {
 
   useEffect(() => {
     if (claimsData.length == 0 || contactsData.length == 0) {
-      console.log("Data Fetched");
       dispatch(fetchClaims());
       dispatch(fetchContacts());
     } else {
-      console.log("Data Not Fetched");
     }
   }, []);
 

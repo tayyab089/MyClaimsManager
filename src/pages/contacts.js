@@ -70,7 +70,6 @@ const Page = () => {
         );
       }
     } catch (e) {
-      console.log(e);
     }
   };
 
@@ -128,7 +127,6 @@ const Page = () => {
         obj?.category?.toLowerCase().includes(lowercaseVal) ||
         obj?.businessName?.toLowerCase().includes(lowercaseVal)
     );
-    console.log(filteredData);
     setSearchValue(val);
     setFilteredContacts(filteredData);
   };
@@ -137,9 +135,7 @@ const Page = () => {
   useEffect(() => {
     if (contactsData.length == 0) {
       dispatch(fetchContacts());
-      console.log("Contacts Fetched");
     } else {
-      console.log("Contacts Not Fetched");
     }
   }, []);
 

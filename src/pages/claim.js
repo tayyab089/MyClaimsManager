@@ -43,7 +43,6 @@ const Page = () => {
         setIsError(false);
         try {
           const { data } = await getSingleClaimApi(fileNo);
-          console.log(data);
           setClaim(data);
         } catch (error) {
           setIsError(true);
@@ -61,9 +60,7 @@ const Page = () => {
       const isValuePresent = formsData.some((obj) => obj.claimfileNo === claim?.fileNo);
       if (formsData.length == 0 || !isValuePresent) {
         dispatch(fetchForms(claim?.fileNo));
-        console.log("Forms Fetched");
       } else {
-        console.log("Forms Not Fetched");
       }
     }
   }, [claim, dispatch]);

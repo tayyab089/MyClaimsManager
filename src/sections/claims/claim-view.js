@@ -108,11 +108,9 @@ export const ClaimView = ({ item }) => {
 
     const ans = await confirmDelete(customTitle, customMessage);
     if (ans) {
-      console.log("Deleting Claim");
       deleteClaimApi({ claim: claim });
       router.push("/claims");
     } else {
-      console.log("dont delete");
     }
   };
 

@@ -45,7 +45,6 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
   });
 
   const onSubmit = async (values) => {
-    console.log(values);
     if (form) {
       const response = await updateFormApi({
         form: { ...form, formData: values, name: formName },
@@ -88,7 +87,6 @@ export const SubrogationReceipt = ({ formRef, claim, form, formName }) => {
     if (form) {
       setInitialValues(form?.formData);
     } else {
-      console.log(claim);
       setInitialValues({
         a: claim?.insurance?.company,
         b: "",

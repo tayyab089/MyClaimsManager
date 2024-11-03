@@ -74,8 +74,6 @@ export const getTokenCookies = () => {
       return cookie.substring(name.length, cookie.length);
     }
   }
-
-  console.log("No token found in cookies.");
   return null; // Return null if the token is not found
 };
 
@@ -84,7 +82,6 @@ export const AuthProvider = ({ children }) => {
   const initialized = useRef(false);
 
   const initialize = async () => {
-    console.log("initialize run");
 
     // Prevent re-initialization
     if (initialized.current) {
@@ -142,7 +139,6 @@ export const AuthProvider = ({ children }) => {
       document.cookie = `token=${encodeURIComponent(
         token
       )}; expires=${expiresDate.toUTCString()}; path=/`;
-      console.log("Cookie saved successfully!");
     } catch (error) {
       console.error("Failed to save cookie:", error);
     }

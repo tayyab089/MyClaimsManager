@@ -63,7 +63,6 @@ export const InsuraceForms = ({ item, formsData, isFormLoading }) => {
         );
       }
     } else {
-      console.log("dont delete");
     }
   };
 

@@ -57,7 +57,6 @@ export const ClaimsTable = (props) => {
     if (ans) {
       deleteClaim(claim);
     } else {
-      console.log("dont delete");
     }
   };
 

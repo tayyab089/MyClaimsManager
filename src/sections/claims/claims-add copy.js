@@ -114,7 +114,6 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
 
   const handleSubmit = useCallback(
     async (values, setSubmitting) => {
-      console.log(values);
       if (item?.fileNo) {
         const response = await updateClaimApi({ claim: values });
         if (response && response.data.type !== "error") {
@@ -128,7 +127,6 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
         }
       } else {
         const response = await saveClaimApi({ claim: values });
-        console.log(response);
         if (response && response.data.type !== "error") {
           dispatch(
             setAlertData({ open: true, message: response.data.message, type: response.data.type })

@@ -11,7 +11,6 @@ export const fetchForms = (fileNo) => async (dispatch) => {
       dispatch(SET_FORMS(response.data.data));
     }
   } catch (error) {
-    console.log(error);
   } finally {
     dispatch(IS_FETCHING_FORMS(false));
   }
@@ -38,9 +37,6 @@ export const updateFormInStore = (form) => async (dispatch, getState) => {
       return item;
     }
   });
-
-  console.log(updatedforms);
-
   dispatch(SET_FORMS(updatedforms));
 };
 

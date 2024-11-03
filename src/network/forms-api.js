@@ -5,7 +5,6 @@ export const saveFormApi = async (data) => {
     const response = await api.post("forms", data, getSecureHeadersConfig());
     return response;
   } catch (error) {
-    console.log(error.message);
   }
 };
 
@@ -14,12 +13,10 @@ export const getFormApi = async (claimfileNo) => {
     const response = await api.get(`forms/claim/${claimfileNo}`, getSecureHeadersConfig());
     return response;
   } catch (error) {
-    console.log(error.message);
   }
 };
 
 export const deleteFormApi = async (data) => {
-  console.log(data);
   try {
     const response = await api.delete(`forms/${data.form.formId}`, {
       ...getSecureHeadersConfig(),
@@ -27,7 +24,6 @@ export const deleteFormApi = async (data) => {
     });
     return response;
   } catch (error) {
-    console.log(error.message);
   }
 };
 
@@ -36,7 +32,6 @@ export const updateFormApi = async (data) => {
     const response = await api.patch("forms", data, getSecureHeadersConfig());
     return response;
   } catch (error) {
-    console.log(error.message);
   }
 };
 
@@ -50,6 +45,5 @@ export const emailFormApi = async (data) => {
     });
     return response;
   } catch (error) {
-    console.log("Error in emailFormApi:", error.response ? error.response.data : error.message);
   }
 };

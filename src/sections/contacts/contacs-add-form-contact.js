@@ -92,7 +92,6 @@ export const ContactsAddFormContact = ({
   // Submit Function ==================================================
   const handleSubmit = useCallback(
     async (values, setSubmitting) => {
-      console.log(values);
       if (isEdit) {
         const response = await updateContactApi({ contact: values });
         if (response && response.data.type !== "error") {
@@ -165,7 +164,6 @@ export const ContactsAddFormContact = ({
                 }
               }}
               onInputChange={(e, v) => {
-                console.log(v);
                 setFieldValue(`contacts.${ix}.contact.name`, v);
                 setFieldValue(`contacts.${ix}.contact.id`, "");
               }}
@@ -205,7 +203,6 @@ export const ContactsAddFormContact = ({
             setFieldValue,
           }) => (
             <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-              {console.log(errors)}
               <Card sx={{ pt: 0, backgroundColor: "#ECFDFF", border: "2px solid black" }}>
                 {/* <CardHeader
                 subheader=""

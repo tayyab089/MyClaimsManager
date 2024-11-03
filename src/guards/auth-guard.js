@@ -17,7 +17,6 @@ export const AuthGuard = (props) => {
       if (isLoading) return;
 
       if (!isAuthenticated) {
-        console.log("Not authenticated, redirecting");
         await router.replace({
           pathname: "/auth/login",
           query: router.asPath !== "/" ? { continueUrl: router.asPath } : undefined,

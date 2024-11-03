@@ -56,8 +56,6 @@ export const ContactsAddForm = ({
   // State Variables =================================================
   const [expand, setExpand] = useState(false);
 
-  console.log("What is happening???");
-
   return (
     <Fragment>
       {!expand ? (
@@ -69,8 +67,6 @@ export const ContactsAddForm = ({
               id="Insured"
               name={`insured.${ix}.name`}
               onChange={(e, v) => {
-                console.log("I Ran");
-                console.log(v);
                 if (v) {
                   if (v?.id !== "") {
                     const foundContact = contactsData.find((x) => x.id === v?.id);
@@ -86,7 +82,6 @@ export const ContactsAddForm = ({
                 }
               }}
               onInputChange={(e, v) => {
-                console.log(v);
                 setFieldValue(`insured.${ix}.name`, v);
                 setFieldValue(`insured.${ix}.id`, "");
               }}
@@ -121,8 +116,6 @@ export const ContactsAddForm = ({
                     id="Insured"
                     name={`insured.${ix}.name`}
                     onChange={(e, v) => {
-                      console.log("I Ran");
-                      console.log(v);
                       if (v) {
                         if (v?.id !== "") {
                           const foundContact = contactsData.find((x) => x.id === v?.id);
@@ -138,7 +131,6 @@ export const ContactsAddForm = ({
                       }
                     }}
                     onInputChange={(e, v) => {
-                      console.log(v);
                       setFieldValue(`insured.${ix}.name`, v);
                       setFieldValue(`insured.${ix}.id`, "");
                     }}

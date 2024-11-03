@@ -5,22 +5,18 @@ export const getContactsApi = async () => {
     const response = await api.get("contacts", getSecureHeadersConfig());
     return response;
   } catch (error) {
-    console.log(error.message);
   }
 };
 
 export const saveContactApi = async (data) => {
-  console.log(getSecureHeadersConfig())
   try {
     const response = await api.post("contacts", data, getSecureHeadersConfig());
     return response;
   } catch (error) {
-    console.log(error.message);
   }
 };
 
 export const deleteContactApi = async (data) => {
-  console.log(data);
   try {
     const response = await api.delete(`contacts/${data.contact.id}`, {
       ...getSecureHeadersConfig(),
@@ -28,7 +24,6 @@ export const deleteContactApi = async (data) => {
     });
     return response;
   } catch (error) {
-    console.log(error.message);
   }
 };
 
@@ -37,6 +32,5 @@ export const updateContactApi = async (data) => {
     const response = await api.patch("contacts", data, getSecureHeadersConfig());
     return response;
   } catch (error) {
-    console.log(error.message);
   }
 };

@@ -33,7 +33,6 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName }) => {
   });
 
   const onSubmit = async (values) => {
-    console.log(values);
     if (form) {
       const response = await updateFormApi({
         form: { ...form, formData: values, name: formName },
@@ -76,7 +75,6 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName }) => {
     if (form) {
       setInitialValues(form?.formData);
     } else {
-      console.log(claim);
       setInitialValues({
         a: claim?.insured?.map((insured) => insured.name).join(", "),
         b: claim?.insurance?.policyNo,

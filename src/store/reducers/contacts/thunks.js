@@ -11,7 +11,6 @@ export const fetchContacts = (refreshDataCallback) => async (dispatch) => {
       dispatch(SET_CONTACTS(sortContacts(response.data.data)));
     }
   } catch (error) {
-    console.log(error);
   } finally {
     dispatch(IS_FETCHING_CONTACTS(false));
     if (typeof refreshDataCallback === "function") {
