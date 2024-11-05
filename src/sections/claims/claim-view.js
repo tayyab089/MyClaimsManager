@@ -34,7 +34,6 @@ const useOther = (contacts, claim) => {
 };
 
 export const ClaimView = ({ item }) => {
-
   const formatDate = (date) => {
     return date ? format(new Date(date), "MM-dd-yyyy") : "";
   };
@@ -137,6 +136,15 @@ export const ClaimView = ({ item }) => {
     }
   }, [isEdit]);
 
+  const insuranceDetails = [
+    { label: "Insurance Company", value: item?.insurance?.company },
+    { label: "File #", value: item?.insurance?.fileNo },
+    { label: "Claim #", value: item?.insurance?.claimNo },
+    { label: "Policy #", value: item?.insurance?.policyNo },
+    { label: "Issued", value: formatDate(item?.insurance?.issueDate) },
+    { label: "Expiration", value: formatDate(item?.insurance?.expiryDate) },
+  ];
+
   return (
     <Box sx={style} ref={componentRef}>
       <ClaimPrintView
@@ -212,19 +220,19 @@ export const ClaimView = ({ item }) => {
         {/* Loss Data */}
         <Grid xs={10} md={12} sx={subheaderStyles}></Grid>
         <Grid xs={10} md={4}>
-          <Typography variant="formTag">Loss Location: </Typography>
+          <Typography variant="formText">Loss Location: </Typography>
         </Grid>
         <Grid xs={10} md={8}>
           <Typography variant="formText">{item?.lossLocation}</Typography>
         </Grid>
         <Grid xs={10} md={4}>
-          <Typography variant="formTag">Type of Loss: </Typography>
+          <Typography variant="formText">Type of Loss: </Typography>
         </Grid>
         <Grid xs={10} md={8}>
           <Typography variant="formText">{item?.lossType}</Typography>
         </Grid>
         <Grid xs={10} md={4}>
-          <Typography variant="formTag">Date of Loss: </Typography>
+          <Typography variant="formText">Date of Loss: </Typography>
         </Grid>
         <Grid xs={10} md={8}>
           <Typography variant="formText">{formatDate(item?.lossDate)}</Typography>
@@ -232,38 +240,47 @@ export const ClaimView = ({ item }) => {
 
         {/* Insurance Company Data */}
         <Grid xs={10} md={12} sx={subheaderStyles}></Grid>
+        <Grid xs={10} md={12}>
+          <Typography variant="formTag">Insurance</Typography>
+        </Grid>
+
         <Grid xs={10} md={4}>
-          <Typography variant="formTag">Insurance Company: </Typography>
+          <Typography variant="formText">Company: </Typography>
         </Grid>
         <Grid xs={10} md={8}>
           <Typography variant="formText">{item?.insurance?.company}</Typography>
         </Grid>
+
         <Grid xs={10} md={4}>
-          <Typography variant="formTag">Flie #: </Typography>
-        </Grid>
-        <Grid xs={10} md={8}>
-          <Typography variant="formText">{item?.insurance?.fileNo}</Typography>
-        </Grid>
-        <Grid xs={10} md={4}>
-          <Typography variant="formTag">Claim #: </Typography>
-        </Grid>
-        <Grid xs={10} md={8}>
-          <Typography variant="formText">{item?.insurance?.claimNo}</Typography>
-        </Grid>
-        <Grid xs={10} md={4}>
-          <Typography variant="formTag">Policy #: </Typography>
+          <Typography variant="formText">Policy #: </Typography>
         </Grid>
         <Grid xs={10} md={8}>
           <Typography variant="formText">{item?.insurance?.policyNo}</Typography>
         </Grid>
+
         <Grid xs={10} md={4}>
-          <Typography variant="formTag">Issued: </Typography>
+          <Typography variant="formText">Claim #: </Typography>
+        </Grid>
+        <Grid xs={10} md={8}>
+          <Typography variant="formText">{item?.insurance?.claimNo}</Typography>
+        </Grid>
+
+        <Grid xs={10} md={4}>
+          <Typography variant="formText">Issued: </Typography>
         </Grid>
         <Grid xs={10} md={8}>
           <Typography variant="formText">{formatDate(item?.insurance?.issueDate)}</Typography>
         </Grid>
+
         <Grid xs={10} md={4}>
-          <Typography variant="formTag">Expiration: </Typography>
+          <Typography variant="formText">Flie #: </Typography>
+        </Grid>
+        <Grid xs={10} md={8}>
+          <Typography variant="formText">{item?.insurance?.fileNo}</Typography>
+        </Grid>
+
+        <Grid xs={10} md={4}>
+          <Typography variant="formText">Expiration: </Typography>
         </Grid>
         <Grid xs={10} md={8}>
           <Typography variant="formText">{formatDate(item?.insurance?.expiryDate)}</Typography>
@@ -272,7 +289,7 @@ export const ClaimView = ({ item }) => {
         {/* Policy Coverages */}
         <Grid xs={10} md={12} sx={subheaderStyles}></Grid>
         <Grid xs={10} md={12}>
-          <Typography variant="formTag">Policy Coverages: </Typography>
+          <Typography variant="formTag">Policy Coverages </Typography>
         </Grid>
         {item?.policyCoverage?.map((coverage, index) => (
           <Fragment key={index}>
@@ -288,7 +305,7 @@ export const ClaimView = ({ item }) => {
         {/* Contacts */}
         <Grid xs={10} md={12} sx={subheaderStyles}></Grid>
         <Grid xs={10} md={12}>
-          <Typography variant="formTag">Contacts: </Typography>
+          <Typography variant="formTag">Contacts </Typography>
         </Grid>
         {item?.contacts?.map((contact, index) => (
           <Fragment key={index}>
