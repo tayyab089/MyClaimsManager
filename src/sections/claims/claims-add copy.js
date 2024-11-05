@@ -322,7 +322,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                       <Grid xs={12} sm={10} md={10}>
                         <TextField
                           fullWidth
-                          label="Address,City,State,Zip,Country"
+                          label="Address, City, State, Zip, Country"
                           name="lossLocation"
                           onChange={handleChange}
                           value={values.lossLocation}

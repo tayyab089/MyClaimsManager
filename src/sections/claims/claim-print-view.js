@@ -1,7 +1,12 @@
 /* eslint-disable react/jsx-key */
 import { Grid, Box, Typography, Button, useMediaQuery, Stack } from "@mui/material";
+import format from "date-fns/format";
 
-export const ClaimPrintView = ({ claim, insuredContacts, otherContacts, formatDate }) => {
+export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
+  const formatDate = (date) => {
+    return date ? format(new Date(date), "MM-dd-yyyy") : "";
+  };
+
   const content = [
     <div>
       <Typography variant="h4">{`Claim ${claim?.fileNo}`}</Typography>

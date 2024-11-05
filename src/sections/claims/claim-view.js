@@ -8,10 +8,8 @@ import useConfirm from "src/hooks/use-confirm";
 import { deleteClaimApi } from "src/network/claims-api";
 import { useRouter } from "next/router";
 import { useReactToPrint } from "react-to-print";
-
+import format from "date-fns/format";
 import { ClaimPrintView } from "./claim-print-view";
-
-import { formatDate } from "src/utils/format-date";
 
 const useInsured = (contacts, claim) => {
   return useMemo(() => {
@@ -36,6 +34,10 @@ const useOther = (contacts, claim) => {
 };
 
 export const ClaimView = ({ item }) => {
+
+  const formatDate = (date) => {
+    return date ? format(new Date(date), "MM-dd-yyyy") : "";
+  };
   const dispatch = useDispatch();
   const { contactsData } = useSelector((state) => state.contacts);
   const [openModal, setOpenModal] = useState(false);
@@ -141,7 +143,6 @@ export const ClaimView = ({ item }) => {
         claim={item}
         insuredContacts={insuredContacts}
         otherContacts={otherContacts}
-        formatDate={formatDate}
       />
       <Grid
         container
