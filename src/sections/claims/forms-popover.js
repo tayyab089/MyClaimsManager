@@ -15,7 +15,7 @@ export const FormsPopover = (props) => {
       }}
       onClose={onClose}
       open={open}
-      PaperProps={{ sx: { width: 200 } }}
+      PaperProps={{ sx: { width: 300 } }}
     >
       <Divider />
       <MenuList
