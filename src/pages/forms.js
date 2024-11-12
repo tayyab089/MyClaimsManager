@@ -51,12 +51,12 @@ import { DocumentTextIcon } from "@heroicons/react/24/outline";
 import { deleteFormApi, emailFormApi } from "src/network/forms-api";
 import { CustomAlert } from "src/components/custom-alert";
 import { setAlertData } from "src/store/reducers/alert/thunks";
+import { getSingleClaimApi } from 'src/network/claims-api';
 
 const Page = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { formType, fileNo, formId } = router.query;
-  const { claimsData } = useSelector((state) => state.claims);
   const { formsData } = useSelector((state) => state.forms);
   const [claim, setClaim] = useState({});
   const [form, setForm] = useState({});
@@ -77,7 +77,7 @@ const Page = () => {
   const componentRef = useRef();
 
   const handleClose = async () => {
-    router.back()
+    router.back();
   };
 
   // Print Function ==============================
@@ -153,7 +153,6 @@ const Page = () => {
 
   // Submit Function ===================================================
   const handleSubmit = async () => {
-    setSavingForm(true);
     try {
       switch (formType) {
         case "ProofOfLoss":
@@ -232,7 +231,13 @@ const Page = () => {
     switch (formType) {
       case "ProofOfLoss":
         return (
-          <ProofOfLoss formRef={ProofOfLossformRef} claim={claim} form={form} formName={formName} />
+          <ProofOfLoss
+            formRef={ProofOfLossformRef}
+            claim={claim}
+            form={form}
+            formName={formName}
+            setSavingForm={setSavingForm}
+          />
         );
       case "Regulation10":
         return (
@@ -242,6 +247,7 @@ const Page = () => {
             form={form}
             formName={formName}
             setForm={setForm}
+            setSavingForm={setSavingForm}
           />
         );
       case "CompensationAgreement":
@@ -251,6 +257,7 @@ const Page = () => {
             claim={claim}
             form={form}
             formName={formName}
+            setSavingForm={setSavingForm}
           />
         );
       case "DisclosureStatement":
@@ -260,6 +267,7 @@ const Page = () => {
             claim={claim}
             form={form}
             formName={formName}
+            setSavingForm={setSavingForm}
           />
         );
       case "CancellationNotice":
@@ -269,6 +277,7 @@ const Page = () => {
             claim={claim}
             form={form}
             formName={formName}
+            setSavingForm={setSavingForm}
           />
         );
       default:
@@ -278,15 +287,25 @@ const Page = () => {
             claim={claim}
             form={form}
             formName={formName}
+            setSavingForm={setSavingForm}
           />
         );
     }
   };
 
-  // useEffect Hooks
   useEffect(() => {
-    setClaim(claimsData.filter((item) => item.fileNo == fileNo)[0]);
-  }, []);
+    const fetchClaim = async () => {
+      if (fileNo) {
+        try {
+          const { data } = await getSingleClaimApi(fileNo);
+          setClaim(data);
+        } catch (error) {
+        } finally {
+        }
+      }
+    };
+    fetchClaim();
+  }, [fileNo]);
 
   useEffect(() => {
     setForm(formsData.filter((item) => item.formId == formId)[0]);
@@ -378,37 +397,41 @@ const Page = () => {
             sx={footerStyles}
           >
             <Stack direction="row" justifyContent="flex-start" alignItems="center">
-              <Button
-                variant="outlined"
-                size="small"
-                color="primary"
-                startIcon={<TrashIcon style={{ height: 20, width: 20 }} />}
-                onClick={() => handleDelete()}
-                disabled={deletingForm}
-              >
-                {deletingForm ? (
-                  <CircularProgress style={{ width: 24, height: 24, color: "primary" }} />
-                ) : (
-                  "DELETE"
-                )}
-              </Button>
+              {!savingForm && (
+                <Button
+                  variant="outlined"
+                  size="small"
+                  color="primary"
+                  startIcon={<TrashIcon style={{ height: 20, width: 20 }} />}
+                  onClick={() => handleDelete()}
+                  disabled={deletingForm}
+                >
+                  {deletingForm ? (
+                    <CircularProgress style={{ width: 24, height: 24, color: "primary" }} />
+                  ) : (
+                    "DELETE"
+                  )}
+                </Button>
+              )}
             </Stack>
             <Stack direction="row" justifyContent="space-between" alignItems="center">
-              <Button
-                variant="contained"
-                size="small"
-                color="neutral"
-                sx={{ marginLeft: "20px" }}
-                onClick={() => handleClose()}
-              >
-                CLOSE
-              </Button>
+              {!savingForm && (
+                <Button
+                  variant="contained"
+                  size="small"
+                  color="neutral"
+                  sx={{ marginLeft: "20px" }}
+                  onClick={() => handleClose()}
+                >
+                  CLOSE
+                </Button>
+              )}
               <Button
                 variant="contained"
                 size="small"
                 color="primary"
                 sx={{ marginLeft: "20px" }}
-                onClick={() => handleSubmit()}
+                onClick={handleSubmit}
                 disabled={savingForm}
               >
                 {savingForm ? (

@@ -10,7 +10,7 @@ import { addFormToStore, updateFormInStore } from "src/store/reducers/forms/thun
 
 // const { format } = require("date-fns");
 
-export const Regulation10 = ({ formRef, claim, form, setForm, formName }) => {
+export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavingForm }) => {
   const dispatch = useDispatch();
   const [initialValues, setInitialValues] = useState({
     a: "",
@@ -33,42 +33,80 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName }) => {
   });
 
   const onSubmit = async (values) => {
-    if (form) {
-      const response = await updateFormApi({
-        form: { ...form, formData: values, name: formName },
-      });
-      if (response && response.data.type !== "error") {
-        dispatch(
-          setAlertData({ open: true, message: response.data.message, type: response.data.type })
-        );
-        dispatch(updateFormInStore({ ...form, formData: values, name: formName }));
+    setSavingForm(true); // Start loading state
+  
+    try {
+      let response;
+  
+      if (form) {
+        // Update form scenario
+        response = await updateFormApi({
+          form: { ...form, formData: values, name: formName },
+        });
+  
+        if (response && response.data.type !== "error") {
+          dispatch(
+            setAlertData({
+              open: true,
+              message: response.data.message,
+              type: response.data.type,
+            })
+          );
+          dispatch(updateFormInStore({ ...form, formData: values, name: formName }));
+        } else {
+          dispatch(
+            setAlertData({
+              open: true,
+              message: response?.data?.message,
+              type: response?.data?.type,
+            })
+          );
+        }
       } else {
-        dispatch(
-          setAlertData({ open: true, message: response?.data?.message, type: response?.data?.type })
-        );
+        // Save new form scenario
+        response = await saveFormApi({
+          form: {
+            formData: values,
+            type: "Regulation10",
+            claimfileNo: claim?.fileNo,
+            name: formName,
+          },
+        });
+  
+        if (response && response.data.type !== "error") {
+          dispatch(
+            setAlertData({
+              open: true,
+              message: response.data.message,
+              type: response.data.type,
+            })
+          );
+          dispatch(addFormToStore(response.data.value));
+          setForm(response.data.value); // Set the new form data
+        } else {
+          dispatch(
+            setAlertData({
+              open: true,
+              message: response?.data?.message,
+              type: response?.data?.type,
+            })
+          );
+        }
       }
-    } else {
-      const response = await saveFormApi({
-        form: {
-          formData: values,
-          type: "Regulation10",
-          claimfileNo: claim?.fileNo,
-          name: formName,
-        },
-      });
-      if (response && response.data.type !== "error") {
-        dispatch(
-          setAlertData({ open: true, message: response.data.message, type: response.data.type })
-        );
-        dispatch(addFormToStore(response.data.value));
-        setForm(response.data.value);
-      } else {
-        dispatch(
-          setAlertData({ open: true, message: response?.data?.message, type: response?.data?.type })
-        );
-      }
+    } catch (error) {
+      console.error("Error during form submission:", error);
+      dispatch(
+        setAlertData({
+          open: true,
+          message: "An unexpected error occurred during form submission.",
+          type: "error",
+        })
+      );
+    } finally {
+      setSavingForm(false); // End loading state
     }
   };
+  
 
   // useEffect Hooks
   useEffect(() => {

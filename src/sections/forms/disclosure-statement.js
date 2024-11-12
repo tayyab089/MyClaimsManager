@@ -10,7 +10,7 @@ import { addFormToStore, updateFormInStore } from "src/store/reducers/forms/thun
 
 // const { format } = require("date-fns");
 
-export const DisclosureStatement = ({ formRef, claim, form, formName }) => {
+export const DisclosureStatement = ({ formRef, claim, form, formName, setSavingForm }) => {
   const dispatch = useDispatch();
   const [initialValues, setInitialValues] = useState({
     a: "",
@@ -29,40 +29,58 @@ export const DisclosureStatement = ({ formRef, claim, form, formName }) => {
   });
 
   const onSubmit = async (values) => {
-    if (form) {
-      const response = await updateFormApi({
-        form: { ...form, formData: values, name: formName },
-      });
+    setSavingForm(true); // Set saving form to true before the API call starts (indicating loading)
+
+    try {
+      let response;
+
+      if (form) {
+        // If form exists, update it
+        response = await updateFormApi({
+          form: { ...form, formData: values, name: formName },
+        });
+      } else {
+        // If form doesn't exist, save it as a new form
+        response = await saveFormApi({
+          form: {
+            formData: values,
+            type: "CompensationAgreement",
+            claimfileNo: claim?.fileNo,
+            name: formName,
+          },
+        });
+      }
+
+      // Handle response and update state
       if (response && response.data.type !== "error") {
         dispatch(
-          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          setAlertData({
+            open: true,
+            message: response.data.message,
+            type: response.data.type,
+          })
         );
-        dispatch(updateFormInStore({ ...form, formData: values, name: formName }));
+        if (form) {
+          dispatch(updateFormInStore({ ...form, formData: values, name: formName }));
+        } else {
+          dispatch(addFormToStore(response.data.value));
+          setForm(response.data.value);
+        }
       } else {
         dispatch(
-          setAlertData({ open: true, message: response?.data?.message, type: response?.data?.type })
+          setAlertData({
+            open: true,
+            message: response?.data?.message,
+            type: response?.data?.type,
+          })
         );
       }
-    } else {
-      const response = await saveFormApi({
-        form: {
-          formData: values,
-          type: "DisclosureStatement",
-          claimfileNo: claim?.fileNo,
-          name: formName,
-        },
-      });
-      if (response && response.data.type !== "error") {
-        dispatch(
-          setAlertData({ open: true, message: response.data.message, type: response.data.type })
-        );
-        dispatch(addFormToStore(response.data.value));
-        setForm(response.data.value);
-      } else {
-        dispatch(
-          setAlertData({ open: true, message: response?.data?.message, type: response?.data?.type })
-        );
-      }
+    } catch (error) {
+      // Handle any errors that occur during the request
+      dispatch(setAlertData({ open: true, message: error.message, type: "error" }));
+    } finally {
+      // Set saving form to false after the API call finishes (either success or failure)
+      setSavingForm(false);
     }
   };
 
