@@ -51,7 +51,7 @@ import { DocumentTextIcon } from "@heroicons/react/24/outline";
 import { deleteFormApi, emailFormApi } from "src/network/forms-api";
 import { CustomAlert } from "src/components/custom-alert";
 import { setAlertData } from "src/store/reducers/alert/thunks";
-import { getSingleClaimApi } from 'src/network/claims-api';
+import { getSingleClaimApi } from "src/network/claims-api";
 
 const Page = () => {
   const router = useRouter();
@@ -72,6 +72,7 @@ const Page = () => {
   // Email Modal Variables
   const [email, setEmail] = useState("");
   const [eBody, setEBody] = useState("");
+  const [eSubject, setESubject] = useState("");
   const [openEmailModal, setOpenEmailModal] = useState(false);
 
   const componentRef = useRef();
@@ -110,7 +111,7 @@ const Page = () => {
     const html2pdf = (await import("html2pdf.js")).default;
     const element = document.getElementById(formType);
     const formData = new FormData();
-    const jsonData = { emailTo: email, eBody: eBody, formName: formName };
+    const jsonData = { emailTo: email, subject: eSubject, eBody: eBody, formName: formName };
 
     var opt = {
       margin: [0.2, 0],
@@ -450,6 +451,8 @@ const Page = () => {
           setEmail={setEmail}
           eBody={eBody}
           setEBody={setEBody}
+          eSubject={eSubject}
+          setESubject={setESubject}
           openEmailModal={openEmailModal}
           setOpenEmailModal={setOpenEmailModal}
           emailPDF={emailPDF}

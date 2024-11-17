@@ -20,6 +20,8 @@ export const EmailToModal = ({
   setEmail,
   eBody,
   setEBody,
+  eSubject,
+  setESubject,
   emailPDF,
   emailingPDF,
 }) => {
@@ -69,6 +71,13 @@ export const EmailToModal = ({
                 name="email"
                 onChange={(event) => setEmail(event.target.value)}
                 value={email}
+              />
+              <TextField
+                fullWidth
+                label="Email Subject"
+                name="eSubject"
+                onChange={(event) => setESubject(event.target.value)}
+                value={eSubject}
               />
               <TextField
                 fullWidth
