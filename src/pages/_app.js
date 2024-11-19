@@ -12,6 +12,7 @@ import { Provider } from "react-redux";
 import store from "src/store";
 import "simplebar-react/dist/simplebar.min.css";
 import "../sections/forms/insurance-forms.css";
+import "../../print.css";
 
 const clientSideEmotionCache = createEmotionCache();
 
