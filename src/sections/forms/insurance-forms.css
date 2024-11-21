@@ -123,7 +123,7 @@ div {
 }
 
 .topMargin5pc {
-  margin-top: 5%;
+  margin-top: 12pt;
 }
 
 .bottomMargin0 {
@@ -594,6 +594,7 @@ input.no-border {
   display: flex;
   flex-direction: row;
   min-height: 1em;
+  font-size: 12pt;
 }
 
 .formHeadContainer {

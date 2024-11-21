@@ -37,7 +37,7 @@ export const CompensationAgreement = ({ formRef, claim, form, formName, setSavin
           form: { ...form, formData: values, name: formName },
         });
       } else {
-        console.log(claim)
+        console.log(claim);
         response = await saveFormApi({
           form: {
             formData: values,
@@ -110,10 +110,19 @@ export const CompensationAgreement = ({ formRef, claim, form, formName, setSavin
         <Form>
           <div id="CompensationAgreement">
             <FormsHeader />
-            <div className="formContainer" style={{ padding: "0 .5in 0 .5in" }}>
+            <div className="formContainer">
               {/* Header===================================================== */}
-              <div className="formRow" style={{ justifyContent: "center", fontSize: "1.1em" }}>
-                <div style={{ order: 1, alignContent: "center", fontWeight: "bold" }}>
+              <div className="formRow" style={{ justifyContent: "center" }}>
+                <div
+                  style={{
+                    order: 1,
+                    alignContent: "center",
+                    fontFamily: "Arial, sans-serif",
+                    fontWeight: "700",
+                    fontSize: "12pt",
+                    textTransform: "uppercase",
+                  }}
+                >
                   PUBLIC ADJUSTER COMPENSATION AGREEMENT
                 </div>
               </div>
@@ -187,7 +196,6 @@ export const CompensationAgreement = ({ formRef, claim, form, formName, setSavin
                     order: 8,
                     color: "#aaaaaa",
                     fontWeight: "lighter",
-                    fontSize: 11,
                     justifyContent: "center",
                     alignItems: "center",
                     display: "flex",
@@ -217,7 +225,7 @@ export const CompensationAgreement = ({ formRef, claim, form, formName, setSavin
               <div className="formRow topMargin10" style={{ borderTop: "1.5px dashed #000" }}></div>
 
               {/* Section 2===================================================== */}
-              <div className="formRow" style={{ justifyContent: "center", fontSize: "1.1em" }}>
+              <div className="formRow" style={{ justifyContent: "center" }}>
                 <div style={{ order: 1, alignContent: "center", fontWeight: "bold" }}>
                   NOTICE TO INSURED
                 </div>
