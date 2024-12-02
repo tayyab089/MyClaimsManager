@@ -9,7 +9,7 @@ import { addFormToStore, updateFormInStore } from "src/store/reducers/forms/thun
 
 const { format } = require("date-fns");
 
-export const SubrogationReceipt = ({ formRef, claim, form, formName, setSavingForm }) => {
+export const SubrogationReceipt = ({ formRef, claim, form, formName, setSavingForm, setForm }) => {
   const dispatch = useDispatch();
   const [initialValues, setInitialValues] = useState({
     a: "Fireman's Fund Insurance",

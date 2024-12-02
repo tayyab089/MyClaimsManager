@@ -10,7 +10,7 @@ import { addFormToStore, updateFormInStore } from "src/store/reducers/forms/thun
 
 // const { format } = require("date-fns");
 
-export const CompensationAgreement = ({ formRef, claim, form, formName, setSavingForm }) => {
+export const CompensationAgreement = ({ formRef, claim, form, formName, setSavingForm, setForm}) => {
   const dispatch = useDispatch();
   const [initialValues, setInitialValues] = useState({
     a: "",
@@ -37,7 +37,6 @@ export const CompensationAgreement = ({ formRef, claim, form, formName, setSavin
           form: { ...form, formData: values, name: formName },
         });
       } else {
-        console.log(claim);
         response = await saveFormApi({
           form: {
             formData: values,
@@ -48,7 +47,6 @@ export const CompensationAgreement = ({ formRef, claim, form, formName, setSavin
         });
       }
 
-      // Handle success or error response
       if (response && response.data.type !== "error") {
         dispatch(
           setAlertData({ open: true, message: response.data.message, type: response.data.type })

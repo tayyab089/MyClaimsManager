@@ -238,6 +238,7 @@ const Page = () => {
             form={form}
             formName={formName}
             setSavingForm={setSavingForm}
+            setForm={setForm}
           />
         );
       case "Regulation10":
@@ -259,6 +260,7 @@ const Page = () => {
             form={form}
             formName={formName}
             setSavingForm={setSavingForm}
+            setForm={setForm}
           />
         );
       case "DisclosureStatement":
@@ -269,6 +271,7 @@ const Page = () => {
             form={form}
             formName={formName}
             setSavingForm={setSavingForm}
+            setForm={setForm}
           />
         );
       case "CancellationNotice":
@@ -279,6 +282,7 @@ const Page = () => {
             form={form}
             formName={formName}
             setSavingForm={setSavingForm}
+            setForm={setForm}
           />
         );
       default:
@@ -289,6 +293,7 @@ const Page = () => {
             form={form}
             formName={formName}
             setSavingForm={setSavingForm}
+            setForm={setForm}
           />
         );
     }
