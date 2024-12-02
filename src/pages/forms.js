@@ -362,21 +362,7 @@ const Page = () => {
               >
                 PRINT
               </Button>
-              <Button
-                variant="outlined"
-                size="small"
-                color="primary"
-                sx={{ marginLeft: "20px" }}
-                startIcon={<DocumentIcon style={{ height: 20, width: 20 }} />}
-                onClick={() => generatePDF()}
-                disabled={generatingPDF}
-              >
-                {generatingPDF ? (
-                  <CircularProgress style={{ width: 24, height: 24, color: "primary" }} />
-                ) : (
-                  "PDF"
-                )}
-              </Button>
+
               <Button
                 variant="outlined"
                 size="small"
