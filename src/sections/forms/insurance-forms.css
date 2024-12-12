@@ -8,6 +8,29 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Grafolita Script';
+  src: url('/fonts/grafolita-script.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Calibri Regular';
+  src: url('/fonts/calibri-regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Calibri Bold';
+  src: url('/fonts/calibri-bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+
+
 /* React To Print */
 
 .print-section {
@@ -447,12 +470,9 @@ input.no-border {
 /**********************************************************/
 
 .formContainer {
-  font-family: sans-serif;
-  font-size: 14px;
 }
 
 .formContainer .finePrint {
-  font-size: 11px;
 }
 
 .formContainer .header {
@@ -478,7 +498,6 @@ input.no-border {
 /* see @media print below */
 .formContainer span {
   display: none;
-  font-size: 16px;
 }
 
 .formContainer .printOnly {
@@ -526,18 +545,14 @@ input.no-border {
   }
 
   .formContainer {
-    font-family: sans-serif;
-    font-size: 13.5px;
+ 
   }
 
   .formContainer .finePrint {
-    font-size: 11px;
   }
 
   .formContainer .header {
     display: inherit;
-    font-weight: bold;
-    font-size: 18px;
   }
 
   /* Hide all input boxes for printing */
@@ -551,9 +566,6 @@ input.no-border {
     border: none;
     box-shadow: none;
     border-bottom: 1px solid darkgrey;
-    font-size: 13.5px;
-    font-weight: normal;
-    line-height: 17px;
     min-height: 17px;
     padding-left: 5px;
   }
@@ -571,10 +583,7 @@ input.no-border {
     border: none;
     box-shadow: none;
     border-bottom: 1px solid darkgrey;
-    font-size: 12px;
-    font-weight: normal;
-    line-height: 17px;
-    min-height: 17px;
+     min-height: 17px;
     padding-left: 5px;
   }
 
@@ -582,8 +591,6 @@ input.no-border {
     display: inline-flex;
     border: none;
     box-shadow: none;
-    font-size: 12px;
-    font-weight: normal;
     line-height: 17px;
     min-height: 17px;
     padding-left: 5px;
@@ -742,3 +749,6 @@ input.no-border {
 .width100pc {
   width: 100%;
 }
+
+
+/*FONTS*/

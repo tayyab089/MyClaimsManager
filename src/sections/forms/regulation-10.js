@@ -151,9 +151,9 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
             <div className="formContainer" style={{ padding: "0 .8in .8in .8in" }}>
               {/* Header===================================================== */}
               <div className="formRow" style={{ justifyContent: "center", fontSize: "1.1em" }}>
-                <div style={{ order: 1, alignContent: "center", fontWeight: "bold" }}>
+                {/*<div style={{ order: 1, alignContent: "center", fontWeight: "bold" }}>
                   DIRECTION TO PAY LETTER
-                </div>
+                </div>*/}
               </div>
               <div className="formRow" style={{ justifyContent: "center", fontSize: "1.1em" }}>
                 <div style={{ order: 1, alignContent: "center" }}>REGULATION 10</div>
