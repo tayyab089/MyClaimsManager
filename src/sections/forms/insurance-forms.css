@@ -29,6 +29,21 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'hnm';
+  src: url('/fonts/HelveticaNeueMedium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'hnr';
+  src: url('/fonts/HelveticaNeueRoman.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+
 
 
 /* React To Print */
@@ -144,6 +159,15 @@ div {
 .topMargin1pc {
   margin-top: 1%;
 }
+
+.topMargin7pt {
+  margin-top: 7pt;
+}
+
+.bottomMargin7pt {
+  margin-bottom: 7pt;
+}
+
 
 .topMargin5pc {
   margin-top: 12pt;
@@ -589,6 +613,7 @@ input.no-border {
 
 .formHeadContainer {
   justify-content: space-between;
+  align-items: flex-end;
   width: 100%;
 }
 

@@ -10,10 +10,12 @@ export const FormsHeader = () => (
       </div>
       <div className="formColumnCentered">
         <div className="formRow" style={{ justifyContent: "center" }}>
-          <div style={styles.tnrB16}>PAUL GUTTMAN & CO., INC</div>
+          <div style={styles.tnrB16}>PAUL GUTTMAN & CO., INC.</div>
         </div>
         <div style={styles.gsBB12}>Licensed Adjusters For The Insured</div>
-        <div style={styles.cbB11}>HOWARD GUTTMAN - SUBLICENSEE</div>
+        <div style={styles.cbB11} className="topMargin7pt">
+          HOWARD GUTTMAN - SUBLICENSEE
+        </div>
       </div>
       <div className="formColumn" style={{ ...styles.hvN1012, alignItems: "flex-end" }}>
         <div>BUS: 516-825-4800</div>

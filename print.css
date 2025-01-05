@@ -1,10 +1,11 @@
 /* styles/print.css */
 @media print {
   @page {
-    margin: 8pt; /* Adds margin around each page */
+    margin-top: 22pt;
+    margin-bottom: 22pt;
+    margin-left: 30pt;    margin-right: 30pt;
+
   }
 
-  body {
-    padding: 8pt; /* Adds padding inside each page content area */
-  }
+  
 }

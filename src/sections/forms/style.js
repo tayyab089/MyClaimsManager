@@ -1,13 +1,15 @@
+
 export const styles = {
   tnrB16: {
     fontFamily: "Times New Roman, Times, serif",
     fontWeight: "bold",
-    fontSize: "16pt",
+    fontSize: "16.2pt",
+    lineHeight: 1
   },
   hvN1012: {
-    fontFamily: "Arial, Helvetica, sans-serif",
+    fontFamily: "hnr",
     fontWeight: "normal",
-    fontSize: "10pt",
+    fontSize: "9pt",
     lineHeight: "12pt",
   },
   cbB11: {
