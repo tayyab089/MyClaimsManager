@@ -7,6 +7,7 @@ import { saveFormApi, updateFormApi } from "src/network/forms-api";
 import { useDispatch } from "react-redux";
 import { setAlertData } from "src/store/reducers/alert/thunks";
 import { addFormToStore, updateFormInStore } from "src/store/reducers/forms/thunks";
+import { styles } from "./style";
 
 // const { format } = require("date-fns");
 
@@ -34,16 +35,16 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
 
   const onSubmit = async (values) => {
     setSavingForm(true); // Start loading state
-  
+
     try {
       let response;
-  
+
       if (form) {
         // Update form scenario
         response = await updateFormApi({
           form: { ...form, formData: values, name: formName },
         });
-  
+
         if (response && response.data.type !== "error") {
           dispatch(
             setAlertData({
@@ -72,7 +73,7 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
             name: formName,
           },
         });
-  
+
         if (response && response.data.type !== "error") {
           dispatch(
             setAlertData({
@@ -106,7 +107,6 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
       setSavingForm(false); // End loading state
     }
   };
-  
 
   // useEffect Hooks
   useEffect(() => {
@@ -148,39 +148,36 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
         <Form>
           <div id="Regulation10">
             <FormsHeader />
-            <div className="formContainer" style={{ padding: "0 .8in .8in .8in" }}>
+            <div className="formContainer" style={{ paddingLeft: "15pt", paddingRight: "15pt" }}>
               {/* Header===================================================== */}
-              
-              <div className="formRow" style={{ justifyContent: "center", fontSize: "1.1em" }}>
-                <div style={{ order: 1, alignContent: "center" }}>REGULATION 10</div>
+
+              <div className="formRow topMargin10" style={{ justifyContent: "center" }}>
+                <div style={styles.cbR1218}>REGULATION 10</div>
               </div>
 
               {/* Section 1===================================================== */}
-              <div className="topMargin5pc" />
-              <div className="topMargin5pc" />
-              <div className="topMargin1pc" />
-              <div className="formRow topMargin10">
+              <div className="formRow topMargin10" style={styles.cbR1218}>
                 <div style={{ order: 1 }}>Name(s) of Named Insured(s)</div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="a" />
                   <span>{values?.a}</span>
                 </div>
               </div>
-              <div className="formRow topMargin10">
+              <div className="formRow topMargin10" style={styles.cbR1218}>
                 <div style={{ order: 1, flexBasis: "5em" }}>Policy No:</div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="b" />
                   <span>{values?.b}</span>
                 </div>
               </div>
-              <div className="formRow topMargin10">
+              <div className="formRow topMargin10" style={styles.cbR1218}>
                 <div style={{ order: 1, flexBasis: "5em" }}>Claim No:</div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="c" />
                   <span>{values?.c}</span>
                 </div>
               </div>
-              <div className="formRow topMargin10 bottomMargin15">
+              <div className="formRow topMargin10 bottomMargin15" style={styles.cbR1218}>
                 <div style={{ order: 1 }}>Public Adjuster&apos;s Name</div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="d" />
@@ -190,7 +187,7 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
 
               {/* Section 2===================================================== */}
               <div className="topMargin1pc" />
-              <div className="formRow">
+              <div className="formRow"  style={styles.cbR1218}>
                 <div>I hereby direct</div>
                 <div style={{ flexGrow: 1 }}>
                   <Field type="text" name="e" />
@@ -198,12 +195,12 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
                 </div>
                 <div>to issue a check or checks</div>
               </div>
-              <div className="formRow">
+              <div className="formRow"  style={styles.cbR1218}>
                 <div>as follows:</div>
               </div>
 
-              <div className="topMargin5pc" />
-              <div className="formRow">
+              <div className="topMargin5pc"  />
+              <div className="formRow"  style={styles.cbR1218}>
                 <div style={{ flexGrow: 0, order: 1, paddingRight: 15 }}>
                   <Field type="checkbox" name="f" />
                   {values?.f ? (
@@ -239,8 +236,8 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
               </div>
 
               <div className="topMargin1pc" />
-              <div className="formRow">
-                <div style={{ order: 1, flexBasis: "5em", flexGrow: 0 }}></div>
+              <div className="formRow"  style={styles.cbR1218}>
+                <div style={{ order: 1, flexBasis: "3em", flexGrow: 0 }}></div>
                 <div style={{ order: 2, flexGrow: 0 }}>$</div>
                 <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
                   <Field type="text" name="g" />
@@ -254,8 +251,8 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
               </div>
 
               <div className="topMargin1pc" />
-              <div className="formRow">
-                <div style={{ order: 1, flexBasis: "5em", flexGrow: 0 }}></div>
+              <div className="formRow"  style={styles.cbR1218}>
+                <div style={{ order: 1, flexBasis: "3em", flexGrow: 0 }}></div>
                 <div style={{ order: 2, flexGrow: 0 }}>$</div>
                 <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
                   <Field type="text" name="h" />
@@ -265,7 +262,7 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
               </div>
 
               <div className="topMargin5pc" />
-              <div className="formRow">
+              <div className="formRow"  style={styles.cbR1218}>
                 <div style={{ flexGrow: 0, order: 1, marginRight: 15 }}>
                   <Field type="checkbox" name="i" />
                   {values?.i ? (
@@ -303,8 +300,8 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
 
               {/* Section 3===================================================== */}
               <div className="topMargin1pc" />
-              <div className="formRow">
-                <div style={{ order: 1, flexBasis: "5em", flexGrow: 0 }}></div>
+              <div className="formRow"  style={styles.cbR1218}>
+                <div style={{ order: 1, flexBasis: "3em", flexGrow: 0 }}></div>
                 <div style={{ order: 2, flexGrow: 0 }}>$</div>
                 <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
                   <Field type="text" name="j" />
@@ -318,8 +315,8 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
               </div>
 
               <div className="topMargin1pc" />
-              <div className="formRow">
-                <div style={{ order: 1, flexBasis: "5em", flexGrow: 0 }}></div>
+              <div className="formRow"  style={styles.cbR1218}>
+                <div style={{ order: 1, flexBasis: "3em", flexGrow: 0 }}></div>
                 <div style={{ order: 2, flexGrow: 0 }}>$</div>
                 <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
                   <Field type="text" name="k" />
@@ -328,15 +325,14 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
                 <div style={{ order: 4, flexGrow: 0 }}> Insured(s)</div>
               </div>
 
-              <div className="formRow topMargin15">
+              <div className="formRow topMargin15"  style={styles.cbR1218}>
                 NOTICE TO NAMED INSURED(S): You may revoke this direction to pay letter at any time
                 prior to the insurer issuing a check. Your revocation must be in writing and signed
                 by you. You must submit the revocation to the insurer and provide the public
                 adjuster with a copy.
               </div>
 
-              <div className="topMargin5pc" />
-              <div className="formRow formHeadContainer">
+              <div className="formRow formHeadContainer topMargin40"  style={styles.cbR1218}>
                 <div className="formColumn" style={{ width: "40%" }}>
                   <div>Signature of Insured(s)</div>
                   <div className="topMargin5pc" />
