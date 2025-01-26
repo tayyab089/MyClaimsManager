@@ -118,83 +118,83 @@ export const CompensationAgreement = ({
             <FormsHeader />
             <div className="formContainer">
               {/* Header===================================================== */}
-              <div className="formRow" style={{ justifyContent: "center" }}>
+              <div className="formRow topMargin20" style={{ justifyContent: "center" }}>
                 <div style={styles.cbB13}>PUBLIC ADJUSTER COMPENSATION AGREEMENT</div>
               </div>
 
               {/* Section 1===================================================== */}
-              <div className="topMargin5pc" />
-              <div className="formRow topMargin5">
-                <div style={{ order: 1, ...styles.cbR1218 }}>
+              <div className="topMargin20" />
+              <div className="formRow topMargin26">
+                <div style={{ order: 1, ...styles.cbR1214 }}>
                   Date and Time of Initial Contact:{" "}
                 </div>
-                <div style={{ flexGrow: 1, order: 2, ...styles.cbR1218 }}>
+                <div style={{ flexGrow: 1, order: 2, ...styles.cbR1214 }}>
                   <Field type="text" name="a" />
                   <span>{values?.a}</span>
                 </div>
               </div>
 
               <div className="formRow topMargin5">
-                <div style={{ flexGrow: 1, order: 2, ...styles.cbR1218 }}>
+                <div style={{ flexGrow: 1, order: 2, ...styles.cbR1214 }}>
                   <Field type="text" name="b" />
                   <span>{values?.b}</span>
                 </div>
               </div>
 
               <div className="formRow topMargin5">
-                <div style={{ order: 1, flexBasis: "10em", ...styles.cbR1218 }}>
+                <div style={{ order: 1, flexBasis: "10em", ...styles.cbR1214 }}>
                   residing/located at
                 </div>
-                <div style={{ flexGrow: 1, order: 2, ...styles.cbR1218 }}>
+                <div style={{ flexGrow: 1, order: 2, ...styles.cbR1214 }}>
                   <Field type="text" name="c" />
                   <span>{values?.c}</span>
                 </div>
               </div>
 
               <div className="formRow topMargin5">
-                <div style={{ order: 1, flexGrow: 1, ...styles.cbR1218 }}>
+                <div style={{ order: 1, flexGrow: 1, ...styles.cbR1214 }}>
                   hereby retains Paul Guttman & Co., Inc. to act or aid in preparation,
                   presentation, adjustment, and negotiation,
                 </div>
               </div>
 
               <div className="formRow topMargin5">
-                <div style={{ order: 1, ...styles.cbR1218 }}>
+                <div style={{ order: 1, ...styles.cbR1214 }}>
                   or effecting the settlement, of the claim for the loss or damage by
                 </div>
-                <div style={{ flexGrow: 1, order: 2, ...styles.cbR1218 }}>
+                <div style={{ flexGrow: 1, order: 2, ...styles.cbR1214 }}>
                   <Field type="text" name="d" />
                   <span>{values?.d}</span>
                 </div>
               </div>
 
               <div className="formRow topMargin5">
-                <div style={{ ...styles.cbR1218 }}>sustained at</div>
-                <div style={{ flexGrow: 1, ...styles.cbR1218 }}>
+                <div style={{ ...styles.cbR1214 }}>sustained at</div>
+                <div style={{ flexGrow: 1, ...styles.cbR1214 }}>
                   <Field type="text" name="e" />
                   <span>{values?.e}</span>
                 </div>
               </div>
 
               <div className="formRow topMargin5">
-                <div style={{ order: 1, ...styles.cbR1218 }}>on</div>
-                <div style={{ order: 2, flexBasis: "5em", ...styles.cbR1218 }}>
+                <div style={{ order: 1, ...styles.cbR1214 }}>on</div>
+                <div style={{ order: 2, flexBasis: "5em", ...styles.cbR1214 }}>
                   <Field type="text" name="f" />
                   <span>{values?.f}</span>
                 </div>
-                <div style={{ order: 3, ...styles.cbR1218 }}>20</div>
-                <div style={{ order: 4, flexBasis: "2em", ...styles.cbR1218 }}>
+                <div style={{ order: 3, ...styles.cbR1214 }}>20</div>
+                <div style={{ order: 4, flexBasis: "2em", ...styles.cbR1214 }}>
                   <Field type="text" name="g" />
                   <span>{values?.g}</span>
                 </div>
-                <div style={{ order: 5, ...styles.cbR1218 }}>
+                <div style={{ order: 5, ...styles.cbR1214 }}>
                   , and agrees to pay the Adjuster for such service a fee of
                 </div>
-                <div style={{ order: 6, flexGrow: 1, flexBasis: "5em", ...styles.cbR1218 }}>
+                <div style={{ order: 6, flexGrow: 1, flexBasis: "4em", ...styles.cbR1214 }}>
                   <Field type="text" name="h" />
                   <span>{values?.h}</span>
                 </div>
-                <div style={{ order: 7, ...styles.cbR1218 }}>percent </div>
+                <div style={{ order: 7, ...styles.cbR1214 }}>percent </div>
                 <div
                   style={{
                     order: 8,
@@ -205,7 +205,7 @@ export const CompensationAgreement = ({
                     display: "flex",
                     marginLeft: 3,
                     borderBottom: "1px solid #999",
-                    ...styles.cbR1218,
+                    ...styles.cbR0608,
                   }}
                 >
                   ( INITIAL HERE )
@@ -213,18 +213,18 @@ export const CompensationAgreement = ({
               </div>
 
               <div className="formRow topMargin5">
-                <div style={{ ...styles.cbR1218 }}>
+                <div style={{ ...styles.cbR1214 }}>
                   of the amount of the loss, including salvage, when adjusted or otherwise recovered
                   from the insurance companies.
                 </div>
               </div>
 
               <div className="formRow topMargin5">
-                <div style={{ order: 0, flexBasis: "10em", ...styles.cbR1218 }}>
+                <div style={{ order: 0, flexBasis: "10em", ...styles.cbR1214 }}>
                   <Field type="text" name="i" />
                   <span>{values?.i}</span>
                 </div>
-                <div style={{ ...styles.cbR1218 }}>disclosure statements are attached hereto.</div>
+                <div style={{ ...styles.cbR1214 }}>disclosure statements are attached hereto.</div>
               </div>
 
               <div className="formRow topMargin10 bottomMargin10" style={{ borderTop: "1.5px dashed #000" }}></div>

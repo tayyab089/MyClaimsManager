@@ -156,6 +156,22 @@ div {
   margin-top: 15px;
 }
 
+.topMargin18 {
+  margin-top: 18px;
+}
+
+.topMargin20 {
+  margin-top: 20px;
+}
+
+.topMargin22 {
+  margin-top: 22px;
+}
+
+.topMargin26 {
+  margin-top: 26px;
+}
+
 .topMargin40 {
   margin-top: 40px;
 }
@@ -500,6 +516,9 @@ input.no-border {
 
 .formList1 {
   padding: 0 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-right: 0;
 }
 
 .formList1 li {
