@@ -86,26 +86,6 @@ const Page = () => {
     content: () => componentRef.current,
   });
 
-  // PDF Generation ==============================
-  const generatePDF = async () => {
-    setGeneratingPDF(true);
-    try {
-      const html2pdf = (await import("html2pdf.js")).default;
-      const element = document.getElementById(formType);
-      var opt = {
-        margin: [0.2, 0],
-        filename: formName,
-        image: { type: "jpeg", quality: 1 },
-        html2canvas: { scale: 1 },
-        jsPDF: { unit: "in", format: "legal", orientation: "portrait" },
-      };
-      html2pdf().from(element).set(opt).save();
-    } catch (e) {
-    } finally {
-      setGeneratingPDF(false);
-    }
-  };
-
   const emailPDF = async () => {
     setEmailingPDF(true);
     const html2pdf = (await import("html2pdf.js")).default;
@@ -227,73 +207,67 @@ const Page = () => {
   };
 
   // Form Selector
-
   const formSelector = () => {
+    const commonProps = {
+      claim,
+      form,
+      formName,
+      setSavingForm,
+      setForm,
+    };
+
+    // Create a key that includes all relevant dependencies
+    const getKey = () => {
+      return `${form?.formId}-${formName}-${JSON.stringify(claim)}-${JSON.stringify(form)}`;
+    };
+
     switch (formType) {
       case "ProofOfLoss":
         return (
           <ProofOfLoss
+            key={getKey()}
             formRef={ProofOfLossformRef}
-            claim={claim}
-            form={form}
-            formName={formName}
-            setSavingForm={setSavingForm}
-            setForm={setForm}
+            {...commonProps}
           />
         );
       case "Regulation10":
         return (
           <Regulation10
+            key={getKey()}
             formRef={reg10formRef}
-            claim={claim}
-            form={form}
-            formName={formName}
-            setForm={setForm}
-            setSavingForm={setSavingForm}
+            {...commonProps}
           />
         );
       case "CompensationAgreement":
         return (
           <CompensationAgreement
+            key={getKey()}
             formRef={compensationAgreementformRef}
-            claim={claim}
-            form={form}
-            formName={formName}
-            setSavingForm={setSavingForm}
-            setForm={setForm}
+            {...commonProps}
           />
         );
       case "DisclosureStatement":
         return (
           <DisclosureStatement
+            key={getKey()}
             formRef={disclosureStatementformRef}
-            claim={claim}
-            form={form}
-            formName={formName}
-            setSavingForm={setSavingForm}
-            setForm={setForm}
+            {...commonProps}
           />
         );
       case "CancellationNotice":
         return (
           <CancellationNotice
+            key={getKey()}
             formRef={cancellationNoticeformRef}
-            claim={claim}
-            form={form}
-            formName={formName}
-            setSavingForm={setSavingForm}
-            setForm={setForm}
+            {...commonProps}
           />
         );
       default:
         return (
           <SubrogationReceipt
+            key={getKey()}
             formRef={subrogationformRef}
-            claim={claim}
-            form={form}
-            formName={formName}
-            setSavingForm={setSavingForm}
-            setForm={setForm}
+            {...commonProps}
           />
         );
     }
@@ -312,6 +286,10 @@ const Page = () => {
     };
     fetchClaim();
   }, [fileNo]);
+
+  useEffect(() => {
+    console.log(claim);
+  }, [claim]);
 
   useEffect(() => {
     setForm(formsData.filter((item) => item.formId == formId)[0]);
