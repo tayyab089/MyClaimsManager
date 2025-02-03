@@ -288,10 +288,6 @@ const Page = () => {
   }, [fileNo]);
 
   useEffect(() => {
-    console.log(claim);
-  }, [claim]);
-
-  useEffect(() => {
     setForm(formsData.filter((item) => item.formId == formId)[0]);
   }, [claim]);
 
