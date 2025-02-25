@@ -44,6 +44,12 @@ export const styles = {
     fontSize: "12pt",
     lineHeight: "13.5pt",
   },
+  cbR1216: {
+    fontFamily: "Calibri Regular",
+    fontWeight: "normal",
+    fontSize: "12pt",
+    lineHeight: "15pt",
+  },
   cbR1218: {
     fontFamily: "Calibri Regular",
     fontWeight: "normal",
@@ -55,6 +61,12 @@ export const styles = {
     fontWeight: "normal",
     fontSize: "12pt",
     lineHeight: "17pt",
+  },
+  cbR1227: {
+    fontFamily: "Calibri Regular",
+    fontWeight: "normal",
+    fontSize: "12.5pt",
+    lineHeight: "27pt",
   },
   cbR1112: {
     fontFamily: "Calibri Regular",

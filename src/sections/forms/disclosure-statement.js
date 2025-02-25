@@ -7,6 +7,7 @@ import { saveFormApi, updateFormApi } from "src/network/forms-api";
 import { useDispatch } from "react-redux";
 import { setAlertData } from "src/store/reducers/alert/thunks";
 import { addFormToStore, updateFormInStore } from "src/store/reducers/forms/thunks";
+import { styles } from "./style";
 
 // const { format } = require("date-fns");
 
@@ -121,18 +122,18 @@ export const DisclosureStatement = ({ formRef, claim, form, formName, setSavingF
         <Form>
           <div id="DisclosureStatement">
             <FormsHeader />
-            <div className="formContainer" style={{ padding: "0 .8in .8in .8in" }}>
+            <div className="formContainer" style={{ padding: "0 12pt" }}>
               {/* Header===================================================== */}
-              <div className="formRow" style={{ justifyContent: "center", fontSize: "1.1em" }}>
-                <div style={{ order: 1, alignContent: "center", fontWeight: "bold" }}>
+
+              <div className="formRow topMargin35" style={{ justifyContent: "center" }}>
+                <div style={styles.cbB13} className="topMargin5">
                   DISCLOSURE STATEMENT
                 </div>
               </div>
+
               {/* Section 1===================================================== */}
-              <div className="topMargin5pc" />
-              <div className="topMargin5pc" />
-              <div className="topMargin1pc" />
-              <div className="formRow topMargin10">
+
+              <div className="formRow topMargin40" style={styles.cbR1227}>
                 <div style={{ order: 1 }}>Paul Guttman & Co., Inc. referred</div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="a" />
@@ -140,14 +141,14 @@ export const DisclosureStatement = ({ formRef, claim, form, formName, setSavingF
                 </div>
                 <div style={{ order: 3 }}>residing and/</div>
               </div>
-              <div className="formRow topMargin10">
+              <div className="formRow" style={styles.cbR1227}>
                 <div style={{ order: 1, flexBasis: "7em" }}>or loss location</div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="b" />
                   <span>{values?.b}</span>
                 </div>
               </div>
-              <div className="formRow topMargin10">
+              <div className="formRow" style={styles.cbR1227}>
                 <div style={{ order: 1, flexBasis: "1em" }}>to </div>
                 <div style={{ flexGrow: 1, order: 2 }}>
                   <Field type="text" name="c" />
@@ -155,13 +156,13 @@ export const DisclosureStatement = ({ formRef, claim, form, formName, setSavingF
                 </div>
                 <div style={{ order: 3 }}>for services,</div>
               </div>
-              <div className="formRow topMargin10">
+              <div className="formRow" style={{ ...styles.cbR1216, marginTop: 5 }}>
                 <div style={{ order: 1 }}>
                   work, or repairs, relating to an insurance claim for which the Adjuster represents
                   or represented the Insured or has negotiated or effected a settlement.
                 </div>
               </div>
-              <div className="formRow topMargin10 bottomMargin10">
+              <div className="formRow" style={styles.cbR1216}>
                 <div style={{ order: 1 }}>
                   The Adjuster shall check off any and all applicable boxes:
                 </div>
@@ -169,7 +170,7 @@ export const DisclosureStatement = ({ formRef, claim, form, formName, setSavingF
               {/* Section 2===================================================== */}
               <div className="topMargin5pc" />
               <div className="formRow">
-                <div style={{ flexGrow: 0, order: 1, paddingRight: 15 }}>
+                <div style={{ flexGrow: 0, order: 1, paddingRight: 10 }}>
                   <Field type="checkbox" name="d" />
                   {values?.d ? (
                     <span
@@ -194,12 +195,11 @@ export const DisclosureStatement = ({ formRef, claim, form, formName, setSavingF
                     ></span>
                   )}
                 </div>
-                <div style={{ order: 2, flexGrow: 1, marginTop: 5 }}>
+                <div style={{ order: 2, flexGrow: 1, ...styles.cbR1227 }}>
                   The Adjuster has received or will receive the following compensation for the
                   referral:
                 </div>
               </div>
-              <div className="topMargin1pc" />
               <div className="formRow">
                 <div style={{ flexGrow: 1 }}>
                   <Field type="text" name="e" />
@@ -213,12 +213,11 @@ export const DisclosureStatement = ({ formRef, claim, form, formName, setSavingF
                   <span>{values?.f}</span>
                 </div>
               </div>
-              <div className="formRow">
+              <div className="formRow" style={styles.cbR1216}>
                 (Specify the dollar amount or percentage. If compensation is in the form of anything
                 other than money, then state the nature of the compensation and its approximate fair
                 market value.)
               </div>
-              <div className="topMargin15" />
               <div className="formRow">
                 <div style={{ flexGrow: 0, order: 1, paddingRight: 15 }}>
                   <Field type="checkbox" name="g" />
@@ -245,14 +244,13 @@ export const DisclosureStatement = ({ formRef, claim, form, formName, setSavingF
                     ></span>
                   )}
                 </div>
-                <div style={{ order: 2, flexGrow: 1, marginTop: 5 }}>
+                <div style={{ order: 2, flexGrow: 1, marginTop: 5, ...styles.cbR1214 }}>
                   The Adjuster and/or his or her spouse has a financial or ownership interest,
                   directly or indirectly, in the individual or entity listed above.
                 </div>
               </div>
-              <div className="topMargin15" />
               <div className="formRow">
-                <div style={{ flexGrow: 0, order: 1, paddingRight: 15 }}>
+                <div style={{ flexGrow: 0, order: 1, paddingRight: 10 }}>
                   <Field type="checkbox" name="h" />
                   {values?.h ? (
                     <span
@@ -277,15 +275,14 @@ export const DisclosureStatement = ({ formRef, claim, form, formName, setSavingF
                     ></span>
                   )}
                 </div>
-                <div style={{ order: 2, flexGrow: 1, marginTop: 5 }}>
+                <div style={{ order: 2, flexGrow: 1, marginTop: 10, ...styles.cbR1214 }}>
                   The Adjuster is related to the individual listed above by blood or affinity within
                   the second degree of consanguinity (which includes an individual&apos;s parents,
                   grandparents, children, grandchildren, siblings, and any spouse thereof).
                 </div>
               </div>
-              <div className="topMargin15" />
               <div className="formRow">
-                <div style={{ flexGrow: 0, order: 1, paddingRight: 15 }}>
+                <div style={{ flexGrow: 0, order: 1, paddingRight: 10 }}>
                   <Field type="checkbox" name="i" />
                   {values?.i ? (
                     <span
@@ -310,37 +307,37 @@ export const DisclosureStatement = ({ formRef, claim, form, formName, setSavingF
                     ></span>
                   )}
                 </div>
-                <div style={{ order: 2, flexGrow: 1, marginTop: 5 }}>
+                <div style={{ order: 2, flexGrow: 1, marginTop: 10, ...styles.cbR1214 }}>
                   The entity listed above is owned or controlled by an individual who is related to
                   the Adjuster by blood or affinity within the second degree of consanguinity (which
                   includes an individual&apos;s parents, grandparents, children, grandchildren,
                   siblings, and any spouse thereof).
                 </div>
               </div>
-              <div className="formRow topMargin15">
+              <div className="formRow" style={{ ...styles.cbR1214, marginTop: 30 }}>
                 NOTICE TO INSURED(S): YOU ARE NOT REQUIRED TO USE ANY INDIVIDUAL OR ENTITY TO WHOM
                 OR WHICH THE PUBLIC ADJUSTER REFERS YOU.
               </div>
-              <div className="formRow topMargin15">
+              <div className="formRow" style={{ ...styles.cbR1214, marginTop: 10 }}>
                 This disclosure statement must be written in the same language as that principally
                 used in the oral negotiations and presentation.
               </div>
 
               {/* Section 3===================================================== */}
-              <div className="topMargin5pc" />
-              <div className="formRow formHeadContainer">
+
+              <div className="formRow topMargin30" style={{ justifyContent: "space-between" }}>
                 <div className="formColumn" style={{ width: "40%" }}>
                   <div style={{ order: 0 }}>
                     <Field type="text" name="j" />
                     <span>{values?.j}</span>
                   </div>
-                  <div style={{ order: 1 }}>Signature of Public Adjuster or</div>
-                  <div style={{ order: 2 }}>or Licensed Representative</div>
+                  <div style={{ order: 1, ...styles.cbR1214 }}>Signature of Public Adjuster or</div>
+                  <div style={{ order: 2, ...styles.cbR1214 }}>or Licensed Representative</div>
                   <div style={{ order: 3, marginTop: 10 }}>
                     <Field type="text" name="k" />
                     <span>{values?.k}</span>
                   </div>
-                  <div style={{ order: 4 }}>Date and Time of Signing</div>
+                  <div style={{ order: 4, ...styles.cbR1214 }}>Date and Time of Signing</div>
                 </div>
                 <div className="formColumn" style={{ width: "40%" }}>
                   <div style={{ order: 0 }}>
@@ -351,7 +348,7 @@ export const DisclosureStatement = ({ formRef, claim, form, formName, setSavingF
                     <Field type="text" name="m" />
                     <span>{values?.m}</span>
                   </div>
-                  <div style={{ order: 2 }}>Signature of Insured</div>
+                  <div style={{ order: 2, ...styles.cbR1214 }}>Signature of Insured(s)</div>
                 </div>
               </div>
             </div>
