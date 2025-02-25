@@ -1347,7 +1347,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="cj"
                           onChange={(e) => setFieldValue("cj", formatCurrency(e.target.value))}
                           value={values?.cj}
@@ -1357,7 +1357,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="ck"
                           onChange={(e) => setFieldValue("ck", formatCurrency(e.target.value))}
                           value={values?.ck}
@@ -1367,7 +1367,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="cl"
                           onChange={(e) => setFieldValue("cl", formatCurrency(e.target.value))}
                           value={values?.cl}
@@ -1377,7 +1377,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="cm"
                           onChange={(e) => setFieldValue("cm", formatCurrency(e.target.value))}
                           value={values?.cm}
@@ -1401,7 +1401,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="cq"
                           onChange={(e) => setFieldValue("cq", formatCurrency(e.target.value))}
                           value={values?.cq}
@@ -1411,7 +1411,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="cr"
                           onChange={(e) => setFieldValue("cr", formatCurrency(e.target.value))}
                           value={values?.cr}
@@ -1421,7 +1421,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="cs"
                           onChange={(e) => setFieldValue("cs", formatCurrency(e.target.value))}
                           value={values?.cs}
@@ -1455,7 +1455,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="cx"
                           onChange={(e) => setFieldValue("cx", formatCurrency(e.target.value))}
                           value={values?.cx}
@@ -1465,7 +1465,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="cy"
                           onChange={(e) => setFieldValue("cy", formatCurrency(e.target.value))}
                           value={values?.cy}
@@ -1475,7 +1475,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="cz"
                           onChange={(e) => setFieldValue("cz", formatCurrency(e.target.value))}
                           value={values?.cz}
@@ -1485,7 +1485,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="da"
                           onChange={(e) => setFieldValue("da", formatCurrency(e.target.value))}
                           value={values?.da}
@@ -1509,7 +1509,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="de"
                           onChange={(e) => setFieldValue("de", formatCurrency(e.target.value))}
                           value={values?.de}
@@ -1519,7 +1519,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="df"
                           onChange={(e) => setFieldValue("df", formatCurrency(e.target.value))}
                           value={values?.df}
@@ -1529,7 +1529,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="dg"
                           onChange={(e) => setFieldValue("dg", formatCurrency(e.target.value))}
                           value={values?.dg}
@@ -1539,7 +1539,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="dh"
                           onChange={(e) => setFieldValue("dh", formatCurrency(e.target.value))}
                           value={values?.dh}
@@ -1568,7 +1568,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableFooterCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="dz"
                           onChange={(e) => setFieldValue("dz", formatCurrency(e.target.value))}
                           value={values?.dz}
@@ -1578,7 +1578,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableFooterCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="ea"
                           onChange={(e) => setFieldValue("ea", formatCurrency(e.target.value))}
                           value={values?.ea}
@@ -1588,7 +1588,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableFooterCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="eb"
                           onChange={(e) => setFieldValue("eb", formatCurrency(e.target.value))}
                           value={values?.eb}
@@ -1598,7 +1598,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                       <td className="formTableFooterCell width10pc">
                         <Field
                           type="text"
-                          className="width100pc numeric"
+                          className="width100pc numeric-left"
                           name="ec"
                           onChange={(e) => setFieldValue("ec", formatCurrency(e.target.value))}
                           value={values?.ec}
