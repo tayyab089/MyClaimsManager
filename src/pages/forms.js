@@ -81,12 +81,11 @@ const Page = () => {
     router.back();
   };
 
-  // Print Function ==============================
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     pageStyle:
       formType === "ProofOfLoss"
-        ? "@media print { @page { margin-top: 10pt; margin-bottom: 10pt; margin-left: 5pt; margin-right: 5pt; } }"
+        ? "@media print { @page { margin-top: 15pt; margin-bottom: 15pt; margin-left: 15pt; margin-right: 15pt; } }"
         : "@media print { @page { margin-top: 22pt; margin-bottom: 22pt; margin-left: 30pt; margin-right: 30pt; } }",
   });
 

@@ -1,16 +1,20 @@
-
 export const styles = {
   tnrB16: {
     fontFamily: "Times New Roman, Times, serif",
     fontWeight: "bold",
     fontSize: "16.2pt",
-    lineHeight: 1
+    lineHeight: 1,
   },
   hvN1012: {
     fontFamily: "hnr",
     fontWeight: "normal",
     fontSize: "9pt",
     lineHeight: "12pt",
+  },
+  cbB10: {
+    fontFamily: "Calibri Bold",
+    fontWeight: "bold",
+    fontSize: "10pt",
   },
   cbB11: {
     fontFamily: "Calibri Bold",
@@ -32,11 +36,39 @@ export const styles = {
     fontWeight: "bold",
     fontSize: "14pt",
   },
+  cbB15: {
+    fontFamily: "Calibri Bold",
+    fontWeight: "bold",
+    fontSize: "15pt",
+  },
+  cbB16: {
+    fontFamily: "Calibri Bold",
+    fontWeight: "bold",
+    fontSize: "16pt",
+  },
+  cbB1010: {
+    fontFamily: "Calibri Bold",
+    fontWeight: "bold",
+    fontSize: "10.5pt",
+    lineHeight: "10.5pt",
+  },
   cbB1214: {
     fontFamily: "Calibri Bold",
     fontWeight: "bold",
     fontSize: "12pt",
     lineHeight: "14pt",
+  },
+  cbB0909: {
+    fontFamily: "Calibri Bold",
+    fontWeight: "bold",
+    fontSize: "9.5pt",
+    lineHeight: "9.5pt",
+  },
+  cbR1010: {
+    fontFamily: "Calibri Regular",
+    fontWeight: "normal",
+    fontSize: "10.25pt",
+    lineHeight: "9.5pt",
   },
   cbR1214: {
     fontFamily: "Calibri Regular",

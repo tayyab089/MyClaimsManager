@@ -9,6 +9,7 @@ import { addFormToStore, updateFormInStore } from "src/store/reducers/forms/thun
 
 const { format } = require("date-fns");
 import { formatDate } from "src/utils/format-date";
+import { styles } from "./style";
 
 export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, setForm }) => {
   const dispatch = useDispatch();
@@ -433,16 +434,14 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
         {({ values, setFieldValue }) => (
           <Form>
             <div id="ProofOfLoss">
-              <div className="formContainer" style={{ padding: "0 .1in .2in .15in" }}>
+              <div className="formContainer">
                 {/* ************************************************************************************************* */}
                 {/* NOTE: Input fields do not render in the print layout since the content is not in the DOM */}
                 {/* Hence there is a span for every input. In the @media print css inputs are hidden and spans shown */}
                 {/* ************************************************************************************************* */}
                 {/* **** SWORN STATEMENT IN PROOF OF LOSS **** */}
                 <div className="formRowCentered">
-                  <div className="header">
-                    <div style={{ order: 1 }}>SWORN STATEMENT IN PROOF OF LOSS</div>
-                  </div>
+                  <div style={{ order: 1, ...styles.cbB16 }}>SWORN STATEMENT IN PROOF OF LOSS</div>
                 </div>
                 {/* **** Top section **** */}
                 <div className="formRow">
@@ -451,29 +450,51 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                     style={{ flexBasis: "25%", flexGrow: 0, alignContent: "flex-start" }}
                   >
                     <div className="formRow">
-                      <Field type="text" name="a" style={{ textAlign: "center" }} />
-                      <span>{values?.a}</span>
+                      <Field
+                        type="text"
+                        name="a"
+                        style={{ textAlign: "center", ...styles.cbR1010 }}
+                      />
+                      <span style={{ ...styles.cbR1010 }}>{values?.a}</span>
                     </div>
-                    <div className="formRowCentered">POLICY NUMBER</div>
+                    <div className="formRowCentered" style={{ ...styles.cbR1010 }}>
+                      POLICY NUMBER
+                    </div>
                     <div className="formRow">
-                      <Field type="text" name="b" style={{ textAlign: "center" }} />
-                      <span>{values?.b}</span>
+                      <Field
+                        type="text"
+                        name="b"
+                        style={{ textAlign: "center", ...styles.cbR1010 }}
+                      />
+                      <span style={{ ...styles.cbR1010 }}>{values?.b}</span>
                     </div>
-                    <div className="formRowCentered" style={{ fontSize: "0.75em" }}>
+                    <div className="formRowCentered" style={{ ...styles.cbR0608 }}>
                       AMOUNT OF POLICY AT TIME OF LOSS
                     </div>
                     <div className="formRow">
-                      <Field type="text" name="c" style={{ textAlign: "center" }} />
-                      <span>{values?.c}</span>
+                      <Field
+                        type="text"
+                        name="c"
+                        style={{ textAlign: "center", ...styles.cbR1010 }}
+                      />
+                      <span style={{ ...styles.cbR1010 }}>{values?.c}</span>
                     </div>
-                    <div className="formRowCentered">DATE ISSUED</div>
+                    <div className="formRowCentered" style={{ ...styles.cbR1010 }}>
+                      DATE ISSUED
+                    </div>
                     <div className="formRow">
-                      <Field type="text" name="d" style={{ textAlign: "center" }} />
-                      <span>{values?.d}</span>
+                      <Field
+                        type="text"
+                        name="d"
+                        style={{ textAlign: "center", ...styles.cbR1010 }}
+                      />
+                      <span style={{ ...styles.cbR1010 }}>{values?.d}</span>
                     </div>
-                    <div className="formRowCentered">DATE EXPIRES</div>
+                    <div className="formRowCentered" style={{ ...styles.cbR1010 }}>
+                      DATE EXPIRES
+                    </div>
                   </div>
-                  <div className="formTextBox">
+                  <div className="formTextBox" style={{ ...styles.cbB1010 }}>
                     ANY PERSON WHO KNOWINGLY AND WITH INTENT TO DEFRAUD ANY INSURANCE COMPANY OR
                     OTHER PERSON FILES A STATMENT OF CLAIM CONTAINING ANY MATERIALLY FALSE
                     INFORMATION, OR CONCEALS FOR THE PURPOSE OF MISLEADING, INFORMATION CONCERNING
@@ -484,84 +505,108 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                     style={{ flexBasis: "25%", flexGrow: 0, alignContent: "flex-end" }}
                   >
                     <div className="formRow">
-                      <Field type="text" name="e" style={{ textAlign: "center" }} />
-                      <span>{values?.e}</span>
+                      <Field
+                        type="text"
+                        name="e"
+                        style={{ textAlign: "center", ...styles.cbR1010 }}
+                      />
+                      <span style={{ ...styles.cbR1010 }}>{values?.e}</span>
                     </div>
-                    <div className="formRowCentered">OUR FILE No.</div>
+                    <div className="formRowCentered" style={{ ...styles.cbR1010 }}>
+                      OUR FILE No.
+                    </div>
                     <div className="formRow">
-                      <Field type="text" name="f" style={{ textAlign: "center" }} />
-                      <span>{values?.f}</span>
+                      <Field
+                        type="text"
+                        name="f"
+                        style={{ textAlign: "center", ...styles.cbR1010 }}
+                      />
+                      <span style={{ ...styles.cbR1010 }}>{values?.f}</span>
                     </div>
-                    <div className="formRowCentered">COMPANY CLAIM NO.</div>
+                    <div className="formRowCentered" style={{ ...styles.cbR1010 }}>
+                      COMPANY CLAIM NO.
+                    </div>
                     <div className="formRow">
-                      <Field type="text" name="g" style={{ textAlign: "center" }} />
-                      <span>{values?.g}</span>
+                      <Field
+                        type="text"
+                        name="g"
+                        style={{ textAlign: "center", ...styles.cbR1010 }}
+                      />
+                      <span style={{ ...styles.cbR1010 }}>{values?.g}</span>
                     </div>
-                    <div className="formRowCentered">AGENCY AT</div>
+                    <div className="formRowCentered" style={{ ...styles.cbR1010 }}>
+                      AGENCY AT
+                    </div>
                     <div className="formRow">
-                      <Field type="text" name="h" style={{ textAlign: "center" }} />
-                      <span>{values?.h}</span>
+                      <Field
+                        type="text"
+                        name="h"
+                        style={{ textAlign: "center", ...styles.cbR1010 }}
+                      />
+                      <span style={{ ...styles.cbR1010 }}>{values?.h}</span>
                     </div>
-                    <div className="formRowCentered">AGENT</div>
+                    <div className="formRowCentered" style={{ ...styles.cbR1010 }}>
+                      AGENT
+                    </div>
                   </div>
                 </div>
                 {/* **** Text start **** */}
-                <div className="formRow">
-                  <div style={{ order: 1 }}>To the</div>
+                <div className="formRow" style={{ ...styles.cbR1010, marginTop: 8 }}>
+                  <div style={{ order: 1, ...styles.cbR1010 }}>To the</div>
                   <div style={{ flexGrow: 1, order: 2 }}>
-                    <Field type="text" name="i" />
-                    <span>{values?.i}</span>
+                    <Field type="text" name="i" style={{ ...styles.cbR1010 }} />
+                    <span style={{ ...styles.cbR1010 }}>{values?.i}</span>
                   </div>
                 </div>
-                <div className="formRow">
-                  <div style={{ order: 1 }}>of</div>
+                <div className="formRow" style={{ ...styles.cbR1010, marginTop: 3 }}>
+                  <div style={{ order: 1, ...styles.cbR1010 }}>of</div>
                   <div style={{ flexGrow: 1, order: 2 }}>
-                    <Field type="text" name="j" />
-                    <span>{values?.j}</span>
+                    <Field type="text" name="j" style={{ ...styles.cbR1010 }} />
+                    <span style={{ ...styles.cbR1010 }}>{values?.j}</span>
                   </div>
                 </div>
                 {/* At the time of loss */}
-                <div className="formRow">
-                  <div style={{ order: 1 }}>
+                <div className="formRow" style={{ ...styles.cbR1010}}>
+                  <div style={{ order: 1, ...styles.cbR1010 }}>
                     At the time of loss, by the above indicated policy of insurance you insured
                   </div>
                   <div style={{ flexGrow: 1, order: 2 }}>
-                    <Field type="text" name="k" />
-                    <span>{values?.k}</span>
+                    <Field type="text" name="k" style={{ ...styles.cbR1010 }} />
+                    <span style={{ ...styles.cbR1010 }}>{values?.k}</span>
                   </div>
                 </div>
-                <div className="formRow">
+                <div className="formRow" style={{ ...styles.cbR1010}}>
                   <div style={{ order: 1, flexGrow: 1 }}>
-                    <Field type="text" name="ek" />
-                    <span>{values?.ek}</span>
+                    <Field type="text" name="ek" style={{ ...styles.cbR1010 }} />
+                    <span style={{ ...styles.cbR1010 }}>{values?.ek}</span>
                   </div>
                 </div>
-                <div className="formRow">
-                  <div style={{ order: 1 }}>against loss by</div>
+                <div className="formRow" style={{ ...styles.cbR1010}}>
+                  <div style={{ order: 1, ...styles.cbR1010 }}>against loss by</div>
                   <div style={{ flexGrow: 1, order: 2 }}>
-                    <Field type="text" name="l" />
-                    <span>{values?.l}</span>
+                    <Field type="text" name="l" style={{ ...styles.cbR1010 }} />
+                    <span style={{ ...styles.cbR1010 }}>{values?.l}</span>
                   </div>
-                  <div style={{ order: 3 }}>
+                  <div style={{ order: 3, ...styles.cbR1010 }}>
                     to the property described under schedule &quot;A&quot; according to
                   </div>
                 </div>
-                <div className="formRow">
-                  <div style={{ order: 1 }}>
+                <div className="formRow" style={{ ...styles.cbR1010}}>
+                  <div style={{ order: 1, ...styles.cbR1010 }}>
                     the terms and conditions of the said policy and all forms, endorsements,
                     transfers and assignments attached thereto
                   </div>
                 </div>
                 {/* **** 1. Time and origin **** */}
-                <div className="formRow topMargin10">
-                  <div style={{ order: 1 }}>
+                <div className="formRow topMargin10" style={{ ...styles.cbR1010 }}>
+                  <div style={{ order: 1, ...styles.cbR1010 }}>
                     <strong>1. Time and Origin:</strong> A
                   </div>
                   <div style={{ flexGrow: 1, order: 2 }}>
-                    <Field type="text" name="m" />
-                    <span>{values?.m}</span>
+                    <Field type="text" name="m" style={{ ...styles.cbR1010 }} />
+                    <span style={{ ...styles.cbR1010 }}>{values?.m}</span>
                   </div>
-                  <div style={{ order: 3 }}>loss occured about the hour of</div>
+                  <div style={{ order: 3, ...styles.cbR1010 }}>loss occured about the hour of</div>
                   <div style={{ flexGrow: 1, order: 4, flexBasis: "3em" }}>
                     <Field type="text" name="n" />
                     <span>{values?.n}</span>
@@ -573,10 +618,10 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                   </div>
                   <div style={{ order: 7 }}>M.</div>
                 </div>
-                <div className="formRow">
-                  <div style={{ order: 1 }}>on the</div>
+                <div className="formRow" style={{ ...styles.cbR1010 }}>
+                  <div style={{ order: 1, ...styles.cbR1010 }}>on the</div>
                   <div style={{ order: 2, flexGrow: 1, flexBasis: "1em" }}>
-                    <Field type="text" name="p" />
+                    <Field type="text" name="p" style={{ ...styles.cbR1010 }} />
                     <span>{values?.p}</span>
                   </div>
                   <div style={{ order: 3 }}>day of</div>
@@ -608,73 +653,73 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                   </div>
                 </div>
                 {/* **** 2. Occupancy **** */}
-                <div className="formRow">
-                  <div style={{ order: 1 }}>
+                <div className="formRow" style={{ ...styles.cbR1010 }}>
+                  <div style={{ order: 1, ...styles.cbR1010 }}>
                     <strong>2. Occupancy:</strong> The building described, or containing the
                     property described, was occupied at the time of the loss as follows,
                   </div>
                 </div>
-                <div className="formRow">
+                <div className="formRow" style={{ ...styles.cbR1010 }}>
                   <div style={{ order: 1 }}>and for no other purpose whatever:</div>
                   <div style={{ order: 2, flexGrow: 1 }}>
                     <Field type="text" name="v" />
                     <span>{values?.v}</span>
                   </div>
                 </div>
-                <div className="formRow">
+                <div className="formRow" style={{ ...styles.cbR1010 }}>
                   <div style={{ order: 1, flexGrow: 1 }}>
                     <Field type="text" name="w" />
                     <span>{values?.w}</span>
                   </div>
                 </div>
-                <div className="formRow">
+                <div className="formRow" style={{ ...styles.cbR1010 }}>
                   <div style={{ order: 1, flexGrow: 1 }}>
                     <Field type="text" name="x" />
                     <span>{values?.x}</span>
                   </div>
                 </div>
                 {/* **** 3. Title and interest **** */}
-                <div className="formRow">
+                <div className="formRow" style={{ ...styles.cbR1010 }}>
                   <div style={{ order: 1 }}>
                     <strong>3. Title and Interest:</strong> At the time of the loss the interest of
                     your insured in the property described therin was
                   </div>
                   <div style={{ order: 2, flexGrow: 1, flexBasis: "2em" }}>
-                    <Field type="text" name="y" />
-                    <span>{values?.y}</span>
+                    <Field type="text" name="y" style={{ ...styles.cbR1010 }} />
+                    <span style={{ ...styles.cbR1010 }}>{values?.y}</span>
                   </div>
                 </div>
-                <div className="formRow">
+                <div className="formRow" style={{ ...styles.cbR1010 }}>
                   <div style={{ order: 1, flexGrow: 1, flexBasis: "5em" }}>
-                    <Field type="text" name="z" />
-                    <span>{values?.z}</span>
+                    <Field type="text" name="z" style={{ ...styles.cbR1010 }} />
+                    <span style={{ ...styles.cbR1010 }}>{values?.z}</span>
                   </div>
                   <div style={{ order: 2 }}>
                     No other person or persons had any interest therein or
                   </div>
                 </div>
-                <div className="formRow">
+                <div className="formRow" style={{ ...styles.cbR1010 }}>
                   <div style={{ order: 1 }}>incumbrance thereon, except:</div>
                   <div style={{ order: 2, flexGrow: 1 }}>
-                    <Field type="text" name="aa" />
-                    <span>{values?.aa}</span>
+                    <Field type="text" name="aa" style={{ ...styles.cbR1010 }} />
+                    <span style={{ ...styles.cbR1010 }}>{values?.aa}</span>
                   </div>
                 </div>
-                <div className="formRow">
+                <div className="formRow" style={{ ...styles.cbR1010 }}>
                   <div style={{ order: 1, flexGrow: 1 }}>
                     <Field type="text" name="ab" />
                     <span>{values?.ab}</span>
                   </div>
                 </div>
                 {/* **** 4. Changes **** */}
-                <div className="formRow">
-                  <div style={{ order: 1 }}>
+                <div className="formRow" style={{ ...styles.cbR1010 }}>
+                  <div style={{ order: 1, ...styles.cbR1010 }}>
                     <strong>3. Changes:</strong> Since the said policy was issued there has been no
                     assignment thereof, or change of interest, use, occupancy
                   </div>
                 </div>
-                <div className="formRow">
-                  <div style={{ order: 1 }}>
+                <div className="formRow" style={{ ...styles.cbR1010 }}>
+                  <div style={{ order: 1, ...styles.cbR1010 }}>
                     possession, location or exposure of the property described, except:
                   </div>
                   <div style={{ order: 2, flexGrow: 1 }}>
@@ -682,29 +727,29 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                     <span>{values?.ac}</span>
                   </div>
                 </div>
-                <div className="formRow">
+                <div className="formRow" style={{ ...styles.cbR1010 }}>
                   <div style={{ order: 1, flexGrow: 1 }}>
                     <Field type="text" name="ad" />
                     <span>{values?.ad}</span>
                   </div>
                 </div>
-                <div className="formRow">
+                <div className="formRow" style={{ ...styles.cbR1010 }}>
                   <div style={{ order: 1, flexGrow: 1 }}>
                     <Field type="text" name="ae" />
                     <span>{values?.ae}</span>
                   </div>
                 </div>
                 {/* **** 5. Total insurance **** */}
-                <div className="formRow">
-                  <div style={{ order: 1 }}>
+                <div className="formRow" style={{ ...styles.cbR1010 }}>
+                  <div style={{ order: 1, ...styles.cbR1010 }}>
                     <strong>5. Total Insurance:</strong> The total amount of insurance upon the
                     property descrobed by this policy was, at the time of the loss,
                   </div>
                 </div>
-                <div className="formRow">
+                <div className="formRow" style={{ ...styles.cbR1010 }}>
                   <div style={{ order: 2 }}>$</div>
                   <div style={{ order: 3, flexGrow: 1, flexBasis: "3em" }}>
-                    <Field type="text" name="af" />
+                    <Field type="text" name="af" style={{ ...styles.cbR1010 }} />
                     <span>{values?.af}</span>
                   </div>
                   <div style={{ order: 4 }}>
@@ -712,15 +757,15 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                     &quot;C&quot;, besides which
                   </div>
                 </div>
-                <div className="formRow">
+                <div className="formRow" style={{ ...styles.cbR1010 }}>
                   <div style={{ order: 5 }}>
                     there was no policy or other contract of insurance, written or oral, valid or
                     invalid.
                   </div>
                 </div>
                 {/* **** 6. Actual Cash Value **** */}
-                <div className="formRow topMargin15">
-                  <div style={{ order: 1 }}>
+                <div className="formRow topMargin15" style={{ ...styles.cbR1010 }}>
+                  <div style={{ order: 1, ...styles.cbR1010 }}>
                     <strong>6. The Actual Cash Value</strong> of the said property at the time of
                     the loss was
                   </div>
@@ -741,8 +786,8 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                   </div>
                 </div>
                 {/* **** 7. Whole loss and damage **** */}
-                <div className="formRow topMargin15">
-                  <div style={{ order: 1 }}>
+                <div className="formRow topMargin15" style={{ ...styles.cbR1010 }}>
+                  <div style={{ order: 1, ...styles.cbR1010 }}>
                     <strong>7. The Whole Loss and Damage </strong> was
                   </div>
                   <div style={{ order: 2, flexGrow: 1 }}>
@@ -762,8 +807,8 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                   </div>
                 </div>
                 {/* **** 8. Less amt **** */}
-                <div className="formRow topMargin15">
-                  <div style={{ order: 1 }}>
+                <div className="formRow topMargin15" style={{ ...styles.cbR1010 }}>
+                  <div style={{ order: 1, ...styles.cbR1010 }}>
                     <strong>8. Less Amount of Deductible </strong>
                   </div>
                   <div style={{ order: 2, flexGrow: 1 }}>
@@ -783,8 +828,8 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                   </div>
                 </div>
                 {/* **** 9. Amt claimed **** */}
-                <div className="formRow topMargin15">
-                  <div style={{ order: 1 }}>
+                <div className="formRow topMargin15" style={{ ...styles.cbR1010 }}>
+                  <div style={{ order: 1, ...styles.cbR1010 }}>
                     <strong>9. The Amount Claimed </strong> under the above numbered policy is
                   </div>
                   <div style={{ order: 2, flexGrow: 1 }}>
@@ -804,49 +849,55 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                   </div>
                 </div>
                 {/* **** Disclaimer **** */}
-                <div className="formRow finePrint topMargin10">
-                  <div style={{ order: 1, marginLeft: "1em" }}>
-                    <strong>
-                      The said loss did not originate by any act, design or procurement on the part
-                      of your insured, or this affiant; nothing has been done by or with the privity
-                      or consent of your insured or this affiant, to violate the conditions of the
-                      policy, or render it void; no articles are mentioned herein or in annexed
-                      schedules but such as were destroyed or damaged at the time of the said loss;
-                      no property saved has in any manner been concealed, and no attempt to deceive
-                      the said company, as to the extent of said loss, has in any manner been made.
-                      Any other information that may be required will be furnished and considered a
-                      part of this proof. The furnishing of this blank or the preparation of proofs
-                      by a representative of the above insurance company is not a waiver of any of
-                      its rights.
-                    </strong>
-                  </div>
+                <div className="formRow topMargin10">
+                  <span
+                    style={{
+                      ...styles.cbB0909,
+                      order: 1,
+                      marginLeft: "1em",
+                      display: "block",
+                      borderBottom: "none",
+                    }}
+                  >
+                    The said loss did not originate by any act, design or procurement on the part of
+                    your insured, or this affiant; nothing has been done by or with the privity or
+                    consent of your insured or this affiant, to violate the conditions of the
+                    policy, or render it void; no articles are mentioned herein or in annexed
+                    schedules but such as were destroyed or damaged at the time of the said loss; no
+                    property saved has in any manner been concealed, and no attempt to deceive the
+                    said company, as to the extent of said loss, has in any manner been made. Any
+                    other information that may be required will be furnished and considered a part
+                    of this proof. The furnishing of this blank or the preparation of proofs by a
+                    representative of the above insurance company is not a waiver of any of its
+                    rights.
+                  </span>
                 </div>
                 <div className="formRow finePrint topMargin10">
-                  <div style={{ order: 1, marginLeft: "1em" }}>
-                    <strong>
-                      The furnishing of this blank or the preparation of proofs by a representative
-                      of the above insurance company is not a waiver of any of its rights.
-                    </strong>
+                  <div style={{ order: 1, marginLeft: "1em", ...styles.cbB0909 }}>
+                    The furnishing of this blank or the preparation of proofs by a representative of
+                    the above insurance company is not a waiver of any of its rights.
                   </div>
                 </div>
                 {/* **** State of **** */}
-                <div className="formRow" style={{ paddingBottom: 10 }} />
-                <div className="formRow">
+                <div className="formRow" style={{ paddingBottom: 10, ...styles.cbB0909 }} />
+                <div className="formRow" style={{ ...styles.cbB0909 }}>
                   <div style={{ order: 1 }}>State of</div>
                   <div style={{ order: 2, flexGrow: 0, flexBasis: "15em" }}>
                     <Field type="text" name="ak" />
                     <span>{values?.ak}</span>
                   </div>
-                  <div style={{ order: 3, flexGrow: 0, flexBasis: "2em" }} />
-                  <div style={{ order: 4, flexGrow: 1, flexBasis: "25em" }}>
+                  <div style={{ order: 3, flexGrow: 0, flexBasis: "2em", ...styles.cbB0909 }} />
+                  <div style={{ order: 4, flexGrow: 1, flexBasis: "25em", ...styles.cbB0909 }}>
                     <Field type="text" name="al" />
                     <span>{values?.al}</span>
                   </div>
-                  <div style={{ order: 5, flexGrow: 0, flexBasis: "2em" }}>Insured</div>
+                  <div style={{ order: 5, flexGrow: 0, flexBasis: "2em", ...styles.cbB0909 }}>
+                    Insured
+                  </div>
                 </div>
                 {/* **** County of **** */}
-                <div className="formRow" style={{ paddingBottom: 10 }} />
-                <div className="formRow">
+                <div className="formRow" style={{ paddingBottom: 10, ...styles.cbB0909 }} />
+                <div className="formRow" style={{ ...styles.cbB0909 }}>
                   <div style={{ order: 1 }}>County of</div>
                   <div style={{ order: 2, flexGrow: 0, flexBasis: "15em" }}>
                     <Field type="text" name="am" />
@@ -854,27 +905,27 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                   </div>
                   <div style={{ order: 3, flexGrow: 0, flexBasis: "2em" }} />
                   <div style={{ order: 4, flexGrow: 1, flexBasis: "22em" }}>
-                    <Field type="text" name="an" />
-                    <span>{values?.an}</span>
+                    <Field type="text" name="an" style={{ ...styles.cbR1010 }} />
+                    <span style={{ ...styles.cbR1010 }}>{values?.an}</span>
                   </div>
                   <div style={{ order: 5, flexGrow: 0, flexBasis: "2em" }}>Insured</div>
                 </div>
                 {/* **** Subscribed and sworn **** */}
-                <div className="formRow topMargin10">
+                <div className="formRow topMargin10" style={{ ...styles.cbR1010 }}>
                   <div style={{ order: 1 }}>Subscribed and sworn to before me this</div>
                   <div style={{ order: 2, flexGrow: 0, flexBasis: "5em" }}>
-                    <Field type="text" name="ao" />
-                    <span>{values?.ao}</span>
+                    <Field type="text" name="ao" style={{ ...styles.cbR1010 }} />
+                    <span style={{ ...styles.cbR1010 }}>{values?.ao}</span>
                   </div>
                   <div style={{ order: 3 }}>day of</div>
                   <div style={{ order: 4, flexGrow: 0, flexBasis: "10em" }}>
-                    <Field type="text" name="ap" />
-                    <span>{values?.ap}</span>
+                    <Field type="text" name="ap" style={{ ...styles.cbR1010 }} />
+                    <span style={{ ...styles.cbR1010 }}>{values?.ap}</span>
                   </div>
                   <div style={{ order: 5 }}>20</div>
                   <div style={{ order: 6, flexGrow: 0, flexBasis: "5em" }}>
-                    <Field type="text" name="aq" />
-                    <span>{values?.aq}</span>
+                    <Field type="text" name="aq" style={{ ...styles.cbR1010 }} />
+                    <span style={{ ...styles.cbR1010 }}>{values?.aq}</span>
                   </div>
                   <div style={{ order: 7, flexGrow: 1 }} />
                 </div>
@@ -884,7 +935,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                     <Field type="text" name="ar" />
                     <span>{values?.ar}</span>
                   </div>
-                  <div style={{ order: 2 }}>Notary Public</div>
+                  <div style={{ order: 2, ...styles.cbB0909 }}>Notary Public</div>
                   <div style={{ order: 3, flexGrow: 1 }} />
                 </div>
                 {/* ************************************************** */}
