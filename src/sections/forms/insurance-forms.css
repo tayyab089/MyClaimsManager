@@ -598,10 +598,6 @@ input.no-border {
 @media print {
   @page {
     size: letter;
-    margin-left: 0.1in;
-    margin-right: 0.1in;
-    margin-bottom: 0.25in;
-    margin-top: 0.5in;
   }
 
   .formContainer {}
@@ -688,7 +684,7 @@ input.no-border {
   align-content: flex-start;
   border: 1px solid darkgray;
   padding: 5px;
-  margin: 5px;
+  margin: 0px;
 }
 
 /************ Form table *************/

@@ -10,7 +10,7 @@ import { addFormToStore, updateFormInStore } from "src/store/reducers/forms/thun
 const { format } = require("date-fns");
 import { formatDate } from "src/utils/format-date";
 
-export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, setForm}) => {
+export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, setForm }) => {
   const dispatch = useDispatch();
   const [initialValues, setInitialValues] = useState({
     a: "",
@@ -415,7 +415,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
         dq: "",
         dr: "",
         ds: "",
-        dt: claim?.insured?.map((insured) => insured.name).join(", "),
+        dt: "",
         du: "",
         dv: "",
         dw: "",
