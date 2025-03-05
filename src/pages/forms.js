@@ -84,6 +84,10 @@ const Page = () => {
   // Print Function ==============================
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
+    pageStyle:
+      formType === "ProofOfLoss"
+        ? "@media print { @page { margin-top: 10pt; margin-bottom: 10pt; margin-left: 5pt; margin-right: 5pt; } }"
+        : "@media print { @page { margin-top: 22pt; margin-bottom: 22pt; margin-left: 30pt; margin-right: 30pt; } }",
   });
 
   const emailPDF = async () => {
@@ -223,21 +227,9 @@ const Page = () => {
 
     switch (formType) {
       case "ProofOfLoss":
-        return (
-          <ProofOfLoss
-            key={getKey()}
-            formRef={ProofOfLossformRef}
-            {...commonProps}
-          />
-        );
+        return <ProofOfLoss key={getKey()} formRef={ProofOfLossformRef} {...commonProps} />;
       case "Regulation10":
-        return (
-          <Regulation10
-            key={getKey()}
-            formRef={reg10formRef}
-            {...commonProps}
-          />
-        );
+        return <Regulation10 key={getKey()} formRef={reg10formRef} {...commonProps} />;
       case "CompensationAgreement":
         return (
           <CompensationAgreement
@@ -256,20 +248,10 @@ const Page = () => {
         );
       case "CancellationNotice":
         return (
-          <CancellationNotice
-            key={getKey()}
-            formRef={cancellationNoticeformRef}
-            {...commonProps}
-          />
+          <CancellationNotice key={getKey()} formRef={cancellationNoticeformRef} {...commonProps} />
         );
       default:
-        return (
-          <SubrogationReceipt
-            key={getKey()}
-            formRef={subrogationformRef}
-            {...commonProps}
-          />
-        );
+        return <SubrogationReceipt key={getKey()} formRef={subrogationformRef} {...commonProps} />;
     }
   };
 

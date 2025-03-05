@@ -1,9 +1,0 @@
-/* styles/print.css */
-@media print {
-  @page {
-    margin-top: 22pt;
-    margin-bottom: 22pt;
-    margin-left: 30pt;
-    margin-right: 30pt;
-  }
-}
