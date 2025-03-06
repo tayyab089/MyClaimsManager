@@ -551,62 +551,62 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                   </div>
                 </div>
                 {/* **** Text start **** */}
-                <div className="formRow" style={{ ...styles.cbR1010, marginTop: 8 }}>
-                  <div style={{ order: 1, ...styles.cbR1010 }}>To the</div>
+                <div className="formRow" style={{ ...styles.cbR0909, marginTop: 8 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>To the</div>
                   <div style={{ flexGrow: 1, order: 2 }}>
-                    <Field type="text" name="i" style={{ ...styles.cbR1010 }} />
-                    <span style={{ ...styles.cbR1010 }}>{values?.i}</span>
+                    <Field type="text" name="i" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.i}</span>
                   </div>
                 </div>
-                <div className="formRow" style={{ ...styles.cbR1010, marginTop: 3 }}>
-                  <div style={{ order: 1, ...styles.cbR1010 }}>of</div>
+                <div className="formRow" style={{ ...styles.cbR0909, marginTop: 3 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>of</div>
                   <div style={{ flexGrow: 1, order: 2 }}>
-                    <Field type="text" name="j" style={{ ...styles.cbR1010 }} />
-                    <span style={{ ...styles.cbR1010 }}>{values?.j}</span>
+                    <Field type="text" name="j" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.j}</span>
                   </div>
                 </div>
                 {/* At the time of loss */}
-                <div className="formRow" style={{ ...styles.cbR1010}}>
-                  <div style={{ order: 1, ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>
                     At the time of loss, by the above indicated policy of insurance you insured
                   </div>
                   <div style={{ flexGrow: 1, order: 2 }}>
-                    <Field type="text" name="k" style={{ ...styles.cbR1010 }} />
-                    <span style={{ ...styles.cbR1010 }}>{values?.k}</span>
+                    <Field type="text" name="k" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.k}</span>
                   </div>
                 </div>
-                <div className="formRow" style={{ ...styles.cbR1010}}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
                   <div style={{ order: 1, flexGrow: 1 }}>
-                    <Field type="text" name="ek" style={{ ...styles.cbR1010 }} />
-                    <span style={{ ...styles.cbR1010 }}>{values?.ek}</span>
+                    <Field type="text" name="ek" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.ek}</span>
                   </div>
                 </div>
-                <div className="formRow" style={{ ...styles.cbR1010}}>
-                  <div style={{ order: 1, ...styles.cbR1010 }}>against loss by</div>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>against loss by</div>
                   <div style={{ flexGrow: 1, order: 2 }}>
-                    <Field type="text" name="l" style={{ ...styles.cbR1010 }} />
-                    <span style={{ ...styles.cbR1010 }}>{values?.l}</span>
+                    <Field type="text" name="l" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.l}</span>
                   </div>
-                  <div style={{ order: 3, ...styles.cbR1010 }}>
+                  <div style={{ order: 3, ...styles.cbR0909 }}>
                     to the property described under schedule &quot;A&quot; according to
                   </div>
                 </div>
-                <div className="formRow" style={{ ...styles.cbR1010}}>
-                  <div style={{ order: 1, ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>
                     the terms and conditions of the said policy and all forms, endorsements,
                     transfers and assignments attached thereto
                   </div>
                 </div>
                 {/* **** 1. Time and origin **** */}
-                <div className="formRow topMargin10" style={{ ...styles.cbR1010 }}>
-                  <div style={{ order: 1, ...styles.cbR1010 }}>
+                <div className="formRow topMargin10" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>
                     <strong>1. Time and Origin:</strong> A
                   </div>
                   <div style={{ flexGrow: 1, order: 2 }}>
-                    <Field type="text" name="m" style={{ ...styles.cbR1010 }} />
-                    <span style={{ ...styles.cbR1010 }}>{values?.m}</span>
+                    <Field type="text" name="m" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.m}</span>
                   </div>
-                  <div style={{ order: 3, ...styles.cbR1010 }}>loss occured about the hour of</div>
+                  <div style={{ order: 3, ...styles.cbR0909 }}>loss occured about the hour of</div>
                   <div style={{ flexGrow: 1, order: 4, flexBasis: "3em" }}>
                     <Field type="text" name="n" />
                     <span>{values?.n}</span>
@@ -618,10 +618,10 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                   </div>
                   <div style={{ order: 7 }}>M.</div>
                 </div>
-                <div className="formRow" style={{ ...styles.cbR1010 }}>
-                  <div style={{ order: 1, ...styles.cbR1010 }}>on the</div>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>on the</div>
                   <div style={{ order: 2, flexGrow: 1, flexBasis: "1em" }}>
-                    <Field type="text" name="p" style={{ ...styles.cbR1010 }} />
+                    <Field type="text" name="p" style={{ ...styles.cbR0909 }} />
                     <span>{values?.p}</span>
                   </div>
                   <div style={{ order: 3 }}>day of</div>
@@ -653,73 +653,73 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                   </div>
                 </div>
                 {/* **** 2. Occupancy **** */}
-                <div className="formRow" style={{ ...styles.cbR1010 }}>
-                  <div style={{ order: 1, ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>
                     <strong>2. Occupancy:</strong> The building described, or containing the
                     property described, was occupied at the time of the loss as follows,
                   </div>
                 </div>
-                <div className="formRow" style={{ ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
                   <div style={{ order: 1 }}>and for no other purpose whatever:</div>
                   <div style={{ order: 2, flexGrow: 1 }}>
                     <Field type="text" name="v" />
                     <span>{values?.v}</span>
                   </div>
                 </div>
-                <div className="formRow" style={{ ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
                   <div style={{ order: 1, flexGrow: 1 }}>
                     <Field type="text" name="w" />
                     <span>{values?.w}</span>
                   </div>
                 </div>
-                <div className="formRow" style={{ ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
                   <div style={{ order: 1, flexGrow: 1 }}>
                     <Field type="text" name="x" />
                     <span>{values?.x}</span>
                   </div>
                 </div>
                 {/* **** 3. Title and interest **** */}
-                <div className="formRow" style={{ ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
                   <div style={{ order: 1 }}>
                     <strong>3. Title and Interest:</strong> At the time of the loss the interest of
                     your insured in the property described therin was
                   </div>
                   <div style={{ order: 2, flexGrow: 1, flexBasis: "2em" }}>
-                    <Field type="text" name="y" style={{ ...styles.cbR1010 }} />
-                    <span style={{ ...styles.cbR1010 }}>{values?.y}</span>
+                    <Field type="text" name="y" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.y}</span>
                   </div>
                 </div>
-                <div className="formRow" style={{ ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
                   <div style={{ order: 1, flexGrow: 1, flexBasis: "5em" }}>
-                    <Field type="text" name="z" style={{ ...styles.cbR1010 }} />
-                    <span style={{ ...styles.cbR1010 }}>{values?.z}</span>
+                    <Field type="text" name="z" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.z}</span>
                   </div>
                   <div style={{ order: 2 }}>
                     No other person or persons had any interest therein or
                   </div>
                 </div>
-                <div className="formRow" style={{ ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
                   <div style={{ order: 1 }}>incumbrance thereon, except:</div>
                   <div style={{ order: 2, flexGrow: 1 }}>
-                    <Field type="text" name="aa" style={{ ...styles.cbR1010 }} />
-                    <span style={{ ...styles.cbR1010 }}>{values?.aa}</span>
+                    <Field type="text" name="aa" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.aa}</span>
                   </div>
                 </div>
-                <div className="formRow" style={{ ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
                   <div style={{ order: 1, flexGrow: 1 }}>
                     <Field type="text" name="ab" />
                     <span>{values?.ab}</span>
                   </div>
                 </div>
                 {/* **** 4. Changes **** */}
-                <div className="formRow" style={{ ...styles.cbR1010 }}>
-                  <div style={{ order: 1, ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>
                     <strong>3. Changes:</strong> Since the said policy was issued there has been no
                     assignment thereof, or change of interest, use, occupancy
                   </div>
                 </div>
-                <div className="formRow" style={{ ...styles.cbR1010 }}>
-                  <div style={{ order: 1, ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>
                     possession, location or exposure of the property described, except:
                   </div>
                   <div style={{ order: 2, flexGrow: 1 }}>
@@ -727,29 +727,29 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                     <span>{values?.ac}</span>
                   </div>
                 </div>
-                <div className="formRow" style={{ ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
                   <div style={{ order: 1, flexGrow: 1 }}>
                     <Field type="text" name="ad" />
                     <span>{values?.ad}</span>
                   </div>
                 </div>
-                <div className="formRow" style={{ ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
                   <div style={{ order: 1, flexGrow: 1 }}>
                     <Field type="text" name="ae" />
                     <span>{values?.ae}</span>
                   </div>
                 </div>
                 {/* **** 5. Total insurance **** */}
-                <div className="formRow" style={{ ...styles.cbR1010 }}>
-                  <div style={{ order: 1, ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>
                     <strong>5. Total Insurance:</strong> The total amount of insurance upon the
                     property descrobed by this policy was, at the time of the loss,
                   </div>
                 </div>
-                <div className="formRow" style={{ ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
                   <div style={{ order: 2 }}>$</div>
                   <div style={{ order: 3, flexGrow: 1, flexBasis: "3em" }}>
-                    <Field type="text" name="af" style={{ ...styles.cbR1010 }} />
+                    <Field type="text" name="af" style={{ ...styles.cbR0909 }} />
                     <span>{values?.af}</span>
                   </div>
                   <div style={{ order: 4 }}>
@@ -757,15 +757,15 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                     &quot;C&quot;, besides which
                   </div>
                 </div>
-                <div className="formRow" style={{ ...styles.cbR1010 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
                   <div style={{ order: 5 }}>
                     there was no policy or other contract of insurance, written or oral, valid or
                     invalid.
                   </div>
                 </div>
                 {/* **** 6. Actual Cash Value **** */}
-                <div className="formRow topMargin15" style={{ ...styles.cbR1010 }}>
-                  <div style={{ order: 1, ...styles.cbR1010 }}>
+                <div className="formRow topMargin15" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>
                     <strong>6. The Actual Cash Value</strong> of the said property at the time of
                     the loss was
                   </div>
@@ -786,8 +786,8 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                   </div>
                 </div>
                 {/* **** 7. Whole loss and damage **** */}
-                <div className="formRow topMargin15" style={{ ...styles.cbR1010 }}>
-                  <div style={{ order: 1, ...styles.cbR1010 }}>
+                <div className="formRow topMargin15" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>
                     <strong>7. The Whole Loss and Damage </strong> was
                   </div>
                   <div style={{ order: 2, flexGrow: 1 }}>
@@ -807,8 +807,8 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                   </div>
                 </div>
                 {/* **** 8. Less amt **** */}
-                <div className="formRow topMargin15" style={{ ...styles.cbR1010 }}>
-                  <div style={{ order: 1, ...styles.cbR1010 }}>
+                <div className="formRow topMargin15" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>
                     <strong>8. Less Amount of Deductible </strong>
                   </div>
                   <div style={{ order: 2, flexGrow: 1 }}>
@@ -828,8 +828,8 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                   </div>
                 </div>
                 {/* **** 9. Amt claimed **** */}
-                <div className="formRow topMargin15" style={{ ...styles.cbR1010 }}>
-                  <div style={{ order: 1, ...styles.cbR1010 }}>
+                <div className="formRow topMargin15" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>
                     <strong>9. The Amount Claimed </strong> under the above numbered policy is
                   </div>
                   <div style={{ order: 2, flexGrow: 1 }}>
@@ -905,27 +905,27 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                   </div>
                   <div style={{ order: 3, flexGrow: 0, flexBasis: "2em" }} />
                   <div style={{ order: 4, flexGrow: 1, flexBasis: "22em" }}>
-                    <Field type="text" name="an" style={{ ...styles.cbR1010 }} />
-                    <span style={{ ...styles.cbR1010 }}>{values?.an}</span>
+                    <Field type="text" name="an" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.an}</span>
                   </div>
                   <div style={{ order: 5, flexGrow: 0, flexBasis: "2em" }}>Insured</div>
                 </div>
                 {/* **** Subscribed and sworn **** */}
-                <div className="formRow topMargin10" style={{ ...styles.cbR1010 }}>
+                <div className="formRow topMargin10" style={{ ...styles.cbR0909 }}>
                   <div style={{ order: 1 }}>Subscribed and sworn to before me this</div>
                   <div style={{ order: 2, flexGrow: 0, flexBasis: "5em" }}>
-                    <Field type="text" name="ao" style={{ ...styles.cbR1010 }} />
-                    <span style={{ ...styles.cbR1010 }}>{values?.ao}</span>
+                    <Field type="text" name="ao" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.ao}</span>
                   </div>
                   <div style={{ order: 3 }}>day of</div>
                   <div style={{ order: 4, flexGrow: 0, flexBasis: "10em" }}>
-                    <Field type="text" name="ap" style={{ ...styles.cbR1010 }} />
-                    <span style={{ ...styles.cbR1010 }}>{values?.ap}</span>
+                    <Field type="text" name="ap" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.ap}</span>
                   </div>
                   <div style={{ order: 5 }}>20</div>
                   <div style={{ order: 6, flexGrow: 0, flexBasis: "5em" }}>
-                    <Field type="text" name="aq" style={{ ...styles.cbR1010 }} />
-                    <span style={{ ...styles.cbR1010 }}>{values?.aq}</span>
+                    <Field type="text" name="aq" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.aq}</span>
                   </div>
                   <div style={{ order: 7, flexGrow: 1 }} />
                 </div>
@@ -941,45 +941,46 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                 {/* ************************************************** */}
                 {/* **** Schedule A - Policy form **** */}
                 {/* ************************************************** */}
-                <div className="formRow topMargin5pc bottomMargin10">
-                  <div style={{ order: 1, textAlign: "center", flexGrow: 1 }}>
-                    <strong>SCHEDULE &quot;A&quot; - POLICY FORM</strong>
+                <div className="formRow topMargin5pc bottomMargin5">
+                  <div style={{ order: 1, textAlign: "center", flexGrow: 1, ...styles.cbB11 }}>
+                    <>SCHEDULE &quot;A&quot; - POLICY FORM</>
                   </div>
                 </div>
-                <div className="formRow">
-                  <div style={{ order: 1 }}>Policy Form No.</div>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>Policy Form No.</div>
                   <div style={{ order: 2, flexGrow: 0, flexBasis: "10em" }}>
-                    <Field type="text" name="as" />
-                    <span>{values?.as}</span>
+                    <Field type="text" name="as" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.as}</span>
                   </div>
-                  <div style={{ order: 3 }}>Dated</div>
+                  <div style={{ order: 3, ...styles.cbR0909 }}>Dated</div>
                   <div style={{ order: 4, flexGrow: 1 }}>
-                    <Field type="text" name="at" />
-                    <span>{values?.at}</span>
+                    <Field type="text" name="at" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.at}</span>
                   </div>
                 </div>
                 {/* **** Item 1 **** */}
-                <div className="formRow">
-                  <div style={{ order: 1 }}>Item 1. $</div>
-                  <div style={{ order: 2, flexGrow: 0, flexBasis: "10em" }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>Item 1. $</div>
+                  <div style={{ order: 2, flexGrow: 0, flexBasis: "10em", ...styles.cbR0909 }}>
                     <Field
                       type="text"
                       name="au"
                       onChange={(e) => setFieldValue("au", formatCurrency(e.target.value))}
                       value={values?.au}
+                      style={{ ...styles.cbR0909 }}
                     />
-                    <span>{values?.au}</span>
+                    <span style={{ ...styles.cbR0909 }}>{values?.au}</span>
                   </div>
-                  <div style={{ order: 3 }}>on</div>
+                  <div style={{ order: 3, ...styles.cbR0909 }}>on</div>
                   <div style={{ order: 4, flexGrow: 1 }}>
-                    <Field type="text" name="av" />
-                    <span>{values?.av}</span>
+                    <Field type="text" name="av" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.av}</span>
                   </div>
                 </div>
                 {/* **** Item 2 **** */}
-                <div className="formRow">
-                  <div style={{ order: 1 }}>Item 2. $</div>
-                  <div style={{ order: 2, flexGrow: 0, flexBasis: "10em" }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>Item 2. $</div>
+                  <div style={{ order: 2, flexGrow: 0, flexBasis: "10em", ...styles.cbR0909 }}>
                     <Field
                       type="text"
                       name="aw"
@@ -990,14 +991,14 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                   </div>
                   <div style={{ order: 3 }}>on</div>
                   <div style={{ order: 4, flexGrow: 1 }}>
-                    <Field type="text" name="ax" />
-                    <span>{values?.ax}</span>
+                    <Field type="text" name="ax" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.ax}</span>
                   </div>
                 </div>
                 {/* **** Item 3 **** */}
-                <div className="formRow">
-                  <div style={{ order: 1 }}>Item 3. $</div>
-                  <div style={{ order: 2, flexGrow: 0, flexBasis: "10em" }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>Item 3. $</div>
+                  <div style={{ order: 2, flexGrow: 0, flexBasis: "10em", ...styles.cbR0909 }}>
                     <Field
                       type="text"
                       name="ay"
@@ -1006,16 +1007,16 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                     />
                     <span>{values?.ay}</span>
                   </div>
-                  <div style={{ order: 3 }}>on</div>
+                  <div style={{ order: 3, ...styles.cbR0909 }}>on</div>
                   <div style={{ order: 4, flexGrow: 1 }}>
-                    <Field type="text" name="az" />
-                    <span>{values?.az}</span>
+                    <Field type="text" name="az" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.az}</span>
                   </div>
                 </div>
                 {/* **** Item 4 **** */}
-                <div className="formRow">
-                  <div style={{ order: 1 }}>Item 4. $</div>
-                  <div style={{ order: 2, flexGrow: 0, flexBasis: "10em" }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>Item 4. $</div>
+                  <div style={{ order: 2, flexGrow: 0, flexBasis: "10em", ...styles.cbR0909 }}>
                     <Field
                       type="text"
                       name="ba"
@@ -1024,304 +1025,420 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                     />
                     <span>{values?.ba}</span>
                   </div>
-                  <div style={{ order: 3 }}>on</div>
+                  <div style={{ order: 3, ...styles.cbR0909 }}>on</div>
                   <div style={{ order: 4, flexGrow: 1 }}>
-                    <Field type="text" name="bb" />
-                    <span>{values?.bb}</span>
+                    <Field type="text" name="bb" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.bb}</span>
                   </div>
                 </div>
                 {/* **** Situated **** */}
-                <div className="formRow">
-                  <div style={{ order: 1 }}>Situated</div>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>Situated</div>
                   <div style={{ order: 2, flexGrow: 1 }}>
                     {/* 
                   ============================================================================
                   ============================================================================
                   */}
-                    <Field type="text" name="ef" />
-                    <span>{values?.ef}</span>
+                    <Field type="text" name="ef" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.ef}</span>
                   </div>
                 </div>
                 {/* **** Coinsurance, Average, Distribution or Deductible Clauses, if any **** */}
-                <div className="formRow">
-                  <div style={{ order: 1 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>
                     Coinsurance, Average, Distribution or Deductible Clauses, if any
                   </div>
                   <div style={{ order: 2, flexGrow: 1 }}>
-                    <Field type="text" name="bc" />
-                    <span>{values?.bc}</span>
+                    <Field type="text" name="bc" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.bc}</span>
                   </div>
                 </div>
                 {/* **** Loss, if any, payable to **** */}
-                <div className="formRow">
-                  <div style={{ order: 1 }}>Loss, if any, payable to</div>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>Loss, if any, payable to</div>
                   <div style={{ order: 2, flexGrow: 1 }}>
-                    <Field type="text" name="bd" />
-                    <span>{values?.bd}</span>
+                    <Field type="text" name="bd" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.bd}</span>
                   </div>
                 </div>
                 <div className="clear" />
                 {/* **** SCHEDULE "B" **** */}
-                <div className="formRow topMargin5pc bottomMargin10">
-                  <div style={{ order: 1, textAlign: "center", flexGrow: 1 }}>
-                    <strong>SCHEDULE &quot;B&quot;</strong>
+                <div className="formRow topMargin20 bottomMargin5">
+                  <div style={{ order: 1, textAlign: "center", flexGrow: 1, ...styles.cbB11 }}>
+                    <>SCHEDULE &quot;B&quot;</>
                   </div>
                 </div>
-                <div className="formRow bottomMargin10">
-                  <div style={{ order: 1, textAlign: "center", flexGrow: 1 }}>
-                    <strong>STATEMENT OF ACTUAL CASH VALUE AND LOSS AND DAMAGE</strong>
+                <div className="formRow bottomMargin5">
+                  <div style={{ order: 1, textAlign: "center", flexGrow: 1, ...styles.cbB11 }}>
+                    <>STATEMENT OF ACTUAL CASH VALUE AND LOSS AND DAMAGE</>
                   </div>
                 </div>
                 <div className="formRow">
                   <table style={{ border: "1px solid black", width: "100%" }}>
                     <tbody>
-                      <tr style={{ borderTopStyle: "double", height: "2.5em" }}>
+                      <tr style={{ borderTopStyle: "double", height: "2.5em", ...styles.cbR0909 }}>
                         <td className="formTableHeaderCell" />
                         <td className="formTableHeaderCell" />
-                        <td className="formTableHeaderCell text-center">ACTUAL CASH VALUE</td>
-                        <td className="formTableHeaderCell text-center">LOSS AND DAMAGE</td>
+                        <td className="formTableHeaderCell text-center" style={{ ...styles.cbB11 }}>
+                          ACTUAL CASH VALUE
+                        </td>
+                        <td className="formTableHeaderCell text-center" style={{ ...styles.cbB11 }}>
+                          LOSS AND DAMAGE
+                        </td>
                       </tr>
                     </tbody>
                     <tbody>
                       <tr>
-                        <td className="formTableCell width10pc">
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field type="text" className="width100pc" name="be" />
-                          <span>{values?.be}</span>
+                          <span style={{ ...styles.cbR0909 }}>{values?.be}</span>
                         </td>
                         <td className="formTableCell width60pc">
-                          <Field type="text" className="width100pc" name="bf" />
-                          <span>{values?.bf}</span>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="bf"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.bf}</span>
                         </td>
-                        <td className="formTableCell width15pc">
+                        <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc"
                             name="bg"
+                            style={{ ...styles.cbR0909 }}
                             // onChange={(e) => setFieldValue("bg", formatCurrency(e.target.value))}
                             // value={values?.bg}
                           />
-                          <div className="numeric printNumeric">{values?.bg}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.bg}
+                          </div>
                         </td>
-                        <td className="formTableCell width15pc">
+                        <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc"
                             name="bh"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) =>
                               setFieldValue("bh", formatCurrencyWithDollarSign(e.target.value))
                             }
                             value={values?.bh}
                           />
-                          <div className="numeric printNumeric">{values?.bh}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.bh}
+                          </div>
                         </td>
                       </tr>
                       <tr>
-                        <td className="formTableCell width10pc">
-                          <Field type="text" className="width100pc" name="bi" />
-                          <span>{values?.bi}</span>
-                        </td>
-                        <td className="formTableCell width60pc">
-                          <Field type="text" className="width100pc" name="bj" />
-                          <span>{values?.bj}</span>
-                        </td>
-                        <td className="formTableCell width15pc">
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc"
+                            name="bi"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.bi}</span>
+                        </td>
+                        <td className="formTableCell width60pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="bj"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.bj}</span>
+                        </td>
+                        <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            style={{ ...styles.cbR0909 }}
                             name="bk"
                             // onChange={(e) => setFieldValue("bk", formatCurrency(e.target.value))}
                             // value={values?.bk}
                           />
-                          <div className="numeric printNumeric">{values?.bk}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.bk}
+                          </div>
                         </td>
-                        <td className="formTableCell width15pc">
+                        <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc"
+                            style={{ ...styles.cbR0909 }}
                             name="bl"
                             onChange={(e) =>
                               setFieldValue("bl", formatCurrencyWithDollarSign(e.target.value))
                             }
                             value={values?.bl}
                           />
-                          <div className="numeric printNumeric">{values?.bl}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.bl}
+                          </div>
                         </td>
                       </tr>
                       <tr>
-                        <td className="formTableCell width10pc">
-                          <Field type="text" className="width100pc" name="bm" />
-                          <span>{values?.bm}</span>
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="bm"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.bm}</span>
                         </td>
-                        <td className="formTableCell width60pc">
-                          <Field type="text" className="width100pc" name="bn" />
-                          <span>{values?.bn}</span>
+                        <td className="formTableCell width60pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="bn"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.bn}</span>
                         </td>
-                        <td className="formTableCell width15pc">
+                        <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc"
                             name="bo"
+                            style={{ ...styles.cbR0909 }}
                             // onChange={(e) => setFieldValue("bo", formatCurrency(e.target.value))}
                             // value={values?.bo}
                           />
-                          <div className="numeric printNumeric">{values?.bo}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.bo}
+                          </div>
                         </td>
-                        <td className="formTableCell width15pc">
+                        <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc"
                             name="bp"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) =>
                               setFieldValue("bp", formatCurrencyWithDollarSign(e.target.value))
                             }
                             value={values?.bp}
                           />
-                          <div className="numeric printNumeric">{values?.bp}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.bp}
+                          </div>
                         </td>
                       </tr>
                       <tr>
-                        <td className="formTableCell width10pc">
-                          <Field type="text" className="width100pc" name="bq" />
-                          <span>{values?.bq}</span>
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="bq"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.bq}</span>
                         </td>
-                        <td className="formTableCell width60pc">
-                          <Field type="text" className="width100pc" name="br" />
-                          <span>{values?.br}</span>
+                        <td className="formTableCell width60pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="br"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.br}</span>
                         </td>
-                        <td className="formTableCell width15pc">
+                        <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc"
                             name="bs"
+                            style={{ ...styles.cbR0909 }}
                             // onChange={(e) => setFieldValue("bs", formatCurrency(e.target.value))}
                             // value={values?.bs}
                           />
-                          <div className="numeric printNumeric">{values?.bs}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.bs}
+                          </div>
                         </td>
-                        <td className="formTableCell width15pc">
+                        <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc"
                             name="bt"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) =>
                               setFieldValue("bt", formatCurrencyWithDollarSign(e.target.value))
                             }
                             value={values?.bt}
                           />
-                          <div className="numeric printNumeric">{values?.bt}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.bt}
+                          </div>
                         </td>
                       </tr>
                       <tr>
-                        <td className="formTableCell width10pc">
-                          <Field type="text" className="width100pc" name="bu" />
-                          <span>{values?.bu}</span>
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="bu"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.bu}</span>
                         </td>
-                        <td className="formTableCell width60pc">
-                          <Field type="text" className="width100pc" name="bv" />
-                          <span>{values?.bv}</span>
+                        <td className="formTableCell width60pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="bv"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.bv}</span>
                         </td>
-                        <td className="formTableCell width15pc">
+                        <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc"
                             name="bw"
+                            style={{ ...styles.cbR0909 }}
                             // onChange={(e) => setFieldValue("bw", formatCurrency(e.target.value))}
                             // value={values?.bw}
                           />
-                          <div className="numeric printNumeric">{values?.bw}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.bw}
+                          </div>
                         </td>
-                        <td className="formTableCell width15pc">
+                        <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc"
                             name="bx"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) =>
                               setFieldValue("bx", formatCurrencyWithDollarSign(e.target.value))
                             }
                             value={values?.bx}
                           />
-                          <div className="numeric printNumeric">{values?.bx}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.bx}
+                          </div>
                         </td>
                       </tr>
                       <tr>
-                        <td className="formTableCell width10pc">
-                          <Field type="text" className="width100pc" name="by" />
-                          <span>{values?.by}</span>
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="by"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.by}</span>
                         </td>
-                        <td className="formTableCell width60pc">
-                          <Field type="text" className="width100pc" name="bz" />
-                          <span>{values?.bz}</span>
+                        <td className="formTableCell width60pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="bz"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.bz}</span>
                         </td>
-                        <td className="formTableCell width15pc">
+                        <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc"
                             name="ca"
+                            style={{ ...styles.cbR0909 }}
                             // onChange={(e) => setFieldValue("ca", formatCurrency(e.target.value))}
                             // value={values?.ca}
                           />
-                          <div className="numeric printNumeric">{values?.ca}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.ca}
+                          </div>
                         </td>
-                        <td className="formTableCell width15pc">
+                        <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc"
+                            style={{ ...styles.cbR0909 }}
                             name="cb"
                             onChange={(e) =>
                               setFieldValue("cb", formatCurrencyWithDollarSign(e.target.value))
                             }
                             value={values?.cb}
                           />
-                          <div className="numeric printNumeric">{values?.cb}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.cb}
+                          </div>
                         </td>
                       </tr>
                       <tr>
-                        <td className="formTableCell width10pc">
-                          <Field type="text" className="width100pc" name="cc" />
-                          <span>{values?.cc}</span>
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="cc"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.cc}</span>
                         </td>
-                        <td className="formTableCell width60pc">
-                          <Field type="text" className="width100pc" name="cd" />
-                          <span>{values?.cd}</span>
+                        <td className="formTableCell width60pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="cd"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.cd}</span>
                         </td>
-                        <td className="formTableCell width15pc">
+                        <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc"
                             name="ce"
+                            style={{ ...styles.cbR0909 }}
                             // onChange={(e) => setFieldValue("ce", formatCurrency(e.target.value))}
                             // value={values?.ce}
                           />
-                          <div className="numeric printNumeric">{values?.ce}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.ce}
+                          </div>
                         </td>
-                        <td className="formTableCell width15pc">
+                        <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc"
                             name="cf"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) =>
                               setFieldValue("cf", formatCurrencyWithDollarSign(e.target.value))
                             }
                             value={values?.cf}
                           />
-                          <div className="numeric printNumeric">{values?.cf}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.cf}
+                          </div>
                         </td>
                       </tr>
                     </tbody>
                     <tfoot style={{ borderBottomStyle: "double", height: "2em" }}>
                       <tr>
-                        <td className="formTableFooterCell width10pc">
-                          <strong>Totals</strong>
+                        <td className="formTableFooterCell width10pc" style={{ ...styles.cbB16 }}>
+                          <>Totals</>
                         </td>
-                        <td className="formTableFooterCell width60pc">
-                          <Field type="text" className="width100pc" name="cg" />
-                          <span>{values?.cg}</span>
+                        <td className="formTableFooterCell width60pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="cg"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.cg}</span>
                         </td>
                         {/* 
                   ============================================================================
                   ============================================================================
                   */}
-                        <td className="formTableFooterCell width15pc">
+                        <td className="formTableFooterCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc"
@@ -1329,9 +1446,11 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                             // onChange={(e) => setFieldValue("dx", formatCurrency(e.target.value))}
                             // value={values?.dx}
                           />
-                          <div className="numeric printNumeric">{values?.dx}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.dx}
+                          </div>
                         </td>
-                        <td className="formTableFooterCell width15pc">
+                        <td className="formTableFooterCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc"
@@ -1341,40 +1460,73 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                             }
                             value={values?.dy}
                           />
-                          <div className="numeric printNumeric">{values?.dy}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.dy}
+                          </div>
                         </td>
                       </tr>
                     </tfoot>
                   </table>
                 </div>
                 {/* **** SCHEDULE "C" - APPORTIONMENT **** */}
-                <div className="formRow topMargin5pc bottomMargin10">
-                  <div style={{ order: 1, textAlign: "center", flexGrow: 1 }}>
-                    <strong>SCHEDULE &quot;C&quot; - APPORTIONMENT</strong>
+                <div className="formRow topMargin20 bottomMargin5">
+                  <div style={{ order: 1, textAlign: "center", flexGrow: 1, ...styles.cbB11 }}>
+                    <>SCHEDULE &quot;C&quot; - APPORTIONMENT</>
                   </div>
                 </div>
-                <div className="formRow">
+                <div className="formRow " style={{ ...styles.cbR0909 }}>
                   <table style={{ border: "1px solid black", width: "100%" }}>
-                    <tbody>
+                    <tbody style={{ ...styles.cbR0909 }}>
                       <tr style={{ borderTopStyle: "double", height: "2.5em" }}>
-                        <th className="formTableHeaderCell text-center">POLICY NO.</th>
-                        <th className="formTableHeaderCell text-center">EXPIRES</th>
-                        <th className="formTableHeaderCell text-center">NAME OF COMPANY</th>
-                        <th className="formTableHeaderCell text-center" colSpan={2}>
+                        <th className="formTableHeaderCell text-center" style={{ ...styles.cbB11 }}>
+                          POLICY NO.
+                        </th>
+                        <th className="formTableHeaderCell text-center" style={{ ...styles.cbB11 }}>
+                          EXPIRES
+                        </th>
+                        <th className="formTableHeaderCell text-center" style={{ ...styles.cbB11 }}>
+                          NAME OF COMPANY
+                        </th>
+                        <th
+                          className="formTableHeaderCell text-center"
+                          colSpan={2}
+                          style={{ ...styles.cbB11 }}
+                        >
                           ITEM NO.
                         </th>
-                        <th className="formTableHeaderCell text-center" colSpan={2}>
+                        <th
+                          className="formTableHeaderCell text-center"
+                          colSpan={2}
+                          style={{ ...styles.cbB11 }}
+                        >
                           ITEM NO.
                         </th>
                       </tr>
                       <tr style={{ height: "1.5em" }}>
-                        <th className="formTableHeaderCell" style={{ borderTop: "none" }} />
-                        <th className="formTableHeaderCell" style={{ borderTop: "none" }} />
-                        <th className="formTableHeaderCell" style={{ borderTop: "none" }} />
-                        <th className="formTableHeaderCell text-center">INSURES</th>
-                        <th className="formTableHeaderCell text-center">PAYS</th>
-                        <th className="formTableHeaderCell text-center">INSURES</th>
-                        <th className="formTableHeaderCell text-center">PAYS</th>
+                        <th
+                          className="formTableHeaderCell"
+                          style={{ borderTop: "none", ...styles.cbR0909 }}
+                        />
+                        <th
+                          className="formTableHeaderCell"
+                          style={{ borderTop: "none", ...styles.cbR0909 }}
+                        />
+                        <th
+                          className="formTableHeaderCell"
+                          style={{ borderTop: "none", ...styles.cbR0909 }}
+                        />
+                        <th className="formTableHeaderCell text-center" style={{ ...styles.cbB11 }}>
+                          INSURES
+                        </th>
+                        <th className="formTableHeaderCell text-center" style={{ ...styles.cbB11 }}>
+                          PAYS
+                        </th>
+                        <th className="formTableHeaderCell text-center" style={{ ...styles.cbB11 }}>
+                          INSURES
+                        </th>
+                        <th className="formTableHeaderCell text-center" style={{ ...styles.cbB11 }}>
+                          PAYS
+                        </th>
                       </tr>
                     </tbody>
                     <tbody>
@@ -1382,206 +1534,309 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                   ============================================================================
                   ============================================================================
                   */}
-                      <tr>
-                        <td className="formTableCell width10pc">
-                          <Field type="text" className="width100pc" name="ed" />
-                          <span>{values?.ed}</span>
+                      <tr style={{ ...styles.cbR0909 }}>
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="ed"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.ed}</span>
                         </td>
-                        <td className="formTableCell width10pc">
-                          <Field type="text" className="width100pc" name="ch" />
-                          <span>{values?.ch}</span>
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="ch"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.ch}</span>
                         </td>
-                        <td className="formTableCell width40pc">
-                          <Field type="text" className="width100pc" name="ci" />
-                          <span>{values?.ci}</span>
+                        <td className="formTableCell width40pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="ci"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.ci}</span>
                         </td>
-                        <td className="formTableCell width10pc">
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
                             name="cj"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) => setFieldValue("cj", formatCurrency(e.target.value))}
                             value={values?.cj}
                           />
-                          <div className="numeric printNumeric">{values?.cj}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.cj}
+                          </div>
                         </td>
-                        <td className="formTableCell width10pc">
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
                             name="ck"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) => setFieldValue("ck", formatCurrency(e.target.value))}
                             value={values?.ck}
                           />
-                          <div className="numeric printNumeric">{values?.ck}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.ck}
+                          </div>
                         </td>
-                        <td className="formTableCell width10pc">
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
                             name="cl"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) => setFieldValue("cl", formatCurrency(e.target.value))}
                             value={values?.cl}
                           />
-                          <div className="numeric printNumeric">{values?.cl}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.cl}
+                          </div>
                         </td>
-                        <td className="formTableCell width10pc">
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
                             name="cm"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) => setFieldValue("cm", formatCurrency(e.target.value))}
                             value={values?.cm}
                           />
-                          <div className="numeric printNumeric">{values?.cm}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.cm}
+                          </div>
                         </td>
                       </tr>
                       <tr>
-                        <td className="formTableCell width10pc">
-                          <Field type="text" className="width100pc" name="cn" />
-                          <span>{values?.cn}</span>
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="cn"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.cn}</span>
                         </td>
-                        <td className="formTableCell width10pc">
-                          <Field type="text" className="width100pc" name="co" />
-                          <span>{values?.co}</span>
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="co"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.co}</span>
                         </td>
-                        <td className="formTableCell width40pc">
-                          <Field type="text" className="width100pc" name="cp" />
-                          <span>{values?.cp}</span>
+                        <td className="formTableCell width40pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="cp"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.cp}</span>
                         </td>
-                        <td className="formTableCell width10pc">
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
                             name="cq"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) => setFieldValue("cq", formatCurrency(e.target.value))}
                             value={values?.cq}
                           />
-                          <div className="numeric printNumeric">{values?.cq}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.cq}
+                          </div>
                         </td>
-                        <td className="formTableCell width10pc">
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
                             name="cr"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) => setFieldValue("cr", formatCurrency(e.target.value))}
                             value={values?.cr}
                           />
-                          <div className="numeric printNumeric">{values?.cr}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.cr}
+                          </div>
                         </td>
-                        <td className="formTableCell width10pc">
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
                             name="cs"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) => setFieldValue("cs", formatCurrency(e.target.value))}
                             value={values?.cs}
                           />
-                          <div className="numeric printNumeric">{values?.cs}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.cs}
+                          </div>
+                        </td>
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc numeric-left"
+                            name="ct"
+                            style={{ ...styles.cbR0909 }}
+                            onChange={(e) => setFieldValue("ct", formatCurrency(e.target.value))}
+                            value={values?.ct}
+                          />
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.ct}
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="cu"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.cu}</span>
                         </td>
                         <td className="formTableCell width10pc">
                           <Field
                             type="text"
-                            className="width100pc numeric"
-                            name="ct"
-                            onChange={(e) => setFieldValue("ct", formatCurrency(e.target.value))}
-                            value={values?.ct}
+                            className="width100pc"
+                            name="cv"
+                            style={{ ...styles.cbR0909 }}
                           />
-                          <div className="numeric printNumeric">{values?.ct}</div>
+                          <span style={{ ...styles.cbR0909 }}>{values?.cv}</span>
                         </td>
-                      </tr>
-                      <tr>
-                        <td className="formTableCell width10pc">
-                          <Field type="text" className="width100pc" name="cu" />
-                          <span>{values?.cu}</span>
-                        </td>
-                        <td className="formTableCell width10pc">
-                          <Field type="text" className="width100pc" name="cv" />
-                          <span>{values?.cv}</span>
-                        </td>
-                        <td className="formTableCell width40pc">
-                          <Field type="text" className="width100pc" name="cw" />
+                        <td className="formTableCell width40pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="cw"
+                            style={{ ...styles.cbR0909 }}
+                          />
                           <span>{values?.cw}</span>
                         </td>
-                        <td className="formTableCell width10pc">
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
                             name="cx"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) => setFieldValue("cx", formatCurrency(e.target.value))}
                             value={values?.cx}
                           />
-                          <div className="numeric printNumeric">{values?.cx}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.cx}
+                          </div>
                         </td>
-                        <td className="formTableCell width10pc">
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
                             name="cy"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) => setFieldValue("cy", formatCurrency(e.target.value))}
                             value={values?.cy}
                           />
-                          <div className="numeric printNumeric">{values?.cy}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.cy}
+                          </div>
                         </td>
-                        <td className="formTableCell width10pc">
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
                             name="cz"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) => setFieldValue("cz", formatCurrency(e.target.value))}
                             value={values?.cz}
                           />
-                          <div className="numeric printNumeric">{values?.cz}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.cz}
+                          </div>
                         </td>
-                        <td className="formTableCell width10pc">
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
                             name="da"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) => setFieldValue("da", formatCurrency(e.target.value))}
                             value={values?.da}
                           />
-                          <div className="numeric printNumeric">{values?.da}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.da}
+                          </div>
                         </td>
                       </tr>
                       <tr>
-                        <td className="formTableCell width10pc">
-                          <Field type="text" className="width100pc" name="db" />
-                          <span>{values?.db}</span>
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="db"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.db}</span>
                         </td>
-                        <td className="formTableCell width10pc">
-                          <Field type="text" className="width100pc" name="dc" />
-                          <span>{values?.dc}</span>
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="dc"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.dc}</span>
                         </td>
-                        <td className="formTableCell width40pc">
-                          <Field type="text" className="width100pc" name="dd" />
-                          <span>{values?.dd}</span>
+                        <td className="formTableCell width40pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="dd"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.dd}</span>
                         </td>
-                        <td className="formTableCell width10pc">
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
                             name="de"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) => setFieldValue("de", formatCurrency(e.target.value))}
                             value={values?.de}
                           />
-                          <div className="numeric printNumeric">{values?.de}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.de}
+                          </div>
                         </td>
-                        <td className="formTableCell width10pc">
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
                             name="df"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) => setFieldValue("df", formatCurrency(e.target.value))}
                             value={values?.df}
                           />
-                          <div className="numeric printNumeric">{values?.df}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.df}
+                          </div>
                         </td>
-                        <td className="formTableCell width10pc">
+                        <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
                             name="dg"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) => setFieldValue("dg", formatCurrency(e.target.value))}
                             value={values?.dg}
                           />
@@ -1592,176 +1847,205 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                             type="text"
                             className="width100pc numeric-left"
                             name="dh"
+                            style={{ ...styles.cbR0909 }}
                             onChange={(e) => setFieldValue("dh", formatCurrency(e.target.value))}
                             value={values?.dh}
                           />
-                          <div className="numeric printNumeric">{values?.dh}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.dh}
+                          </div>
                         </td>
                       </tr>
                     </tbody>
                     <tfoot style={{ borderBottomStyle: "double", height: "2em" }}>
                       <tr>
-                        <td className="formTableFooterCell width10pc">
-                          <strong>Totals</strong>
+                        <td className="formTableFooterCell width10pc" style={{ ...styles.cbB16 }}>
+                          <>Totals</>
                         </td>
-                        <td className="formTableFooterCell width10pc">
-                          <Field type="text" className="width100pc" name="di" />
-                          <span>{values?.di}</span>
+                        <td className="formTableFooterCell width10pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="di"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.di}</span>
                         </td>
-                        <td className="formTableFooterCell width40pc">
-                          <Field type="text" className="width100pc" name="dj" />
-                          <span>{values?.dj}</span>
+                        <td className="formTableFooterCell width40pc" style={{ ...styles.cbR0909 }}>
+                          <Field
+                            type="text"
+                            className="width100pc"
+                            name="dj"
+                            style={{ ...styles.cbR0909 }}
+                          />
+                          <span style={{ ...styles.cbR0909 }}>{values?.dj}</span>
                         </td>
                         {/* 
                   ============================================================================
                   ============================================================================
                   */}
-                        <td className="formTableFooterCell width10pc">
+                        <td className="formTableFooterCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
                             name="dz"
                             onChange={(e) => setFieldValue("dz", formatCurrency(e.target.value))}
                             value={values?.dz}
+                            style={{ ...styles.cbR0909 }}
                           />
-                          <div className="numeric printNumeric">{values?.dz}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.dz}
+                          </div>
                         </td>
-                        <td className="formTableFooterCell width10pc">
+                        <td className="formTableFooterCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
+                            style={{ ...styles.cbR0909 }}
                             className="width100pc numeric-left"
                             name="ea"
                             onChange={(e) => setFieldValue("ea", formatCurrency(e.target.value))}
                             value={values?.ea}
                           />
-                          <div className="numeric printNumeric">{values?.ea}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.ea}
+                          </div>
                         </td>
-                        <td className="formTableFooterCell width10pc">
+                        <td className="formTableFooterCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
+                            style={{ ...styles.cbR0909 }}
                             name="eb"
                             onChange={(e) => setFieldValue("eb", formatCurrency(e.target.value))}
                             value={values?.eb}
                           />
-                          <div className="numeric printNumeric">{values?.eb}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.eb}
+                          </div>
                         </td>
-                        <td className="formTableFooterCell width10pc">
+                        <td className="formTableFooterCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
                             className="width100pc numeric-left"
                             name="ec"
                             onChange={(e) => setFieldValue("ec", formatCurrency(e.target.value))}
                             value={values?.ec}
+                            style={{ ...styles.cbR0909 }}
                           />
-                          <div className="numeric printNumeric">{values?.ec}</div>
+                          <div className="numeric printNumeric" style={{ ...styles.cbR0909 }}>
+                            {values?.ec}
+                          </div>
                         </td>
                       </tr>
                     </tfoot>
                   </table>
                 </div>
                 {/* **** Adjuster **** */}
-                <div className="formRow topMargin15" style={{ width: "50%", float: "right" }}>
+                <div
+                  className="formRow topMargin15"
+                  style={{ width: "50%", float: "right", ...styles.cbR0909 }}
+                >
                   <div style={{ order: 1, flexGrow: 1 }}>
-                    <Field type="text" name="dk" />
-                    <span>{values?.dk}</span>
+                    <Field type="text" name="dk" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.dk}</span>
                   </div>
-                  <div style={{ order: 2 }}>Adjuster</div>
+                  <div style={{ order: 2, ...styles.cbR0909 }}> Adjuster</div>
                 </div>
                 <div className="clear" />
                 {/* **** RECEIPT FOR PAYMENT **** */}
                 <div className="formRow topMargin15 bottomMargin10">
-                  <div style={{ order: 1, textAlign: "center", flexGrow: 1 }}>
-                    <strong>RECEIPT FOR PAYMENT</strong>
+                  <div style={{ order: 1, textAlign: "center", flexGrow: 1, ...styles.cbB11 }}>
+                    <>RECEIPT FOR PAYMENT</>
                   </div>
                 </div>
-                <div className="formRow">
-                  <div style={{ order: 1 }}>Received of</div>
-                  <div style={{ order: 2, flexGrow: 1, flexBasis: "10em" }}>
-                    <Field type="text" name="dl" />
-                    <span>{values?.dl}</span>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>Received of</div>
+                  <div style={{ order: 2, flexGrow: 1, flexBasis: "10em", ...styles.cbR0909 }}>
+                    <Field type="text" name="dl" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.dl}</span>
                   </div>
-                  <div style={{ order: 3 }}>(insurer) of</div>
-                  <div style={{ order: 4, flexGrow: 0, flexBasis: "20em" }}>
-                    <Field type="text" name="dm" />
-                    <span>{values?.dm}</span>
+                  <div style={{ order: 3, ...styles.cbR0909 }}>(insurer) of</div>
+                  <div style={{ order: 4, flexGrow: 0, flexBasis: "20em", ...styles.cbR0909 }}>
+                    <Field type="text" name="dm" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.dm}</span>
                   </div>
                 </div>
-                <div className="formRow">
-                  <div style={{ order: 1, flexGrow: 1, flexBasis: "10em" }}>
-                    <Field type="text" name="dn" />
-                    <span>{values?.dn}</span>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, flexGrow: 1, flexBasis: "10em", ...styles.cbR0909 }}>
+                    <Field type="text" name="dn" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.dn}</span>
                   </div>
-                  <div style={{ order: 2 }}>Dollars ($</div>
-                  <div style={{ order: 3, flexGrow: 0, flexBasis: "10em" }}>
+                  <div style={{ order: 2, ...styles.cbR0909 }}>Dollars ($</div>
+                  <div style={{ order: 3, flexGrow: 0, flexBasis: "10em", ...styles.cbR0909 }}>
                     <Field
                       type="text"
                       name="dp"
                       onChange={(e) => setFieldValue("dp", formatCurrency(e.target.value))}
                       value={values?.dp}
+                      style={{ ...styles.cbR0909 }}
                     />
-                    <span>{values?.dp}</span>
+                    <span style={{ ...styles.cbR0909 }}>{values?.dp}</span>
                   </div>
-                  <div style={{ order: 4 }}>)</div>
+                  <div style={{ order: 4, ...styles.cbR0909 }}>)</div>
                 </div>
-                <div className="formRow">
-                  <div style={{ order: 1, flexGrow: 1 }}>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, flexGrow: 1, ...styles.cbR0909 }}>
                     in full satisfaction and indemnity for all claims and demands upon said company
                     on account of said loss and damage and the
                   </div>
                 </div>
-                <div className="formRow">
-                  <div style={{ order: 1 }}>said policy is hereby</div>
-                  <div style={{ order: 2, flexGrow: 1, flexBasis: "10em" }}>
-                    <Field type="text" name="dq" />
-                    <span>{values?.dq}</span>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>said policy is hereby</div>
+                  <div style={{ order: 2, flexGrow: 1, flexBasis: "10em", ...styles.cbR0909 }}>
+                    <Field type="text" name="dq" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.dq}</span>
                   </div>
-                  <div style={{ order: 3 }}>
+                  <div style={{ order: 3, ...styles.cbR0909 }}>
                     (State whether <strong>Reduced, Reduced and Reinstated</strong> or
                     <strong>Canceled</strong> by payment.)
                   </div>
                 </div>
-                <div className="formRow topMargin" />
+                <div className="formRow topMargin" style={{ ...styles.cbR0909 }} />
                 {/* The insured */}
-                <div className="formRow">
-                  <div style={{ order: 1 }}>Dated</div>
-                  <div style={{ order: 2, flexGrow: 1, flexBasis: "15em" }}>
-                    <Field type="text" name="dr" />
-                    <span>{values?.dr}</span>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>Dated</div>
+                  <div style={{ order: 2, flexGrow: 1, flexBasis: "15em", ...styles.cbR0909 }}>
+                    <Field type="text" name="dr" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.dr}</span>
                   </div>
-                  <div style={{ order: 3 }}>20</div>
-                  <div style={{ order: 4, flexGrow: 1, flexBasis: "5em" }}>
-                    <Field type="text" name="ds" />
-                    <span>{values?.ds}</span>
+                  <div style={{ order: 3, ...styles.cbR0909 }}>20</div>
+                  <div style={{ order: 4, flexGrow: 1, flexBasis: "5em", ...styles.cbR0909 }}>
+                    <Field type="text" name="ds" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.ds}</span>
                   </div>
-                  <div style={{ order: 5, flexGrow: 0, flexBasis: "10em" }} />
-                  <div style={{ order: 6, flexGrow: 1, flexBasis: "20em" }}>
-                    <Field type="text" name="dt" />
-                    <span>{values?.dt}</span>
+                  <div style={{ order: 5, flexGrow: 0, flexBasis: "10em", ...styles.cbR0909 }} />
+                  <div style={{ order: 6, flexGrow: 1, flexBasis: "20em", ...styles.cbR0909 }}>
+                    <Field type="text" name="dt" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.dt}</span>
                   </div>
                 </div>
-                <div className="formRow" style={{ justifyContent: "flex-end" }}>
+                <div className="formRow" style={{ justifyContent: "flex-end", ...styles.cbR0909 }}>
                   The Insured
                 </div>
                 {/* The Mortgagee */}
-                <div className="formRow">
-                  <div style={{ order: 1 }}>Dated</div>
-                  <div style={{ order: 2, flexGrow: 1, flexBasis: "15em" }}>
-                    <Field type="text" name="du" />
-                    <span>{values?.du}</span>
+                <div className="formRow" style={{ ...styles.cbR0909 }}>
+                  <div style={{ order: 1, ...styles.cbR0909 }}>Dated</div>
+                  <div style={{ order: 2, flexGrow: 1, flexBasis: "15em", ...styles.cbR0909 }}>
+                    <Field type="text" name="du" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.du}</span>
                   </div>
-                  <div style={{ order: 3 }}>20</div>
-                  <div style={{ order: 4, flexGrow: 1, flexBasis: "5em" }}>
-                    <Field type="text" name="dv" />
-                    <span>{values?.dv}</span>
+                  <div style={{ order: 3, ...styles.cbR0909 }}>20</div>
+                  <div style={{ order: 4, flexGrow: 1, flexBasis: "5em", ...styles.cbR0909 }}>
+                    <Field type="text" name="dv" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.dv}</span>
                   </div>
-                  <div style={{ order: 5, flexGrow: 0, flexBasis: "10em" }} />
-                  <div style={{ order: 6, flexGrow: 1, flexBasis: "20em" }}>
-                    <Field type="text" name="dw" />
-                    <span>{values?.dw}</span>
+                  <div style={{ order: 5, flexGrow: 0, flexBasis: "10em", ...styles.cbR0909 }} />
+                  <div style={{ order: 6, flexGrow: 1, flexBasis: "20em", ...styles.cbR0909 }}>
+                    <Field type="text" name="dw" style={{ ...styles.cbR0909 }} />
+                    <span style={{ ...styles.cbR0909 }}>{values?.dw}</span>
                   </div>
                 </div>
-                <div className="formRow" style={{ justifyContent: "flex-end" }}>
+                <div className="formRow" style={{ justifyContent: "flex-end", ...styles.cbR0909 }}>
                   The Mortgagee
                 </div>
               </div>
