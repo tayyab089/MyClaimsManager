@@ -46,6 +46,16 @@ export const styles = {
     fontWeight: "bold",
     fontSize: "16pt",
   },
+  cbB18: {
+    fontFamily: "Calibri Bold",
+    fontWeight: "bold",
+    fontSize: "18pt",
+  },
+  cbB20: {
+    fontFamily: "Calibri Bold",
+    fontWeight: "bold",
+    fontSize: "20pt",
+  },
   cbB1010: {
     fontFamily: "Calibri Bold",
     fontWeight: "bold",
@@ -76,6 +86,19 @@ export const styles = {
     fontSize: "10.5pt",
     lineHeight: "9.5pt",
     letterSpacing: "0.05em",
+  },
+  cbR1010Normal: {
+    fontFamily: "Calibri Regular",
+    fontWeight: "normal",
+    fontSize: "10.5pt",
+    lineHeight: "9.5pt",
+  },
+  cbR1010Condensed: {
+    fontFamily: "Calibri Regular",
+    fontWeight: "normal",
+    fontSize: "10.5pt",
+    lineHeight: "9.5pt",
+    letterSpacing: "0.01em",
   },
   cbR1214: {
     fontFamily: "Calibri Regular",
@@ -124,6 +147,11 @@ export const styles = {
     fontWeight: "normal",
     fontSize: "6pt",
     lineHeight: "8pt",
+  },
+  cbR14: {
+    fontFamily: "Calibri Regular",
+    fontWeight: "normal",
+    fontSize: "14pt",
   },
   gsBB12: {
     fontFamily: "Grafolita Script",
