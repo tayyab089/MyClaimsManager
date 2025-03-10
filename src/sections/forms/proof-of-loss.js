@@ -778,6 +778,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                     <Field
                       type="text"
                       className="numeric"
+                      style={{ textAlign: "right" }}
                       name="ag"
                       onChange={(e) => setFieldValue("ag", formatCurrency(e.target.value))}
                       value={values?.ag}
@@ -1105,7 +1106,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             name="bg"
                             style={{ ...styles.cbR0909 }}
                             // onChange={(e) => setFieldValue("bg", formatCurrency(e.target.value))}
@@ -1118,7 +1119,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             name="bh"
                             style={{ ...styles.cbR0909 }}
                             onChange={(e) =>
@@ -1153,7 +1154,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             style={{ ...styles.cbR0909 }}
                             name="bk"
                             // onChange={(e) => setFieldValue("bk", formatCurrency(e.target.value))}
@@ -1166,7 +1167,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             style={{ ...styles.cbR0909 }}
                             name="bl"
                             onChange={(e) =>
@@ -1214,7 +1215,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             name="bp"
                             style={{ ...styles.cbR0909 }}
                             onChange={(e) =>
@@ -1231,7 +1232,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             name="bq"
                             style={{ ...styles.cbR0909 }}
                           />
@@ -1240,7 +1241,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width60pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             name="br"
                             style={{ ...styles.cbR0909 }}
                           />
@@ -1249,7 +1250,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc "
                             name="bs"
                             style={{ ...styles.cbR0909 }}
                             // onChange={(e) => setFieldValue("bs", formatCurrency(e.target.value))}
@@ -1262,7 +1263,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             name="bt"
                             style={{ ...styles.cbR0909 }}
                             onChange={(e) =>
@@ -1279,7 +1280,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             name="bu"
                             style={{ ...styles.cbR0909 }}
                           />
@@ -1288,7 +1289,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width60pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             name="bv"
                             style={{ ...styles.cbR0909 }}
                           />
@@ -1327,7 +1328,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             name="by"
                             style={{ ...styles.cbR0909 }}
                           />
@@ -1336,7 +1337,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width60pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             name="bz"
                             style={{ ...styles.cbR0909 }}
                           />
@@ -1358,7 +1359,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             style={{ ...styles.cbR0909 }}
                             name="cb"
                             onChange={(e) =>
@@ -1375,7 +1376,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width10pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             name="cc"
                             style={{ ...styles.cbR0909 }}
                           />
@@ -1384,7 +1385,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width60pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             name="cd"
                             style={{ ...styles.cbR0909 }}
                           />
@@ -1406,7 +1407,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             name="cf"
                             style={{ ...styles.cbR0909 }}
                             onChange={(e) =>
@@ -1428,7 +1429,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableFooterCell width60pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             name="cg"
                             style={{ ...styles.cbR0909 }}
                           />
@@ -1453,7 +1454,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
                         <td className="formTableFooterCell width15pc" style={{ ...styles.cbR0909 }}>
                           <Field
                             type="text"
-                            className="width100pc"
+                            className="width100pc numeric"
                             name="dy"
                             onChange={(e) =>
                               setFieldValue("dy", formatCurrencyWithDollarSign(e.target.value))

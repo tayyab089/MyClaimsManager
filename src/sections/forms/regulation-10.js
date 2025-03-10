@@ -245,8 +245,8 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
                 <div style={{ order: 1, flexBasis: "3em", flexGrow: 0 }}></div>
                 <div style={{ order: 2, flexGrow: 0 }}>$</div>
                 <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
-                  <Field type="text" name="g" />
-                  <span>{values?.g}</span>
+                  <Field type="text" name="g" className="numeric" />
+                  <span className="numeric">{values?.g}</span>
                 </div>
                 <div style={{ order: 4, flexGrow: 0 }}>Public Adjuster&apos;s Fee</div>
                 <div style={{ order: 5, flexBasis: "20em", flexGrow: 0 }}>
@@ -259,8 +259,8 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
                 <div style={{ order: 1, flexBasis: "3em", flexGrow: 0 }}></div>
                 <div style={{ order: 2, flexGrow: 0 }}>$</div>
                 <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
-                  <Field type="text" name="h" />
-                  <span>{values?.h}</span>
+                  <Field type="text" name="h" className="numeric" />
+                  <span className="numeric">{values?.h}</span>
                 </div>
                 <div style={{ order: 4, flexGrow: 0 }}> Insured(s)</div>
               </div>
