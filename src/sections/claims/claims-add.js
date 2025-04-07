@@ -304,9 +304,6 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                         }
                                         contactsData={contactsData}
                                       />
-                                      {!item.id && item.name && (
-                                        <p>You are adding a new contact </p>
-                                      )}
                                     </Grid>
                                     <Grid xs={2} sm={1} md={1}>
                                       <Button
@@ -688,9 +685,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                         contactsData={contactsData}
                                       />
                                       {item.name}
-                                      {!item.id && item.name && (
-                                        <p>You are adding a new contact </p>
-                                      )}
+                                     
                                     </Grid>
                                     <Grid xs={2} sm={1} md={1}>
                                       <Button

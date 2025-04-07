@@ -172,7 +172,6 @@ export const ContactsAddFormContact = ({
               //   id: values.insured[ix].id,
               // }}
               inputValue={values?.contacts[ix]?.contact?.name}
-              freeSolo
               options={contactList ? contactList : []}
               getOptionLabel={(option) => option.label || ""}
               renderInput={(params) => <TextField {...params} label="Name" size="small" />}
@@ -676,7 +675,6 @@ export const ContactsAddFormContact = ({
           )}
         </Formik>
       )}
-      {!item.id && item.name && <p sx="text-sm">You are adding a new contact </p>}
     </Fragment>
   );
 };
