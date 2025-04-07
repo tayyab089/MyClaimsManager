@@ -15,8 +15,8 @@ const useInsured = (contacts, claim) => {
   return useMemo(() => {
     const insuredContacts = new Set();
     claim?.insured?.forEach((item) => {
-      var filteredContacts = contacts.filter((contact) => contact.id == item.id);
-      filteredContacts.length > 0 && insuredContacts.add(...filteredContacts);
+      var filteredContacts = contacts?.filter((contact) => contact.id == item?.id);
+      filteredContacts?.length > 0 && insuredContacts.add(...filteredContacts);
     });
     return Array.from(insuredContacts);
   }, [contacts, claim]);
@@ -26,8 +26,8 @@ const useOther = (contacts, claim) => {
   return useMemo(() => {
     const otherContacts = new Set();
     claim?.contacts?.forEach((item) => {
-      var filteredContacts = contacts.filter((contact) => contact.id == item.contact.id);
-      filteredContacts.length > 0 && otherContacts.add(...filteredContacts);
+      var filteredContacts = contacts?.filter((contact) => contact.id == item?.contact?.id);
+      filteredContacts?.length > 0 && otherContacts.add(...filteredContacts);
     });
     return Array.from(otherContacts);
   }, [contacts, claim]);
@@ -85,6 +85,7 @@ export const ClaimView = ({ item }) => {
 
   // Contact Modal================================
   const handleContactClick = (item) => {
+    console.log(item)
     const foundContact = contactsData.find((x) => x.id === item);
     if (foundContact) {
       setContactsModalData(foundContact);
@@ -209,7 +210,7 @@ export const ClaimView = ({ item }) => {
             Delete
           </Button>
         </Grid>
-        {item?.insured?.map((contact, index) => (
+        {item?.insuredNames?.map((contact, index) => (
           <Grid xs={10} md={2} key={index}>
             <Typography variant="link" onClick={() => handleContactClick(contact.id)}>
               {contact.name}{" "}
@@ -307,18 +308,22 @@ export const ClaimView = ({ item }) => {
         <Grid xs={10} md={12}>
           <Typography variant="formTag">Contacts </Typography>
         </Grid>
-        {item?.contacts?.map((contact, index) => (
+        {item?.contactNames?.map((contact, index) => {
+          console.log(contact);
+          return (
           <Fragment key={index}>
             <Grid xs={10} md={4}>
               <Typography variant="formText">{contact?.category}: </Typography>
             </Grid>
             <Grid xs={10} md={8}>
-              <Typography variant="link" onClick={() => handleContactClick(contact.contact.id)}>
-                {contact?.contact?.name}
+              <Typography variant="link" onClick={() => handleContactClick(contact.id)}>
+                {contact?.name}
               </Typography>
             </Grid>
           </Fragment>
-        ))}
+        )}
+        
+        )}
       </Grid>
       <ClaimsAdd
         open={openModal}
