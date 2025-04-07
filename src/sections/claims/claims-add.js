@@ -155,7 +155,13 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
         }
       } else {
         //adding new claim
-        const response = await saveClaimApi({ claim: values });
+        console.log(values.contacts.map(contact => ({ category: contact.category, id: contact.contact.id })));
+        const modifiedValues = {
+          ...values,
+          contacts: values.contacts.map(contact => ({ category: contact.category, id: contact.contact.id })),
+          insured: values.insured.map(insured => ({ category: "Insured", id: insured.id }))
+        };
+        const response = await saveClaimApi({ claim: modifiedValues });
         if (response && response.data.type !== "error") {
           dispatch(
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
@@ -685,7 +691,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                         contactsData={contactsData}
                                       />
                                       {item.name}
-                                     
+
                                     </Grid>
                                     <Grid xs={2} sm={1} md={1}>
                                       <Button

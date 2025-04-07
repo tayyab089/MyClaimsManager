@@ -93,8 +93,8 @@ export const ClaimsTable = (props) => {
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      {claim.insured.map((insured, ind) => (
-                        <div key={ind}>{insured?.name}</div>
+                      {claim.insuredNames?.map((insured, ind) => (
+                        <div key={ind}>{insured}</div>
                       ))}
                     </TableCell>
                     <TableCell>{claim?.insurance?.company}</TableCell>

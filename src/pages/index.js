@@ -112,7 +112,7 @@ const Page = () => {
   const [searchValue, setSearchValue] = useState("");
   const [filteredClaims, setFilteredClaims] = useState([]);
 
-  const filterData = (val) => {
+  const filterData = useCallback((val) => {
     const lowercaseVal = val.toLowerCase();
     const filteredData = claims.filter(
       (obj) =>
@@ -122,7 +122,7 @@ const Page = () => {
     );
     setSearchValue(val);
     setFilteredClaims(filteredData);
-  };
+  }, [claims])
 
   // UseEffect Calls=======================================
 
