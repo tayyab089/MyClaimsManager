@@ -97,7 +97,7 @@ export const ContactsAddFormInsured = ({
           dispatch(updateContactInStore(values));
           setFieldValue(`insured.${ix}.name`, values.name);
           setExpand(false);
-          
+
         } else {
           showAlert(response, dispatch);
         }
@@ -140,7 +140,6 @@ export const ContactsAddFormInsured = ({
               //   id: values.insured[ix].id,
               // }}
               inputValue={values.insured[ix].name}
-              freeSolo
               options={contactList ? contactList : []}
               getOptionLabel={(option) => option.label || ""}
               renderInput={(params) => <TextField {...params} label="Name" size="small" />}

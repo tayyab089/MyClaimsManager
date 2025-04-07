@@ -41,6 +41,7 @@ import {
   contactCategories,
 } from "./claims-static-data";
 import { addContactToStore } from "src/store/reducers/contacts/thunks";
+import { ContactsAdd } from "../contacts/contacs-add";
 
 // Custom Hooks ====================================================
 const useContactList = (contacts) => {
@@ -176,6 +177,8 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
     [item?.fileNo]
   );
 
+  const [openAddContactModal, setOpenAddContactModal] = useState(false);
+
   // Function to format currency
   const formatCurrency = (value) => {
     const numericValue = value.replace(/\D/g, "");
@@ -292,12 +295,12 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                         item={
                                           values?.insured[index].id !== ""
                                             ? contactsData.find(
-                                                (x) => x.id === values?.insured[index].id
-                                              )
+                                              (x) => x.id === values?.insured[index].id
+                                            )
                                             : {
-                                                ...contactEmptyValues,
-                                                name: values?.insured[index].name,
-                                              }
+                                              ...contactEmptyValues,
+                                              name: values?.insured[index].name,
+                                            }
                                         }
                                         contactsData={contactsData}
                                       />
@@ -323,7 +326,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                       type="button"
                                       onClick={() => arrayHelpers.push(insuredObject)}
                                     >
-                                      Add Insured
+                                      Add Insured From Contacts
                                     </Button>
                                   </Grid>
                                 </>
@@ -336,7 +339,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                       type="button"
                                       onClick={() => arrayHelpers.push(insuredObject)}
                                     >
-                                      Add Insured
+                                      Add Insured From Contacts
                                     </Button>
                                   </Grid>
                                 </Fragment>
@@ -345,6 +348,20 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                           )}
                         />
                       </Grid>
+                      <Grid xs={12} md={2}></Grid>
+                      <Grid xs={12} md={10}>
+                        <Button
+                          type="button"
+                          onClick={() => setOpenAddContactModal(true)}
+                        >
+                          Create a new contact instead
+                        </Button>
+                      </Grid>
+
+                      <ContactsAdd
+                        open={openAddContactModal}
+                        handleClose={() => setOpenAddContactModal(false)}
+                      />
                       {smUp && (
                         <Grid
                           xs={2}
@@ -655,17 +672,17 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                         item={
                                           values?.contacts[index]?.contact?.id !== ""
                                             ? {
-                                                ...contactsData.find(
-                                                  (x) =>
-                                                    x.id === values?.contacts[index]?.contact?.id
-                                                ),
-                                                category: values?.contacts[index]?.category,
-                                              }
+                                              ...contactsData.find(
+                                                (x) =>
+                                                  x.id === values?.contacts[index]?.contact?.id
+                                              ),
+                                              category: values?.contacts[index]?.category,
+                                            }
                                             : {
-                                                ...contactEmptyValues,
-                                                name: values?.contacts[index]?.contact?.name,
-                                                category: values?.contacts[index]?.category,
-                                              }
+                                              ...contactEmptyValues,
+                                              name: values?.contacts[index]?.contact?.name,
+                                              category: values?.contacts[index]?.category,
+                                            }
                                         }
                                         isEdit={values?.contacts[index]?.contact?.id !== ""}
                                         contactsData={contactsData}
