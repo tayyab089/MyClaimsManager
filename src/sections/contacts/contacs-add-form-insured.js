@@ -60,7 +60,6 @@ const useTypes = (contacts) => {
 
 export const ContactsAddFormInsured = ({
   item,
-  isEdit,
   setFieldValue,
   ix,
   values,
@@ -91,7 +90,7 @@ export const ContactsAddFormInsured = ({
   // Submit Function ==================================================
   const handleSubmit = useCallback(
     async (values, setSubmitting) => {
-      if (isEdit) {
+     
         const response = await updateContactApi({ contact: { ...values, category: "Insured" } });
         if (response && response.data.type !== "error") {
           showAlert(response, dispatch);
@@ -99,20 +98,9 @@ export const ContactsAddFormInsured = ({
         } else {
           showAlert(response, dispatch);
         }
-      } else {
-        const response = await saveContactApi({ contact: { ...values, category: "Insured" } });
-        if (response && response.data.type !== "error") {
-          showAlert(response, dispatch);
-          dispatch(addContactToStore(response?.data?.value));
-          setFieldValue(`insured.${ix}.name`, response?.data?.value?.name);
-          setFieldValue(`insured.${ix}.id`, response?.data?.value?.id);
-        } else {
-          showAlert(response, dispatch);
-        }
-      }
+      
       setSubmitting(false);
-    },
-    [isEdit]
+    }
   );
 
   // UseEffect Calls ========================================================
@@ -156,7 +144,9 @@ export const ContactsAddFormInsured = ({
             />
             {/* </Grid>
          <Grid xs={2} sm={2} md={2}> */}
-            <Button onClick={() => setExpand(true)}>Expand</Button>
+         {item && item.id && (
+            <Button onClick={() => setExpand(true)}>Edit</Button>
+         )}
           </Stack>
         </>
       ) : (
@@ -170,11 +160,7 @@ export const ContactsAddFormInsured = ({
           {({ values, errors, handleBlur, handleChange, handleSubmit, isSubmitting, isValid }) => (
             <form autoComplete="off" noValidate onSubmit={handleSubmit}>
               <Card sx={{ pt: 0, backgroundColor: "#ECFDFF", border: "2px solid black" }}>
-                {/* <CardHeader
-                subheader=""
-                title={isEdit ? "Edit Existing Contact" : "Add New Contact"}
-                style={{ marginBottom: 20 }}
-              /> */}
+                
                 <CardContent>
                   <Box sx={{ m: -1.5 }}>
                     <Grid container spacing={2}>
@@ -601,8 +587,6 @@ export const ContactsAddFormInsured = ({
                   >
                     {isSubmitting ? (
                       <CircularProgress style={{ width: 24, height: 24, color: "white" }} />
-                    ) : isEdit ? (
-                      "Update"
                     ) : (
                       "Save details"
                     )}

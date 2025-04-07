@@ -299,7 +299,6 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                                 name: values?.insured[index].name,
                                               }
                                         }
-                                        isEdit={values.insured[index].id !== ""}
                                         contactsData={contactsData}
                                       />
                                       {!item.id && item.name && (
