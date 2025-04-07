@@ -95,6 +95,9 @@ export const ContactsAddFormInsured = ({
         if (response && response.data.type !== "error") {
           showAlert(response, dispatch);
           dispatch(updateContactInStore(values));
+          setFieldValue(`insured.${ix}.name`, values.name);
+          setExpand(false);
+          
         } else {
           showAlert(response, dispatch);
         }
