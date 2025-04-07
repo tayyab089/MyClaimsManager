@@ -676,6 +676,7 @@ export const ContactsAddFormContact = ({
           )}
         </Formik>
       )}
+      {!item.id && item.name && <p sx="text-sm">You are adding a new contact </p>}
     </Fragment>
   );
 };

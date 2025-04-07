@@ -114,7 +114,6 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
   const pcCategoryList = usePCCategoryList(claimsData);
   // const [expand, setExpand] = useState(false);
 
-
   // Style Objects =================================================
   const style = {
     position: "absolute",
@@ -139,6 +138,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
   const handleSubmit = useCallback(
     async (values, setSubmitting) => {
       if (item?.fileNo) {
+        //editing
         const response = await updateClaimApi({ claim: values });
         if (response && response.data.type !== "error") {
           dispatch(
@@ -153,6 +153,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
           alert(response.data.message);
         }
       } else {
+        //adding new claim
         const response = await saveClaimApi({ claim: values });
         if (response && response.data.type !== "error") {
           dispatch(
@@ -161,6 +162,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
           handleClose();
           dispatch(addClaimToStore(response?.data?.value?.claim));
           response?.data?.value?.contactsToSave?.forEach((item) => {
+            //any new contact made 
             dispatch(addContactToStore(item));
           });
         } else {
@@ -300,6 +302,9 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                         isEdit={values.insured[index].id !== ""}
                                         contactsData={contactsData}
                                       />
+                                      {!item.id && item.name && (
+                                        <p>You are adding a new contact </p>
+                                      )}
                                     </Grid>
                                     <Grid xs={2} sm={1} md={1}>
                                       <Button
@@ -666,6 +671,10 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                         isEdit={values?.contacts[index]?.contact?.id !== ""}
                                         contactsData={contactsData}
                                       />
+                                      {item.name}
+                                      {!item.id && item.name && (
+                                        <p>You are adding a new contact </p>
+                                      )}
                                     </Grid>
                                     <Grid xs={2} sm={1} md={1}>
                                       <Button

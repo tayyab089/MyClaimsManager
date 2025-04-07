@@ -119,7 +119,7 @@ const Page = () => {
   const [searchValue, setSearchValue] = useState("");
   const [filteredContacts, setFilteredContacts] = useState([]);
 
-  const filterData = (val) => {
+  const filterData = useCallback((val) => {
     const lowercaseVal = val.toLowerCase();
     const filteredData = contacts.filter(
       (obj) =>
@@ -129,7 +129,13 @@ const Page = () => {
     );
     setSearchValue(val);
     setFilteredContacts(filteredData);
-  };
+  }, [contacts]);
+
+  useEffect(() => {
+    if (searchValue) {
+      filterData(searchValue);
+    }
+  }, [contacts, searchValue, filterData]);
 
   // Useffect Calls =====================================================
   useEffect(() => {

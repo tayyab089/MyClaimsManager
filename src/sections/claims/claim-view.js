@@ -109,8 +109,8 @@ export const ClaimView = ({ item }) => {
 
     const ans = await confirmDelete(customTitle, customMessage);
     if (ans) {
-      deleteClaimApi({ claim: claim });
-      router.push("/claims");
+      await deleteClaimApi({ claim: claim });
+      router.push("/");
     } else {
     }
   };

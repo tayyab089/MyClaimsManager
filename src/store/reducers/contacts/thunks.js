@@ -46,8 +46,10 @@ export const updateContactInStore = (contact) => async (dispatch, getState) => {
 
 // Delete Contact Function ==============================================================
 export const deleteContactFromStore = (contact) => async (dispatch, getState) => {
+  console.log("deleteContactFromStore", contact);
   const currentState = getState();
   const currentContacts = currentState.contacts.contactsData;
+  console.log("currentContacts", currentContacts);
 
   const updatedContacts = currentContacts.filter((item) => item.id !== contact.id);
 

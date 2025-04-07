@@ -23,15 +23,12 @@ import { saveContactApi, updateContactApi } from "src/network/contacts-api";
 import { addContactToStore, updateContactInStore } from "src/store/reducers/contacts/thunks";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setAlertData } from "src/store/reducers/alert/thunks";
 
 import InputMask from "react-input-mask";
 import contactSchema from "./contacts-schema";
 
 import {
   emptyValues,
-  addressTypes,
-  phEmailTypes,
   addressObject,
   phNoObject,
   emailObject,
