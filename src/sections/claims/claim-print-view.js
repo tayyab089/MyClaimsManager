@@ -14,7 +14,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
       <Typography variant="h5">Insured</Typography>
       <hr />
       <Stack direction="row" justifyContent="flex-start" alignItems="flex-start" flexWrap="wrap">
-        {insuredContacts.map((item, index) => {
+        {insuredContacts?.map((item, index) => {
           return (
             <Stack
               key={index}
@@ -173,7 +173,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
       </Typography>
       <hr />
       <Stack direction="row" justifyContent="flex-start" alignItems="flex-start" flexWrap="wrap">
-        {otherContacts.map((item, index) => {
+        {otherContacts?.map((item, index) => {
           return (
             <Stack
               key={index}

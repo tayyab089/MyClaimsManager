@@ -155,7 +155,6 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
         }
       } else {
         //adding new claim
-        console.log(values.contacts.map(contact => ({ category: contact.category, id: contact.contact.id })));
         const modifiedValues = {
           ...values,
           contacts: values.contacts.map(contact => ({ category: contact.category, id: contact.contact.id })),
@@ -204,7 +203,12 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
 
   // UseEffect Calls ===============================================
   useEffect(() => {
-    setInitialValues(item?.fileNo ? item : emptyValues);
+    setInitialValues(item?.fileNo ? {
+      ...item,
+      insured: item?.insuredNames?.map(i => ({ id: i.id, name: i.name })),
+      contacts: []
+
+    } : emptyValues);
   }, [item]);
 
   return (

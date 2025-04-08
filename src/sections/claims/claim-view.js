@@ -85,7 +85,6 @@ export const ClaimView = ({ item }) => {
 
   // Contact Modal================================
   const handleContactClick = (item) => {
-    console.log(item)
     const foundContact = contactsData.find((x) => x.id === item);
     if (foundContact) {
       setContactsModalData(foundContact);
@@ -150,8 +149,8 @@ export const ClaimView = ({ item }) => {
     <Box sx={style} ref={componentRef}>
       <ClaimPrintView
         claim={item}
-        insuredContacts={insuredContacts}
-        otherContacts={otherContacts}
+        insuredContacts={item?.insuredNames}
+        otherContacts={item?.contactNames}
       />
       <Grid
         container
@@ -309,7 +308,6 @@ export const ClaimView = ({ item }) => {
           <Typography variant="formTag">Contacts </Typography>
         </Grid>
         {item?.contactNames?.map((contact, index) => {
-          console.log(contact);
           return (
           <Fragment key={index}>
             <Grid xs={10} md={4}>
