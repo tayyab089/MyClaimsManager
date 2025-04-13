@@ -114,7 +114,7 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
       setInitialValues(form?.formData);
     } else {
       setInitialValues({
-        a: claim?.insured?.map((insured) => insured.name).join(", "),
+        a: claim?.insured?.map((insured) => insured?.name).join(", "),
         b: claim?.insurance?.policyNo,
         c: claim?.insurance?.claimNo,
         // d: claim?.lossDate ? format(new Date(claim?.lossDate), "dd-MM-yyyy") : "",

@@ -289,7 +289,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
         h: "",
         i: claim?.insurance?.company,
         j: "",
-        k: claim?.insured?.map((insured) => insured.name).join(", "),
+        k: claim?.insured?.map((insured) => insured?.name).join(", "),
         ek: "",
         l: claim?.lossType,
         m: claim?.lossType,
@@ -321,7 +321,7 @@ export const ProofOfLoss = ({ formRef, claim, form, formName, setSavingForm, set
         aj: "",
         ej: "", // eSeries
         ak: "",
-        al: claim?.insured?.map((insured) => insured.name).join(", "),
+        al: claim?.insured?.map((insured) => insured?.name).join(", "),
         am: "",
         an: "X",
         ao: "",
