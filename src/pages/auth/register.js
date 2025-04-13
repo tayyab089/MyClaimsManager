@@ -50,7 +50,8 @@ const Page = () => {
     onSubmit: async (values, helpers) => {
       setIsLoading(true);
       try {
-        await signUp(values.email, values.password);
+       const a =  await signUp(values.email, values.password);
+       console.log(a)
         router.push("/auth/verify");
       } catch (err) {
         helpers.setStatus({ success: false });

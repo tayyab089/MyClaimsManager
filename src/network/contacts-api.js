@@ -5,6 +5,8 @@ export const getContactsApi = async () => {
     const response = await api.get("contacts", getSecureHeadersConfig());
     return response;
   } catch (error) {
+    toast.error(error.response.data?.error?.message) || "Something went wrong";
+    throw error;
   }
 };
 

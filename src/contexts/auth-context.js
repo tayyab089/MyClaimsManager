@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useReducer, useRef } from "react";
 import PropTypes from "prop-types";
 import { signInApi, signUpApi, validateTokenApi, verifyUserApi, requestPasswordResetApi, forgotPasswordApi} from "../network/auth-api";
+import { setAlertData } from "src/store/reducers/alert/thunks";
 
 const HANDLERS = {
   INITIALIZE: "INITIALIZE",
@@ -169,30 +170,15 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await signUpApi({ email, password, username: email });
       if (response?.data?.type === "success") {
-        // After registration but before verification, only save the email in reducer
         dispatch({
           type: HANDLERS.SIGN_UP,
           payload: email,
         });
+        return response;
       }
     } catch (error) {
-      console.error(error);
-
-      if (error.response) {
-        const { status, data } = error.response;
-
-        const errorMessage =
-          data?.error?.message || "An unexpected error occurred. Please try again.";
-
-        switch (status) {
-          case 400:
-            throw new Error(errorMessage);
-          default:
-            throw new Error(errorMessage);
-        }
-      } else {
-        throw new Error("Network error: Please check your connection and try again.");
-      }
+      dispatch(setAlertData({ open: true, message: error.response.data?.message || "An error occurred during sign-up.", type: "error" }));
+      throw error; // Ensure the calling function knows there was an error
     }
   };
 
@@ -216,6 +202,7 @@ export const AuthProvider = ({ children }) => {
             throw new Error(errorMessage);
         }
       } else {
+        dispatch(setAlertData({ open: true, message: "Network error: Please check your connection and try again.", type: "error" }));
         throw new Error("Network error: Please check your connection and try again.");
       }
     }
@@ -240,11 +227,14 @@ export const AuthProvider = ({ children }) => {
 
         switch (status) {
           case 400:
+            dispatch(setAlertData({ open: true, message: errorMessage, type: "error" }));
             throw new Error(errorMessage);
           default:
+            dispatch(setAlertData({ open: true, message: errorMessage, type: "error" }));
             throw new Error(errorMessage);
         }
       } else {
+        dispatch(setAlertData({ open: true, message: "Network error: Please check your connection and try again.", type: "error" }));
         throw new Error("Network error: Please check your connection and try again.");
       }
     }
@@ -265,11 +255,14 @@ export const AuthProvider = ({ children }) => {
   
         switch (status) {
           case 400:
+            dispatch(setAlertData({ open: true, message: errorMessage, type: "error" }));
             throw new Error(errorMessage); // Throws the specific error message for client errors
           default:
+            dispatch(setAlertData({ open: true, message: errorMessage, type: "error" }));
             throw new Error(errorMessage); // Throws a default error message for other status codes
         }
       } else {
+        dispatch(setAlertData({ open: true, message: "Network error: Please check your connection and try again.", type: "error" }));
         throw new Error("Network error: Please check your connection and try again.");
       }
     }

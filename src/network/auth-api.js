@@ -1,12 +1,13 @@
 
 import { api, getHeadersConfig } from "./api";
+import { setAlertData } from "../store/reducers/alert/thunks";
 
 export const signUpApi = async (data) => {
   try {
     const response = await api.post('auth/signup', data, getHeadersConfig());
     return response;
   } catch (error) {
-    throw error; // Pass the error to the caller
+    throw error;
   }
 };
 
