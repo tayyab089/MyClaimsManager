@@ -28,10 +28,8 @@ const claimSchema = Yup.object().shape({
   contacts: Yup.array().of(
     Yup.object().shape({
       category: Yup.string(),
-      contact: Yup.object().shape({
-        name: Yup.string(),
-        id: Yup.string(),
-      }),
+      name: Yup.string(),
+      id: Yup.string(),
     })
   ),
 });

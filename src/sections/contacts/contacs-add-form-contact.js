@@ -1,66 +1,14 @@
-import React, { useState, useCallback, Fragment, useEffect, useMemo } from "react";
+import React, { Fragment, useMemo } from "react";
 import {
-  Modal,
-  Box,
-  Typography,
   Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  Divider,
   TextField,
   useMediaQuery,
-  Avatar,
-  Unstable_Grid2 as Grid,
-  FormHelperText,
-  CircularProgress,
   Stack,
   Autocomplete,
 } from "@mui/material";
-import { FieldArray, Formik } from "formik";
-import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
-import { saveContactApi, updateContactApi } from "src/network/claims-api";
-import { addContactToStore, updateContactInStore } from "src/store/reducers/contacts/thunks";
 
-import { useDispatch } from "react-redux";
-import { setAlertData } from "src/store/reducers/alert/thunks";
-
-import InputMask from "react-input-mask";
-import contactSchema from "./contacts-schema";
-
-import {
-  emptyValues,
-  addressTypes,
-  phEmailTypes,
-  addressObject,
-  phNoObject,
-  emailObject,
-} from "./contacts-static-data";
-import { showAlert } from "src/utils/show-alert";
-import { insuredObject } from "../claims/claims-static-data";
-
-const useTypes = (contacts) => {
-  return useMemo(() => {
-    const typeSet = new Set();
-    contacts?.forEach((contact) => {
-      contact?.address?.forEach((address) => {
-        typeSet.add(address?.type);
-      });
-      contact?.email?.forEach((email) => {
-        typeSet.add(email?.type);
-      });
-      contact?.phNo?.forEach((phNo) => {
-        typeSet.add(phNo?.type);
-      });
-    });
-    return Array.from(typeSet);
-  }, [contacts]);
-};
 
 export const ContactsAddFormContact = ({
-  item,
-  isEdit,
   setFieldValue,
   ix,
   values,
@@ -69,7 +17,6 @@ export const ContactsAddFormContact = ({
   contactsData,
 }) => {
   // State Variables =================================================
-  const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
   const smUp = useMediaQuery((theme) => theme.breakpoints.up("sm"));
 
 
@@ -100,37 +47,32 @@ export const ContactsAddFormContact = ({
           sx={{ width: "65%", minWidth: "170px", marginTop: !smUp ? 1 : 0 }}
           disablePortal
           id="Contacts"
-          name={`contacts.${ix}.contact.name`}
+          name={`contacts.${ix}.name`}
           onChange={(e, v) => {
             if (v) {
               if (v?.id !== "") {
                 const category = contactsData.find((x) => x.id === v?.id).category;
-                setFieldValue(`contacts.${ix}.contact.name`, v?.label);
-                setFieldValue(`contacts.${ix}.contact.id`, v?.id);
+                setFieldValue(`contacts.${ix}.name`, v?.label);
+                setFieldValue(`contacts.${ix}.id`, v?.id);
                 setFieldValue(`contacts.${ix}.category`, category);
               }
             } else {
-              setFieldValue(`contacts.${ix}.contact`, { name: "", id: "" });
+              setFieldValue(`contacts.${ix}`, { name: "", id: "" });
             }
           }}
           onInputChange={(e, v) => {
-            setFieldValue(`contacts.${ix}.contact.name`, v);
-            setFieldValue(`contacts.${ix}.contact.id`, "");
+            setFieldValue(`contacts.${ix}.name`, v);
+            setFieldValue(`contacts.${ix}.id`, "");
           }}
           value={{
-            label: values.insured[ix].name,
-            id: values.insured[ix].id,
+            label: values.contacts[ix].name || "",
+            id: values.contacts[ix].id || "",
           }}
-          inputValue={values?.contacts[ix]?.contact?.name}
+          inputValue={values?.contacts[ix]?.name || ""}
           options={contactList ? contactList : []}
           getOptionLabel={(option) => option.label || ""}
           renderInput={(params) => <TextField {...params} label="Name" size="small" />}
         />
-        {/* </Grid>
-         <Grid xs={2} sm={2} md={2}> */}
-        <Button onClick={() => setExpand(true)} sx={{ marginTop: !smUp ? 1 : 0 }}>
-          Expand
-        </Button>
       </Stack>
 
     </Fragment>

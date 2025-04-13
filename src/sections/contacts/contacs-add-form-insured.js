@@ -73,11 +73,11 @@ export const ContactsAddFormInsured = ({
               setFieldValue(`insured.${ix}.name`, v);
               setFieldValue(`insured.${ix}.id`, "");
             }}
-              value={{
-                label: values.insured[ix].name,
-                id: values.insured[ix].id,
+            value={{
+              label: values.insured[ix].name || "",
+              id: values.insured[ix].id || "",
             }}
-            inputValue={values.insured[ix].name}
+            inputValue={values.insured[ix].name || ""}
             options={contactList ? contactList : []}
             getOptionLabel={(option) => option.label || ""}
             renderInput={(params) => <TextField {...params} label="Name" size="small" />}

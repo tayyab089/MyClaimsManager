@@ -6,27 +6,17 @@ import {
   Autocomplete,
   Button,
   Card,
-  CardActions,
   CardContent,
-  CardHeader,
   Divider,
   TextField,
-  useMediaQuery,
   Avatar,
   Unstable_Grid2 as Grid,
   Stack,
   FormHelperText,
-  CircularProgress,
 } from "@mui/material";
-import { FieldArray, Formik } from "formik";
-import { TrashIcon, PlusCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
-import { saveContactApi, updateContactApi } from "src/network/contacts-api";
-import { addContactToStore, updateContactInStore } from "src/store/reducers/contacts/thunks";
-
-import { useDispatch } from "react-redux";
-
+import { FieldArray } from "formik";
+import { TrashIcon, PlusCircleIcon } from "@heroicons/react/20/solid";
 import InputMask from "react-input-mask";
-import contactSchema from "./contacts-schema";
 
 import {
   emptyValues,
@@ -36,10 +26,6 @@ import {
   phNoObject,
   emailObject,
 } from "./contacts-static-data";
-
-import { insuredObject } from "../claims/claims-static-data";
-import { showAlert } from "src/utils/show-alert";
-
 export const ContactsAddForm = ({
   item,
   isEdit,
@@ -85,11 +71,11 @@ export const ContactsAddForm = ({
                 setFieldValue(`insured.${ix}.name`, v);
                 setFieldValue(`insured.${ix}.id`, "");
               }}
-              // value={{
-              //   label: values.insured[ix].name,
-              //   id: values.insured[ix].id,
-              // }}
-              inputValue={values.insured[ix].name}
+              value={{
+                label: values.insured[ix].name || "",
+                id: values.insured[ix].id || "",
+              }}
+              inputValue={values.insured[ix].name || ""}
               freeSolo
               options={contactList ? contactList : []}
               getOptionLabel={(option) => option.label || ""}
@@ -134,7 +120,7 @@ export const ContactsAddForm = ({
                       setFieldValue(`insured.${ix}.name`, v);
                       setFieldValue(`insured.${ix}.id`, "");
                     }}
-                    inputValue={values.insured[ix].name}
+                    inputValue={values.insured[ix].name || ""}
                     freeSolo
                     options={contactList ? contactList : []}
                     getOptionLabel={(option) => option.label || ""}

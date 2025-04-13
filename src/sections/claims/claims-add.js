@@ -157,7 +157,7 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
         //adding new claim
         const modifiedValues = {
           ...values,
-          contacts: values.contacts.map(contact => ({ category: contact.category, id: contact.contact.id, name: contact.contact.name })),
+          contacts: values.contacts.map(contact => ({ category: contact.category, id: contact.id, name: contact.name })),
           insured: values.insured.map(insured => ({ category: "Insured", id: insured.id, name: insured.name }))
         };
         const response = await saveClaimApi({ claim: modifiedValues });
@@ -669,28 +669,28 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                 values?.contacts?.map((item, index) => (
                                   <Fragment key={index}>
                                     <Grid xs={10} sm={11} md={11}>
-                                      <ContactsAddFormContact
+                                      <ContactsAddFormContact 
                                         setFieldValue={setFieldValue}
                                         ix={index}
                                         values={values}
                                         contactList={contactList}
                                         contactCategoryList={contactCategoryList}
                                         item={
-                                          values?.contacts[index]?.contact?.id !== ""
+                                          values?.contacts[index]?.id !== ""
                                             ? {
                                               ...contactsData.find(
                                                 (x) =>
-                                                  x.id === values?.contacts[index]?.contact?.id
+                                                  x.id === values?.contacts[index]?.id
                                               ),
                                               category: values?.contacts[index]?.category,
                                             }
                                             : {
                                               ...contactEmptyValues,
-                                              name: values?.contacts[index]?.contact?.name,
+                                              name: values?.contacts[index]?.name,
                                               category: values?.contacts[index]?.category,
                                             }
                                         }
-                                        isEdit={values?.contacts[index]?.contact?.id !== ""}
+                                        isEdit={values?.contacts[index]?.id !== ""}
                                         contactsData={contactsData}
                                       />
                                     </Grid>
