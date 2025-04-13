@@ -146,10 +146,8 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
           );
           handleClose();
-          dispatch(updateClaimInStore(response?.data?.value?.claim));
-          response?.data?.value?.contactsToSave?.forEach((item) => {
-            dispatch(addContactToStore(item));
-          });
+          await dispatch(updateClaimInStore(response?.data?.value?.claim));
+          window.location.reload();
         } else {
           alert(response.data.message);
         }
