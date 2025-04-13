@@ -5,8 +5,8 @@ import { getTokenCookies } from 'src/contexts/auth-context';
 // import store from "../store";
 
 export const api = axios.create({
-baseURL: "https://9izta92tph.execute-api.us-east-1.amazonaws.com/dev"
-  //   baseURL: "http://localhost:3001",
+ //baseURL: "https://9izta92tph.execute-api.us-east-1.amazonaws.com/dev"
+    baseURL: "http://localhost:3001",
 });
 
 // Function to get the user token from Redux state

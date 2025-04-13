@@ -205,9 +205,8 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
   useEffect(() => {
     setInitialValues(item?.fileNo ? {
       ...item,
-      insured: item?.insuredNames?.map(i => ({ id: i.id, name: i.name })),
-      contacts: []
-
+      insured: item?.insured?.map(i => ({ id: i.id, name: i.name })),
+      contacts: item?.contacts?.map(i => ({ id: i.id, name: i.name, category: i.category }))
     } : emptyValues);
   }, [item]);
 
@@ -694,8 +693,6 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                                         isEdit={values?.contacts[index]?.contact?.id !== ""}
                                         contactsData={contactsData}
                                       />
-                                      {item.name}
-
                                     </Grid>
                                     <Grid xs={2} sm={1} md={1}>
                                       <Button
