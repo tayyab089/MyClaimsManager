@@ -54,17 +54,18 @@ const Page = () => {
   const deleteClaim = async (claim) => {
     try {
       const response = await deleteClaimApi({ claim: claim });
-      if (response && response.data.type !== "error") {
+      if (response && response?.data?.type !== "error") {
         dispatch(deleteClaimFromStore(claim));
         dispatch(
-          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          setAlertData({ open: true, message: response?.data?.message, type: "success"})
         );
       } else {
         dispatch(
-          setAlertData({ open: true, message: response.data.message, type: response.data.type })
+          setAlertData({ open: true, message: response?.data?.message || "Network error: Please check your connection and try again.", type: "error" })
         );
       }
     } catch (e) {
+      dispatch(setAlertData({ open: true, message: e?.data?.message || "Network error: Please check your connection and try again.", type: "error" }));
     }
   };
 
