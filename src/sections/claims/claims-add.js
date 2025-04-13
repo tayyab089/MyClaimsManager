@@ -157,8 +157,8 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
         //adding new claim
         const modifiedValues = {
           ...values,
-          contacts: values.contacts.map(contact => ({ category: contact.category, id: contact.contact.id })),
-          insured: values.insured.map(insured => ({ category: "Insured", id: insured.id }))
+          contacts: values.contacts.map(contact => ({ category: contact.category, id: contact.contact.id, name: contact.contact.name })),
+          insured: values.insured.map(insured => ({ category: "Insured", id: insured.id, name: insured.name }))
         };
         const response = await saveClaimApi({ claim: modifiedValues });
         if (response && response.data.type !== "error") {

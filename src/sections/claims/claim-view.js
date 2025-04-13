@@ -149,8 +149,8 @@ export const ClaimView = ({ item }) => {
     <Box sx={style} ref={componentRef}>
       <ClaimPrintView
         claim={item}
-        insuredContacts={item?.insuredNames}
-        otherContacts={item?.contactNames}
+        insuredContacts={item?.insured}
+        otherContacts={item?.contacts}
       />
       <Grid
         container
@@ -209,7 +209,7 @@ export const ClaimView = ({ item }) => {
             Delete
           </Button>
         </Grid>
-        {item?.insuredNames?.map((contact, index) => (
+        {item?.insured?.map((contact, index) => (
           <Grid xs={10} md={2} key={index}>
             <Typography variant="link" onClick={() => handleContactClick(contact.id)}>
               {contact.name}{" "}
@@ -307,7 +307,7 @@ export const ClaimView = ({ item }) => {
         <Grid xs={10} md={12}>
           <Typography variant="formTag">Contacts </Typography>
         </Grid>
-        {item?.contactNames?.map((contact, index) => {
+        {item?.contacts?.map((contact, index) => {
           return (
           <Fragment key={index}>
             <Grid xs={10} md={4}>
