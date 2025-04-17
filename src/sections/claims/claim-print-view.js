@@ -27,9 +27,9 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
               justifyContent="space-between"
               alignItems="flex-start"
               spacing={2}
-              sx={{ marginTop: 4, width: "50%" }}
+              sx={{ marginTop: 2, width: "50%" }}
             >
-              <Typography variant="claimPrintText">{item?.category}</Typography>
+              {/*<Typography variant="claimPrintText">{item?.category}</Typography>*/}
               <Typography variant="claimPrintHeading">{item?.name}</Typography>
               <Stack>
                 <Typography variant="claimPrintText">{item?.businessName}</Typography>
@@ -86,7 +86,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
       </Stack>
     </div>,
     <div>
-      <Grid container sx={{ marginTop: 5, padding: 0 }}>
+      <Grid container sx={{ marginTop: 3, padding: 0 }}>
         <Grid xs={3} sm={3} md={3}>
           <Typography variant="claimPrintTextBold">Loss Location:</Typography>
         </Grid>
@@ -107,7 +107,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
         </Grid>
       </Grid>
 
-      <Typography variant="h5" sx={{ marginTop: 5 }}>
+      <Typography variant="h5" sx={{ marginTop: 3 }}>
         Insurance
       </Typography>
       <hr />
@@ -154,7 +154,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
         </Grid>
       </Grid>
 
-      <Typography variant="h5" sx={{ marginTop: 5 }}>
+      <Typography variant="h5" sx={{ marginTop: 3 }}>
         Policy Coverages
       </Typography>
       <hr />
@@ -173,7 +173,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
       </Grid>
     </div>,
     <div>
-      <Typography variant="h5" sx={{ marginTop: 5 }}>
+      <Typography variant="h5" sx={{ marginTop: 3 }}>
         Contacts
       </Typography>
       <hr />
@@ -186,7 +186,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
               justifyContent="space-between"
               alignItems="flex-start"
               spacing={2}
-              sx={{ marginTop: 4, width: "50%" }}
+              sx={{ marginTop: 2, width: "50%" }}
             >
               <Typography variant="claimPrintText">{item?.category}</Typography>
               <Typography variant="claimPrintHeading">{item?.name}</Typography>
@@ -251,7 +251,6 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
       sx={{
         "@media print": {
           display: "block",
-          marginBottom: "100px",
         },
         display: "none",
       }}
