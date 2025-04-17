@@ -32,6 +32,7 @@ export const Layout = withAuthGuard((props) => {
   const [openNav, setOpenNav] = useState(false);
 
   useEffect(() => {
+    //TODO: Remove this and find a better approach to hydrate
     dispatch(fetchContacts());
   }, [pathname, dispatch]);
 
