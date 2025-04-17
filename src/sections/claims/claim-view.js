@@ -26,7 +26,7 @@ const useOther = (contacts, claim) => {
   return useMemo(() => {
     const otherContacts = new Set();
     claim?.contacts?.forEach((item) => {
-      var filteredContacts = contacts?.filter((contact) => contact.id == item?.contact?.id);
+      var filteredContacts = contacts?.filter((contact) => contact.id == item?.id);
       filteredContacts?.length > 0 && otherContacts.add(...filteredContacts);
     });
     return Array.from(otherContacts);
@@ -149,8 +149,8 @@ export const ClaimView = ({ item }) => {
     <Box sx={style} ref={componentRef}>
       <ClaimPrintView
         claim={item}
-        insuredContacts={item?.insured}
-        otherContacts={item?.contacts}
+        insuredContacts={insuredContacts}
+        otherContacts={otherContacts}
       />
       <Grid
         container

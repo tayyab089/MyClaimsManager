@@ -1,11 +1,16 @@
 /* eslint-disable react/jsx-key */
 import { Grid, Box, Typography, Button, useMediaQuery, Stack } from "@mui/material";
 import format from "date-fns/format";
+import { useEffect } from 'react';
 
 export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
   const formatDate = (date) => {
     return date ? format(new Date(date), "MM-dd-yyyy") : "";
   };
+
+  useEffect(()=>{
+    console.log(otherContacts)
+  }, [otherContacts])
 
   const content = [
     <div>
