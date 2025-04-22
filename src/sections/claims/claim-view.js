@@ -24,14 +24,23 @@ const useInsured = (contacts, claim) => {
 
 const useOther = (contacts, claim) => {
   return useMemo(() => {
-    const otherContacts = new Set();
+    const otherContacts = new Map();
+
     claim?.contacts?.forEach((item) => {
-      var filteredContacts = contacts?.filter((contact) => contact.id == item?.id);
-      filteredContacts?.length > 0 && otherContacts.add(...filteredContacts);
+      const match = contacts?.find((contact) => contact.id === item?.id);
+      if (match) {
+        // Copy the matched contact and override the category from claim
+        otherContacts.set(match.id, {
+          ...match,
+          category: item.category
+        });
+      }
     });
-    return Array.from(otherContacts);
+
+    return Array.from(otherContacts.values());
   }, [contacts, claim]);
 };
+
 
 export const ClaimView = ({ item }) => {
   const formatDate = (date) => {
@@ -60,7 +69,7 @@ export const ClaimView = ({ item }) => {
     boxShadow: 24,
     p: 1,
     overflow: "auto",
-    maxHeight: "90%",
+    height: "90%",
     padding: "20px",
   };
   const subheaderStyles = {

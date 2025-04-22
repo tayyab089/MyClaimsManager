@@ -1,16 +1,11 @@
 /* eslint-disable react/jsx-key */
-import { Grid, Box, Typography, Button, useMediaQuery, Stack } from "@mui/material";
+import { Grid, Box, Typography , Stack } from "@mui/material";
 import format from "date-fns/format";
-import { useEffect } from 'react';
 
 export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
   const formatDate = (date) => {
     return date ? format(new Date(date), "MM-dd-yyyy") : "";
   };
-
-  useEffect(()=>{
-    console.log(otherContacts)
-  }, [otherContacts])
 
   const content = [
     <div>
@@ -248,13 +243,21 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
 
   return (
     <Box
-      sx={{
-        "@media print": {
-          display: "block",
-        },
-        display: "none",
-      }}
-    >
+    sx={{
+      "@media print": {
+        display: "block",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        padding: '10px',
+        margin: 0,
+        backgroundColor: "white", // optional for clean print
+        boxSizing: "border-box",
+      },
+      display: "none", // hide normally
+    }}>
       {content.map((section, index) => (
         <div key={index} className="print-section">
           {section}
