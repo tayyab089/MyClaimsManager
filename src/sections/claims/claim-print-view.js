@@ -248,9 +248,9 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
         margin: "0 auto",
         width: "100%",
         boxSizing: "border-box",
-        backgroundColor: "pink",
-
+        backgroundColor: "white",
       },
+      display: "none"
     }}>
       {content.map((section, index) => (
         <div key={index} className="print-section">
