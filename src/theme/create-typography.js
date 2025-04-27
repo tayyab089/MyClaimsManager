@@ -1,7 +1,7 @@
 // const normal = "1.1rem";
 // const small = "0.9rem";
 // const large = "1.1rem";
-const printText = "1.3rem";
+const printText = "1.2rem";
 const baseFontSize = 17;
 
 // const printFontFamily = "Inter";
@@ -112,38 +112,38 @@ export const createTypography = () => {
       fontSize: "1.125rem",
       lineHeight: 1.2,
     },
-    claimPrintHeading: {
-      // fontFamily: printFontFamily,
-      fontSize: printText,
-      fontWeight: 700,
-      lineHeight: 1.1,
-      // letterSpacing: "0.5px",
-      marginRight: 5,
+    //FOR CLAIM PRINT
+    claimPrintTitle: {
+      fontSize: '1.6rem',
+      fontWeight: 800,
+      lineHeight: 0,
     },
-    claimPrintType: {
-      // fontFamily: printFontFamily,
-      fontSize: printText,
+    claimPrintSectionTitle: {
+      fontSize: '1.4rem',
+      fontWeight: 800,
+      lineHeight: 0.6,
+    },
+    claimPrintItalicLabel: {
+      fontSize: '1.2rem',
+      lineHeight: 1.2,
       fontWeight: 400,
-      lineHeight: 1.1,
-      // letterSpacing: "0.5px",
       fontStyle: "italic",
-      // textDecoration: "underline",
       marginRight: 5,
+      display: "inline"
+    },
+    claimPrintLabel: {
+      fontSize: "1.2rem",
+      fontWeight: 600,
+      lineHeight: 1,
+      marginRight: 5,
+      display: "inline"
+
     },
     claimPrintText: {
-      // fontFamily: printFontFamily,
-      fontSize: printText,
+      fontSize: '1.2rem',
       fontWeight: 400,
-      lineHeight: 1.1,
-      // letterSpacing: "0.5px",
-    },
-    claimPrintTextBold: {
-      // fontFamily: printFontFamily,
-      fontSize: printText,
-      fontWeight: 600,
-      lineHeight: 1.1,
-      marginRight: 5,
-      // letterSpacing: "0.5px",
+      lineHeight: 1.2,
+      display: "inline",
     },
   };
 };

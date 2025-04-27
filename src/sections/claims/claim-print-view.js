@@ -9,10 +9,10 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
 
   const content = [
     <div>
-      <Typography variant="h4">{`Claim ${claim?.fileNo}`}</Typography>
-      <hr />
-      <Typography variant="h5">Insured</Typography>
-      <hr />
+      <Typography variant="claimPrintTitle">{`Claim ${claim?.fileNo}`}</Typography>
+      <hr style={{marginTop: 0, marginBottom: "0.5rem"}}/>
+      <Typography  variant="claimPrintSectionTitle">Insured</Typography>
+      <hr style={{marginTop: 0, marginBottom: "0.5rem"}}/>
       <Stack direction="row" justifyContent="flex-start" alignItems="flex-start" flexWrap="wrap">
         {insuredContacts?.map((item, index) => {
           return (
@@ -21,17 +21,16 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
               direction="column"
               justifyContent="space-between"
               alignItems="flex-start"
-              spacing={2}
-              sx={{ marginTop: 2, width: "50%" }}
+              spacing={1}
+              sx={{width: "50%" }}
             >
-              {/*<Typography variant="claimPrintText">{item?.category}</Typography>*/}
-              <Typography variant="claimPrintHeading">{item?.name}</Typography>
+              <Typography variant="claimPrintSectionTitle">{item?.name}</Typography>
               <Stack>
                 <Typography variant="claimPrintText">{item?.businessName}</Typography>
                 {item?.address?.map((it, ix) => {
                   return (
                     <Stack key={ix}>
-                      <Typography variant="claimPrintType">
+                      <Typography variant="claimPrintItalicLabel">
                         {it?.type ? it?.type : "address"}:
                       </Typography>
                       <Typography variant="claimPrintText">{it?.street}</Typography>
@@ -51,7 +50,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
                       justifyContent="flex-start"
                       alignItems="flex-start"
                     >
-                      <Typography variant="claimPrintType">
+                      <Typography variant="claimPrintItalicLabel">
                         {it?.type ? it?.type : "email"}:
                       </Typography>
                       <Typography variant="claimPrintText">{it?.email}</Typography>
@@ -66,7 +65,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
                       justifyContent="flex-start"
                       alignItems="flex-start"
                     >
-                      <Typography variant="claimPrintType">
+                      <Typography variant="claimPrintItalicLabel">
                         {it?.type ? it?.type : "phone"}:
                       </Typography>
                       <Typography variant="claimPrintText">{it?.no}</Typography>
@@ -81,58 +80,58 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
       </Stack>
     </div>,
     <div>
-      <Grid container sx={{ marginTop: 3, padding: 0 }}>
+      <Grid container sx={{ marginTop: 1, marginBottom:1, padding: 0 }}>
         <Grid xs={3} sm={3} md={3}>
-          <Typography variant="claimPrintTextBold">Loss Location:</Typography>
+          <Typography variant="claimPrintLabel">Loss Location:</Typography>
         </Grid>
         <Grid xs={9} sm={9} md={9}>
           <Typography variant="claimPrintText">{claim?.lossLocation}</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
-          <Typography variant="claimPrintTextBold">Type of Loss:</Typography>
+          <Typography variant="claimPrintLabel">Type of Loss:</Typography>
         </Grid>
         <Grid xs={9} sm={9} md={9}>
           <Typography variant="claimPrintText">{claim?.lossType}</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
-          <Typography variant="claimPrintTextBold">Date of Loss:</Typography>
+          <Typography variant="claimPrintLabel">Date of Loss:</Typography>
         </Grid>
         <Grid xs={9} sm={9} md={9}>
           <Typography variant="claimPrintText">{formatDate(claim?.lossDate)}</Typography>
         </Grid>
       </Grid>
 
-      <Typography variant="h5" sx={{ marginTop: 3 }}>
+      <Typography variant="claimPrintSectionTitle" sx={{ marginTop: '10px' }}>
         Insurance
       </Typography>
-      <hr />
-      <Grid container sx={{ padding: 0 }}>
+      <hr style={{marginTop: 0, marginBottom: "0.5rem"}}/>
+      <Grid container  sx={{ marginTop: 1, marginBottom:1, padding: 0 }}>
         <Grid xs={3} sm={3} md={3}>
-          <Typography variant="claimPrintTextBold">Company:</Typography>
+          <Typography variant="claimPrintLabel">Company:</Typography>
         </Grid>
         <Grid xs={9} sm={9} md={9}>
           <Typography variant="claimPrintText">{claim?.insurance?.company}</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
-          <Typography variant="claimPrintTextBold">Policy Number:</Typography>
+          <Typography variant="claimPrintLabel">Policy Number:</Typography>
         </Grid>
         <Grid xs={9} sm={9} md={9}>
           <Typography variant="claimPrintText">{claim?.insurance?.policyNo}</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
-          <Typography variant="claimPrintTextBold">Claim No:</Typography>
+          <Typography variant="claimPrintLabel">Claim No:</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
           <Typography variant="claimPrintText">{claim?.insurance?.claimNo}</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
-          <Typography variant="claimPrintTextBold">File No:</Typography>
+          <Typography variant="claimPrintLabel">File No:</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
           <Typography variant="claimPrintText">{claim?.insurance?.fileNo}</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
-          <Typography variant="claimPrintTextBold">Issued:</Typography>
+          <Typography variant="claimPrintLabel">Issued:</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
           <Typography variant="claimPrintText">
@@ -140,7 +139,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
           </Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
-          <Typography variant="claimPrintTextBold">Expires:</Typography>
+          <Typography variant="claimPrintLabel">Expires:</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
           <Typography variant="claimPrintText">
@@ -149,17 +148,16 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
         </Grid>
       </Grid>
 
-      <Typography variant="h5" sx={{ marginTop: 3 }}>
+      <Typography variant="claimPrintSectionTitle" sx={{ marginTop: 2 }}>
         Policy Coverages
       </Typography>
-      <hr />
-
+      <hr style={{marginTop: 0, marginBottom: "0.5rem"}}/>
       <Grid container sx={{}}>
         {claim?.policyCoverage?.map((coverage, ix) => {
           return (
             <Grid key={ix} xs={6} sm={6} md={6}>
               <Stack direction="row" justifyContent="flex-start" alignItems="flex-start">
-                <Typography variant="claimPrintTextBold">{coverage.category}:</Typography>
+                <Typography variant="claimPrintLabel">{coverage.category}:</Typography>
                 <Typography variant="claimPrintText">${coverage.amount}</Typography>
               </Stack>
             </Grid>
@@ -167,11 +165,11 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
         })}
       </Grid>
     </div>,
-    <div>
-      <Typography variant="h5" sx={{ marginTop: 3 }}>
+    <div style={{marginTop: "0.5rem"}} >
+      <Typography variant="claimPrintSectionTitle">
         Contacts
       </Typography>
-      <hr />
+      <hr style={{marginTop: 0, marginBottom: "0.5rem"}}/>
       <Stack direction="row" justifyContent="flex-start" alignItems="flex-start" flexWrap="wrap">
         {otherContacts?.map((item, index) => {
           return (
@@ -180,17 +178,17 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
               direction="column"
               justifyContent="space-between"
               alignItems="flex-start"
-              spacing={2}
-              sx={{ marginTop: 2, width: "50%" }}
+              spacing={1}
+              sx={{ marginBottom: "1rem", width: "50%" }}
             >
               <Typography variant="claimPrintText">{item?.category}</Typography>
-              <Typography variant="claimPrintHeading">{item?.name}</Typography>
+              <Typography variant="claimPrintLabel">{item?.name}</Typography>
               <Stack>
                 <Typography variant="claimPrintText">{item?.businessName}</Typography>
                 {item?.address?.map((it, ix) => {
                   return (
                     <Stack key={ix}>
-                      <Typography variant="claimPrintType">
+                      <Typography variant="claimPrintItalicLabel">
                         {it?.type ? it?.type : "address"}:
                       </Typography>
                       <Typography variant="claimPrintText">{it?.street}</Typography>
@@ -210,7 +208,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
                       justifyContent="flex-start"
                       alignItems="flex-start"
                     >
-                      <Typography variant="claimPrintType">
+                      <Typography variant="claimPrintItalicLabel">
                         {it?.type ? it?.type : "email"}:
                       </Typography>
                       <Typography variant="claimPrintText">{it?.email}</Typography>
@@ -225,7 +223,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
                       justifyContent="flex-start"
                       alignItems="flex-start"
                     >
-                      <Typography variant="claimPrintType">
+                      <Typography variant="claimPrintItalicLabel">
                         {it?.type ? it?.type : "phone"}:
                       </Typography>
                       <Typography variant="claimPrintText">{it?.no}</Typography>
@@ -246,17 +244,13 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
     sx={{
       "@media print": {
         display: "block",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        padding: '10px',
-        margin: 0,
-        backgroundColor: "white", // optional for clean print
+        padding: "2mm 5mm",
+        margin: "0 auto",
+        width: "100%",
         boxSizing: "border-box",
+        backgroundColor: "pink",
+
       },
-      display: "none", // hide normally
     }}>
       {content.map((section, index) => (
         <div key={index} className="print-section">
