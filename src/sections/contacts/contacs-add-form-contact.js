@@ -54,7 +54,6 @@ export const ContactsAddFormContact = ({
                 const category = contactsData.find((x) => x.id === v?.id).category;
                 setFieldValue(`contacts.${ix}.name`, v?.label);
                 setFieldValue(`contacts.${ix}.id`, v?.id);
-                setFieldValue(`contacts.${ix}.category`, category);
               }
             } else {
               setFieldValue(`contacts.${ix}`, { name: "", id: "" });
