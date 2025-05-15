@@ -71,6 +71,7 @@ export const ClaimView = ({ item }) => {
     overflow: "auto",
     height: "90%",
     padding: "20px",
+    marginTop: "20px",
   };
   const subheaderStyles = {
     marginTop: "20px",
