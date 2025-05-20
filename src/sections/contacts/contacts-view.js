@@ -58,7 +58,7 @@ export const ContactsView = ({ item, handleClose, open, handleViewEdit }) => {
       <Box sx={style}>
         <Card>
           <CardHeader
-            subheader={`${item?.jobTitle} @ ${item?.businessName}`}
+            subheader={`${item?.jobTitle} ${item?.businessName}`}
             title={item?.name}
             sx={{ marginBottom: "-30px" }}
           />

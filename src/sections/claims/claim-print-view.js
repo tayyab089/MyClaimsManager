@@ -113,19 +113,19 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
           <Typography variant="claimPrintText">{claim?.insurance?.company}</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
-          <Typography variant="claimPrintLabel">Policy Number:</Typography>
+          <Typography variant="claimPrintLabel">Policy #:</Typography>
         </Grid>
         <Grid xs={9} sm={9} md={9}>
           <Typography variant="claimPrintText">{claim?.insurance?.policyNo}</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
-          <Typography variant="claimPrintLabel">Claim No:</Typography>
+          <Typography variant="claimPrintLabel">Claim #:</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
           <Typography variant="claimPrintText">{claim?.insurance?.claimNo}</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
-          <Typography variant="claimPrintLabel">File No:</Typography>
+          <Typography variant="claimPrintLabel">File #:</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
           <Typography variant="claimPrintText">{claim?.insurance?.fileNo}</Typography>
@@ -181,7 +181,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
               spacing={1}
               sx={{ marginBottom: "1rem", width: "50%" }}
             >
-              <Typography variant="claimPrintText">{item?.category}</Typography>
+              <Typography variant="claimPrintLabel">{item?.category}</Typography>
               <Typography variant="claimPrintLabel">{item?.name}</Typography>
               <Stack>
                 <Typography variant="claimPrintText">{item?.businessName}</Typography>

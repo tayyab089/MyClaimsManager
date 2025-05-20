@@ -275,6 +275,14 @@ export const ClaimView = ({ item }) => {
           <Typography variant="formText">{item?.insurance?.claimNo}</Typography>
         </Grid>
 
+
+        <Grid xs={10} md={4}>
+          <Typography variant="formText">File #: </Typography>
+        </Grid>
+        <Grid xs={10} md={8}>
+          <Typography variant="formText">{item?.insurance?.fileNo}</Typography>
+        </Grid>
+
         <Grid xs={10} md={4}>
           <Typography variant="formText">Issued: </Typography>
         </Grid>
@@ -282,12 +290,6 @@ export const ClaimView = ({ item }) => {
           <Typography variant="formText">{formatDate(item?.insurance?.issueDate)}</Typography>
         </Grid>
 
-        <Grid xs={10} md={4}>
-          <Typography variant="formText">Flie #: </Typography>
-        </Grid>
-        <Grid xs={10} md={8}>
-          <Typography variant="formText">{item?.insurance?.fileNo}</Typography>
-        </Grid>
 
         <Grid xs={10} md={4}>
           <Typography variant="formText">Expiration: </Typography>
@@ -321,7 +323,7 @@ export const ClaimView = ({ item }) => {
           return (
           <Fragment key={index}>
             <Grid xs={10} md={4}>
-              <Typography variant="formText">{contact?.category}: </Typography>
+              <Typography variant="formText" style={{ fontWeight: "bold" }}>{contact?.category}: </Typography>
             </Grid>
             <Grid xs={10} md={8}>
               <Typography variant="link" onClick={() => handleContactClick(contact.id)}>
