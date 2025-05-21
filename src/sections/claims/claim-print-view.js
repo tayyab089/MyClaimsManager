@@ -179,7 +179,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
               justifyContent="space-between"
               alignItems="flex-start"
               spacing={1}
-              sx={{ marginBottom: "1rem", width: "50%" }}
+              sx={{ marginBottom: "1rem", minWidth: "50%" }}
             >
               <Typography variant="claimPrintLabel">{item?.category}</Typography>
               <Typography variant="claimPrintLabel">{item?.name}</Typography>
@@ -250,7 +250,9 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
         boxSizing: "border-box",
         backgroundColor: "white",
       },
-      display: "none"
+      "@media screen": {
+        display: "none",
+      },
     }}>
       {content.map((section, index) => (
         <div key={index} className="print-section">
