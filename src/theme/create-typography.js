@@ -121,7 +121,7 @@ export const createTypography = () => {
     claimPrintSectionTitle: {
       fontSize: '1.4rem',
       fontWeight: 800,
-      lineHeight: 0.6,
+      lineHeight: 1,
     },
     claimPrintItalicLabel: {
       fontSize: '1.2rem',

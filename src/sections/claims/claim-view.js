@@ -69,9 +69,7 @@ export const ClaimView = ({ item }) => {
     boxShadow: 24,
     p: 1,
     overflow: "auto",
-    height: "90%",
     padding: "20px",
-    marginTop: "40px",
   };
   const subheaderStyles = {
     marginTop: "20px",
@@ -220,7 +218,7 @@ export const ClaimView = ({ item }) => {
           </Button>
         </Grid>
         {item?.insured?.map((contact, index) => (
-          <Grid xs={10} md={2} key={index}>
+          <Grid xs={10} md={4} key={index}>
             <Typography variant="link" onClick={() => handleContactClick(contact.id)}>
               {contact.name}{" "}
             </Typography>

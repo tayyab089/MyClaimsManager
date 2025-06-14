@@ -1,8 +1,23 @@
 /* eslint-disable react/jsx-key */
-import { Grid, Box, Typography , Stack } from "@mui/material";
+import { Grid, Box, Typography, Stack } from "@mui/material";
 import format from "date-fns/format";
+import { useEffect } from "react";
 
 export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.innerHTML = `
+      @media print {
+        @page {
+          margin-top: 40px;
+          margin-bottom: 40px;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
+  }, []);
+
   const formatDate = (date) => {
     return date ? format(new Date(date), "MM-dd-yyyy") : "";
   };
@@ -10,9 +25,9 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
   const content = [
     <div>
       <Typography variant="claimPrintTitle">{`Claim ${claim?.fileNo}`}</Typography>
-      <hr style={{marginTop: 0, marginBottom: "0.5rem"}}/>
-      <Typography  variant="claimPrintSectionTitle">Insured</Typography>
-      <hr style={{marginTop: 0, marginBottom: "0.5rem"}}/>
+      <hr style={{ marginTop: 0, marginBottom: "0.5rem" }} />
+      <Typography variant="claimPrintSectionTitle">Insured</Typography>
+      <hr style={{ marginTop: 0, marginBottom: "0.5rem" }} />
       <Stack direction="row" justifyContent="flex-start" alignItems="flex-start" flexWrap="wrap">
         {insuredContacts?.map((item, index) => {
           return (
@@ -22,7 +37,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
               justifyContent="space-between"
               alignItems="flex-start"
               spacing={1}
-              sx={{width: "50%" }}
+              sx={{ width: "50%" }}
             >
               <Typography variant="claimPrintSectionTitle">{item?.name}</Typography>
               <Stack>
@@ -80,7 +95,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
       </Stack>
     </div>,
     <div>
-      <Grid container sx={{ marginTop: 1, marginBottom:1, padding: 0 }}>
+      <Grid container sx={{ marginTop: 1, marginBottom: 1, padding: 0 }}>
         <Grid xs={3} sm={3} md={3}>
           <Typography variant="claimPrintLabel">Loss Location:</Typography>
         </Grid>
@@ -101,11 +116,11 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
         </Grid>
       </Grid>
 
-      <Typography variant="claimPrintSectionTitle" sx={{ marginTop: '10px' }}>
+      <Typography variant="claimPrintSectionTitle" sx={{ marginTop: "10px" }}>
         Insurance
       </Typography>
-      <hr style={{marginTop: 0, marginBottom: "0.5rem"}}/>
-      <Grid container  sx={{ marginTop: 1, marginBottom:1, padding: 0 }}>
+      <hr style={{ marginTop: 0, marginBottom: "0.5rem" }} />
+      <Grid container sx={{ marginTop: 1, marginBottom: 1, padding: 0 }}>
         <Grid xs={3} sm={3} md={3}>
           <Typography variant="claimPrintLabel">Company:</Typography>
         </Grid>
@@ -151,7 +166,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
       <Typography variant="claimPrintSectionTitle" sx={{ marginTop: 2 }}>
         Policy Coverages
       </Typography>
-      <hr style={{marginTop: 0, marginBottom: "0.5rem"}}/>
+      <hr style={{ marginTop: 0, marginBottom: "0.5rem" }} />
       <Grid container sx={{}}>
         {claim?.policyCoverage?.map((coverage, ix) => {
           return (
@@ -165,11 +180,9 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
         })}
       </Grid>
     </div>,
-    <div style={{marginTop: "0.5rem"}} >
-      <Typography variant="claimPrintSectionTitle">
-        Contacts
-      </Typography>
-      <hr style={{marginTop: 0, marginBottom: "0.5rem"}}/>
+    <div style={{ marginTop: "0.5rem" }}>
+      <Typography variant="claimPrintSectionTitle">Contacts</Typography>
+      <hr style={{ marginTop: 0, marginBottom: "0.5rem" }} />
       <Stack direction="row" justifyContent="flex-start" alignItems="flex-start" flexWrap="wrap">
         {otherContacts?.map((item, index) => {
           return (
@@ -241,19 +254,21 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
 
   return (
     <Box
-    sx={{
-      "@media print": {
-        display: "block",
-        padding: "2mm 5mm",
-        margin: "0 auto",
-        width: "100%",
-        boxSizing: "border-box",
-        backgroundColor: "white",
-      },
-      "@media screen": {
-        display: "none",
-      },
-    }}>
+      sx={{
+        "@media print": {
+          display: "block",
+          paddingLeft: "2mm",
+          paddingRight: "2mm",
+          margin: "0",
+          width: "100%",
+          boxSizing: "border-box",
+          backgroundColor: "white",
+        },
+        "@media screen": {
+          display: "none",
+        },
+      }}
+    >
       {content.map((section, index) => (
         <div key={index} className="print-section">
           {section}
