@@ -16,8 +16,8 @@ const claimSchema = Yup.object().shape({
     fileNo: Yup.string(),
     policyNo: Yup.string(),
     claimNo: Yup.string(),
-    issueDate: Yup.date(),
-    expiryDate: Yup.date(),
+    issueDate: Yup.date().nullable(),
+    expiryDate: Yup.date().nullable(),
   }),
   policyCoverage: Yup.array().of(
     Yup.object().shape({

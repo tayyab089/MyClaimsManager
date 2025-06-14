@@ -537,9 +537,25 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                             <TextField fullWidth variant="outlined" {...props} />
                           )}
                           name="insurance.issueDate"
-                          value={values.insurance.issueDate}
+                          value={values.insurance.issueDate || null}
                           onChange={(d) => setFieldValue("insurance.issueDate", d)}
+                          clearable
+                          clearText="Clear"
+                          slotProps={{
+                            actionBar: {
+                              actions: ['clear']
+                            }
+                          }}
                         />
+                        {values.insurance.issueDate && (
+                          <Button
+                            size="small"
+                            onClick={() => setFieldValue("insurance.issueDate", null)}
+                            sx={{ textTransform: 'none', textDecoration: 'underline' }}
+                          >
+                            Remove issue date
+                          </Button>
+                        )}
                       </Grid>
                       <Grid
                         xs={4}
@@ -555,9 +571,25 @@ export const ClaimsAdd = ({ open, handleClose, item, editContact }) => {
                             <TextField fullWidth variant="outlined" {...props} />
                           )}
                           name="insurance.expiryDate"
-                          value={values.insurance.expiryDate}
+                          value={values.insurance.expiryDate || null}
                           onChange={(d) => setFieldValue("insurance.expiryDate", d)}
+                          clearable
+                          clearText="Clear"
+                          slotProps={{
+                            actionBar: {
+                              actions: ['clear']
+                            }
+                          }}
                         />
+                        {values.insurance.expiryDate && (
+                          <Button
+                            size="small"
+                            onClick={() => setFieldValue("insurance.expiryDate", null)}
+                            sx={{ textTransform: 'none', textDecoration: 'underline' }}
+                          >
+                            Remove expiry date
+                          </Button>
+                        )}
                       </Grid>
 
                       {/* Policy Coverages part */}
