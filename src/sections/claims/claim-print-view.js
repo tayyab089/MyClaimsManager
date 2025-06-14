@@ -143,7 +143,9 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
           <Typography variant="claimPrintLabel">File #:</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
-          <Typography variant="claimPrintText">{claim?.insurance?.fileNo}</Typography>
+          <Typography variant="claimPrintText" sx={{ wordWrap: 'break-word' }}>
+            {claim?.insurance?.fileNo}
+          </Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
           <Typography variant="claimPrintLabel">Issued:</Typography>
@@ -171,7 +173,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
         {claim?.policyCoverage?.map((coverage, ix) => {
           return (
             <Grid key={ix} xs={6} sm={6} md={6}>
-              <Stack direction="row" justifyContent="flex-start" alignItems="flex-start">
+              <Stack direction="column" justifyContent="flex-start" alignItems="flex-start">
                 <Typography variant="claimPrintLabel">{coverage.category}:</Typography>
                 <Typography variant="claimPrintText">${coverage.amount}</Typography>
               </Stack>

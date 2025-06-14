@@ -66,7 +66,6 @@ export const ClaimView = ({ item }) => {
 
   // Style Objects =============================
   const style = {
-    boxShadow: 24,
     p: 1,
     overflow: "auto",
     padding: "20px",
@@ -278,7 +277,10 @@ export const ClaimView = ({ item }) => {
           <Typography variant="formText">File #: </Typography>
         </Grid>
         <Grid xs={10} md={8}>
-          <Typography variant="formText">{item?.insurance?.fileNo}</Typography>
+          {/*<Typography variant="formText">{item?.insurance?.fileNo}</Typography>*/}
+          <Typography variant="formText" sx={{ wordWrap: 'break-word' }}>
+            {item?.insurance?.fileNo}
+          </Typography>
         </Grid>
 
         <Grid xs={10} md={4}>
