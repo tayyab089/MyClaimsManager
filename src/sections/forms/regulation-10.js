@@ -246,7 +246,7 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
                 <div style={{ order: 2, flexGrow: 0 }}>$</div>
                 <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
                   <Field type="text" name="g" className="numeric" />
-                  <span className="numeric">{values?.g}</span>
+                  <div className="printOnly numeric">{values?.g}</div>
                 </div>
                 <div style={{ order: 4, flexGrow: 0 }}>Public Adjuster&apos;s Fee</div>
                 <div style={{ order: 5, flexBasis: "20em", flexGrow: 0 }}>
@@ -260,7 +260,7 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
                 <div style={{ order: 2, flexGrow: 0 }}>$</div>
                 <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
                   <Field type="text" name="h" className="numeric" />
-                  <span className="numeric">{values?.h}</span>
+                  <div className="printOnly numeric">{values?.h}</div>
                 </div>
                 <div style={{ order: 4, flexGrow: 0 }}> Insured(s)</div>
               </div>
@@ -306,8 +306,8 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
                 <div style={{ order: 1, flexBasis: "3em", flexGrow: 0 }}></div>
                 <div style={{ order: 2, flexGrow: 0 }}>$</div>
                 <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
-                  <Field type="text" name="j" />
-                  <span>{values?.j}</span>
+                  <Field type="text" name="j" className="numeric" />
+                  <div className="printOnly numeric">{values?.j}</div>
                 </div>
                 <div style={{ order: 4, flexGrow: 0 }}>Public Adjuster&apos;s Fee</div>
                 <div style={{ order: 5, flexBasis: "20em", flexGrow: 0 }}>
@@ -320,8 +320,8 @@ export const Regulation10 = ({ formRef, claim, form, setForm, formName, setSavin
                 <div style={{ order: 1, flexBasis: "3em", flexGrow: 0 }}></div>
                 <div style={{ order: 2, flexGrow: 0 }}>$</div>
                 <div style={{ order: 3, flexBasis: "10em", flexGrow: 0 }}>
-                  <Field type="text" name="k" />
-                  <span>{values?.k}</span>
+                  <Field type="text" name="k" className="numeric" />
+                  <div className="printOnly numeric">{values?.k}</div>
                 </div>
                 <div style={{ order: 4, flexGrow: 0 }}> Insured(s)</div>
               </div>
