@@ -66,9 +66,7 @@ export const ClaimView = ({ item }) => {
 
   // Style Objects =============================
   const style = {
-    p: 1,
     overflow: "auto",
-    padding: "20px",
   };
   const subheaderStyles = {
     marginTop: "20px",
@@ -153,7 +151,11 @@ export const ClaimView = ({ item }) => {
   ];
 
   return (
-    <Box sx={style} ref={componentRef}>
+    <>
+      <div 
+        style={style} 
+        ref={componentRef}
+      >
       <ClaimPrintView
         claim={item}
         insuredContacts={insuredContacts}
@@ -163,6 +165,7 @@ export const ClaimView = ({ item }) => {
         container
         spacing={1}
         sx={{
+          padding: "20px",
           "@media print": {
             display: "none",
           },
@@ -348,6 +351,7 @@ export const ClaimView = ({ item }) => {
         isEdit={isEdit}
       />
       <Dialog />
-    </Box>
+    </div>
+    </>
   );
 };

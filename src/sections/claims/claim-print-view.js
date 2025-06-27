@@ -9,8 +9,21 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
     style.innerHTML = `
       @media print {
         @page {
-          margin-top: 40px;
-          margin-bottom: 40px;
+          margin: 10mm;
+          margin-top: 20mm;
+        }
+        .print-container {
+          display: block;
+          margin: 0;
+          padding: 0;
+          width: 100%;
+          box-sizing: border-box;
+          background-color: white;
+        }
+      }
+      @media screen {
+        .print-container {
+        display: none;
         }
       }
     `;
@@ -24,7 +37,10 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
 
   const content = [
     <div>
-      <Typography variant="claimPrintTitle">{`Claim ${claim?.fileNo}`}</Typography>
+      <Typography
+        variant="claimPrintTitle"
+        sx={{ marginTop: 0 }}
+      >{`Claim ${claim?.fileNo}`}</Typography>
       <hr style={{ marginTop: 0, marginBottom: "0.5rem" }} />
       <Typography variant="claimPrintSectionTitle">Insured</Typography>
       <hr style={{ marginTop: 0, marginBottom: "0.5rem" }} />
@@ -37,22 +53,37 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
               justifyContent="space-between"
               alignItems="flex-start"
               spacing={1}
-              sx={{ minWidth: "50%", 'flex': 1 }}
+              sx={{ minWidth: "50%", flex: 1 }}
             >
               <Typography variant="claimPrintSectionTitle">{item?.name}</Typography>
               <Stack>
-                <Typography variant="claimPrintText" sx={{ wordBreak: 'break-word' }}>{item?.businessName}</Typography>
+                <Typography variant="claimPrintText" sx={{ wordBreak: "break-word" }}>
+                  {item?.businessName}
+                </Typography>
                 {item?.address?.map((it, ix) => {
                   return (
                     <Stack key={ix}>
-                      <Typography variant="claimPrintItalicLabel" sx={{ wordBreak: 'break-word' }}>
+                      <Typography variant="claimPrintItalicLabel" sx={{ wordBreak: "break-word" }}>
                         {it?.type ? it?.type : "address"}:
                       </Typography>
-                      <Typography variant="claimPrintText" sx={{ wordBreak: 'break-word' }}>{it?.street}</Typography>
-                      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ flexWrap: 'wrap' }}>
-                        <Typography variant="claimPrintText" sx={{ wordBreak: 'break-word' }}>{it?.city}</Typography>
-                        <Typography variant="claimPrintText" sx={{ wordBreak: 'break-word' }}>{it?.state}</Typography>
-                        <Typography variant="claimPrintText" sx={{ wordBreak: 'break-word' }}>{it?.zip}</Typography>
+                      <Typography variant="claimPrintText" sx={{ wordBreak: "break-word" }}>
+                        {it?.street}
+                      </Typography>
+                      <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        sx={{ flexWrap: "wrap" }}
+                      >
+                        <Typography variant="claimPrintText" sx={{ wordBreak: "break-word" }}>
+                          {it?.city}
+                        </Typography>
+                        <Typography variant="claimPrintText" sx={{ wordBreak: "break-word" }}>
+                          {it?.state}
+                        </Typography>
+                        <Typography variant="claimPrintText" sx={{ wordBreak: "break-word" }}>
+                          {it?.zip}
+                        </Typography>
                       </Stack>
                     </Stack>
                   );
@@ -64,12 +95,14 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
                       direction="row"
                       justifyContent="flex-start"
                       alignItems="flex-start"
-                      sx={{ flexWrap: 'wrap' }}
+                      sx={{ flexWrap: "wrap" }}
                     >
-                      <Typography variant="claimPrintItalicLabel" sx={{ wordBreak: 'break-word' }}>
+                      <Typography variant="claimPrintItalicLabel" sx={{ wordBreak: "break-word" }}>
                         {it?.type ? it?.type : "email"}:
                       </Typography>
-                      <Typography variant="claimPrintText" sx={{ wordBreak: 'break-word' }}>{it?.email}</Typography>
+                      <Typography variant="claimPrintText" sx={{ wordBreak: "break-word" }}>
+                        {it?.email}
+                      </Typography>
                     </Stack>
                   );
                 })}
@@ -80,13 +113,19 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
                       direction="row"
                       justifyContent="flex-start"
                       alignItems="flex-start"
-                      sx={{ flexWrap: 'wrap' }}
+                      sx={{ flexWrap: "wrap" }}
                     >
-                      <Typography variant="claimPrintItalicLabel" sx={{ wordBreak: 'break-word' }}>
+                      <Typography variant="claimPrintItalicLabel" sx={{ wordBreak: "break-word" }}>
                         {it?.type ? it?.type : "phone"}:
                       </Typography>
-                      <Typography variant="claimPrintText" sx={{ wordBreak: 'break-word' }}>{it?.no}</Typography>
-                      {it?.ext && <Typography variant="claimPrintText" sx={{ wordBreak: 'break-word' }}>x{it?.ext}</Typography>}
+                      <Typography variant="claimPrintText" sx={{ wordBreak: "break-word" }}>
+                        {it?.no}
+                      </Typography>
+                      {it?.ext && (
+                        <Typography variant="claimPrintText" sx={{ wordBreak: "break-word" }}>
+                          x{it?.ext}
+                        </Typography>
+                      )}
                     </Stack>
                   );
                 })}
@@ -145,7 +184,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
           <Typography variant="claimPrintLabel">File #:</Typography>
         </Grid>
         <Grid xs={3} sm={3} md={3}>
-          <Typography variant="claimPrintText" sx={{ wordWrap: 'break-word' }}>
+          <Typography variant="claimPrintText" sx={{ wordWrap: "break-word" }}>
             {claim?.insurance?.fileNo}
           </Typography>
         </Grid>
@@ -257,27 +296,12 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
   ];
 
   return (
-    <Box
-      sx={{
-        "@media print": {
-          display: "block",
-          paddingLeft: "2mm",
-          paddingRight: "2mm",
-          margin: "0",
-          width: "100%",
-          boxSizing: "border-box",
-          backgroundColor: "white",
-        },
-        "@media screen": {
-          display: "none",
-        },
-      }}
-    >
+    <div className="print-container">
       {content.map((section, index) => (
         <div key={index} className="print-section">
           {section}
         </div>
       ))}
-    </Box>
+    </div>
   );
 };
