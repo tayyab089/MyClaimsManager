@@ -210,18 +210,16 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
         Policy Coverages
       </Typography>
       <hr style={{ marginTop: 0, marginBottom: "0.5rem" }} />
-      <Grid container sx={{}}>
+      <Stack direction="column" spacing={1}>
         {claim?.policyCoverage?.map((coverage, ix) => {
           return (
-            <Grid key={ix} xs={6} sm={6} md={6}>
-              <Stack direction="column" justifyContent="flex-start" alignItems="flex-start">
-                <Typography variant="claimPrintLabel">{coverage.category}:</Typography>
-                <Typography variant="claimPrintText">${coverage.amount}</Typography>
-              </Stack>
-            </Grid>
+            <Stack key={ix} direction="column" justifyContent="flex-start" alignItems="flex-start">
+              <Typography variant="claimPrintLabel">{coverage.category}:</Typography>
+              <Typography variant="claimPrintText">${coverage.amount}</Typography>
+            </Stack>
           );
         })}
-      </Grid>
+      </Stack>
     </div>,
     <div style={{ marginTop: "0.5rem" }}>
       <Typography variant="claimPrintSectionTitle">Contacts</Typography>
