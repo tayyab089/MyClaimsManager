@@ -224,7 +224,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
     <div style={{ marginTop: "0.5rem" }}>
       <Typography variant="claimPrintSectionTitle">Contacts</Typography>
       <hr style={{ marginTop: 0, marginBottom: "0.5rem" }} />
-      <Stack direction="row" justifyContent="flex-start" alignItems="flex-start" flexWrap="wrap">
+      <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" flexWrap="wrap">
         {otherContacts?.map((item, index) => {
           return (
             <Stack
@@ -233,7 +233,7 @@ export const ClaimPrintView = ({ claim, insuredContacts, otherContacts }) => {
               justifyContent="space-between"
               alignItems="flex-start"
               spacing={1}
-              sx={{ marginBottom: "1rem", minWidth: "50%" }}
+              sx={{ marginBottom: "1rem" }}
             >
               <Typography variant="claimPrintLabel">{item?.category}</Typography>
               <Typography variant="claimPrintLabel">{item?.name}</Typography>
