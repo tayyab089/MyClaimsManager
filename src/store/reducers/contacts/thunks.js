@@ -10,7 +10,7 @@ export const fetchContacts = ({
   try {
     const response = await getContactsApi({
       limit: 5,
-      lastKey: state.lastKey,
+      lastKey: page == 0 ? undefined : state.lastKey,
       searchTerm,
       page,
     });

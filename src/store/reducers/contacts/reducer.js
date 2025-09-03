@@ -13,6 +13,7 @@ const initialState = {
 const contactsReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(SET_CONTACTS, (state, { payload }) => {
+      console.log(paylaod.data)
       return {
         ...state,
         contactsData: payload.data,

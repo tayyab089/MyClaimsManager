@@ -10,7 +10,7 @@ export const ContactsSearch = ({ handleSearchClick }) => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         fullWidth
-        placeholder="Search Contact"
+        placeholder="Search Contact By Name"
         startAdornment={
           <InputAdornment position="start">
             <SvgIcon color="action" fontSize="small">

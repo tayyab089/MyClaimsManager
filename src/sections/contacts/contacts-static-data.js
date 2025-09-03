@@ -1,6 +1,5 @@
 export const emptyValues = {
   id: "",
-  category: "Contact",
   address: [
     {
       type: "",

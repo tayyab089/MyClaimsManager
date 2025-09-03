@@ -33,7 +33,7 @@ export const ContactsTable = (props) => {
   const {
     count = 0,
     items = [],
-    onPageChange = () => {},
+    onPageChange = () => { },
     page = 0,
     rowsPerPage,
     handleRowClick,
@@ -65,8 +65,8 @@ export const ContactsTable = (props) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell style={{ width: "60%" }}>Name</TableCell>
-                <TableCell style={{ width: "15%" }}>Category</TableCell>
+                <TableCell style={{ width: "40%" }}>Name</TableCell>
+                <TableCell style={{ width: "35%" }}>Business Name</TableCell>
                 <TableCell style={{ width: "25%" }}>Action</TableCell>
               </TableRow>
             </TableHead>
@@ -81,7 +81,7 @@ export const ContactsTable = (props) => {
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      <Typography variant="subtitle2">{contact?.category}</Typography>
+                      <Typography variant="subtitle2">{contact?.businessName || "-"}</Typography>
                     </TableCell>
                     <TableCell>
                       <ButtonsContainer>
