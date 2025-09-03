@@ -34,10 +34,8 @@ export const ContactsTable = (props) => {
     count = 0,
     items = [],
     onPageChange = () => {},
-    onRowsPerPageChange,
     page = 0,
-    rowsPerPage = 0,
-    selected = [],
+    rowsPerPage,
     handleRowClick,
     deleteContact,
     viewContact,
@@ -74,13 +72,8 @@ export const ContactsTable = (props) => {
             </TableHead>
             <TableBody>
               {items.map((contact) => {
-                const isSelected = selected.includes(contact.id);
-                const lastUpdated = contact.lastUpdated
-                  ? format(new Date(contact.lastUpdated), "dd/MM/yyyy")
-                  : "N/A";
-
                 return (
-                  <TableRow hover key={contact.id} selected={isSelected}>
+                  <TableRow hover key={contact.id}>
                     <TableCell>
                       <Stack alignItems="center" direction="row" spacing={2}>
                         <Avatar src={contact.avatar}>{getInitials(contact.name)}</Avatar>
@@ -132,10 +125,9 @@ export const ContactsTable = (props) => {
         component="div"
         count={count}
         onPageChange={onPageChange}
-        onRowsPerPageChange={onRowsPerPageChange}
         page={page}
         rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPageOptions={-1}
       />
     </Card>
   );

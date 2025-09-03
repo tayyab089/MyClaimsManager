@@ -139,13 +139,13 @@ const Page = () => {
     }
   }, [claimsModalData]);
 
-  useEffect(() => {
-    if (claimsData.length == 0 || contactsData.length == 0) {
-      dispatch(fetchClaims());
-      dispatch(fetchContacts());
-    } else {
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (claimsData.length == 0 || contactsData.length == 0) {
+  //     dispatch(fetchClaims());
+  //     dispatch(fetchContacts());
+  //   } else {
+  //   }
+  // }, []);
 
   return (
     <>

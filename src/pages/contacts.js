@@ -2,58 +2,44 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 import { Box, Button, Container, Stack, SvgIcon, Typography, LinearProgress } from "@mui/material";
-import { useSelection } from "src/hooks/use-selection";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { ContactsTable } from "src/sections/contacts/contacts-table";
 import { ContactsSearch } from "src/sections/contacts/contacts-search";
 import { ContactsAdd } from "src/sections/contacts/contacs-add";
 import { ContactsView } from "src/sections/contacts/contacts-view";
-import { applyPagination } from "src/utils/apply-pagination";
 import { deleteContactApi } from "src/network/contacts-api";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts, deleteContactFromStore } from "src/store/reducers/contacts/thunks";
 import { CustomAlert } from "src/components/custom-alert";
 import { setAlertData } from "src/store/reducers/alert/thunks";
 
-const useContacts = (contactsData, page, rowsPerPage) => {
-  return useMemo(() => {
-    return applyPagination(contactsData, page, rowsPerPage);
-  }, [contactsData, page, rowsPerPage]);
-};
-
-const useContactIds = (contacts) => {
-  return useMemo(() => {
-    return contacts?.map((contact) => contact.id);
-  }, [contacts]);
-};
-
 const Page = () => {
   // State Variables ===============================================
   const dispatch = useDispatch();
   const {
     contactsData,
+    count,
     meta: { isLoading },
   } = useSelector((state) => state.contacts);
 
   const [contactItem, setContactItem] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
-
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(25);
-  const contacts = useContacts(contactsData, page, rowsPerPage);
-  const contactIds = useContactIds(contacts);
-  const contactsSelection = useSelection(contactIds);
+  const ROWS_PER_PAGE = 5;
   const [openModal, setOpenModal] = useState(false);
   const [openViewModal, setOpenViewModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Table Functions ================================================
   const handlePageChange = useCallback((event, value) => {
-    setPage(value);
+    setPage(value)
   }, []);
 
-  const handleRowsPerPageChange = useCallback((event) => {
-    setRowsPerPage(event.target.value);
-  }, []);
+  const handleSearchClick = useCallback((searchTerm) => {
+    setPage(0)
+    setSearchTerm(searchTerm)
+  }, [])
+
 
   // API Functions====================================================
   const deleteContact = async (contact) => {
@@ -116,34 +102,16 @@ const Page = () => {
   };
 
   // Search Functions and State=========================================
-  const [searchValue, setSearchValue] = useState("");
-  const [filteredContacts, setFilteredContacts] = useState([]);
 
-  const filterData = useCallback((val) => {
-    const lowercaseVal = val.toLowerCase();
-    const filteredData = contacts.filter(
-      (obj) =>
-        obj?.name?.toLowerCase().includes(lowercaseVal) ||
-        obj?.category?.toLowerCase().includes(lowercaseVal) ||
-        obj?.businessName?.toLowerCase().includes(lowercaseVal)
-    );
-    setSearchValue(val);
-    setFilteredContacts(filteredData);
-  }, [contacts]);
 
   useEffect(() => {
-    if (searchValue) {
-      filterData(searchValue);
-    }
-  }, [contacts, searchValue, filterData]);
+    dispatch(fetchContacts({
+      page,
+      searchTerm,
+    }))
+  }, [dispatch, page, searchTerm]);
 
   // Useffect Calls =====================================================
-  useEffect(() => {
-    if (contactsData.length == 0) {
-      dispatch(fetchContacts());
-    } else {
-    }
-  }, []);
 
   return (
     <>
@@ -177,31 +145,22 @@ const Page = () => {
                 </Button>
               </div>
             </Stack>
-            <ContactsSearch filterData={filterData} />
-            {isLoading ? (
+            <ContactsSearch handleSearchClick={handleSearchClick} />
+            {isLoading && (
               <Box sx={{ width: "100%" }}>
                 <LinearProgress />
               </Box>
-            ) : filteredContacts.length > 0 || !searchValue ? (
-              <ContactsTable
-                count={filteredContacts.length > 0 ? filteredContacts.length : contactsData.length}
-                items={filteredContacts.length > 0 ? filteredContacts : contacts}
-                onDeselectAll={contactsSelection.handleDeselectAll}
-                onDeselectOne={contactsSelection.handleDeselectOne}
-                onPageChange={handlePageChange}
-                onRowsPerPageChange={handleRowsPerPageChange}
-                onSelectAll={contactsSelection.handleSelectAll}
-                onSelectOne={contactsSelection.handleSelectOne}
-                page={page}
-                rowsPerPage={rowsPerPage}
-                selected={contactsSelection.selected}
-                handleRowClick={handleRowClick}
-                deleteContact={deleteContact}
-                viewContact={handleViewOpen}
-              />
-            ) : (
-              <Typography variant="h6">No contact found</Typography>
             )}
+            <ContactsTable
+              count={count}
+              items={contactsData.length > 0 ? contactsData : []}
+              onPageChange={handlePageChange}
+              page={page}
+              rowsPerPage={ROWS_PER_PAGE}
+              handleRowClick={handleRowClick}
+              deleteContact={deleteContact}
+              viewContact={handleViewOpen}
+            />
           </Stack>
           <ContactsAdd
             open={openModal}

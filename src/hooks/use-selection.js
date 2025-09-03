@@ -1,3 +1,4 @@
+//TODO: Can be deleted
 import { useCallback, useEffect, useState } from 'react';
 
 export const useSelection = (items = []) => {

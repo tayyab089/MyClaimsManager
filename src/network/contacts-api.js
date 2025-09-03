@@ -1,8 +1,8 @@
 import { api, getSecureHeadersConfig } from './api';
 
-export const getContactsApi = async () => {
+export const getContactsApi = async (params) => {
   try {
-    const response = await api.get("contacts", getSecureHeadersConfig());
+    const response = await api.get("contacts", { ...getSecureHeadersConfig(), params });
     return response;
   } catch (error) {
     toast.error(error.response.data?.error?.message) || "Something went wrong";

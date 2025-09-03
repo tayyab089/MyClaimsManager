@@ -1,14 +1,21 @@
 import { getContactsApi } from 'src/network/contacts-api';
 import { SET_CONTACTS, REMOVE_CONTACTS, IS_FETCHING_CONTACTS } from "./actions";
 
-import { sortContacts } from "src/utils/sort-data";
-
-export const fetchContacts = (refreshDataCallback) => async (dispatch) => {
+export const fetchContacts = ({
+  searchTerm,
+  page,
+} = {}) => async (dispatch, getState) => {
+  const state = getState()
   dispatch(IS_FETCHING_CONTACTS(true));
   try {
-    const response = await getContactsApi();
+    const response = await getContactsApi({
+      limit: 5,
+      lastKey: state.lastKey,
+      searchTerm,
+      page,
+    });
     if (response && response.data.type !== "error") {
-      dispatch(SET_CONTACTS(sortContacts(response.data.data)));
+      dispatch(SET_CONTACTS({ data: response.data.data, lastKeyId: response.data.lastKey.id, count: response.data.totalCount }));
     }
   } catch (error) {
   } finally {

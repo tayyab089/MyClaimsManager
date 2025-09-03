@@ -54,7 +54,7 @@ export const ContactsEdit = ({ open, handleClose, item, isEdit, setExpand }) => 
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
           );
           handleClose();
-          dispatch(fetchContacts());
+          // dispatch(fetchContacts());
           setTimeout(() => {
             dispatch(setAlertData({ open: false, message: "", type: "" }));
           }, 3000);
@@ -68,7 +68,7 @@ export const ContactsEdit = ({ open, handleClose, item, isEdit, setExpand }) => 
             setAlertData({ open: true, message: response.data.message, type: response.data.type })
           );
           handleClose();
-          dispatch(fetchContacts());
+          // dispatch(fetchContacts());
           setTimeout(() => {
             dispatch(setAlertData({ open: false, message: "", type: "" }));
           }, 3000);

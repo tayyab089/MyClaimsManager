@@ -33,7 +33,7 @@ export const Layout = withAuthGuard((props) => {
 
   useEffect(() => {
     //TODO: Remove this and find a better approach to hydrate
-    dispatch(fetchContacts());
+    // dispatch(fetchContacts());
   }, [pathname, dispatch]);
 
   const handlePathnameChange = useCallback(() => {
